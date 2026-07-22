@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg-color: #030303; /* Extremely dark */
+  --btn-bg: #0a0a0a;
+  --border-color: #1a1a1a;
+  --border-hover: #333;
+  --text-main: #fafafa;
+  --text-muted: #777;
+  
+  --accent-signal: #10b981; /* Professional emerald */
+  --accent-todo: #fbbf24; /* Professional amber */
+  --accent-system: #3b82f6; /* Blue for system */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  width: 100%;
+  max-width: 800px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  align-items: center;
+}
+
+.project-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+/* --- Ultra-Minimal Pill Buttons --- */
+.project-btn {
+  background-color: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  padding: 1.25rem 4rem;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.project-btn:hover {
+  border-color: var(--border-hover);
+  background-color: #0f0f0f;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+  transform: translateY(-2px);
+}
+
+/* Specific hover borders */
+#signal-btn:hover { border-color: rgba(16, 185, 129, 0.3); }
+#todo-btn:hover { border-color: rgba(251, 191, 36, 0.3); }
+
+.project-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 5;
+  transition: color 0.4s ease;
+  text-transform: uppercase;
+}
+
+.project-btn:hover .project-name {
+  color: var(--text-main);
+}
+
+/* --- Minimalist Animations Container --- */
+.anim-container {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.project-btn:hover .anim-container {
+  opacity: 1;
+}
+
+/* SIGNAL - Line Graph Animation */
+.signal-graph {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.signal-line {
+  fill: none;
+  stroke: var(--accent-signal);
+  stroke-width: 1.5;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.signal-area {
+  fill: url(#signal-gradient);
+  opacity: 0;
+}
+
+#signal-btn:hover .signal-line {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+#signal-btn:hover .signal-area {
+  opacity: 1;
+  transition: opacity 1.5s ease;
+}
+
+/* TODO - Minimal Progress Animation */
+.todo-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 0 4rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#todo-btn:hover .todo-progress {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.progress-track {
+  flex-grow: 1;
+  height: 2px;
+  background: var(--border-color);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0; left: 0; height: 100%;
+  width: 0%;
+  background: var(--accent-todo);
+  transition: width 1s cubic-bezier(0.25, 1, 0.5, 1) 0.1s;
+}
+
+#todo-btn:hover .progress-fill {
+  width: 100%;
+}
+
+
+
+
+/* --- Minimalist Info Buttons & Panels --- */
+.info-btn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  position: absolute;
+  right: calc(50% - 250px); /* Positioned relative to center */
+}
+
+.info-btn:hover, .info-btn.active {
+  border-color: var(--text-muted);
+  color: var(--text-main);
+  background: rgba(255,255,255,0.05);
+}
+
+.info-panel {
+  position: absolute;
+  left: calc(50% + 280px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-10px);
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  width: 260px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 10;
+}
+
+.info-panel.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.info-panel p {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* --- System Health (Minimalist) --- */
+.system-health-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.system-toggle {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--btn-bg);
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.system-toggle:hover, .system-toggle.active {
+  border-color: var(--border-hover);
+  background: #111;
+}
+
+/* Clean pulsing dot */
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-system);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  animation: pulse-dot 3s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; box-shadow: 0 0 15px rgba(59, 130, 246, 0.8); }
+  100% { opacity: 0.4; }
+}
+
+/* The Data Panel */
+.system-panel {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.95);
+  transform-origin: bottom right;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.system-panel.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.stat-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Minimalist linear gauge */
+.stat-bar-bg {
+  width: 100%; height: 2px;
+  background: var(--border-color);
+  border-radius: 2px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+.stat-bar-fill {
+  height: 100%;
+  background: var(--text-muted);
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+.fill-temp { width: 45%; background: var(--accent-system); }
+.fill-cpu { width: 12%; }
+.fill-mem { width: 68%; }
+
+/* Live Indicator */
+.live-indicator {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: var(--accent-signal);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
