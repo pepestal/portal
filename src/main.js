@@ -1,165 +1,216 @@
 import './style.css'
+import { apps } from './apps.js'
+import { styles, DEFAULT_STYLE } from './styles.js'
+import stats from './data/stats.json'
+
+const nf = new Intl.NumberFormat('sv-SE')
+const el = (html) => {
+  const t = document.createElement('template')
+  t.innerHTML = html.trim()
+  return t.content.firstElementChild
+}
+
+/* ---------- Hover-animationer per apptyp (stilarna dresserar dem i CSS) ---------- */
+const ANIM = {
+  graph: `
+    <svg class="anim anim--graph" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+      <path class="anim--graph__area" d="M0,46 L25,34 L50,40 L75,22 L100,29 L125,12 L150,21 L175,6 L200,15 L200,60 L0,60 Z"/>
+      <path class="anim--graph__line" d="M0,46 L25,34 L50,40 L75,22 L100,29 L125,12 L150,21 L175,6 L200,15"/>
+    </svg>`,
+  progress: `
+    <div class="anim anim--progress" aria-hidden="true">
+      <span class="anim--progress__c">0/3</span>
+      <div class="anim--progress__track"><div class="anim--progress__fill"></div></div>
+      <span class="anim--progress__c anim--progress__c--to">3/3</span>
+    </div>`,
+  reps: `
+    <div class="anim anim--reps" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>`,
+}
+
+/* ---------- Info-panel: byggd av den statiska stats-datan ---------- */
+function infoPanel(app) {
+  const p = stats.projects[app.id]
+  if (!p || !p.available) {
+    return `<div class="info-panel" id="info-${app.id}" role="region" aria-label="Om ${app.name}">
+      <p class="info-tagline">${app.tagline}</p>
+      <p class="info-foot">Ingen projektdata tillgänglig.</p>
+    </div>`
+  }
+  const maxLang = Math.max(...p.languages.map((l) => l.lines), 1)
+  const langs = p.languages.map((l) => `
+    <div class="lang">
+      <span class="lang__name">${l.name}</span>
+      <span class="lang__bar"><span style="width:${Math.round((l.lines / maxLang) * 100)}%"></span></span>
+      <span class="lang__n">${nf.format(l.lines)}</span>
+    </div>`).join('')
+  const stack = p.stack.map((s) => `<li>${s}</li>`).join('')
+  return `
+    <div class="info-panel" id="info-${app.id}" role="region" aria-label="Om ${app.name}">
+      <p class="info-tagline">${app.tagline}</p>
+      <dl class="info-metrics">
+        <div><dt>Filer</dt><dd>${nf.format(p.files)}</dd></div>
+        <div><dt>Rader</dt><dd>${nf.format(p.lines)}</dd></div>
+      </dl>
+      <div class="info-langs">${langs}</div>
+      <ul class="info-stack">${stack}</ul>
+    </div>`
+}
+
+/* ---------- Systemhälsa: ekosystemets samlade siffror ur stats ---------- */
+function systemHealth() {
+  const e = stats.ecosystem
+  const built = new Date(stats.generatedAt).toLocaleDateString('sv-SE')
+  const entries = Object.entries(stats.projects).filter(([, p]) => p.available)
+  const maxLines = Math.max(...entries.map(([, p]) => p.lines), 1)
+  const rows = entries.map(([id, p]) => `
+    <div class="sys-row" data-app="${id}">
+      <span class="sys-row__name">${p.name}</span>
+      <span class="sys-row__bar"><span style="width:${Math.round((p.lines / maxLines) * 100)}%"></span></span>
+      <span class="sys-row__n">${nf.format(p.lines)}</span>
+    </div>`).join('')
+  return `
+    <div class="system">
+      <div class="system__panel" id="system-panel" role="region" aria-label="Systemhälsa">
+        <div class="system__head">
+          <span class="system__title">Ekosystem</span>
+          <span class="system__meta">${e.apps} appar · ${nf.format(e.files)} filer</span>
+        </div>
+        <div class="system__rows">${rows}</div>
+        <div class="system__foot">
+          <span><span class="live"></span> ${nf.format(e.lines)} rader kod</span>
+          <span>byggd ${built}</span>
+        </div>
+      </div>
+      <button class="system__toggle" id="system-toggle" aria-label="Visa systemhälsa" aria-expanded="false">
+        <span class="live"></span>
+      </button>
+    </div>`
+}
+
+/* ---------- Skelett ---------- */
+function appRow(app) {
+  return `
+    <div class="app-row" data-app="${app.id}">
+      <a class="app-btn" href="${app.url}">
+        <span class="app-btn__name">${app.name}</span>
+        <span class="app-btn__anim">${ANIM[app.anim] || ''}</span>
+      </a>
+      <button class="info-toggle" data-target="info-${app.id}"
+              aria-label="Mer om ${app.name}" aria-expanded="false">i</button>
+      ${infoPanel(app)}
+    </div>`
+}
 
 document.querySelector('#app').innerHTML = `
-  <div class="projects-container">
-    
-    <!-- SIGNAL Project -->
-    <div class="project-wrapper">
-      <a href="#" class="project-btn" id="signal-btn">
-        <span class="project-name">SIGNAL</span>
-        
-        <!-- Minimalist Line Graph Animation -->
-        <div class="anim-container">
-          <svg class="signal-graph" viewBox="0 0 400 100" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="signal-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="rgba(16, 185, 129, 0.2)" />
-                <stop offset="100%" stop-color="rgba(16, 185, 129, 0)" />
-              </linearGradient>
-            </defs>
-            <path class="signal-area" d="M0,80 L50,60 L100,70 L150,40 L200,50 L250,20 L300,35 L350,10 L400,25 L400,100 L0,100 Z" />
-            <path class="signal-line" d="M0,80 L50,60 L100,70 L150,40 L200,50 L250,20 L300,35 L350,10 L400,25" />
-          </svg>
-        </div>
-      </a>
-      <button class="info-btn" data-target="info-signal">?</button>
-      <div class="info-panel" id="info-signal">
-        <p>Real-time market analytics, portfolio tracking, and automated signal detection.</p>
-      </div>
+  <header class="topbar">
+    <span class="wordmark">Portal</span>
+    <div class="style-switch">
+      <button class="style-switch__btn" data-act="prev" aria-label="Föregående stil">‹</button>
+      <span class="style-switch__name" id="style-name">—</span>
+      <button class="style-switch__btn" data-act="next" aria-label="Nästa stil">›</button>
+      <button class="style-switch__lock" data-act="lock" aria-pressed="false"
+              aria-label="Lås stilen">Lås</button>
     </div>
+  </header>
 
-    <!-- TODO Project -->
-    <div class="project-wrapper">
-      <a href="#" class="project-btn" id="todo-btn">
-        <span class="project-name">TODO</span>
-        
-        <!-- Minimalist Progress Animation -->
-        <div class="anim-container">
-          <div class="todo-progress">
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted);">0/1</span>
-            <div class="progress-track">
-              <div class="progress-fill"></div>
-            </div>
-            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--accent-todo);">1/1</span>
-          </div>
-        </div>
-      </a>
-      <button class="info-btn" data-target="info-todo">?</button>
-      <div class="info-panel" id="info-todo">
-        <p>A sleek daily reminder app. Organizes tasks efficiently with a clean, distraction-free interface.</p>
-      </div>
-    </div>
+  <main class="rows">
+    ${apps.map(appRow).join('')}
+  </main>
 
-  </div>
-
-  <!-- Minimalist System Health -->
-  <div class="system-health-container">
-    <div class="system-panel" id="system-panel">
-      
-      <div class="stat-row">
-        <span class="stat-label">STATUS</span>
-        <span class="stat-value"><span class="live-indicator"></span> ONLINE</span>
-      </div>
-
-      <div class="stat-row">
-        <span class="stat-label">CORE TEMP</span>
-        <span class="stat-value" id="temp-val">45&deg;C</span>
-        <div class="stat-bar-bg"><div class="stat-bar-fill fill-temp" id="temp-bar"></div></div>
-      </div>
-
-      <div class="stat-row">
-        <span class="stat-label">CPU LOAD</span>
-        <span class="stat-value" id="cpu-val">12%</span>
-        <div class="stat-bar-bg"><div class="stat-bar-fill fill-cpu" id="cpu-bar"></div></div>
-      </div>
-
-      <div class="stat-row">
-        <span class="stat-label">MEMORY</span>
-        <span class="stat-value" id="mem-val">68%</span>
-        <div class="stat-bar-bg"><div class="stat-bar-fill fill-mem" id="mem-bar"></div></div>
-      </div>
-
-    </div>
-
-    <button class="system-toggle" id="system-toggle">
-      <div class="status-dot"></div>
-    </button>
-  </div>
+  ${systemHealth()}
 `
 
-// --- Info Panels Logic ---
-document.querySelectorAll('.info-btn').forEach(btn => {
+/* ============================ Stilrotation ============================ */
+const LS_LOCK = 'portal.lockedStyle'
+const LS_LAST = 'portal.lastStyle'
+const nameEl = document.getElementById('style-name')
+const lockBtn = document.querySelector('[data-act="lock"]')
+const ids = styles.map((s) => s.id)
+
+function applyStyle(id) {
+  if (!ids.includes(id)) id = DEFAULT_STYLE
+  document.documentElement.dataset.style = id
+  nameEl.textContent = styles.find((s) => s.id === id).label
+  localStorage.setItem(LS_LAST, id)
+}
+
+function reflectLock() {
+  const locked = localStorage.getItem(LS_LOCK)
+  const active = locked && locked === document.documentElement.dataset.style
+  lockBtn.setAttribute('aria-pressed', String(!!active))
+  lockBtn.textContent = active ? 'Låst' : 'Lås'
+  lockBtn.classList.toggle('is-locked', !!active)
+}
+
+function pickInitial() {
+  const locked = localStorage.getItem(LS_LOCK)
+  if (locked && ids.includes(locked)) return locked
+  // Slumpa — undvik samma som förra besöket när det går.
+  const last = localStorage.getItem(LS_LAST)
+  const pool = ids.length > 1 ? ids.filter((id) => id !== last) : ids
+  return pool[Math.floor(Math.random() * pool.length)]
+}
+
+applyStyle(pickInitial())
+reflectLock()
+
+document.querySelector('.style-switch').addEventListener('click', (e) => {
+  const act = e.target.closest('[data-act]')?.dataset.act
+  if (!act) return
+  const cur = ids.indexOf(document.documentElement.dataset.style)
+  if (act === 'next') applyStyle(ids[(cur + 1) % ids.length])
+  else if (act === 'prev') applyStyle(ids[(cur - 1 + ids.length) % ids.length])
+  else if (act === 'lock') {
+    const isLocked = localStorage.getItem(LS_LOCK) === document.documentElement.dataset.style
+    if (isLocked) localStorage.removeItem(LS_LOCK)
+    else localStorage.setItem(LS_LOCK, document.documentElement.dataset.style)
+  }
+  reflectLock()
+})
+
+/* ============================ Info-paneler ============================ */
+const closeAllInfo = () => {
+  document.querySelectorAll('.info-panel.is-open').forEach((p) => p.classList.remove('is-open'))
+  document.querySelectorAll('.info-toggle[aria-expanded="true"]').forEach((b) => b.setAttribute('aria-expanded', 'false'))
+}
+
+document.querySelectorAll('.info-toggle').forEach((btn) => {
   btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const targetId = btn.getAttribute('data-target');
-    const infoPanel = document.getElementById(targetId);
-    
-    // Close others
-    document.querySelectorAll('.info-panel').forEach(panel => {
-      if(panel.id !== targetId) panel.classList.remove('active');
-    });
-    document.querySelectorAll('.info-btn').forEach(b => {
-      if(b !== btn) b.classList.remove('active');
-    });
+    e.preventDefault()
+    e.stopPropagation()
+    const panel = document.getElementById(btn.dataset.target)
+    const willOpen = !panel.classList.contains('is-open')
+    closeAllInfo()
+    if (willOpen) {
+      panel.classList.add('is-open')
+      btn.setAttribute('aria-expanded', 'true')
+    }
+  })
+})
 
-    infoPanel.classList.toggle('active');
-    btn.classList.toggle('active');
-  });
-});
+/* ============================ Systemhälsa ============================ */
+const sysToggle = document.getElementById('system-toggle')
+const sysPanel = document.getElementById('system-panel')
+sysToggle.addEventListener('click', (e) => {
+  e.stopPropagation()
+  const open = sysPanel.classList.toggle('is-open')
+  sysToggle.setAttribute('aria-expanded', String(open))
+})
 
-// Close panels on click outside
+/* ============================ Stäng vid klick utanför ============================ */
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.info-btn') && !e.target.closest('.info-panel')) {
-    document.querySelectorAll('.info-panel').forEach(panel => panel.classList.remove('active'));
-    document.querySelectorAll('.info-btn').forEach(btn => btn.classList.remove('active'));
+  if (!e.target.closest('.info-toggle') && !e.target.closest('.info-panel')) closeAllInfo()
+  if (!e.target.closest('.system')) {
+    sysPanel.classList.remove('is-open')
+    sysToggle.setAttribute('aria-expanded', 'false')
   }
-});
-
-// --- System Health Logic ---
-const systemToggle = document.getElementById('system-toggle');
-const systemPanel = document.getElementById('system-panel');
-
-systemToggle.addEventListener('click', (e) => {
-  e.stopPropagation();
-  systemToggle.classList.toggle('active');
-  systemPanel.classList.toggle('active');
-});
-
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.system-health-container')) {
-    systemToggle.classList.remove('active');
-    systemPanel.classList.remove('active');
+})
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeAllInfo()
+    sysPanel.classList.remove('is-open')
+    sysToggle.setAttribute('aria-expanded', 'false')
   }
-});
-
-// Simulated Data Updates for System Health
-const tempVal = document.getElementById('temp-val');
-const tempBar = document.getElementById('temp-bar');
-const cpuVal = document.getElementById('cpu-val');
-const cpuBar = document.getElementById('cpu-bar');
-const memVal = document.getElementById('mem-val');
-const memBar = document.getElementById('mem-bar');
-
-let currentTemp = 45;
-let currentCpu = 12;
-let currentMem = 68;
-
-setInterval(() => {
-  // Temp drift
-  currentTemp += (Math.random() * 2) - 1;
-  currentTemp = Math.max(35, Math.min(85, currentTemp));
-  tempVal.innerHTML = `${Math.round(currentTemp)}&deg;C`;
-  tempBar.style.width = `${((currentTemp - 20) / 70) * 100}%`;
-
-  // CPU drift (faster, spikier)
-  currentCpu += (Math.random() * 10) - 5;
-  currentCpu = Math.max(2, Math.min(98, currentCpu));
-  cpuVal.innerText = `${Math.round(currentCpu)}%`;
-  cpuBar.style.width = `${Math.round(currentCpu)}%`;
-
-  // Mem drift (slow)
-  currentMem += (Math.random() * 1) - 0.5;
-  currentMem = Math.max(20, Math.min(95, currentMem));
-  memVal.innerText = `${Math.round(currentMem)}%`;
-  memBar.style.width = `${Math.round(currentMem)}%`;
-}, 2000);
+})

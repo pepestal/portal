@@ -1,28 +1,45 @@
 # Status — Portal
 
-> 🚧 **Status:** fungerande prototyp — statisk landningssida med Signal- och Todo-knappar; app-länkar ännu inte inkopplade.
+> 🚧 **Status:** fungerande showroom-prototyp — stora app-knappar med hover-animationer,
+> ett stil-system som roterar slumpmässigt, och info-paneler med byggtidsgenererad projektdata.
 
 Ingången för den som ska **ta vid**: var vi står, vad nästa steg är, och vilka
 beslut/förutsättningar som gäller just nu.
 
 ## Var vi står
 
-- Vite-projekt (tidigare `landing-page`) som renderar en enda sida via `src/main.js`.
-- Två app-kort finns: **SIGNAL** (grafanimation) och **TODO** (progress-animation),
-  var med info-panel.
-- Hopfällbar system-health-widget med simulerade drift-värden.
-- Knapparna (`#signal-btn`, `#todo-btn`) pekar ännu på `#` — ingen riktig navigering.
+Portal är medvetet ett **design-experiment / showroom** — inte en nyttosida man
+faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
+
+- **Delat skelett** (`src/main.js`): stora centrerade knappar, en per app (Signal,
+  Todos, Stronk), var med en info-knapp; plus en systemhälsa-panel.
+- **Stil-system** (`src/styles.js` + `src/style.css`): tre stilar — `terminal`
+  (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank). Varje
+  stil bär egen palett, typografi och animationsuttryck under sin `[data-style]`.
+  Skelettet står still; bara stilen byts.
+- **Rotation:** slumpad stil vid varje besök (undviker samma som förra). Switcher i
+  topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage).
+- **Per-app hover-animationer** som varje stil dresserar: graf (Signal),
+  progress (Todos), reps (Stronk).
+- **Byggtidsdata:** `scripts/generate-stats.mjs` går igenom grann-repona och skriver
+  `src/data/stats.json` (filer, rader, språk, stack). Info-panelerna och systemhälsan
+  läser den. Körs automatiskt via `predev`/`prebuild`. Se dokumenterat undantag i CLAUDE.md.
+- Projektnamnet är nu `portal` (var `landing-page`); `<title>` likaså.
 
 ## Nästa konkreta steg
 
-1. Koppla app-knapparna till apparnas riktiga URL:er.
-2. Byt projektnamnet `landing-page` → `portal` i `package.json` och `<title>` i `index.html`.
+1. **Riktiga URL:er** på knapparna (nu `#` i `src/apps.js`) när apparnas adresser finns.
+2. **Fler stilar** — arkitekturen gör det till ett token/animations-block + en rad i `styles.js`.
+3. Ev. **per-app unika animationer per stil** (nu delar apparna animationstyp som stilen tintar).
+4. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut
 
-- Ska system-health visa riktiga värden (kräver en källa/endpoint) eller förbli dekorativ?
-- Fler appar på sidan (t.ex. Stronk) när de blir publika?
+- Ska Stronk vara en aktiv knapp direkt eller markeras som "planerad" tills den är publik?
+- Hur ofta ska stats regenereras — bara vid deploy (nuvarande) eller schemalagt?
 
 ## Förutsättningar (infra, nycklar, miljö)
 
-- Ingen — statisk frontend, inga hemligheter, ingen `.env`.
+- Statisk frontend, inga hemligheter, ingen `.env`.
+- Byggtidsstatistiken kräver att grann-repona finns bredvid (`../Signal`, `../todos`,
+  `../stronk`, `../syntes`). Saknas de behålls senast kända värden i `stats.json`.

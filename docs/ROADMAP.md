@@ -34,14 +34,20 @@ _(Inga uppslag noterade ännu.)_
 
 ## v1.0 — mål
 
-- Alla ekosystemets publika appar har ett kort med fungerande länk.
-- Sidan är korrekt namngiven (`portal`) och byggbar (`npm run build`).
+- ~~Sidan är korrekt namngiven (`portal`) och byggbar (`npm run build`).~~ ✅
+- ~~Stil-system med flera roterande estetiker och per-app hover-animationer.~~ ✅ (showroom)
+- ~~System-health/info med riktig projektdata (byggtidsgenererad).~~ ✅
+- Alla app-knappar har en fungerande länk (nu `#` tills URL:er finns).
 
 ## Medvetet INTE i v1
 
-- Riktig live-data i system-health — dekorativ simulering räcker tills en källa finns.
+- **Runtime**-live-data från apparna — byggtidsstatistik räcker och håller sidan statisk
+  (se dokumenterat undantag i CLAUDE.md). Runtime-fetch mot apparna är medvetet bortvalt.
 - Autentisering / personlig vy — Portal är en publik ingång.
 
 ## v2+ — framtid
 
-- Dynamisk lista över appar (i stället för hårdkodade kort).
+- ~~Dynamisk lista över appar i stället för hårdkodade kort.~~ ✅ (drivs av `src/apps.js`)
+- Per-app **unika** animationer per stil (nu delar apparna animationstyp som stilen tintar).
+- Fler stilar i rotationen.
+- Självhostade typsnitt i stället för Google Fonts-`<link>`.

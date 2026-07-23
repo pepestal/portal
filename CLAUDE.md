@@ -17,6 +17,10 @@ Läses automatiskt av Claude Code och gäller alla agenter i portal-repot. Håll
 - Portal är en **statisk frontend** — ingen backend, ingen databas, ingen
   Syntes-koppling. Inför inte sådant utan att först flagga och förankra beslutet.
 - Länkar ut till andra appar går via URL. Läs aldrig i en annan apps data direkt.
+- **Undantag (förankrat):** `scripts/generate-stats.mjs` läser grann-repona vid
+  **byggtid** och bakar in en statisk `src/data/stats.json`. Det är inte en
+  runtime-koppling — sidan förblir statisk och läser aldrig en annan app live.
+  Utöka inte detta till runtime-fetch mot apparna utan att flagga.
 
 ## När du är klar med en ändring
 

@@ -22,16 +22,28 @@ system-health-widget. Den är **fristående** — den pratar inte med händelsen
 
 ## Vad appen gör
 
-Portal renderar en enda sida (`src/main.js` + `src/style.css`) med en knapp per app
-i ekosystemet. Varje knapp har en liten temaanimation och en info-panel som
-beskriver appen. En hopfällbar "system health"-panel visar simulerade drift-värden
-(temp, CPU, minne). Ren presentation — ingen inloggning, inget API, ingen databas.
+Portal är ett **showroom / design-experiment** — en sida med stora app-knappar
+(en per app i ekosystemet), var med en hover-animation och en info-knapp. Poängen
+är hur det känns, inte att navigera vidare.
+
+- **Stil-system:** flera estetiker (`terminal`, `editorial`, `bank`) delar ett och
+  samma skelett men bär egen palett, typografi och animationer. Stilen **roterar
+  slumpmässigt** vid varje besök; en switcher låter dig bläddra och **låsa** en favorit.
+- **Info-paneler + systemhälsa** visar riktig projektdata (filer, rader, språk, stack)
+  som genereras vid **byggtid** ur grann-repona — inte via runtime-koppling.
+
+Ren presentation — ingen inloggning, inget runtime-API, ingen databas.
 
 ## Arkitektur i korthet
 
-Statisk klient utan backend. Vite bygger `index.html` + `src/` till statiska filer
-som kan serveras var som helst. Länkar ut till de andra apparna via URL; ingen
-app-till-app-kommunikation sker här.
+Statisk klient utan backend. Vite bygger `index.html` + `src/` till statiska filer.
+Länkar ut till andra appar via URL; ingen runtime app-till-app-kommunikation.
+
+- `src/main.js` — renderar skelettet, sköter stilrotation, info-paneler och systemhälsa.
+- `src/apps.js` — appregistret (lägg till en app = en rad).
+- `src/styles.js` + `src/style.css` — stilregister och per-stil tokens/animationer.
+- `scripts/generate-stats.mjs` → `src/data/stats.json` — byggtidsstatistik (körs via
+  `predev`/`prebuild`). Se **dokumenterat undantag** i [`CLAUDE.md`](CLAUDE.md).
 
 ## Teknikstack
 
@@ -48,9 +60,13 @@ app-till-app-kommunikation sker här.
 git clone https://github.com/pepestal/portal.git
 cd portal
 npm install
-npm run dev        # startar Vite dev-server
-npm run build      # produktionsbygge till dist/
+npm run dev        # regenererar stats + startar Vite dev-server
+npm run build      # regenererar stats + produktionsbygge till dist/
+npm run stats      # bara: regenerera src/data/stats.json ur grann-repona
 ```
+
+> `stats`-steget läser `../Signal`, `../todos`, `../stronk`, `../syntes`. Finns de inte
+> bredvid (t.ex. på servern) behålls senast kända värden i `src/data/stats.json`.
 
 ## Konventioner
 

@@ -1,0 +1,137 @@
+{
+  "generatedAt": "2026-07-23T16:06:07.336Z",
+  "ecosystem": {
+    "files": 414,
+    "lines": 49980,
+    "apps": 4
+  },
+  "projects": {
+    "signal": {
+      "name": "Signal",
+      "available": true,
+      "files": 258,
+      "lines": 39336,
+      "languages": [
+        {
+          "name": "TypeScript",
+          "lines": 18781
+        },
+        {
+          "name": "Python",
+          "lines": 12904
+        },
+        {
+          "name": "Markdown",
+          "lines": 6755
+        },
+        {
+          "name": "CSS",
+          "lines": 687
+        }
+      ],
+      "stack": [
+        "FastAPI",
+        "SQLAlchemy",
+        "PostgreSQL",
+        "Docker",
+        "Next.js",
+        "Tailwind",
+        "Lightweight Charts"
+      ]
+    },
+    "todos": {
+      "name": "Todos",
+      "available": true,
+      "files": 45,
+      "lines": 1861,
+      "languages": [
+        {
+          "name": "Markdown",
+          "lines": 1132
+        },
+        {
+          "name": "Python",
+          "lines": 371
+        },
+        {
+          "name": "TypeScript",
+          "lines": 125
+        },
+        {
+          "name": "YAML",
+          "lines": 108
+        }
+      ],
+      "stack": [
+        "PostgreSQL",
+        "Docker",
+        "FastAPI",
+        "SQLAlchemy",
+        "React",
+        "Vite"
+      ]
+    },
+    "stronk": {
+      "name": "Stronk",
+      "available": true,
+      "files": 68,
+      "lines": 5581,
+      "languages": [
+        {
+          "name": "Markdown",
+          "lines": 2258
+        },
+        {
+          "name": "Python",
+          "lines": 1551
+        },
+        {
+          "name": "TypeScript",
+          "lines": 1391
+        },
+        {
+          "name": "CSS",
+          "lines": 177
+        }
+      ],
+      "stack": [
+        "PostgreSQL",
+        "Docker",
+        "FastAPI",
+        "SQLAlchemy",
+        "React",
+        "Vite"
+      ]
+    },
+    "syntes": {
+      "name": "Syntes",
+      "available": true,
+      "files": 43,
+      "lines": 3202,
+      "languages": [
+        {
+          "name": "Markdown",
+          "lines": 2273
+        },
+        {
+          "name": "Python",
+          "lines": 661
+        },
+        {
+          "name": "HTML",
+          "lines": 161
+        },
+        {
+          "name": "JSON",
+          "lines": 66
+        }
+      ],
+      "stack": [
+        "FastAPI",
+        "SQLAlchemy",
+        "PostgreSQL",
+        "Docker"
+      ]
+    }
+  }
+}
