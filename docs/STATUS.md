@@ -19,8 +19,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   Skelettet står still; bara stilen byts.
 - **Rotation:** slumpad stil vid varje besök (undviker samma som förra). Switcher i
   topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage).
-- **Per-app hover-animationer** som varje stil dresserar: graf (Signal),
-  progress (Todos), reps (Stronk).
+- **Nio unika hover-animationer** — en egen form per app i varje stil (matris
+  app × stil, `.viz--*` i `src/style.css`). På hover viker knappnamnet upp och
+  animationen tar scenen. Räknare (count-up) via enhancers för terminal/bank.
 - **Byggtidsdata:** `scripts/generate-stats.mjs` går igenom grann-repona och skriver
   `src/data/stats.json` (filer, rader, språk, stack). Info-panelerna och systemhälsan
   läser den. Körs automatiskt via `predev`/`prebuild`. Se dokumenterat undantag i CLAUDE.md.
@@ -29,9 +30,8 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 ## Nästa konkreta steg
 
 1. **Riktiga URL:er** på knapparna (nu `#` i `src/apps.js`) när apparnas adresser finns.
-2. **Fler stilar** — arkitekturen gör det till ett token/animations-block + en rad i `styles.js`.
-3. Ev. **per-app unika animationer per stil** (nu delar apparna animationstyp som stilen tintar).
-4. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
+2. **Fler stilar** — arkitekturen gör det till ett token/`.viz--*`-block + en rad i `styles.js`.
+3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut
 

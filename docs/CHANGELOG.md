@@ -10,8 +10,14 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 - Stil-system: tre estetiker (`terminal`, `editorial`, `bank`) med egen palett, typografi
   och animationsuttryck, drivet av `src/styles.js` + `[data-style]` i `src/style.css`.
 - Slumpad stilrotation vid varje besök, med switcher och lås (localStorage) i topbaren.
-- Stora app-knappar med per-app hover-animationer (graf/progress/reps), app-registret i `src/apps.js`.
+- Stora app-knappar; på hover viker namnet upp och lämnar scenen åt animationen. App-registret i `src/apps.js`.
 - Info-panel per app och systemhälsa som läser byggtidsgenererad projektdata.
+- **Nio unika hover-animationer** — en egen form per app i varje stil (`.viz--*`):
+  - Signal: candlesticks som printas (terminal) · graverad linje ritar sig + annoterad punkt (editorial) · mjuk area-kurva sveper fram + värde räknas upp (bank).
+  - Todos: `[ ]→[x]`-checklista som bockas (terminal) · bläck-bock ritas + hårlinje stryker över (editorial) · cirkulär progress-ring sluts + bock (bank).
+  - Stronk: ASCII load-bar + reps-räknare (terminal) · tally-streck i loggbok (editorial) · viktplattor glider in och staplas + kg räknas upp (bank).
+- Stil-ambiance: scanline-svep + blinkande caret + marching-grid (terminal), sheen-svep + lyft (bank), stilla bläck (editorial).
+- Enhancer-livscykel i `main.js` med räknare (count-up) för terminal/bank; kopplas in/ur vid stilbyte.
 - Byggtidsgenerator `scripts/generate-stats.mjs` → `src/data/stats.json` (filer, rader,
   språk, stack per grann-repo); körs via `predev`/`prebuild`.
 

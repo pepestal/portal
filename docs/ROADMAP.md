@@ -48,6 +48,6 @@ _(Inga uppslag noterade ännu.)_
 ## v2+ — framtid
 
 - ~~Dynamisk lista över appar i stället för hårdkodade kort.~~ ✅ (drivs av `src/apps.js`)
-- Per-app **unika** animationer per stil (nu delar apparna animationstyp som stilen tintar).
+- ~~Per-app **unika** animationer per stil.~~ ✅ (nio st, matris app × stil)
 - Fler stilar i rotationen.
 - Självhostade typsnitt i stället för Google Fonts-`<link>`.
