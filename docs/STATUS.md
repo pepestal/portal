@@ -11,17 +11,38 @@ beslut/förutsättningar som gäller just nu.
 Portal är medvetet ett **design-experiment / showroom** — inte en nyttosida man
 faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 
-- **Delat skelett** (`src/main.js`): stora centrerade knappar, en per app (Signal,
-  Todos, Stronk), var med en info-knapp; plus en systemhälsa-panel.
-- **Stil-system** (`src/styles.js` + `src/style.css`): tre stilar — `terminal`
-  (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank). Varje
-  stil bär egen palett, typografi och animationsuttryck under sin `[data-style]`.
-  Skelettet står still; bara stilen byts.
+- **Delat skelett** (`src/main.js`): stora centrerade knappar, en per app (Syntes,
+  Signal, Todos, Stronk), var med en info-knapp; plus en systemhälsa-panel.
+- **Syntes är navet** — den övergripande dashboarden som tar emot, syntetiserar och
+  pumpar information mellan underapparna (t.ex. säljsignal från Signal → uppgift i
+  Todos). Varje stil ger den en särställning: merge-diagram (terminal), venn-snitt
+  (editorial), samlad allokering (bank), största porten med hjärtslag (singularitet),
+  inringad NAV-rad med kassörens penna (kvitto), det lysande navet i mitten (orrery),
+  växelbordet där det ringer när en underapp hovras (vaxel).
+- **Stil-system** (`src/styles.js` + `src/style.css`): sju stilar — `terminal`
+  (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
+  `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära
+  portar, stjärnfält, levande siffror), `kvitto` (Kvittot — ur tävlingsbidraget
+  `variations/kvitto.html`: topbaren blir kassaapparat, apparna varurader på ett
+  termokvitto som skrivs ut), `orrery` (Orrery — himlainstrument: apparna som
+  världar i omlopp kring ett nav, byggd i `src/orrery.js`) och `vaxel` (Växeln —
+  telefonstation ~1915: bakelit, mässingsplåtar, linjelampor; Syntes är växelbordet
+  och inkommande-lampan ringer via `:has` när en underapp hovras). Varje stil bär egen
+  palett, typografi och animationsuttryck under sin `[data-style]`. Skelettet står still
+  för alla **utom `orrery`**, som är en helscen och medvetet ersätter det (döljer
+  knappkolumn + systemhälsa och bygger en egen scen) — förankrat undantag, se
+  CLAUDE.md/styles.js.
 - **Rotation:** slumpad stil vid varje besök (undviker samma som förra). Switcher i
-  topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage).
-- **Nio unika hover-animationer** — en egen form per app i varje stil (matris
-  app × stil, `.viz--*` i `src/style.css`). På hover viker knappnamnet upp och
-  animationen tar scenen. Räknare (count-up) via enhancers för terminal/bank.
+  topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage);
+  `?style=<id>` deep-linkar.
+- **Tjugoåtta unika hover-animationer** — tjugofyra i skelett-matrisen (fyra appar × sex stilar,
+  `.viz--*` i `src/style.css`; på hover viker knappnamnet upp och animationen tar scenen)
+  plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
+  singularitet injicerar stjärnfält/parallax/3D-tilt och tickande siffror (kurs, reps);
+  kvitto injicerar kvittots huvud/fot med realtidsklocka och streckkod (hover: kassörens penna,
+  skanner-laser, gummistämpel, termohuvud); orrery bygger hela scenen (stjärnfält, banor, reticle,
+  siktlinjer) och väcker per app en sparkline, en bockad lista respektive en laddad skivstång
+  med uppräkning — samt navet Syntes i mitten, som tänder alla siktlinjer.
 - **Byggtidsdata:** `scripts/generate-stats.mjs` går igenom grann-repona och skriver
   `src/data/stats.json` (filer, rader, språk, stack). Info-panelerna och systemhälsan
   läser den. Körs automatiskt via `predev`/`prebuild`. Se dokumenterat undantag i CLAUDE.md.
@@ -30,7 +51,10 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 ## Nästa konkreta steg
 
 1. **Riktiga URL:er** på knapparna (nu `#` i `src/apps.js`) när apparnas adresser finns.
-2. **Fler stilar** — arkitekturen gör det till ett token/`.viz--*`-block + en rad i `styles.js`.
+2. **Fler stilar** — `singularitet` (fjärde), `kvitto` (femte), `orrery` (sjätte,
+   första helscenen) och `vaxel` (sjunde) kom 2026-07-23; en ny skelett-stil =
+   token/`.viz--*`-block + en rad i `styles.js`, en helscen = egen modul (som
+   `src/orrery.js`) + en rad i `styles.js`.
 3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut

@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kvitto #0002 — Portal &amp; Söner AB</title>
+<style>
+/* =========================================================================
+   TÄVLINGSBIDRAG — "KVITTOT"
+   Uppgiften bad om tre klickbara länkar med hover-animation.
+   Här är kvittot på köpet. Bokstavligen.
+   Tre varurader = tre länkar. Tre hover: skanner, stämpel, termotryck.
+   Helt fristående. Ingen extern resurs. Moms ingår.
+   ========================================================================= */
+
+:root {
+  --desk-1: #1c2420;
+  --desk-2: #0e1411;
+  --paper: #f6f2e7;
+  --paper-shade: #e9e3d3;
+  --ink: #37342c;
+  --ink-faint: #7d786a;
+  --laser: #ff2d20;
+  --stamp: #c2312b;
+  --led: #46e08a;
+  --mono: "Cascadia Code", ui-monospace, Consolas, "Courier New", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  min-height: 100svh;
+  font-family: var(--mono);
+  background:
+    radial-gradient(90vmax 60vmax at 50% 0%, rgba(255,255,255,.05), transparent 60%),
+    repeating-linear-gradient(94deg, transparent 0 90px, rgba(0,0,0,.14) 90px 92px),
+    linear-gradient(180deg, var(--desk-1), var(--desk-2) 70%);
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+/* ============================ Kassaapparaten ============================ */
+
+.printer {
+  position: fixed;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, 96vw);
+  height: 54px;
+  z-index: 10;
+  background: linear-gradient(180deg, #3d4148, #23262b 55%, #101215);
+  border-radius: 0 0 14px 14px;
+  box-shadow:
+    0 14px 30px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.14);
+}
+
+.printer::after { /* själva utmatningsslitsen */
+  content: "";
+  position: absolute;
+  left: 50%; bottom: 9px;
+  transform: translateX(-50%);
+  width: min(420px, 82vw);
+  height: 7px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #000 30%, #1b1d21);
+  box-shadow: inset 0 2px 4px #000;
+}
+
+.printer__label {
+  position: absolute;
+  left: 18px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: #8b929c;
+  user-select: none;
+}
+
+.printer__led {
+  position: absolute;
+  right: 18px; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--led);
+  box-shadow: 0 0 10px var(--led);
+  animation: led-print .18s steps(2, jump-none) 16 both,
+             led-idle 3.2s ease-in-out 3.4s infinite;
+}
+@keyframes led-print { from { opacity: 1; } to { opacity: .25; } }
+@keyframes led-idle  { 0%, 92%, 100% { opacity: .9; } 96% { opacity: .3; } }
+
+/* =============================== Kvittot =============================== */
+
+.receipt-hang {
+  margin-top: 47px;               /* börjar i slitsen */
+  padding-bottom: 12vh;
+  transform-origin: top center;
+  animation: sway 7s ease-in-out 3.6s infinite;
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(.35deg); }
+  50%      { transform: rotate(-.3deg); }
+}
+
+.receipt {
+  width: min(400px, 88vw);
+  padding: 34px 26px 10px;
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.75;
+  background:
+    /* kaffering, nederkant — kassören var trött */
+    radial-gradient(ellipse 58px 50px at 78% 94.5%,
+      transparent 62%, rgba(139, 94, 43, .28) 66%, rgba(139, 94, 43, .1) 72%,
+      transparent 77%),
+    /* termopapprets blekningsband */
+    repeating-linear-gradient(180deg,
+      transparent 0 42px, rgba(255,255,255,.35) 42px 44px),
+    linear-gradient(96deg, var(--paper) 60%, var(--paper-shade)),
+    var(--paper);
+  box-shadow:
+    0 30px 60px -18px rgba(0,0,0,.7),
+    0 4px 14px rgba(0,0,0,.4);
+  animation: print 3s steps(34, end) .4s both;
+  text-shadow: 0 0 .6px rgba(55, 52, 44, .8); /* lätt bläckblödning */
+}
+@keyframes print {
+  from { transform: translateY(-103%); }
+  to   { transform: translateY(0); }
+}
+
+/* riven underkant */
+.receipt::after {
+  content: "";
+  display: block;
+  height: 14px;
+  margin: 4px -26px -10px;
+  background:
+    conic-gradient(from 135deg at 50% 0, var(--paper) 90deg, transparent 0)
+    top / 18px 14px repeat-x;
+  filter: drop-shadow(0 4px 5px rgba(0,0,0,.3));
+}
+
+.center { text-align: center; }
+.small  { font-size: 11px; color: var(--ink-faint); }
+.rule   { border: 0; border-top: 1.5px dashed var(--ink-faint); margin: 12px 0; }
+
+.receipt h1 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.row span:last-child { white-space: nowrap; }
+
+/* ============================ Varuraderna ============================== */
+
+.item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 8px;
+  margin: 2px -8px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.item b { font-weight: 700; letter-spacing: .06em; }
+.item .price { white-space: nowrap; }
+.item .hint {
+  position: absolute;
+  right: 8px; top: -8px;
+  font-size: 9px;
+  letter-spacing: .14em;
+  color: var(--ink-faint);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.item:hover .hint, .item:focus-visible .hint { opacity: 1; }
+.item:focus-visible { outline: 2px dashed var(--stamp); outline-offset: 2px; }
+
+/* --- Länk 1: streckkodsskannern ---------------------------------------- */
+
+.item--scan .beep {
+  position: absolute;
+  right: 8px; bottom: 100%;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .3em;
+  color: var(--laser);
+  opacity: 0;
+}
+.item--scan::before { /* laserlinjen */
+  content: "";
+  position: absolute;
+  top: -4px; bottom: -4px; left: -6px;
+  width: 3px;
+  background: var(--laser);
+  border-radius: 2px;
+  box-shadow: 0 0 12px 2px rgba(255, 45, 32, .8);
+  opacity: 0;
+  pointer-events: none;
+}
+.item--scan:hover::before, .item--scan:focus-visible::before {
+  animation: laser 1s cubic-bezier(.4, 0, .6, 1) infinite;
+}
+@keyframes laser {
+  0%   { opacity: 0; transform: translateX(0); }
+  8%   { opacity: 1; }
+  46%  { transform: translateX(calc(100% + 380px)); }
+  50%  { transform: translateX(calc(100% + 380px)); opacity: 1; }
+  92%  { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; }
+}
+@media (max-width: 460px) {
+  @keyframes laser {
+    0%   { opacity: 0; transform: translateX(0); }
+    8%   { opacity: 1; }
+    46%  { transform: translateX(78vw); }
+    50%  { transform: translateX(78vw); opacity: 1; }
+    92%  { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; }
+  }
+}
+.item--scan:hover, .item--scan:focus-visible {
+  background: rgba(255, 45, 32, .07);
+}
+.item--scan:hover .beep, .item--scan:focus-visible .beep {
+  animation: beep 1s steps(1) infinite;
+}
+@keyframes beep {
+  0%, 44%  { opacity: 0; }
+  50%, 78% { opacity: 1; }
+  80%      { opacity: 0; }
+}
+
+/* --- Länk 2: gummistämpeln --------------------------------------------- */
+
+.item--stamp .stamp {
+  position: absolute;
+  right: 64px; top: 50%;
+  padding: 2px 9px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  color: var(--stamp);
+  border: 2.5px solid var(--stamp);
+  border-radius: 3px;
+  mix-blend-mode: multiply;
+  /* sliten stämpeldyna */
+  -webkit-mask: radial-gradient(3px 3px at 20% 30%, transparent 40%, #000 50%),
+                radial-gradient(4px 3px at 70% 80%, transparent 40%, #000 50%),
+                linear-gradient(#000, #000);
+  -webkit-mask-composite: source-in, source-in;
+  mask: radial-gradient(3px 3px at 20% 30%, transparent 40%, #000 50%),
+        radial-gradient(4px 3px at 70% 80%, transparent 40%, #000 50%),
+        linear-gradient(#000, #000);
+  mask-composite: intersect;
+  transform: translateY(-50%) rotate(-8deg) scale(2.6);
+  opacity: 0;
+  pointer-events: none;
+}
+.item--stamp:hover .stamp, .item--stamp:focus-visible .stamp {
+  animation: stamp-slam .38s cubic-bezier(.2, 1.6, .4, 1) both;
+}
+@keyframes stamp-slam {
+  0%   { opacity: 0; transform: translateY(-50%) rotate(-24deg) scale(2.6); }
+  55%  { opacity: 1; transform: translateY(-50%) rotate(-7deg) scale(.94); }
+  75%  { transform: translateY(-50%) rotate(-9deg) scale(1.05); }
+  100% { opacity: .92; transform: translateY(-50%) rotate(-8deg) scale(1); }
+}
+.item--stamp:hover, .item--stamp:focus-visible {
+  animation: paper-thud .3s cubic-bezier(.2, 1.4, .4, 1) .05s;
+}
+@keyframes paper-thud {
+  0%, 100% { transform: none; }
+  40%      { transform: translateY(1.5px) scale(.997); }
+}
+
+/* --- Länk 3: termohuvudet ---------------------------------------------- */
+
+.item--thermal .txt {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex: 1;
+}
+.item--thermal:hover .txt, .item--thermal:focus-visible .txt {
+  background: linear-gradient(90deg, #000 0 47%, var(--ink) 53%)
+              100% 0 / 220% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: burn 1.4s linear both;
+}
+@keyframes burn {
+  from { background-position-x: 100%; }
+  to   { background-position-x: 0%; }
+}
+
+.item--thermal::before { /* skrivhuvudet som sveper */
+  content: "";
+  position: absolute;
+  top: 2px; bottom: 2px; left: 0;
+  width: 14px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #2b2e33, #14161a);
+  box-shadow: 0 0 14px 3px rgba(255, 122, 30, .55);
+  opacity: 0;
+  pointer-events: none;
+}
+.item--thermal:hover::before, .item--thermal:focus-visible::before {
+  animation: head-sweep 1.4s linear both;
+}
+@keyframes head-sweep {
+  0%   { opacity: 0; transform: translateX(-6px); }
+  6%   { opacity: 1; }
+  94%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(calc(100% + 340px)); }
+}
+@media (max-width: 460px) {
+  @keyframes head-sweep {
+    0%   { opacity: 0; transform: translateX(-6px); }
+    6%   { opacity: 1; }
+    94%  { opacity: 1; }
+    100% { opacity: 0; transform: translateX(80vw); }
+  }
+}
+
+/* ============================ Regelkontroll ============================ */
+
+.check { list-style: none; padding: 0; margin: 6px 0; }
+.check li { display: flex; justify-content: space-between; }
+.check .ok { font-weight: 700; }
+
+/* ============================== Streckkod ============================== */
+
+.barcode {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 46px;
+  margin: 14px auto 2px;
+  gap: 0;
+}
+.barcode i { background: var(--ink); }
+
+/* ================================ Stubb ================================ */
+
+.tear {
+  margin-top: 16px;
+  font-size: 10px;
+  letter-spacing: .3em;
+  color: var(--ink-faint);
+  text-align: center;
+  user-select: none;
+}
+
+/* ========================= Rörelsekänslighet =========================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .receipt, .receipt-hang, .printer__led { animation: none !important; }
+  .item--scan:hover::before { opacity: 1; animation: none; left: 40%; }
+  .item--stamp:hover .stamp { opacity: .92; animation: none; }
+  .item--thermal:hover::before { animation: none; }
+  .item--thermal:hover .txt { animation: none; -webkit-text-fill-color: #000; }
+}
+</style>
+</head>
+<body>
+
+<div class="printer" aria-hidden="true">
+  <span class="printer__label">KASSA 03 · SWE-QT80</span>
+  <span class="printer__led"></span>
+</div>
+
+<div class="receipt-hang">
+  <main class="receipt">
+
+    <header class="center">
+      <h1>Portal &amp; Söner</h1>
+      <div class="small">— LÄNKHANDEL SEDAN 1994 —</div>
+      <div class="small">Org.nr 556677-8899 · Godkänd för F-skatt</div>
+      <div class="small"><span id="datetime">2026-07-23 00:00</span> · Kassör: FABLE-5</div>
+    </header>
+
+    <hr class="rule">
+    <div class="center small" style="letter-spacing:.28em">KVITTO · DESIGNTÄVLING · BIDRAG NR 2</div>
+    <hr class="rule">
+
+    <div class="row small"><span>ARTIKEL</span><span>À-PRIS</span></div>
+
+    <a class="item item--scan" href="#syntes">
+      <span class="hint">SKANNAS…</span>
+      <span class="beep">*PIIP*</span>
+      <b>1 st&nbsp; LÄNK, SYNTES</b>
+      <span class="price">0:00</span>
+    </a>
+
+    <a class="item item--stamp" href="#design-lab">
+      <span class="hint">STÄMPLAS…</span>
+      <b>1 st&nbsp; LÄNK, DESIGN-LAB</b>
+      <span class="price">0:00</span>
+      <span class="stamp" aria-hidden="true">ÖPPNAD</span>
+    </a>
+
+    <a class="item item--thermal" href="#arkivet">
+      <span class="hint">BRÄNNS OM…</span>
+      <span class="txt"><b>1 st&nbsp; LÄNK, ARKIVET</b>
+      <span class="price">0:00</span></span>
+    </a>
+
+    <hr class="rule">
+
+    <div class="row"><span>SUMMA</span><span>0:00</span></div>
+    <div class="row small"><span>Varav moms 25% på kreativitet</span><span>0:00</span></div>
+    <div class="row small"><span>Rabatt: "UTANFÖR BOXEN"</span><span>−100%</span></div>
+    <div class="row" style="font-weight:700"><span>ATT BETALA</span><span>0:00</span></div>
+    <div class="row small"><span>Betalsätt</span><span>HOVER</span></div>
+    <div class="row small"><span>Du har sparat idag</span><span>en backend</span></div>
+
+    <hr class="rule">
+
+    <div class="small" style="letter-spacing:.2em">REGELKONTROLL</div>
+    <ul class="check small">
+      <li><span>3 st klickbara länkar</span><span class="ok">✓ GODKÄNT</span></li>
+      <li><span>Hover-animation</span><span class="ok">✓✓✓ GODKÄNT</span></li>
+      <li><span>Övriga regler</span><span>SAKNAS</span></li>
+    </ul>
+
+    <hr class="rule">
+
+    <div class="barcode" id="barcode" aria-hidden="true"></div>
+    <div class="center small">7 350094 219942</div>
+
+    <div class="center" style="margin-top:14px; letter-spacing:.18em">
+      TACK FÖR DITT BESÖK<br>VÄLKOMMEN ÅTER
+    </div>
+    <div class="center small" style="margin-top:10px">
+      Bytesrätt gäller ej hyperlänkar.<br>
+      Kvittot är även din biljett vidare.<br>
+      Vid frågor, hovra igen.
+    </div>
+
+    <div class="tear">✂ · — · — · RIV HÄR · — · — · ✂</div>
+
+  </main>
+</div>
+
+<script>
+  // Klockan på kvittot går i realtid — kassan stänger aldrig.
+  const dt = document.getElementById("datetime");
+  const tick = () => {
+    dt.textContent = new Date().toLocaleString("sv-SE", {
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit"
+    });
+  };
+  tick();
+  setInterval(tick, 30000);
+
+  // EAN-aktig streckkod: deterministiskt "slumpad" så den ser likadan ut
+  // varje utskrift — ett kvitto ändrar sig inte.
+  const bc = document.getElementById("barcode");
+  let seed = 19940123;
+  const rnd = () => (seed = (seed * 48271) % 2147483647) / 2147483647;
+  for (let i = 0; i < 42; i++) {
+    const bar = document.createElement("i");
+    bar.style.width = (1 + Math.floor(rnd() * 3)) + "px";
+    bar.style.marginRight = (1 + Math.floor(rnd() * 3)) + "px";
+    if (i === 0 || i === 20 || i === 41) bar.style.height = "112%";
+    bc.appendChild(bar);
+  }
+</script>
+
+</body>
+</html>

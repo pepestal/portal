@@ -28,6 +28,12 @@ När en idé mognar flyttas den vidare:
 <!-- Skriv dina idéer här, t.ex.: -->
 <!-- - **Kort rubrik** — vad tanken är och varför den kan vara värd något. -->
 
+### Spridda korta tankar:
+- Animera textförflyttning vid hover på olika sätt för de olika stilarna
+- Mer gym-styrkelyft tema för stronk
+- signal bättre graf för bank tema
+- större/längre candles på moderism temat
+
 _(Inga uppslag noterade ännu.)_
 
 ---
@@ -49,5 +55,7 @@ _(Inga uppslag noterade ännu.)_
 
 - ~~Dynamisk lista över appar i stället för hårdkodade kort.~~ ✅ (drivs av `src/apps.js`)
 - ~~Per-app **unika** animationer per stil.~~ ✅ (nio st, matris app × stil)
-- Fler stilar i rotationen.
+- ~~Fler stilar i rotationen.~~ ✅ (`singularitet` — fjärde, `kvitto` — femte, `orrery` — sjätte
+  och första helscenen, `vaxel` — sjunde; alla ur tävlingsbidrag; fler kan läggas till löpande)
+- ~~Helscen-stil som ersätter skelettet.~~ ✅ (`orrery`, förankrat undantag från "skelettet står still")
 - Självhostade typsnitt i stället för Google Fonts-`<link>`.

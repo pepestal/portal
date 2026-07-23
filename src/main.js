@@ -1,15 +1,88 @@
 import './style.css'
 import { apps } from './apps.js'
 import { styles, DEFAULT_STYLE } from './styles.js'
+import { orreryEnhancer } from './orrery.js'
 import stats from './data/stats.json'
 
 const nf = new Intl.NumberFormat('sv-SE')
 
 /* =========================================================================
    Hover-animationer — helt unika per (app × stil).
-   Varje app renderar tre varianter (terminal/editorial/bank); CSS visar bara
-   den aktiva stilens. Formen skiljer sig, inte bara färgen.
+   Varje app renderar en variant per skelett-stil; CSS visar bara den aktiva
+   stilens (`.av[data-for]`). Formen skiljer sig, inte bara färgen.
    ========================================================================= */
+
+/* Stjärnstoft som sugs in i porten (singularitet). Slumpas per sidladdning. */
+const dust = () => `<span class="dust" aria-hidden="true">${Array.from({ length: 12 }, () =>
+  `<i style="--ang:${(Math.random() * 360) | 0}deg;--dist:${(70 + Math.random() * 50) | 0}px;--dur:${(1.2 + Math.random() * 1.1).toFixed(2)}s;--del:${(Math.random() * 2).toFixed(2)}s"></i>`).join('')}</span>`
+
+/* --- Syntes (navet: tre flöden in, ett ut) --- */
+const SYNTES = {
+  terminal: `
+    <div class="av" data-for="terminal" aria-hidden="true">
+      <div class="viz viz--pipe">
+        <span class="ln" style="--i:0">signal ─┐</span>
+        <span class="ln" style="--i:1">todos  ─┼─▶ <b>syntes</b></span>
+        <span class="ln" style="--i:2">stronk ─┘</span>
+      </div>
+    </div>`,
+  editorial: `
+    <div class="av" data-for="editorial" aria-hidden="true">
+      <div class="viz viz--venn">
+        <svg viewBox="0 0 84 56" preserveAspectRatio="xMidYMid meet">
+          <circle class="vc vc1" cx="32" cy="22" r="15" />
+          <circle class="vc vc2" cx="52" cy="22" r="15" />
+          <circle class="vc vc3" cx="42" cy="37" r="15" />
+          <circle class="vd" cx="42" cy="27" r="2.6" />
+        </svg>
+        <span class="fig">= syntes</span>
+      </div>
+    </div>`,
+  bank: `
+    <div class="av" data-for="bank" aria-hidden="true">
+      <div class="viz viz--alloc">
+        <div class="bar">
+          <span class="seg" style="--i:0;--w:38%"></span>
+          <span class="seg" style="--i:1;--w:34%"></span>
+          <span class="seg" style="--i:2;--w:28%"></span>
+        </div>
+        <span class="val count" data-to="100" data-suffix=" % samlat">0 % samlat</span>
+      </div>
+    </div>`,
+  singularitet: `
+    <div class="av" data-for="singularitet" aria-hidden="true">
+      <div class="viz viz--nexus">
+        <span class="field">
+          <i class="mote" style="--a:10deg;--c:#4ADE9C;--d:0s"></i>
+          <i class="mote" style="--a:130deg;--c:#F5C56B;--d:.5s"></i>
+          <i class="mote" style="--a:250deg;--c:#F97B76;--d:1s"></i>
+          <span class="core"></span>
+        </span>
+        <span class="cap">tre världar · en puls</span>
+      </div>
+      ${dust()}
+    </div>`,
+  kvitto: `
+    <div class="av" data-for="kvitto" aria-hidden="true">
+      <div class="viz viz--encircle">
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+          <ellipse class="ink" cx="100" cy="20" rx="95" ry="15" pathLength="100" />
+        </svg>
+        <span class="note">navet!</span>
+      </div>
+    </div>`,
+  vaxel: `
+    <div class="av" data-for="vaxel" aria-hidden="true">
+      <div class="viz viz--patch">
+        <span class="board">
+          <span class="jack" style="--i:0;--c:#C4574A"><i class="cord"></i></span>
+          <span class="jack" style="--i:1;--c:#86A268"><i class="cord"></i></span>
+          <span class="jack" style="--i:2;--c:#CB7C43"><i class="cord"></i></span>
+        </span>
+        <span class="cap">tre linjer · en telefonist</span>
+      </div>
+    </div>`,
+}
 
 /* --- Signal --- */
 const CANDLES = [[42, 'up'], [58, 'down'], [36, 'up'], [64, 'up'], [50, 'down'], [72, 'up'], [56, 'down'], [82, 'up'], [68, 'up']]
@@ -46,6 +119,26 @@ const SIGNAL = {
         <span class="val count" data-to="42318" data-prefix="$">$0</span>
       </div>
     </div>`,
+  singularitet: `
+    <div class="av" data-for="singularitet" aria-hidden="true">
+      <div class="viz viz--pulse">
+        <svg viewBox="0 0 120 64" preserveAspectRatio="none">
+          <path class="ghost" d="M0 40 L12 36 20 46 32 22 42 30 54 12 66 28 78 20 90 34 102 16 112 26 120 22" pathLength="100" />
+          <path class="beam"  d="M0 40 L12 36 20 46 32 22 42 30 54 12 66 28 78 20 90 34 102 16 112 26 120 22" pathLength="100" />
+        </svg>
+        <span class="tick"><b class="tick-v">512,34</b> <i class="tick-d">▲ +0,0 %</i></span>
+      </div>
+      ${dust()}
+    </div>`,
+  vaxel: `
+    <div class="av" data-for="vaxel" aria-hidden="true">
+      <div class="viz viz--morse">
+        <span class="tape">
+          <i class="m m--d" style="--i:0"></i><i class="m m--p" style="--i:1"></i><i class="m m--d" style="--i:2"></i><i class="g"></i><i class="m m--d" style="--i:3"></i><i class="m m--d" style="--i:4"></i><i class="m m--d" style="--i:5"></i><i class="m m--p" style="--i:6"></i><i class="g"></i><i class="m m--p" style="--i:7"></i><i class="m m--d" style="--i:8"></i><i class="m m--d" style="--i:9"></i><i class="m m--p" style="--i:10"></i>
+        </span>
+        <span class="read">telegram: <b>KÖP</b> — vidare till växeln</span>
+      </div>
+    </div>`,
 }
 
 /* --- Todos --- */
@@ -75,6 +168,21 @@ const TODOS = {
           <circle class="rp" cx="22" cy="22" r="18" />
           <path class="rc" d="M14,22.5 l5,5 L30,15" />
         </svg>
+      </div>
+    </div>`,
+  singularitet: `
+    <div class="av" data-for="singularitet" aria-hidden="true">
+      <div class="viz viz--selfcheck">
+        ${[['öppna portalen', '.05'], ['hälsa på grannarna', '.4'], ['vinn designtävlingen', '.75']].map(([t, d]) => `
+          <span class="task" style="--t:${d}s"><span class="box"></span><span class="txt">${t}</span></span>`).join('')}
+      </div>
+      ${dust()}
+    </div>`,
+  vaxel: `
+    <div class="av" data-for="vaxel" aria-hidden="true">
+      <div class="viz viz--exped">
+        ${[['ankn. 101 söker', 0], ['ankn. 303 söker', 1], ['rikssamtal i kö', 2]].map(([t, i]) => `
+          <span class="q" style="--i:${i}"><i class="lamp"></i><span class="lbl"><span class="who">${t}</span><span class="done">— expedierad</span></span></span>`).join('')}
       </div>
     </div>`,
 }
@@ -114,12 +222,40 @@ const STRONK = {
         <span class="val count" data-to="60" data-suffix=" kg">0 kg</span>
       </div>
     </div>`,
+  singularitet: `
+    <div class="av" data-for="singularitet" aria-hidden="true">
+      <div class="viz viz--lift">
+        <span class="bar">
+          <span class="plate plate--small"></span><span class="plate plate--big"></span>
+          <span class="rod"></span>
+          <span class="plate plate--big"></span><span class="plate plate--small"></span>
+        </span>
+        <span class="reps">reps <b class="reps-n">0</b></span>
+      </div>
+      ${dust()}
+    </div>`,
+  vaxel: `
+    <div class="av" data-for="vaxel" aria-hidden="true">
+      <div class="viz viz--vev">
+        <span class="rig">
+          <span class="gauge">
+            <svg viewBox="0 0 60 36" aria-hidden="true">
+              <path class="arc" d="M6,30 A24,24 0 0 1 54,30" />
+              <path class="arc2" d="M6,30 A24,24 0 0 1 54,30" pathLength="100" />
+              <line class="needle" x1="30" y1="30" x2="30" y2="9" />
+            </svg>
+          </span>
+          <span class="crank"><i class="arm"></i></span>
+        </span>
+        <span class="cap"><b class="count" data-to="24" data-suffix=" vev">0 vev</b> · ringer upp styrkan</span>
+      </div>
+    </div>`,
 }
 
-const ANIM = { signal: SIGNAL, todos: TODOS, stronk: STRONK }
+const ANIM = { syntes: SYNTES, signal: SIGNAL, todos: TODOS, stronk: STRONK }
 const animVariants = (app) => {
   const set = ANIM[app.id]
-  return set ? `${set.terminal}${set.editorial}${set.bank}` : ''
+  return set ? Object.values(set).join('') : ''
 }
 
 /* ---------- Info-panel: byggd av den statiska stats-datan ---------- */
@@ -267,7 +403,179 @@ function makeCountEnhancer(styleId) {
     })
   }
 }
-const enhancers = { terminal: makeCountEnhancer('terminal'), bank: makeCountEnhancer('bank') }
+/* Singularitet: stjärnfält + parallax + 3D-tilt + levande siffror vid hover.
+   Allt injiceras/binds här och plockas bort av cleanup vid stilbyte. */
+function singularitetEnhancer() {
+  const cleanups = []
+
+  // Stjärnfält i tre djuplager + vandringsljus, bakom allt (z: -1)
+  const voidEl = document.createElement('div')
+  voidEl.className = 'void'
+  voidEl.setAttribute('aria-hidden', 'true')
+  voidEl.innerHTML = `
+    <i class="stars" data-depth="1"></i>
+    <i class="stars" data-depth="2"></i>
+    <i class="stars" data-depth="3"></i>
+    <i class="lantern"></i>`
+  const tints = ['rgba(155,217,192,', 'rgba(240,217,168,', 'rgba(240,168,168,']
+  voidEl.querySelectorAll('.stars').forEach((layer, li) => {
+    const n = [90, 60, 34][li]
+    const shadows = []
+    for (let i = 0; i < n; i++) {
+      const base = Math.random() < 0.85 ? 'rgba(232,230,242,' : tints[(Math.random() * 3) | 0]
+      const r = li === 2 && Math.random() < 0.3 ? 1 : 0
+      shadows.push(`${(Math.random() * 104 - 2).toFixed(1)}vw ${(Math.random() * 104 - 2).toFixed(1)}vh 0 ${r}px ${base}${(0.25 + Math.random() * 0.6).toFixed(2)})`)
+    }
+    layer.style.boxShadow = shadows.join(',')
+  })
+  document.body.prepend(voidEl)
+  cleanups.push(() => voidEl.remove())
+
+  if (!prefersReduced) {
+    // Parallax + ljus som följer pekaren
+    const lantern = voidEl.querySelector('.lantern')
+    const onMove = (e) => {
+      voidEl.style.setProperty('--px', ((e.clientX / innerWidth - 0.5) * -22).toFixed(1) + 'px')
+      voidEl.style.setProperty('--py', ((e.clientY / innerHeight - 0.5) * -14).toFixed(1) + 'px')
+      lantern.style.transform = `translate3d(${e.clientX - innerWidth * 0.25}px, ${e.clientY - innerWidth * 0.25}px, 0)`
+    }
+    addEventListener('pointermove', onMove)
+    cleanups.push(() => removeEventListener('pointermove', onMove))
+
+    // Porten vrider sig mot pekaren
+    document.querySelectorAll('.app-btn').forEach((btn) => {
+      const move = (e) => {
+        const r = btn.getBoundingClientRect()
+        btn.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * 12).toFixed(2) + 'deg')
+        btn.style.setProperty('--rx', (((e.clientY - r.top) / r.height - 0.5) * -10).toFixed(2) + 'deg')
+      }
+      const leave = () => {
+        btn.style.setProperty('--rx', '0deg')
+        btn.style.setProperty('--ry', '0deg')
+      }
+      btn.addEventListener('pointermove', move)
+      btn.addEventListener('pointerleave', leave)
+      cleanups.push(() => {
+        btn.removeEventListener('pointermove', move)
+        btn.removeEventListener('pointerleave', leave)
+        btn.style.removeProperty('--rx')
+        btn.style.removeProperty('--ry')
+      })
+    })
+  }
+
+  // Levande siffror så länge dörren är öppen; totalen nollställs aldrig
+  const liveNumber = (appId, onTick, ms) => {
+    const btn = document.querySelector(`.app-row[data-app="${appId}"] .app-btn`)
+    if (!btn) return
+    if (prefersReduced) { onTick(); return }
+    let timer = null
+    const start = () => { if (!timer) timer = setInterval(onTick, ms) }
+    const stop = () => { clearInterval(timer); timer = null }
+    btn.addEventListener('mouseenter', start)
+    btn.addEventListener('focus', start)
+    btn.addEventListener('mouseleave', stop)
+    btn.addEventListener('blur', stop)
+    cleanups.push(() => {
+      stop()
+      btn.removeEventListener('mouseenter', start)
+      btn.removeEventListener('focus', start)
+      btn.removeEventListener('mouseleave', stop)
+      btn.removeEventListener('blur', stop)
+    })
+  }
+
+  const fmt = (v) => v.toFixed(2).replace('.', ',')
+  const tickV = document.querySelector('.av[data-for="singularitet"] .tick-v')
+  const tickD = document.querySelector('.av[data-for="singularitet"] .tick-d')
+  const base = 512.34
+  let price = base
+  liveNumber('signal', () => {
+    price = Math.max(1, price + (Math.random() - 0.48) * 1.4)
+    const pct = ((price - base) / base) * 100
+    tickV.textContent = fmt(price)
+    tickD.textContent = `${pct >= 0 ? '▲ +' : '▼ '}${fmt(pct)} %`
+  }, 260)
+
+  const repsEl = document.querySelector('.av[data-for="singularitet"] .reps-n')
+  let reps = 0
+  liveNumber('stronk', () => { repsEl.textContent = prefersReduced ? 12 : ++reps }, 1000)
+
+  return () => cleanups.forEach((fn) => fn())
+}
+
+/* Kvittot: huvud och fot skrivs ut runt varuraderna (injiceras, städas vid
+   stilbyte). Klockan på kvittot går i realtid; streckkoden är deterministiskt
+   "slumpad" — ett kvitto ändrar sig inte mellan utskrifter. */
+function kvittoEnhancer() {
+  const rows = document.querySelector('.rows')
+
+  const head = document.createElement('div')
+  head.className = 'kv kv-head'
+  head.innerHTML = `
+    <span class="kv-shop">Portal &amp; Söner</span>
+    <span class="kv-dim">— LÄNKHANDEL SEDAN 1994 —</span>
+    <span class="kv-dim">Org.nr 556677-8899 · Kassa 03 · Kassör: FABLE-5</span>
+    <span class="kv-dim kv-dt"></span>
+    <span class="kv-rule" aria-hidden="true"></span>
+    <span class="kv-cols" aria-hidden="true"><i>ARTIKEL</i><i>À-PRIS</i></span>`
+
+  const foot = document.createElement('div')
+  foot.className = 'kv kv-foot'
+  foot.innerHTML = `
+    <span class="kv-rule" aria-hidden="true"></span>
+    <span class="kv-row kv-strong"><i>SUMMA</i><i>0:00</i></span>
+    <span class="kv-row kv-dim"><i>Varav moms 25% på kreativitet</i><i>0:00</i></span>
+    <span class="kv-row kv-dim"><i>Rabatt: "UTANFÖR BOXEN"</i><i>−100%</i></span>
+    <span class="kv-row kv-strong"><i>ATT BETALA</i><i>0:00</i></span>
+    <span class="kv-row kv-dim"><i>Betalsätt</i><i>HOVER</i></span>
+    <span class="kv-row kv-dim"><i>Du har sparat idag</i><i>en backend</i></span>
+    <span class="kv-rule" aria-hidden="true"></span>
+    <span class="kv-barcode" aria-hidden="true"></span>
+    <span class="kv-dim">7 350094 219942</span>
+    <span class="kv-thanks">TACK FÖR DITT BESÖK<br>VÄLKOMMEN ÅTER</span>
+    <span class="kv-dim">Bytesrätt gäller ej hyperlänkar.</span>
+    <span class="kv-tear" aria-hidden="true">✂ · — · — · RIV HÄR · — · — · ✂</span>`
+
+  const bc = foot.querySelector('.kv-barcode')
+  let seed = 19940123
+  const rnd = () => (seed = (seed * 48271) % 2147483647) / 2147483647
+  for (let i = 0; i < 42; i++) {
+    const bar = document.createElement('i')
+    bar.style.width = 1 + Math.floor(rnd() * 3) + 'px'
+    bar.style.marginRight = 1 + Math.floor(rnd() * 3) + 'px'
+    if (i === 0 || i === 20 || i === 41) bar.style.height = '112%'
+    bc.appendChild(bar)
+  }
+
+  rows.prepend(head)
+  rows.append(foot)
+
+  const dt = head.querySelector('.kv-dt')
+  const tick = () => {
+    dt.textContent = new Date().toLocaleString('sv-SE', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit',
+    })
+  }
+  tick()
+  const timer = setInterval(tick, 30000)
+
+  return () => {
+    clearInterval(timer)
+    head.remove()
+    foot.remove()
+  }
+}
+
+const enhancers = {
+  terminal: makeCountEnhancer('terminal'),
+  bank: makeCountEnhancer('bank'),
+  vaxel: makeCountEnhancer('vaxel'),
+  singularitet: singularitetEnhancer,
+  kvitto: kvittoEnhancer,
+  orrery: orreryEnhancer,
+}
 let cleanupEnhancer = null
 function runEnhancer(id) {
   if (cleanupEnhancer) { cleanupEnhancer(); cleanupEnhancer = null }
@@ -291,6 +599,8 @@ function reflectLock() {
 }
 
 function pickInitial() {
+  const wanted = new URLSearchParams(location.search).get('style')
+  if (wanted && ids.includes(wanted)) return wanted
   const locked = localStorage.getItem(LS_LOCK)
   if (locked && ids.includes(locked)) return locked
   const last = localStorage.getItem(LS_LAST)
@@ -301,18 +611,35 @@ function pickInitial() {
 applyStyle(pickInitial())
 reflectLock()
 
+/* Bläddra n steg i stilrotationen (wrap:ar åt båda håll). */
+function stepStyle(delta) {
+  const cur = ids.indexOf(document.documentElement.dataset.style)
+  applyStyle(ids[(cur + delta + ids.length) % ids.length])
+  reflectLock()
+}
+
 document.querySelector('.style-switch').addEventListener('click', (e) => {
   const act = e.target.closest('[data-act]')?.dataset.act
   if (!act) return
-  const cur = ids.indexOf(document.documentElement.dataset.style)
-  if (act === 'next') applyStyle(ids[(cur + 1) % ids.length])
-  else if (act === 'prev') applyStyle(ids[(cur - 1 + ids.length) % ids.length])
+  if (act === 'next') stepStyle(1)
+  else if (act === 'prev') stepStyle(-1)
   else if (act === 'lock') {
     const isLocked = localStorage.getItem(LS_LOCK) === document.documentElement.dataset.style
     if (isLocked) localStorage.removeItem(LS_LOCK)
     else localStorage.setItem(LS_LOCK, document.documentElement.dataset.style)
+    reflectLock()
   }
-  reflectLock()
+})
+
+/* Piltangenter ←/→ bläddrar stil (som prev/next). Hoppar över om fokus ligger
+   i ett textfält, så vanlig markörnavigation inte kapas. */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
+  if (e.metaKey || e.ctrlKey || e.altKey) return
+  const t = e.target
+  if (t.isContentEditable || t.matches?.('input, textarea, select')) return
+  e.preventDefault()
+  stepStyle(e.key === 'ArrowRight' ? 1 : -1)
 })
 
 /* ============================ Info-paneler ============================ */

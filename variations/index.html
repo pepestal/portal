@@ -1,0 +1,610 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal — tre dörrar, ett ekosystem</title>
+<style>
+  /* =====================================================================
+     TÄVLINGSBIDRAG — "Portalen tog sitt namn på allvar"
+     Inte en fjärde kostym på samma knappar: sidan ÄR en portal.
+     Tre dörrar, tre dimensioner, interiörer som lever vid hover.
+     Helt fristående — ingen extern resurs, ren CSS + en nypa JS.
+     ===================================================================== */
+
+  :root {
+    --void:        #06050c;
+    --star:        #e8e6f2;
+    --chrome:      #9b96b4;
+    --chrome-dim:  #5b5772;
+    --emerald:     #4ade9c;
+    --gold:        #f5c56b;
+    --coral:       #f97b76;
+    --mono: ui-monospace, "Cascadia Code", Consolas, "SF Mono", monospace;
+    --disp: system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { background: var(--void); }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    font-family: var(--disp);
+    color: var(--chrome);
+    background:
+      radial-gradient(120vmax 70vmax at 50% -20%, #14102a 0%, transparent 60%),
+      radial-gradient(80vmax 60vmax at 108% 88%, rgba(74, 222, 156, .05), transparent 55%),
+      radial-gradient(80vmax 60vmax at -8% 92%, rgba(249, 123, 118, .05), transparent 55%),
+      var(--void);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: rgba(74, 222, 156, .25); color: var(--star); }
+
+  /* ============================ Tomrummet ============================ */
+
+  .void { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .stars {
+    position: absolute; inset: -50px;
+    width: 2px; height: 2px; border-radius: 50%;
+    transform: translate3d(calc(var(--px, 0px) * var(--k)), calc(var(--py, 0px) * var(--k)), 0);
+    transition: transform .25s ease-out;
+  }
+  .stars[data-depth="1"] { --k: .35; }
+  .stars[data-depth="2"] { --k: .75; }
+  .stars[data-depth="3"] { --k: 1.4; animation: twinkle 5s ease-in-out infinite alternate; }
+  @keyframes twinkle { from { opacity: .65; } to { opacity: 1; } }
+
+  .lantern {
+    position: fixed; left: 0; top: 0;
+    width: 50vmax; height: 50vmax; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232, 230, 242, .045), transparent 60%);
+    transform: translate3d(-50%, -50%, 0);
+    transition: transform .3s ease-out;
+    pointer-events: none;
+  }
+
+  /* ============================ Ordmärket ============================ */
+
+  .masthead {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: clamp(2.2rem, 6vh, 4.5rem) 1.5rem 0;
+    animation: descend 1.1s cubic-bezier(.2, .8, .2, 1) both;
+  }
+  @keyframes descend { from { opacity: 0; transform: translateY(-18px); filter: blur(8px); } }
+
+  .wordmark {
+    margin: 0;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 200;
+    letter-spacing: .42em;
+    padding-left: .42em; /* kompenserar spärrningens efterslag */
+    color: var(--star);
+    text-shadow: 0 0 40px rgba(232, 230, 242, .25);
+  }
+  .wordmark__o {
+    display: inline-grid; place-items: center;
+    width: .82em; height: .82em;
+    margin: 0 .08em;
+    vertical-align: -.08em;
+    position: relative;
+  }
+  .wordmark__o i {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--emerald), var(--gold), var(--coral), var(--emerald));
+    -webkit-mask: radial-gradient(closest-side, transparent 54%, #000 60%);
+    mask: radial-gradient(closest-side, transparent 54%, #000 60%);
+    animation: spin 6s linear infinite;
+    filter: saturate(.9);
+    transition: filter .4s;
+  }
+  .wordmark:hover .wordmark__o i { filter: saturate(1.4) brightness(1.3) drop-shadow(0 0 10px rgba(245, 197, 107, .5)); }
+  @keyframes spin { to { transform: rotate(1turn); } }
+
+  .thesis {
+    margin: 1.4rem auto 0;
+    max-width: 52ch;
+    font-family: var(--mono);
+    font-size: .82rem;
+    letter-spacing: .05em;
+    line-height: 1.9;
+    color: var(--chrome);
+  }
+  .thesis em { font-style: normal; color: var(--star); }
+
+  /* ============================ Hallen ============================ */
+
+  .hall {
+    position: relative; z-index: 2;
+    display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: center;
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+    padding: clamp(2rem, 5vh, 3.5rem) 2rem;
+  }
+
+  .gate {
+    --size: clamp(190px, 23vw, 280px);
+    --rx: 0deg; --ry: 0deg; --s: 1;
+    display: grid; justify-items: center;
+    text-decoration: none;
+    outline: none;
+    animation: arrive 1s cubic-bezier(.2, .8, .2, 1) both;
+    transition: opacity .5s, filter .5s;
+  }
+  .gate[data-app="signal"] { --c: var(--emerald); --c2: #2dd4bf; animation-delay: .15s; }
+  .gate[data-app="todos"]  { --c: var(--gold);    --c2: #e8a33d; animation-delay: .32s; }
+  .gate[data-app="stronk"] { --c: var(--coral);   --c2: #e35d78; animation-delay: .49s; }
+  @keyframes arrive { from { opacity: 0; transform: translateY(26px) scale(.82); filter: blur(16px); } }
+
+  /* dimma de portar som inte pekas på */
+  .hall:has(.gate:is(:hover, :focus-visible)) .gate:not(:is(:hover, :focus-visible)) {
+    opacity: .38;
+    filter: saturate(.5) blur(1.5px);
+  }
+
+  .gate__float { animation: float 7s ease-in-out infinite alternate; }
+  .gate[data-app="todos"]  .gate__float { animation-delay: -2.4s; }
+  .gate[data-app="stronk"] .gate__float { animation-delay: -4.8s; }
+  @keyframes float { from { transform: translateY(-5px); } to { transform: translateY(6px); } }
+
+  .gate__scene {
+    position: relative; display: block;
+    width: var(--size); height: var(--size);
+    transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s));
+    transition: transform .45s cubic-bezier(.2, .9, .25, 1.15);
+  }
+  .gate:is(:hover, :focus-visible) { --s: 1.06; }
+
+  /* --- glorian --- */
+  .gate__halo {
+    position: absolute; inset: -18%; border-radius: 50%;
+    background: radial-gradient(circle, color-mix(in srgb, var(--c) 30%, transparent), transparent 68%);
+    opacity: .35; transform: scale(.96);
+    transition: opacity .5s, transform .5s;
+  }
+  .gate:is(:hover, :focus-visible) .gate__halo { opacity: .85; transform: scale(1.1); }
+
+  /* --- virvelringarna --- */
+  .gate__ring { position: absolute; inset: 2%; border-radius: 50%; }
+  .gate__ring--a {
+    background: conic-gradient(from 0deg,
+      transparent 0deg 20deg, var(--c) 62deg, transparent 100deg 140deg,
+      var(--c2) 182deg, transparent 222deg 266deg, var(--c) 304deg, transparent 340deg 360deg);
+    -webkit-mask: radial-gradient(closest-side, transparent 70%, #000 74%, #000 95%, transparent 99%);
+    mask: radial-gradient(closest-side, transparent 70%, #000 74%, #000 95%, transparent 99%);
+    animation: spin 15s linear infinite;
+    filter: blur(.5px);
+    opacity: .9;
+  }
+  .gate__ring--b {
+    background: conic-gradient(from 90deg,
+      transparent 0deg 60deg, var(--c2) 140deg, transparent 200deg 260deg, var(--c) 320deg, transparent 360deg);
+    -webkit-mask: radial-gradient(closest-side, transparent 62%, #000 68%, #000 100%, transparent);
+    mask: radial-gradient(closest-side, transparent 62%, #000 68%, #000 100%, transparent);
+    animation: spin 24s linear infinite reverse;
+    filter: blur(8px);
+    opacity: .5;
+  }
+  .gate__ring--fast {
+    background: conic-gradient(from 0deg,
+      transparent 0deg 30deg, var(--c) 70deg, transparent 110deg 180deg,
+      var(--c) 230deg, transparent 270deg 360deg);
+    -webkit-mask: radial-gradient(closest-side, transparent 68%, #000 73%, #000 97%, transparent);
+    mask: radial-gradient(closest-side, transparent 68%, #000 73%, #000 97%, transparent);
+    animation: spin 2.4s linear infinite;
+    filter: blur(3px);
+    opacity: 0;
+    transition: opacity .45s;
+  }
+  .gate:is(:hover, :focus-visible) .gate__ring--fast { opacity: .95; }
+
+  .gate__rim {
+    position: absolute; inset: 11%; border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+    box-shadow: inset 0 0 26px color-mix(in srgb, var(--c) 18%, transparent);
+    transition: box-shadow .4s;
+  }
+  .gate:focus-visible .gate__rim {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 55%, transparent),
+                inset 0 0 30px color-mix(in srgb, var(--c) 25%, transparent);
+  }
+
+  /* --- aperturen: hålet man ser världen genom --- */
+  .gate__aperture {
+    position: absolute; inset: 13%; border-radius: 50%;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 36%,
+      color-mix(in oklab, var(--c) 22%, #08060f), #05040a 80%);
+  }
+  .world {
+    position: absolute; inset: 0;
+    display: grid; place-items: center; place-content: center;
+    filter: brightness(.5) saturate(.5);
+    transition: filter .5s;
+  }
+  .gate:is(:hover, :focus-visible) .world { filter: brightness(1) saturate(1); }
+  .gate__vignette {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(closest-side, transparent 42%, rgba(5, 4, 10, .92) 99%);
+    pointer-events: none;
+  }
+
+  /* --- stoftet som sugs in --- */
+  .gate__dust { position: absolute; inset: 0; pointer-events: none; }
+  .gate__dust i {
+    position: absolute; left: 50%; top: 50%;
+    width: 3px; height: 3px; border-radius: 50%;
+    background: var(--c);
+    opacity: 0;
+    animation: suck var(--dur, 1.6s) linear infinite;
+    animation-delay: var(--del, 0s);
+    animation-play-state: paused;
+  }
+  .gate:is(:hover, :focus-visible) .gate__dust i { animation-play-state: running; }
+  @keyframes suck {
+    0%   { opacity: 0; transform: rotate(var(--ang)) translateX(var(--dist)) scale(1); }
+    18%  { opacity: .9; }
+    100% { opacity: 0; transform: rotate(calc(var(--ang) + 70deg)) translateX(5px) scale(.1); }
+  }
+
+  /* ============================ Etiketter ============================ */
+
+  .gate__label { display: grid; justify-items: center; gap: .3rem; margin-top: 1.5rem; text-align: center; }
+  .gate__label b {
+    font-weight: 400; font-size: 1.02rem;
+    text-transform: uppercase; letter-spacing: .32em;
+    padding-left: .32em;
+    color: var(--star);
+  }
+  .gate__label i {
+    font-family: var(--mono); font-style: normal;
+    font-size: .7rem; letter-spacing: .12em;
+    color: var(--chrome-dim);
+  }
+  .gate__label em {
+    font-family: var(--mono); font-style: normal;
+    font-size: .72rem; letter-spacing: .1em;
+    color: var(--c);
+    opacity: 0; transform: translateY(7px);
+    transition: opacity .35s, transform .35s;
+  }
+  .gate:is(:hover, :focus-visible) .gate__label em { opacity: 1; transform: none; }
+  .gate__label .arr { display: inline-block; animation: nudge 1s ease infinite; }
+  @keyframes nudge { 50% { transform: translateX(4px); } }
+
+  /* ============================ Världarna ============================ */
+
+  /* Signal — marknadens dimension */
+  .world--signal { gap: 10px; }
+  .pulse { width: 68%; height: 42%; overflow: visible; }
+  .pulse path { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .pulse__ghost { stroke: color-mix(in srgb, var(--c) 28%, transparent); stroke-width: 1.5; }
+  .pulse__line {
+    stroke: var(--c); stroke-width: 2;
+    stroke-dasharray: 100; stroke-dashoffset: 100;
+    filter: drop-shadow(0 0 7px color-mix(in srgb, var(--c) 80%, transparent));
+    animation: draw 2.8s cubic-bezier(.6, 0, .3, 1) infinite;
+    animation-play-state: paused;
+  }
+  .gate:is(:hover, :focus-visible) .pulse__line { animation-play-state: running; }
+  @keyframes draw {
+    0%   { stroke-dashoffset: 100; opacity: 1; }
+    55%  { stroke-dashoffset: 0;   opacity: 1; }
+    82%  { stroke-dashoffset: 0;   opacity: 1; }
+    100% { stroke-dashoffset: 0;   opacity: 0; }
+  }
+  .tick {
+    font-family: var(--mono); font-size: .78rem; letter-spacing: .06em;
+    color: var(--star); font-variant-numeric: tabular-nums;
+  }
+  .tick i { font-style: normal; color: var(--c); }
+
+  /* Todos — ordningens dimension */
+  .world--todos { gap: .6rem; }
+  .task { display: flex; align-items: center; gap: .55rem; }
+  .task__box {
+    position: relative; width: 13px; height: 13px; flex: none;
+    border: 1px solid color-mix(in srgb, var(--c) 60%, transparent);
+    border-radius: 2px;
+  }
+  .task__box::before {
+    content: ""; position: absolute; inset: 0;
+    background: color-mix(in srgb, var(--c) 24%, transparent);
+    opacity: 0; transition: opacity .2s;
+  }
+  .task__box::after {
+    content: ""; position: absolute; left: 2px; top: 2px;
+    width: 8px; height: 4px;
+    border-left: 2px solid var(--c); border-bottom: 2px solid var(--c);
+    transform: rotate(-45deg) scale(0);
+    transition: transform .28s cubic-bezier(.5, 1.7, .4, 1);
+  }
+  .task__txt {
+    position: relative;
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .05em;
+    color: var(--star);
+    transition: color .3s;
+    white-space: nowrap;
+  }
+  .task__txt::after {
+    content: ""; position: absolute; left: 0; top: 55%;
+    height: 1px; width: 0; background: var(--c);
+    transition: width .3s ease;
+  }
+  .gate:is(:hover, :focus-visible) .task__box::before { opacity: 1; transition-delay: var(--t); }
+  .gate:is(:hover, :focus-visible) .task__box::after  { transform: rotate(-45deg) scale(1); transition-delay: var(--t); }
+  .gate:is(:hover, :focus-visible) .task__txt         { color: var(--chrome-dim); transition-delay: calc(var(--t) + .12s); }
+  .gate:is(:hover, :focus-visible) .task__txt::after  { width: 100%; transition-delay: calc(var(--t) + .12s); }
+
+  /* Stronk — järnets dimension */
+  .world--stronk { gap: 1rem; }
+  .lift {
+    display: flex; align-items: center; gap: 3px;
+    transform: translateY(8px);
+    animation: rep 1s cubic-bezier(.45, 0, .3, 1.3) infinite;
+    animation-play-state: paused;
+  }
+  .gate:is(:hover, :focus-visible) .lift { animation-play-state: running; }
+  @keyframes rep {
+    0%, 100% { transform: translateY(8px); }
+    45%, 62% { transform: translateY(-12px); }
+  }
+  .lift__rod {
+    width: 72px; height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, transparent, #cfcbdd 14% 86%, transparent);
+  }
+  .plate {
+    width: 7px; border-radius: 3px;
+    background: color-mix(in srgb, var(--c) 65%, #1a0d12);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--c) 40%, transparent);
+  }
+  .plate--big { height: 42px; }
+  .plate--small { height: 28px; }
+  .reps {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--chrome-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .reps b { font-weight: 400; color: var(--c); }
+
+  /* ============================ Systemraden ============================ */
+
+  .systemline {
+    position: relative; z-index: 2;
+    display: flex; flex-wrap: wrap; gap: .6rem 2rem;
+    align-items: baseline; justify-content: space-between;
+    padding: 1.1rem clamp(1.2rem, 4vw, 2.4rem) 1.3rem;
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .08em;
+    color: var(--chrome-dim);
+    font-variant-numeric: tabular-nums;
+    animation: descend 1.1s .5s cubic-bezier(.2, .8, .2, 1) both;
+  }
+  .systemline .dot { color: var(--emerald); animation: breathe 2.6s ease-in-out infinite; }
+  @keyframes breathe { 50% { opacity: .35; } }
+
+  /* ============================ Reduced motion ============================ */
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .15s !important;
+    }
+    .gate__scene { transform: none !important; }
+    .stars, .lantern { transition: none !important; }
+  }
+</style>
+
+<div class="void" aria-hidden="true">
+  <div class="stars" data-depth="1"></div>
+  <div class="stars" data-depth="2"></div>
+  <div class="stars" data-depth="3"></div>
+</div>
+<div class="lantern" aria-hidden="true"></div>
+
+<header class="masthead">
+  <h1 class="wordmark" aria-label="Portal"><span aria-hidden="true">P</span><span class="wordmark__o" aria-hidden="true"><i></i></span><span aria-hidden="true">RTAL</span></h1>
+  <p class="thesis">
+    Tre kostymer har redan hängt på de här knapparna — terminal, editorial, bank.<br>
+    Det här är ingen fjärde kostym. <em>Portalen tog sitt namn på allvar. Välj en dörr.</em>
+  </p>
+</header>
+
+<main class="hall">
+
+  <a class="gate" data-app="signal" href="#" aria-label="Signal — marknadens dimension">
+    <span class="gate__float">
+      <span class="gate__scene">
+        <span class="gate__halo"></span>
+        <span class="gate__ring gate__ring--b"></span>
+        <span class="gate__ring gate__ring--a"></span>
+        <span class="gate__ring gate__ring--fast"></span>
+        <span class="gate__rim"></span>
+        <span class="gate__aperture">
+          <span class="world world--signal">
+            <svg class="pulse" viewBox="0 0 120 64" preserveAspectRatio="none" aria-hidden="true">
+              <path class="pulse__ghost" d="M0 40 L12 36 20 46 32 22 42 30 54 12 66 28 78 20 90 34 102 16 112 26 120 22" pathLength="100"></path>
+              <path class="pulse__line"  d="M0 40 L12 36 20 46 32 22 42 30 54 12 66 28 78 20 90 34 102 16 112 26 120 22" pathLength="100"></path>
+            </svg>
+            <span class="tick"><b class="tick__v">512,34</b> <i class="tick__d">▲ +0,0 %</i></span>
+          </span>
+          <span class="gate__vignette"></span>
+        </span>
+        <span class="gate__dust"></span>
+      </span>
+    </span>
+    <span class="gate__label">
+      <b>Signal</b>
+      <i>marknadens dimension</i>
+      <em>kliv igenom <span class="arr">→</span></em>
+    </span>
+  </a>
+
+  <a class="gate" data-app="todos" href="#" aria-label="Todos — ordningens dimension">
+    <span class="gate__float">
+      <span class="gate__scene">
+        <span class="gate__halo"></span>
+        <span class="gate__ring gate__ring--b"></span>
+        <span class="gate__ring gate__ring--a"></span>
+        <span class="gate__ring gate__ring--fast"></span>
+        <span class="gate__rim"></span>
+        <span class="gate__aperture">
+          <span class="world world--todos">
+            <span class="task" style="--t: .05s"><span class="task__box"></span><span class="task__txt">öppna portalen</span></span>
+            <span class="task" style="--t: .4s"><span class="task__box"></span><span class="task__txt">hälsa på grannarna</span></span>
+            <span class="task" style="--t: .75s"><span class="task__box"></span><span class="task__txt">vinn designtävlingen</span></span>
+          </span>
+          <span class="gate__vignette"></span>
+        </span>
+        <span class="gate__dust"></span>
+      </span>
+    </span>
+    <span class="gate__label">
+      <b>Todos</b>
+      <i>ordningens dimension</i>
+      <em>kliv igenom <span class="arr">→</span></em>
+    </span>
+  </a>
+
+  <a class="gate" data-app="stronk" href="#" aria-label="Stronk — järnets dimension">
+    <span class="gate__float">
+      <span class="gate__scene">
+        <span class="gate__halo"></span>
+        <span class="gate__ring gate__ring--b"></span>
+        <span class="gate__ring gate__ring--a"></span>
+        <span class="gate__ring gate__ring--fast"></span>
+        <span class="gate__rim"></span>
+        <span class="gate__aperture">
+          <span class="world world--stronk">
+            <span class="lift" aria-hidden="true">
+              <span class="plate plate--small"></span><span class="plate plate--big"></span>
+              <span class="lift__rod"></span>
+              <span class="plate plate--big"></span><span class="plate plate--small"></span>
+            </span>
+            <span class="reps">reps <b class="reps__n">0</b></span>
+          </span>
+          <span class="gate__vignette"></span>
+        </span>
+        <span class="gate__dust"></span>
+      </span>
+    </span>
+    <span class="gate__label">
+      <b>Stronk</b>
+      <i>järnets dimension</i>
+      <em>kliv igenom <span class="arr">→</span></em>
+    </span>
+  </a>
+
+</main>
+
+<footer class="systemline">
+  <p><span class="dot">◍</span> systemhälsa — 4 världar · 414 filer · 49 980 rader · synkade ur granndimensionerna 2026-07-23</p>
+  <p>stil 04/03 — singularitet [låst]</p>
+</footer>
+
+<script>
+  document.documentElement.lang = 'sv'
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  /* ---------- stjärnfält: tre djuplager av box-shadow-stjärnor ---------- */
+  const tints = ['rgba(155,217,192,', 'rgba(240,217,168,', 'rgba(240,168,168,']
+  document.querySelectorAll('.stars').forEach((layer, li) => {
+    const n = [90, 60, 34][li]
+    const shadows = []
+    for (let i = 0; i < n; i++) {
+      const x = (Math.random() * 104 - 2).toFixed(1)
+      const y = (Math.random() * 104 - 2).toFixed(1)
+      const a = (0.25 + Math.random() * 0.6).toFixed(2)
+      const base = Math.random() < 0.85 ? 'rgba(232,230,242,' : tints[(Math.random() * 3) | 0]
+      const r = li === 2 && Math.random() < 0.3 ? 1 : 0
+      shadows.push(`${x}vw ${y}vh 0 ${r}px ${base}${a})`)
+    }
+    layer.style.boxShadow = shadows.join(',')
+  })
+
+  /* ---------- parallax + vandringsljus ---------- */
+  const voidEl = document.querySelector('.void')
+  const lantern = document.querySelector('.lantern')
+  if (!reduceMotion) {
+    addEventListener('pointermove', (e) => {
+      const dx = e.clientX / innerWidth - 0.5
+      const dy = e.clientY / innerHeight - 0.5
+      voidEl.style.setProperty('--px', (dx * -22).toFixed(1) + 'px')
+      voidEl.style.setProperty('--py', (dy * -14).toFixed(1) + 'px')
+      lantern.style.transform = `translate3d(${e.clientX - innerWidth * 0.25}px, ${e.clientY - innerWidth * 0.25}px, 0)`
+    })
+  }
+
+  /* ---------- per port: stoft, 3D-tilt, levande interiörer ---------- */
+  document.querySelectorAll('.gate').forEach((gate) => {
+    const scene = gate.querySelector('.gate__scene')
+
+    // stjärnstoft som sugs in i porten
+    const dust = gate.querySelector('.gate__dust')
+    const radius = () => scene.offsetWidth * (0.55 + Math.random() * 0.3)
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement('i')
+      p.style.setProperty('--ang', ((Math.random() * 360) | 0) + 'deg')
+      p.style.setProperty('--dist', radius().toFixed(0) + 'px')
+      p.style.setProperty('--dur', (1.2 + Math.random() * 1.1).toFixed(2) + 's')
+      p.style.setProperty('--del', (Math.random() * 2).toFixed(2) + 's')
+      dust.appendChild(p)
+    }
+
+    // porten vrider sig mot pekaren
+    if (!reduceMotion) {
+      gate.addEventListener('pointermove', (e) => {
+        const r = scene.getBoundingClientRect()
+        const x = (e.clientX - r.left) / r.width - 0.5
+        const y = (e.clientY - r.top) / r.height - 0.5
+        gate.style.setProperty('--ry', (x * 12).toFixed(2) + 'deg')
+        gate.style.setProperty('--rx', (y * -10).toFixed(2) + 'deg')
+      })
+      gate.addEventListener('pointerleave', () => {
+        gate.style.setProperty('--rx', '0deg')
+        gate.style.setProperty('--ry', '0deg')
+      })
+    }
+  })
+
+  /* ---------- Signal: kursen tickar när dörren är öppen ---------- */
+  const signalGate = document.querySelector('[data-app="signal"]')
+  const tickV = signalGate.querySelector('.tick__v')
+  const tickD = signalGate.querySelector('.tick__d')
+  const base = 512.34
+  let price = base
+  let tickTimer = null
+  const fmt = (v) => v.toFixed(2).replace('.', ',')
+  const startTick = () => {
+    if (tickTimer) return
+    tickTimer = setInterval(() => {
+      price = Math.max(1, price + (Math.random() - 0.48) * 1.4)
+      const pct = ((price - base) / base) * 100
+      tickV.textContent = fmt(price)
+      tickD.textContent = `${pct >= 0 ? '▲ +' : '▼ '}${fmt(pct)} %`
+    }, 260)
+  }
+  const stopTick = () => { clearInterval(tickTimer); tickTimer = null }
+  signalGate.addEventListener('pointerenter', startTick)
+  signalGate.addEventListener('focus', startTick)
+  signalGate.addEventListener('pointerleave', stopTick)
+  signalGate.addEventListener('blur', stopTick)
+
+  /* ---------- Stronk: repsen räknas — och nollställs aldrig ---------- */
+  const stronkGate = document.querySelector('[data-app="stronk"]')
+  const repsEl = stronkGate.querySelector('.reps__n')
+  let reps = 0
+  let repTimer = null
+  const startReps = () => {
+    if (repTimer) return
+    repTimer = setInterval(() => { repsEl.textContent = ++reps }, 1000)
+  }
+  const stopReps = () => { clearInterval(repTimer); repTimer = null }
+  stronkGate.addEventListener('pointerenter', startReps)
+  stronkGate.addEventListener('focus', startReps)
+  stronkGate.addEventListener('pointerleave', stopReps)
+  stronkGate.addEventListener('blur', stopReps)
+</script>

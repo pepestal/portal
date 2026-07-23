@@ -3,6 +3,16 @@
 // animation som renderas i knappen; varje stil dresserar den på sitt sätt.
 export const apps = [
   {
+    // Navet: den övergripande dashboarden som tar emot info från underapparna,
+    // syntetiserar och pumpar vidare (t.ex. säljsignal → todo-uppgift).
+    // Stilarna får gärna ge Syntes en särställning — den är hjärtat.
+    id: 'syntes',
+    name: 'Syntes',
+    url: '#',
+    tagline: 'Navet — tar emot, syntetiserar och pumpar information mellan apparna',
+    anim: 'hub',
+  },
+  {
     id: 'signal',
     name: 'Signal',
     url: '#',

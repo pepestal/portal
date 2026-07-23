@@ -3,9 +3,11 @@
 > En landningssida som samlar ekosystemets appar i ett nav.
 
 Portal är ekosystemets **ingång i webbläsaren**: en minimalistisk startsida som
-länkar vidare till de övriga apparna (Signal, Todo, …) med små animationer och en
-system-health-widget. Den är **fristående** — den pratar inte med händelsenavet
-**Syntes** och äger ingen egen data.
+länkar vidare till apparna (Syntes, Signal, Todos, Stronk) med små animationer och en
+system-health-widget. **Syntes är navet** — den övergripande dashboard som tar emot,
+syntetiserar och pumpar information mellan underapparna — och stilarna ger den en
+särställning. Portal är **fristående** — den *länkar* till Syntes men pratar aldrig
+med den i runtime och äger ingen egen data.
 
 **Status:** se [`docs/STATUS.md`](docs/STATUS.md) — börja där om du ska ta vid.
 
@@ -26,9 +28,11 @@ Portal är ett **showroom / design-experiment** — en sida med stora app-knappa
 (en per app i ekosystemet), var med en hover-animation och en info-knapp. Poängen
 är hur det känns, inte att navigera vidare.
 
-- **Stil-system:** flera estetiker (`terminal`, `editorial`, `bank`) delar ett och
-  samma skelett men bär egen palett, typografi och animationer. Stilen **roterar
-  slumpmässigt** vid varje besök; en switcher låter dig bläddra och **låsa** en favorit.
+- **Stil-system:** flera estetiker (`terminal`, `editorial`, `bank`, `singularitet`, `kvitto`, `vaxel`)
+  delar ett och samma skelett men bär egen palett, typografi och animationer; `orrery` är en
+  **helscen** som medvetet ersätter skelettet (förankrat undantag). Stilen **roterar slumpmässigt**
+  vid varje besök; en switcher låter dig bläddra och **låsa** en favorit. `?style=<id>` i URL:en
+  deep-linkar till en specifik stil.
 - **Info-paneler + systemhälsa** visar riktig projektdata (filer, rader, språk, stack)
   som genereras vid **byggtid** ur grann-repona — inte via runtime-koppling.
 
@@ -42,6 +46,7 @@ Länkar ut till andra appar via URL; ingen runtime app-till-app-kommunikation.
 - `src/main.js` — renderar skelettet, sköter stilrotation, info-paneler och systemhälsa.
 - `src/apps.js` — appregistret (lägg till en app = en rad).
 - `src/styles.js` + `src/style.css` — stilregister och per-stil tokens/animationer.
+- `src/orrery.js` — helscen-enhancern för stilen `orrery` (bygger/river en egen scen som ersätter skelettet).
 - `scripts/generate-stats.mjs` → `src/data/stats.json` — byggtidsstatistik (körs via
   `predev`/`prebuild`). Se **dokumenterat undantag** i [`CLAUDE.md`](CLAUDE.md).
 
