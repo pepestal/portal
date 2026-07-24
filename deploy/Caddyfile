@@ -1,0 +1,7 @@
+# Intern Caddy i portal-containern: serverar de byggda statiska filerna på :80.
+# Autentisering (Authelia) och TLS sköts av den yttre reverse-proxy-Caddy:n, inte här.
+:80 {
+	root * /srv
+	encode gzip
+	file_server
+}

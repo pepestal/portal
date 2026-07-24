@@ -58,6 +58,7 @@ Länkar ut till andra appar via URL; ingen runtime app-till-app-kommunikation.
 | Styling | Ren CSS (`src/style.css`) |
 | Backend | – (ingen) |
 | Databas | – (ingen) |
+| Drift | Docker (Node-byggsteg → Caddy serverar `dist/`), bakom Authelia. Se [`docs/DEPLOY.md`](docs/DEPLOY.md). |
 
 ## Snabbstart
 

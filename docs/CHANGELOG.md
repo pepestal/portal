@@ -8,9 +8,12 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ### Tillagt
 - **Driftsatt live på `https://portal.syntes.dev`** (2026-07-24), bakom Authelia-login
   (`one_factor`, SSO över `.syntes.dev` — spegling av signal/stronk/syntes-dashboard).
-  Statisk `dist/` byggs lokalt (grann-repona finns → riktiga stats) och serveras av Caddy
-  `file_server` via en monterad volym i reverse-proxy-stacken; ingen egen container. Ny
-  deploy-guide: [`docs/DEPLOY.md`](DEPLOY.md).
+- **`Dockerfile` + `docker-compose.yml`** — portal kör nu som egen container (`portal`) på
+  `proxy`-nätet, precis som övriga appar. Tvåstegs-bygge: Node-steg (`npm ci && npm run
+  build`) → Caddy-steg som serverar `dist/`; intern [`deploy/Caddyfile`](../deploy/Caddyfile).
+  VPS:en behöver ingen node — bygget sker i containern. Yttre Caddy `reverse_proxy portal:80`.
+  Uppdatering är nu **`git pull && docker compose up -d --build`**, identiskt med syntes/stronk.
+  Ny deploy-guide: [`docs/DEPLOY.md`](DEPLOY.md).
 - Piltangenter ←/→ bläddrar stil (samma som prev/next-knapparna). Hoppar över när
   fokus ligger i ett textfält så vanlig markörnavigation inte kapas. Stegnings-logiken
   bruten ut till `stepStyle(delta)` i `main.js` och delas av knappar och tangentbord.

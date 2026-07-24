@@ -70,7 +70,10 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 - Statisk frontend, inga hemligheter, ingen `.env`.
 - Byggtidsstatistiken kräver att grann-repona finns bredvid (`../Signal`, `../todos`,
   `../stronk`, `../syntes`). Saknas de behålls senast kända värden i `stats.json`.
-- **Drift:** VPS `root@65.109.143.130`. Servern har **ingen node** → `dist/` byggs
-  **lokalt** (där grann-repona finns, så statistiken blir riktig) och scp:as till
-  `/root/apps/portal/dist`. Caddy (`/root/apps/reverse-proxy/`) monterar mappen och kör
-  `file_server`; Authelia-regeln ligger i `/root/apps/authelia/`. Steg för steg: [`DEPLOY.md`](DEPLOY.md).
+- **Drift:** VPS `root@65.109.143.130`, egen container `portal` (git-klon i
+  `/root/apps/portal/`) som övriga appar. Bygget sker i Dockerfilens Node-steg → VPS:en
+  behöver ingen node. Yttre Caddy (`/root/apps/reverse-proxy/`) kör `reverse_proxy portal:80`
+  bakom `forward_auth`; Authelia-regeln i `/root/apps/authelia/`. Uppdatering:
+  `git pull && docker compose up -d --build`. Steg för steg: [`DEPLOY.md`](DEPLOY.md).
+  Stats (`src/data/stats.json`) genereras lokalt (grann-repona finns där) och committas
+  in i bygget — i containern behålls den som fallback.
