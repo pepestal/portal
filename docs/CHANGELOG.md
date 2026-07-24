@@ -6,6 +6,11 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Driftsatt live på `https://portal.syntes.dev`** (2026-07-24), bakom Authelia-login
+  (`one_factor`, SSO över `.syntes.dev` — spegling av signal/stronk/syntes-dashboard).
+  Statisk `dist/` byggs lokalt (grann-repona finns → riktiga stats) och serveras av Caddy
+  `file_server` via en monterad volym i reverse-proxy-stacken; ingen egen container. Ny
+  deploy-guide: [`docs/DEPLOY.md`](DEPLOY.md).
 - Piltangenter ←/→ bläddrar stil (samma som prev/next-knapparna). Hoppar över när
   fokus ligger i ett textfält så vanlig markörnavigation inte kapas. Stegnings-logiken
   bruten ut till `stepStyle(delta)` i `main.js` och delas av knappar och tangentbord.
@@ -74,6 +79,8 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
   språk, stack per grann-repo); körs via `predev`/`prebuild`.
 
 ### Ändrat
+- Åtkomstbeslut: Portal är **inte längre en publik ingång** utan ligger bakom Authelia
+  (infra-skydd, inte app-egen auth — sidan förblir statisk). `docs/ROADMAP.md` uppdaterad.
 - Tävlingsmappen `tavling/` har döpts om till `variations/`; alla referenser i docs och
   kodkommentarer uppdaterade.
 - Invarianten "skelettet står still" gäller nu alla stilar **utom** `orrery` — en förankrad helscen

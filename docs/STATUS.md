@@ -2,6 +2,9 @@
 
 > 🚧 **Status:** fungerande showroom-prototyp — stora app-knappar med hover-animationer,
 > ett stil-system som roterar slumpmässigt, och info-paneler med byggtidsgenererad projektdata.
+>
+> 🟢 **Live:** [`https://portal.syntes.dev`](https://portal.syntes.dev) (sedan 2026-07-24),
+> bakom Authelia-login. Driftsättning: se [`DEPLOY.md`](DEPLOY.md).
 
 Ingången för den som ska **ta vid**: var vi står, vad nästa steg är, och vilka
 beslut/förutsättningar som gäller just nu.
@@ -67,3 +70,7 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 - Statisk frontend, inga hemligheter, ingen `.env`.
 - Byggtidsstatistiken kräver att grann-repona finns bredvid (`../Signal`, `../todos`,
   `../stronk`, `../syntes`). Saknas de behålls senast kända värden i `stats.json`.
+- **Drift:** VPS `root@65.109.143.130`. Servern har **ingen node** → `dist/` byggs
+  **lokalt** (där grann-repona finns, så statistiken blir riktig) och scp:as till
+  `/root/apps/portal/dist`. Caddy (`/root/apps/reverse-proxy/`) monterar mappen och kör
+  `file_server`; Authelia-regeln ligger i `/root/apps/authelia/`. Steg för steg: [`DEPLOY.md`](DEPLOY.md).

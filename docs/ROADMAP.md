@@ -49,7 +49,11 @@ _(Inga uppslag noterade ännu.)_
 
 - **Runtime**-live-data från apparna — byggtidsstatistik räcker och håller sidan statisk
   (se dokumenterat undantag i CLAUDE.md). Runtime-fetch mot apparna är medvetet bortvalt.
-- Autentisering / personlig vy — Portal är en publik ingång.
+- **App-egen** autentisering / personlig vy — Portal har ingen inloggningslogik i själva
+  appen och äger ingen användardata. Åtkomsten skyddas i stället på infra-nivå: sedan
+  2026-07-24 ligger `portal.syntes.dev` bakom **Authelia** (`one_factor`, SSO över
+  `.syntes.dev`), precis som signal/stronk/syntes-dashboard. Sidan förblir statisk.
+  (Tidigare beslut här var "Portal är en publik ingång" — ändrat vid driftsättning.)
 
 ## v2+ — framtid
 

@@ -10,6 +10,7 @@ Index över Portals dokumentation. Den samlade tekniska ingången är
 | [`STATUS.md`](STATUS.md) | Nuläge: var vi står, nästa steg, öppna beslut. **Börja här om du ska ta vid.** |
 | [`CHANGELOG.md`](CHANGELOG.md) | Kronologisk logg över ändringar och beslut. |
 | [`ROADMAP.md`](ROADMAP.md) | Versionsplan och vad som medvetet ligger efter v1. |
+| [`DEPLOY.md`](DEPLOY.md) | Driftsättning på VPS:en: bygg lokalt → scp `dist/` → Caddy `file_server` + Authelia. |
 
 > Portal rör inte Syntes och har ingen djup datamodell, därför saknas
 > `INTEGRATION.md` och `ARCHITECTURE.md` medvetet. Läggs till om behovet uppstår.
