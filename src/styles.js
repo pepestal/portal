@@ -15,6 +15,7 @@ export const styles = [
   { id: 'kvitto',       label: 'Kvittot' },
   { id: 'orrery',       label: 'Orrery' },
   { id: 'vaxel',        label: 'Växeln' },
+  { id: 'jacquard',     label: 'Jacquardväven' },
 ]
 
 export const DEFAULT_STYLE = 'terminal'

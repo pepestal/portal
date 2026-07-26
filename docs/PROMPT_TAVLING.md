@@ -29,15 +29,16 @@ Syntes är inte en app bland de andra: den är **hjärtat i ekosystemet**, en
 och pumpar vidare (t.ex. säljsignal från Signal → uppgift i Todos: "sälj aktie A").
 
 Låt det synas i din stil. De tre underapparna förhåller sig till Syntes — inte
-tvärtom. Tidigare bidrag har gjort navet till kvittots inringade rad och till
-himlainstrumentets lysande centrum; gör något eget: en wrap kring de andra,
-källan de springer ur, dirigenten, blodomloppet. Detta är tävlingens
+tvärtom. Tidigare bidrag har gjort navet till kvittots inringade rad, till
+himlainstrumentets lysande centrum, till telefonistens växelbord och till
+inslaget som binder de tre varptrådarna till tyg; gör något eget: en wrap kring
+de andra, källan de springer ur, dirigenten, blodomloppet. Detta är tävlingens
 konceptuella kärna.
 
 ## Tävlingens kärna: konceptet
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
-`bank`, `singularitet`, `kvitto`, `orrery`) — inte för inspiration utan för att
+`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Tolka uppgiften oväntat; en stark idé
 konsekvent genomförd slår tio effekter.
 
@@ -51,5 +52,20 @@ konsekvent genomförd slår tio effekter.
 3. **Arkivera bidraget:** spara en representativ skärmdump (gärna med hover
    aktiv) i `variations/<stil-id>/`. Fristående kodversioner av bidraget görs
    inte — stilen i produktion ÄR bidraget.
+
+## Terminal & shell (agenten har stående tillåtelse)
+
+Du har stående tillåtelse att köra alla terminal-/shell-kommandon som är relevanta för
+uppgiften (bygga, testa, installera, scripts, git m.m.) — fråga inte per kommando.
+Destruktiva/svåråterställbara åtgärder bekräftas dock med mig först.
+
+## Server & deploy (agenten har stående tillåtelse)
+
+Jag (Peter) har SSH-access till produktionsservern via **nyckel som redan finns på datorn —
+inget lösenord behövs**. Du som agent har **stående tillåtelse att köra server-kommandon
+som hör till uppgiften** (SSH in, curl, deploy m.m.) — du behöver inte fråga varje gång. De
+konkreta serveruppgifterna (adress, sökvägar, deploy-kommandon) för det aktuella projektet
+finns i projektets egen dokumentation (`.claude/` / `docs/`) eller i `password.md` i
+LOKALT-roten.
 
 Må bäste agent vinna.

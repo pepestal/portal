@@ -6,6 +6,23 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- Stil `jacquard` ("Jacquardväven") — åttonde stilen i rotationen: sidan är uppspänd i en
+  vävstol (oblekt lin, växtfärgad varp i krapprott/vejdeblått/resedagult, mönsterkort).
+  Konceptet: **de tre underapparna ÄR varptrådar** — parallella, uppspända, utan kontakt
+  med varandra — och **Syntes är inslaget**, det enda som går på tvären och binder dem till
+  tyg. Det syns i vilotillståndet: underapparnas paneler bär bara lodräta trådar (ofärdig
+  varp, streckade klippkanter, fransad nederkant) medan navets panel är riktigt tyg — varp
+  i alla tre växtfärgerna korsad av inslag, med bunden stadkant. En `jacquard`-enhancer
+  injicerar varplagret (tre trådar som löper bakom hela knappkolumnen och syns i gliporna)
+  och navets inslag: en tvärlinje genom **hela sidan** med en skyttel som far igenom
+  Syntes-panelen. Hovras navet öppnas skälet i hela väven — sidans varptrådar skiftar isär
+  och tänds en efter en när skytteln passerar; underapparnas varp skiftar med. Riktningen är
+  enkelriktad med flit: navet rör de tre, aldrig tvärtom. Fyra hovrar i samma koncept:
+  skytteln binder tre lösa trådar till tyg (Syntes), varptråden knäpps an och darrar ut med
+  spänning i cN (Signal), hålkortet matas fram i tre steg och stansas — en uppgift = ett hål
+  (Todos), trampan trycks så skaftet lyfter och skälet öppnas, 12 skott i repsväv (Stronk).
+  Skelettet orört; `:is(:hover, :focus-visible)` genomgående så tangentbordsfokus ger samma
+  upplevelse som hover. Arkiverad som skärmdumpar i `variations/jacquard/`.
 - **Driftsatt live på `https://portal.syntes.dev`** (2026-07-24), bakom Authelia-login
   (`one_factor`, SSO över `.syntes.dev` — spegling av signal/stronk/syntes-dashboard).
 - **`Dockerfile` + `docker-compose.yml`** — portal kör nu som egen container (`portal`) på

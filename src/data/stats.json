@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-07-24T09:14:32.314Z",
+  "generatedAt": "2026-07-26T15:41:28.990Z",
   "ecosystem": {
-    "files": 414,
-    "lines": 49980,
+    "files": 478,
+    "lines": 58448,
     "apps": 4
   },
   "projects": {
     "signal": {
       "name": "Signal",
       "available": true,
-      "files": 258,
-      "lines": 39336,
+      "files": 282,
+      "lines": 44802,
       "languages": [
         {
           "name": "TypeScript",
-          "lines": 18781
+          "lines": 21283
         },
         {
           "name": "Python",
-          "lines": 12904
+          "lines": 14321
         },
         {
           "name": "Markdown",
-          "lines": 6755
+          "lines": 8295
         },
         {
           "name": "CSS",
@@ -69,17 +69,18 @@
         "SQLAlchemy",
         "React",
         "Vite"
-      ]
+      ],
+      "stale": true
     },
     "stronk": {
       "name": "Stronk",
       "available": true,
-      "files": 68,
-      "lines": 5581,
+      "files": 86,
+      "lines": 7315,
       "languages": [
         {
           "name": "Markdown",
-          "lines": 2258
+          "lines": 2559
         },
         {
           "name": "Python",
@@ -87,11 +88,11 @@
         },
         {
           "name": "TypeScript",
-          "lines": 1391
+          "lines": 1530
         },
         {
-          "name": "CSS",
-          "lines": 177
+          "name": "YAML",
+          "lines": 1334
         }
       ],
       "stack": [
@@ -106,31 +107,33 @@
     "syntes": {
       "name": "Syntes",
       "available": true,
-      "files": 43,
-      "lines": 3202,
+      "files": 65,
+      "lines": 4470,
       "languages": [
         {
           "name": "Markdown",
-          "lines": 2273
+          "lines": 2820
         },
         {
           "name": "Python",
-          "lines": 661
+          "lines": 838
         },
         {
-          "name": "HTML",
-          "lines": 161
+          "name": "TypeScript",
+          "lines": 355
         },
         {
-          "name": "JSON",
-          "lines": 66
+          "name": "CSS",
+          "lines": 223
         }
       ],
       "stack": [
         "FastAPI",
         "SQLAlchemy",
         "PostgreSQL",
-        "Docker"
+        "Docker",
+        "React",
+        "Vite"
       ]
     }
   }

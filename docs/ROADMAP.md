@@ -60,6 +60,7 @@ _(Inga uppslag noterade ännu.)_
 - ~~Dynamisk lista över appar i stället för hårdkodade kort.~~ ✅ (drivs av `src/apps.js`)
 - ~~Per-app **unika** animationer per stil.~~ ✅ (nio st, matris app × stil)
 - ~~Fler stilar i rotationen.~~ ✅ (`singularitet` — fjärde, `kvitto` — femte, `orrery` — sjätte
-  och första helscenen, `vaxel` — sjunde; alla ur tävlingsbidrag; fler kan läggas till löpande)
+  och första helscenen, `vaxel` — sjunde, `jacquard` — åttonde; alla ur tävlingsbidrag; fler kan
+  läggas till löpande)
 - ~~Helscen-stil som ersätter skelettet.~~ ✅ (`orrery`, förankrat undantag från "skelettet står still")
 - Självhostade typsnitt i stället för Google Fonts-`<link>`.
