@@ -23,8 +23,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   inringad NAV-rad med kassörens penna (kvitto), det lysande navet i mitten (orrery),
   växelbordet där det ringer när en underapp hovras (vaxel), inslaget som binder de tre
   varptrådarna till tyg (jacquard), POS. 1 — sammanställningen i snitt som de tre
-  detaljerna måttsätts från (sprangskiss).
-- **Stil-system** (`src/styles.js` + `src/style.css`): nio stilar — `terminal`
+  detaljerna måttsätts från (sprangskiss), lågtryckscentrum L som isobarerna sluter sig
+  kring och de tre fronterna utgår ur (synop).
+- **Stil-system** (`src/styles.js` + `src/style.css`): tio stilar — `terminal`
   (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
   `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära
   portar, stjärnfält, levande siffror), `kvitto` (Kvittot — ur tävlingsbidraget
@@ -37,7 +38,10 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   är varptrådar, Syntes är inslaget som går på tvären och binder dem till tyg) och
   `sprangskiss` (Sprängskissen — ritningsblad i cyanotypi: Syntes är POS. 1,
   sammanställningen ritad i snitt och referensplanet `A`; underapparna är POS. 2–4
-  och bär lägestolerans `⊕ Ø0,2 A` mot navet). Varje stil bär egen
+  och bär lägestolerans `⊕ Ø0,2 A` mot navet) och `synop` (Synoptiken — synoptisk
+  väderanalys på kartpapper: *synoptisk* är grekiskans ”sedd tillsammans”, så kartan
+  ÄR en syntes; Syntes är lågtryckscentrum `L 984 hPa`, underapparna är fronttyper
+  som utgår ur det, och varje station läser ett högre tryck än navet). Varje stil bär egen
   palett, typografi och animationsuttryck under sin `[data-style]`. Skelettet står still
   för alla **utom `orrery`**, som är en helscen och medvetet ersätter det (döljer
   knappkolumn + systemhälsa och bygger en egen scen) — förankrat undantag, se
@@ -45,7 +49,7 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 - **Rotation:** slumpad stil vid varje besök (undviker samma som förra). Switcher i
   topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage);
   `?style=<id>` deep-linkar.
-- **Trettiosex unika hover-animationer** — trettiotvå i skelett-matrisen (fyra appar × åtta stilar,
+- **Fyrtio unika hover-animationer** — trettiosex i skelett-matrisen (fyra appar × nio stilar,
   `.viz--*` i `src/style.css`; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
   singularitet injicerar stjärnfält/parallax/3D-tilt och tickande siffror (kurs, reps);
@@ -56,7 +60,11 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   varplagret bakom knappkolumnen och navets inslag tvärs över hela sidan (skyttel + skäl som
   öppnas när navet hovras) och delar count-up-enhancern; sprangskiss injicerar ritningsbladet
   (ram, zonlister, stycklista och namnruta ur appregistret + stats) som markerar den hovrade
-  vyn i stycklistan och kvitterar de tre som `MONT.` när navet hovras, och delar count-up.
+  vyn i stycklistan och kvitterar de tre som `MONT.` när navet hovras, och delar count-up;
+  synop injicerar kartunderlaget (kust, graticule-kryss) och analysen (isobarer inmätta på
+  navets rad, fronter med riktiga frontsymboler, stationsmodeller, namnruta med giltighetstid
+  i UTC) som tänder den hovrade appens front och drar ihop hela lågtrycket när navet hovras,
+  och delar count-up.
 - **Byggtidsdata:** `scripts/generate-stats.mjs` går igenom grann-repona och skriver
   `src/data/stats.json` (filer, rader, språk, stack). Info-panelerna och systemhälsan
   läser den. Körs automatiskt via `predev`/`prebuild`. Se dokumenterat undantag i CLAUDE.md.
@@ -67,7 +75,7 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 1. **Riktiga URL:er** på knapparna (nu `#` i `src/apps.js`) när apparnas adresser finns.
 2. **Fler stilar** — `singularitet` (fjärde), `kvitto` (femte), `orrery` (sjätte,
    första helscenen) och `vaxel` (sjunde) kom 2026-07-23, `jacquard` (åttonde)
-   2026-07-26 och `sprangskiss` (nionde) 2026-07-27; en ny skelett-stil =
+   2026-07-26 samt `sprangskiss` (nionde) och `synop` (tionde) 2026-07-27; en ny skelett-stil =
    token/`.viz--*`-block + en rad i `styles.js`, en helscen = egen modul (som
    `src/orrery.js`) + en rad i `styles.js`.
 3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.

@@ -6,6 +6,29 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- Stil `synop` ("Synoptiken") — tionde stilen i rotationen: sidan är en **synoptisk
+  väderanalys** (blekt kartpapper med väderfaxets svepränder, kustlinje, graticule-kryss
+  och namnruta nere till vänster). Konceptet ligger i ordet: *synoptisk* är grekiskans
+  "sedd tillsammans" — en synoptisk karta **är** en syntes, spridda observationer
+  sammanförda till en bild. **Syntes är lågtryckscentrum L**, och kartan känner bara en
+  hierarki: isobarerna är slutna kurvor kring L, de tre fronterna **utgår ur** L, och varje
+  underapp läser ett högre tryck än navets 984 hPa med tendenspilen nedåt — hela tryckfältet
+  lutar inåt mot navet. Underapparna är fronttyper (Signal = kallfront, Todos = varmfront,
+  Stronk = ocklusion) och kan per definition inte finnas utan systemet de tillhör; navet kan.
+  En `synop`-enhancer injicerar kartunderlaget och analysen (isobarer, fronter med riktiga
+  frontsymboler, stationsmodeller, namnruta byggd ur appregistret + byggtidsstatistiken med
+  giltighetstid i UTC) och river den vid stilbyte; analysen mäts in på navets rad i DOM:en,
+  så allt är polärt uttryckt kring den punkten. Kartan svarar på pekaren — hovras en underapp
+  tänds dess front och legendraden kvitterar `→ L`; hovras navet dras hela analysen ihop:
+  isobarerna sluter sig tätare, alla tre fronterna tänds, observationerna rinner in mot
+  centrum längs streckade stråk och systemet börjar vrida sig moturs. Fyra hovrar i samma
+  kartspråk: lågtrycket analyseras fram — isobarerna sluts inifrån och ut, de tre fronterna
+  dras ut ur centrum och systemet roterar cyklonalt (Syntes), kallfronten passerar stationen
+  och observationen skrivs om i samma stund den går förbi → SÄLJ (Signal), molnmängden
+  klarnar upp station för station 8/8 → 4/8 → 0/8 (Todos), vindpilen fjädras upp halvfjäder
+  för fjäder till vimpel, 95 knop = orkan (Stronk). Skelettet orört;
+  `:is(:hover, :focus-visible)` genomgående så tangentbordsfokus ger samma upplevelse som
+  hover. Arkiverad som skärmdumpar i `variations/synop/`.
 - Stil `sprangskiss` ("Sprängskissen") — nionde stilen i rotationen: sidan är ett
   **ritningsblad i cyanotypi** (preussiskblå kopia, vit tusch, ritningsram med zonlister,
   stycklista och namnruta nere till vänster). Konceptet: en sammanställningsritning känner

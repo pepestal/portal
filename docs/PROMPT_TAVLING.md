@@ -32,14 +32,15 @@ Låt det synas i din stil. De tre underapparna förhåller sig till Syntes — i
 tvärtom. Tidigare bidrag har gjort navet till kvittots inringade rad, till
 himlainstrumentets lysande centrum, till telefonistens växelbord, till inslaget
 som binder de tre varptrådarna till tyg och till ritningens POS. 1 — sammanställningen
-som de tre detaljerna måttsätts från; gör något eget: en wrap kring de andra,
+som de tre detaljerna måttsätts från och till väderkartans lågtryckscentrum L, som
+isobarerna sluter sig kring och de tre fronterna utgår ur; gör något eget: en wrap kring de andra,
 källan de springer ur, dirigenten, blodomloppet. Detta är tävlingens
 konceptuella kärna.
 
 ## Tävlingens kärna: konceptet
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
-`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`) — inte för inspiration utan för att
+`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Tolka uppgiften oväntat; en stark idé
 konsekvent genomförd slår tio effekter.
 
