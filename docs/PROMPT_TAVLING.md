@@ -20,6 +20,11 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
   slår till långt innan knapparna faktiskt är för breda (så tappade `singularitet`
   sin fjärde port). Kolla horisontell scroll på smal skärm efteråt: `.info-panel`
   är ankrad mitt i raden, så en rad ute i kanten kan knuffa ut den ur sidan.
+- **Klipper du knappens form (`clip-path`): ersätt fokusringen.** Skelettets
+  `a:focus-visible { outline }` ligger utanför formen och klipps bort helt — tangentbords-
+  fokus blir osynligt. Rita den inåt i stället (t.ex. låt knappens bakgrund/ram byta färg)
+  och lägg glödet med `filter: drop-shadow()`, som följer clip-path; `box-shadow` gör det
+  inte, den ritas mot den rektangulära boxen och klipps av på diagonalerna.
 - **Skelettets markup rörs aldrig.** Vill du bygga en helscen som ersätter det
   (à la `orrery`) måste avsteget flaggas och dokumenteras som förankrat undantag.
 - Alla **fyra appar** (Syntes, Signal, Todos, Stronk) ska vara klickbara länkar
@@ -38,15 +43,23 @@ Låt det synas i din stil. De tre underapparna förhåller sig till Syntes — i
 tvärtom. Tidigare bidrag har gjort navet till kvittots inringade rad, till
 himlainstrumentets lysande centrum, till telefonistens växelbord, till inslaget
 som binder de tre varptrådarna till tyg och till ritningens POS. 1 — sammanställningen
-som de tre detaljerna måttsätts från och till väderkartans lågtryckscentrum L, som
-isobarerna sluter sig kring och de tre fronterna utgår ur; gör något eget: en wrap kring de andra,
-källan de springer ur, dirigenten, blodomloppet. Detta är tävlingens
-konceptuella kärna.
+som de tre detaljerna måttsätts från, till väderkartans lågtryckscentrum L, som
+isobarerna sluter sig kring och de tre fronterna utgår ur, och till vaxkakans dansgolv —
+den enda cell som hålls TOM, eftersom den inte lagrar en sak utan en riktning; gör något
+eget: en wrap kring de andra, källan de springer ur, dirigenten, blodomloppet. Detta är
+tävlingens konceptuella kärna.
+
+**Ett grepp som visat sig bära:** låt navets särställning synas redan i vilotillståndet,
+inte bara vid hover — och låt den vara *mekanisk*, inte dekorativ. Det starkaste är när de
+tre underapparna bär en egenskap som bevisligen kommer ur navet (en lägestolerans mot
+referensplanet, ett tryck som lutar in mot L, en bäring som mättes på dansgolvet), så att
+det syns att de inte kan definiera sig själva.
 
 ## Tävlingens kärna: konceptet
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
-`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`) — inte för inspiration utan för att
+`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
+`bikupa`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Tolka uppgiften oväntat; en stark idé
 konsekvent genomförd slår tio effekter.
 

@@ -6,6 +6,34 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- Stil `bikupa` ("Bikupan") — elfte stilen i rotationen: sidan är en **vaxkaka i motljus**
+  (ljuset uppifrån, kupans mörker i kanterna, cellrutnät i ljust vax, foder lagrat högt
+  och ramens ovanlist överst med biodlarens krita). Konceptet ligger i vad cellerna
+  innehåller: tre av dem **lagrar** något — Signal är nektarcellen, Todos den täckta
+  yngelcellen, Stronk den packade pollencellen — medan **navets cell är den enda tomma**.
+  Bina håller dansgolvet putsat och propolislackat just för att det inte ska ligga något
+  där: det lagrar ingen sak, det lagrar **riktning**. Ett lass nektar är stumt tills det
+  dansas, och det som lämnar golvet är en anvisning — en bäring och ett avstånd åt de
+  andra. Kakans grammatik bär hierarkin: den hänger lodrätt, och på en lodrät kaka betyder
+  "rakt upp" **mot solen**, så sidans lodlinje är sollinjen, dansens vinkel α mot den är en
+  kompassriktning, och varje underapp bär sin egen bäring **ur** navet (`α 40° · 1,4 km`)
+  medan navet bär temperaturen det håller åt hela kakan (`35,0 °C ±0,2`). Knapparna är
+  klippta till långsträckta sexkanter (`clip-path`), där knappens egen bakgrund är
+  cellväggen och `.app-btn__fx` kärlet den omsluter; navet får dubbel vägg i propolis.
+  En `bikupa`-enhancer injicerar kakan (cellmönster, fyllt foder, yngelvärme centrerad på
+  navets rad, solmärke med lodlinje ner i dansgolvet och de tre flygvektorerna, mätta i
+  DOM:en och ritade om vid resize) och river den vid stilbyte. Kakan svarar på pekaren —
+  hovras en underapp dras **bara hennes** bäring, och den startar alltid i dansgolvets
+  cellvägg; hovras navet dras alla tre på en gång, solen tänds och yngelvärmen slår ut.
+  Fyra hovrar i samma kupspråk: svansdansen löps varv efter varv med referenslinjen mot
+  solen, vinkeln α och tre åskådare som lämnar i var sin bäring (Syntes), refraktometern
+  mäter nektarns sockerhalt till 46 % — över tröskeln → KÖP (Signal), tre celler fylls och
+  förseglas med vaxlock, en i taget (Todos), dragbiet lastar pollenkorgen i tre turer till
+  30 mg = en tredjedel av kroppsvikten (Stronk). Rörelse-etiken är kupans: ingenting kopplas
+  om, allt byggs — och sidans **enda** snabba rörelse är svansrunets 13 Hz, som bara navet
+  har. Skelettet orört; `:is(:hover, :focus-visible)` genomgående, och eftersom sexkanten
+  klipper bort en vanlig `outline` är fokusmarkeringen cellväggen själv, som slår om till
+  pollenblått och lyser i sin egen form. Arkiverad som skärmdumpar i `variations/bikupa/`.
 - Stil `synop` ("Synoptiken") — tionde stilen i rotationen: sidan är en **synoptisk
   väderanalys** (blekt kartpapper med väderfaxets svepränder, kustlinje, graticule-kryss
   och namnruta nere till vänster). Konceptet ligger i ordet: *synoptisk* är grekiskans

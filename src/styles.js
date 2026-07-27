@@ -18,6 +18,7 @@ export const styles = [
   { id: 'jacquard',     label: 'Jacquardväven' },
   { id: 'sprangskiss',  label: 'Sprängskissen' },
   { id: 'synop',        label: 'Synoptiken' },
+  { id: 'bikupa',       label: 'Bikupan' },
 ]
 
 export const DEFAULT_STYLE = 'terminal'
