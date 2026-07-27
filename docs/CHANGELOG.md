@@ -154,6 +154,16 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 - CLAUDE.md: dokumenterat undantag för byggtidsläsning av grann-repona (ej runtime-koppling).
 
 ### Fixat
+- **`singularitet`: Stronk ramlade ned på en andra rad — alla fyra portar ligger på en rad igen.**
+  Regression från scroll-fixen: den delade `.app-row` fick en bredd avsedd för den **lodräta**
+  kolumnen (`min(100%, knapp + gap + info)` ≈ 500 px). `singularitet` är den enda stil som lägger
+  raderna **på tvären**, och där blev den bredden flexbasis per port — fyra av dem sprängde
+  raden, så `flex-wrap` bröt i förtid trots att portarna (cirklar på ~260 px) hade fått plats.
+  Raden hugger nu porten (`width: auto`) från den bredd där alla fyra faktiskt ryms (≥ 1380 px).
+  Under den brytpunkten behålls skelettets bredd med flit: hallen radbryter ändå där, och en port
+  ute i kanten skulle annars knuffa ut sin info-panel (ankrad i porten, 360 px) ur sidan — samma
+  horisontella scroll som scroll-fixen tog bort. Verifierat 360–3440 px över alla tio stilar:
+  noll horisontell scroll, fyra portar på rad från 1380 px och uppåt.
 - **Horisontell scroll på smal skärm i alla stilar.** Knappens bredd var `min(480px, 86vw)`
   medan raden också rymmer mellanrum + info-knapp och `.rows` har sidopadding — `vw` räknar
   dessutom in rullisten. Summan blev bredare än sidan under ~580px, så varje besök på mobil

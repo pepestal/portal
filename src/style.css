@@ -977,6 +977,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 /* --- hallen: tre portar i rad; de som inte pekas på dimmas --- */
 [data-style="singularitet"] .rows { flex-direction: row; flex-wrap: wrap; align-items: center; align-content: center; gap: clamp(1.5rem, 4vw, 3.5rem); }
 [data-style="singularitet"] .app-row { flex-direction: column; gap: 1rem; transition: opacity .5s ease, filter .5s ease; }
+/* Skelettets `.app-row` bär en bredd avsedd för den lodräta kolumnen (knapp +
+   glapp + info-knapp). Här ligger raderna på tvären och porten är en cirkel, så
+   raden måste hugga porten — annars äter varje rad ~500 px flexbasis och
+   radbrytningen slår till i förtid (Stronk ramlar ned på rad två).
+   Bara från den bredd där alla fyra portarna ryms på en rad: under den radbryter
+   hallen ändå, och då ska raden behålla skelettets bredd så info-panelen (ankrad
+   i porten, 360 px) inte kan knuffas ut ur sidan av en port ute i kanten. */
+@media (min-width: 1380px) {
+  [data-style="singularitet"] .app-row { width: auto; }
+}
 [data-style="singularitet"] .rows:has(.app-btn:hover) .app-row:not(:has(.app-btn:hover)) { opacity: .38; filter: saturate(.5) blur(1.5px); }
 
 /* --- porten: cirkulär, 3D-tilt via enhancer (--rx/--ry), lyfter vid hover --- */
