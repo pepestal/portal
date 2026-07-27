@@ -30,15 +30,16 @@ och pumpar vidare (t.ex. säljsignal från Signal → uppgift i Todos: "sälj ak
 
 Låt det synas i din stil. De tre underapparna förhåller sig till Syntes — inte
 tvärtom. Tidigare bidrag har gjort navet till kvittots inringade rad, till
-himlainstrumentets lysande centrum, till telefonistens växelbord och till
-inslaget som binder de tre varptrådarna till tyg; gör något eget: en wrap kring
-de andra, källan de springer ur, dirigenten, blodomloppet. Detta är tävlingens
+himlainstrumentets lysande centrum, till telefonistens växelbord, till inslaget
+som binder de tre varptrådarna till tyg och till ritningens POS. 1 — sammanställningen
+som de tre detaljerna måttsätts från; gör något eget: en wrap kring de andra,
+källan de springer ur, dirigenten, blodomloppet. Detta är tävlingens
 konceptuella kärna.
 
 ## Tävlingens kärna: konceptet
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
-`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`) — inte för inspiration utan för att
+`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Tolka uppgiften oväntat; en stark idé
 konsekvent genomförd slår tio effekter.
 
@@ -52,6 +53,9 @@ konsekvent genomförd slår tio effekter.
 3. **Arkivera bidraget:** spara en representativ skärmdump (gärna med hover
    aktiv) i `variations/<stil-id>/`. Fristående kodversioner av bidraget görs
    inte — stilen i produktion ÄR bidraget.
+
+## Inlämning!
+Bidrag anses inlämnat när det är live på sidan portal.syntes.dev tillsammans med de övriga bidragen, och är en del av rotationen. 
 
 ## Terminal & shell (agenten har stående tillåtelse)
 

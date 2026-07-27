@@ -6,6 +6,27 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- Stil `sprangskiss` ("Sprängskissen") — nionde stilen i rotationen: sidan är ett
+  **ritningsblad i cyanotypi** (preussiskblå kopia, vit tusch, ritningsram med zonlister,
+  stycklista och namnruta nere till vänster). Konceptet: en sammanställningsritning känner
+  bara **en** hierarki — POS. 1 är sammanställningen, resten är detaljer som *ingår i* den.
+  **Syntes är POS. 1**, den enda vyn ritad i snitt (45°-hatchade väggar, dubbel ram) — man
+  ser in i navet; de tre andra är POS. 2–4 med benämning efter sin funktion i maskinen
+  (Signalgivare, Spärrverk, Fjäderpaket). Hierarkin står dessutom i ritningens egen
+  grammatik och syns i vilotillståndet: navet bär referensbeteckningen `▲ A` och varje
+  underapp en lägestolerans `⊕ Ø0,2 A` — deras läge är definierat **från** navet, aldrig
+  tvärtom. En `sprangskiss`-enhancer injicerar bladet (ram, zoner A–D/1–6, stycklista och
+  namnruta byggd ur appregistret + byggtidsstatistiken) och river det vid stilbyte; bladet
+  svarar på pekaren — den vy man hovrar markeras i stycklistan, och hovras navet kvitteras
+  alla tre som `MONT.`. Fyra hovrar i samma koncept: sprängskissen sluter sig — de tre
+  delarna gängas in på navets monteringsaxel, ballongnumren slocknar och sammanställningen
+  måttsätts (Syntes), mätserien plottas kryss för kryss mot toleransgränserna tills sista
+  värdet bryter övre gränsen och ringas in med rödpennan → SÄLJ (Signal), spärrhjulet
+  klickar tre tänder med spärrhaken fallande i efter var och en, 3/3 utan återgång (Todos),
+  fjädern pressas mot fast inspänning medan måttet h krymper och kraften räknas upp till
+  1 200 N (Stronk). Skelettet orört; `:is(:hover, :focus-visible)` genomgående så
+  tangentbordsfokus ger samma upplevelse som hover. Arkiverad som skärmdumpar i
+  `variations/sprangskiss/`.
 - Stil `jacquard` ("Jacquardväven") — åttonde stilen i rotationen: sidan är uppspänd i en
   vävstol (oblekt lin, växtfärgad varp i krapprott/vejdeblått/resedagult, mönsterkort).
   Konceptet: **de tre underapparna ÄR varptrådar** — parallella, uppspända, utan kontakt

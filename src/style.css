@@ -8,11 +8,12 @@
      editorial     graverad linje ritas   bläck-bock + strike  tally-streck (loggbok)
      bank          area-kurva sveper      progress-ring sluts  viktplattor staplas
      singularitet  puls + kurs tickar     listan bockar sig    skivstång gör reps
-     (kvitto/vaxel/jacquard: se respektive stilblock längre ned)
+     (kvitto/vaxel/jacquard/sprangskiss: se respektive stilblock längre ned)
 
    Rörelse-etik: terminal snappar (stegat), editorial ritar långsamt, bank
-   glider med tyngd, jacquard går taktfast i vävens takt. Att lägga till en
-   stil/app = markup i main.js + block här.
+   glider med tyngd, jacquard går taktfast i vävens takt, sprangskiss rör sig
+   som ett ritstift — linjer dras, delar gängas på plats, mått sätts. Att lägga
+   till en stil/app = markup i main.js + block här.
    ========================================================================= */
 
 /* ---------- Tokens (default = terminal) ---------- */
@@ -99,7 +100,8 @@ body {
 [data-style="singularitet"] .av[data-for="singularitet"],
 [data-style="kvitto"] .av[data-for="kvitto"],
 [data-style="vaxel"] .av[data-for="vaxel"],
-[data-style="jacquard"] .av[data-for="jacquard"] { display: grid; }
+[data-style="jacquard"] .av[data-for="jacquard"],
+[data-style="sprangskiss"] .av[data-for="sprangskiss"] { display: grid; }
 
 /* --- Info-toggle + panel (droppar under knappen) --- */
 .info-toggle {
@@ -317,6 +319,33 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .viz--vav .cap { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em; color: var(--muted); opacity: 0; transition: opacity .4s ease 1s; }
 .app-btn:is(:hover, :focus-visible) .viz--vav .cap { opacity: 1; }
 
+/* sprangskiss · sprängskissen sluter sig: de tre delarna gängas in på navets
+   monteringsaxel, ballongnumren slocknar och sammanställningen måttsätts */
+.viz--montage { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--montage svg { width: min(242px, 66vw); height: auto; overflow: visible; }
+.viz--montage :is(rect, line, path, circle) { fill: none; stroke: var(--app-accent); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.viz--montage .axis { stroke-dasharray: 10 2.5 1.5 2.5; opacity: .5; } /* dash-dot: monteringsaxeln */
+/* huvudenheten är den enda delen i snitt — man ser in i navet */
+.viz--montage .unit .cut { stroke-width: 1.6; }
+.viz--montage .hatch line { stroke-width: .7; opacity: .5; }
+.viz--montage .part {
+  transform: translateX(0);
+  transition: transform .8s var(--anim-ease) .55s; /* sprängd vy först, sedan montering */
+}
+.viz--montage .part .ctr { stroke-dasharray: 4 2 1 2; opacity: .55; }
+.viz--montage .bal { opacity: 1; transition: opacity .3s ease .45s; }
+.viz--montage .bal text { fill: var(--app-accent); stroke: none; font-family: var(--font-mono); font-size: 7px; text-anchor: middle; dominant-baseline: middle; }
+.viz--montage .dim { opacity: 0; transition: opacity .25s ease 1.45s; }
+.viz--montage .dim .ext { opacity: .6; }
+.viz--montage .dl { stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset .45s var(--anim-ease) 1.5s; }
+.viz--montage .arrow { fill: var(--app-accent); stroke: none; }
+.app-btn:is(:hover, :focus-visible) .viz--montage .part { transform: translateX(calc(var(--dx) * 1px)); }
+.app-btn:is(:hover, :focus-visible) .viz--montage .bal { opacity: 0; }
+.app-btn:is(:hover, :focus-visible) .viz--montage .dim { opacity: 1; }
+.app-btn:is(:hover, :focus-visible) .viz--montage .dl { stroke-dashoffset: 0; }
+.viz--montage .cap { font-family: var(--font-mono); font-size: .55rem; letter-spacing: .13em; color: var(--muted); opacity: 0; transition: opacity .4s ease 1.65s; }
+.app-btn:is(:hover, :focus-visible) .viz--montage .cap { opacity: 1; }
+
 /* =========================================================================
    ANIMATIONER — SIGNAL
    ========================================================================= */
@@ -407,6 +436,29 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .viz--strang .read { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .05em; white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .35s; }
 .viz--strang .read b { font-weight: 600; color: var(--app-accent); }
 .app-btn:is(:hover, :focus-visible) .viz--strang .read { opacity: 1; }
+
+/* sprangskiss · mätserien plottas kryss för kryss mot toleransgränserna —
+   det sista värdet bryter övre gränsen och ringas in med rödpennan: SÄLJ */
+.viz--tolerans { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--tolerans svg { width: min(242px, 66vw); height: auto; overflow: visible; }
+.viz--tolerans :is(line, path, circle) { fill: none; stroke: var(--app-accent); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.viz--tolerans .lim { stroke-dasharray: 5 3; opacity: .75; }
+.viz--tolerans .nom { stroke-dasharray: 9 2.5 1.5 2.5; opacity: .45; }
+.viz--tolerans .lbl { fill: var(--app-accent); stroke: none; font-family: var(--font-mono); font-size: 7.5px; opacity: .8; }
+.viz--tolerans .lbl--nom { opacity: .55; }
+.viz--tolerans .pt { opacity: 0; transition: opacity .01s steps(1) calc(var(--i) * .1s + .1s); }
+.viz--tolerans .pt path { stroke-width: 1.4; }
+.viz--tolerans .pt--out path { stroke-width: 1.8; stroke: var(--sk-red, var(--app-accent)); }
+.viz--tolerans .flag { /* rödpennans ring: enda röda på hela bladet */
+  stroke: var(--sk-red, var(--app-accent)); stroke-width: 1.6; stroke-linecap: round;
+  stroke-dasharray: 88 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset .5s var(--anim-ease) 1.05s;
+}
+.app-btn:is(:hover, :focus-visible) .viz--tolerans .pt { opacity: 1; }
+.app-btn:is(:hover, :focus-visible) .viz--tolerans .flag { stroke-dashoffset: 12; }
+.viz--tolerans .cap { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em; color: var(--muted); opacity: 0; transition: opacity .4s ease 1.4s; }
+.viz--tolerans .cap b { font-weight: 600; color: var(--sk-red, var(--app-accent)); }
+.app-btn:is(:hover, :focus-visible) .viz--tolerans .cap { opacity: 1; }
 
 /* =========================================================================
    ANIMATIONER — TODOS
@@ -500,6 +552,36 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .app-btn:is(:hover, :focus-visible) .viz--halkort .hole { opacity: 1; }
 .viz--halkort .cap { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em; color: var(--muted); opacity: 0; transition: opacity .4s ease 1.25s; }
 .app-btn:is(:hover, :focus-visible) .viz--halkort .cap { opacity: 1; }
+
+/* sprangskiss · spärrhjulet klickar tre tänder, spärrhaken faller i efter var
+   och en. Ett klick är en uppgift — och spärren släpper aldrig tillbaka. */
+.viz--sparr { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--sparr svg { width: min(104px, 32vw); height: auto; overflow: visible; }
+.viz--sparr :is(line, path, circle) { fill: none; stroke: var(--app-accent); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.viz--sparr .teeth { stroke-width: 1.3; }
+.viz--sparr .ctr { stroke-dasharray: 7 2 1 2; opacity: .45; } /* centrumlinjekors */
+.viz--sparr .arc { stroke-dasharray: 100; stroke-dashoffset: 100; opacity: .7; transition: stroke-dashoffset .4s var(--anim-ease) .15s; }
+.viz--sparr .lbl { fill: var(--app-accent); stroke: none; font-family: var(--font-mono); font-size: 8px; opacity: 0; transition: opacity .3s ease .5s; }
+.viz--sparr .wheel { transform-origin: 40px 23px; }
+.viz--sparr .pawl { transform-origin: 80px 6px; }
+.app-btn:is(:hover, :focus-visible) .viz--sparr .wheel { animation: sk-ratchet 1.45s both; }
+.app-btn:is(:hover, :focus-visible) .viz--sparr .pawl { animation: sk-pawl 1.45s both; }
+.app-btn:is(:hover, :focus-visible) .viz--sparr .arc { stroke-dashoffset: 0; }
+.app-btn:is(:hover, :focus-visible) .viz--sparr .lbl { opacity: .8; }
+/* tre tandsteg med håll emellan: hjulet snäpper, det glider inte */
+@keyframes sk-ratchet {
+  0%, 10%   { transform: rotate(0deg); }
+  22%, 42%  { transform: rotate(-30deg); }
+  54%, 74%  { transform: rotate(-60deg); }
+  86%, 100% { transform: rotate(-90deg); }
+}
+@keyframes sk-pawl {
+  0%, 12%, 44%, 76%, 100% { transform: rotate(0deg); }
+  17%, 49%, 81%           { transform: rotate(-10deg); }
+}
+.viz--sparr .cap { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease 1.35s; }
+.viz--sparr .cap b { font-weight: 600; color: var(--app-accent); }
+.app-btn:is(:hover, :focus-visible) .viz--sparr .cap { opacity: 1; }
 
 /* =========================================================================
    ANIMATIONER — STRONK
@@ -599,6 +681,31 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .viz--trampa .cap { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .3s; }
 .viz--trampa .cap b { font-weight: 600; color: var(--app-accent); }
 .app-btn:is(:hover, :focus-visible) .viz--trampa .cap { opacity: 1; }
+
+/* sprangskiss · lastfallet: fjädern pressas mot fast inspänning, måttet h
+   krymper med varje rep och kraften räknas upp */
+.viz--last { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--last svg { width: min(154px, 46vw); height: auto; overflow: visible; }
+.viz--last :is(line, path, rect) { fill: none; stroke: var(--app-accent); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.viz--last .coil { stroke-width: 1.4; stroke-linejoin: round; transform-box: fill-box; transform-origin: bottom; }
+.viz--last .ground { stroke-width: 1.5; }
+.viz--last .fix { stroke-width: .8; opacity: .65; } /* hatchen under fast inspänning */
+.viz--last .plate { stroke-width: 1.3; }
+.viz--last .arrow { stroke-width: 1.3; fill: var(--app-accent); }
+.viz--last .lbl { fill: var(--app-accent); stroke: none; font-family: var(--font-mono); font-size: 8px; }
+.viz--last .dim { opacity: .7; }
+.viz--last .dim .ext { stroke-dasharray: 2 2; }
+.viz--last .arrowhead { fill: var(--app-accent); stroke: none; }
+.viz--last .dl { stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset .5s var(--anim-ease) .2s; }
+.app-btn:is(:hover, :focus-visible) .viz--last .dl { stroke-dashoffset: 0; }
+.viz--last .press { animation: sk-press .82s var(--anim-ease) infinite alternate; animation-play-state: paused; }
+.viz--last .coil  { animation: sk-coil  .82s var(--anim-ease) infinite alternate; animation-play-state: paused; }
+.app-btn:is(:hover, :focus-visible) .viz--last :is(.press, .coil) { animation-play-state: running; }
+@keyframes sk-press { to { transform: translateY(6px); } }
+@keyframes sk-coil  { to { transform: scaleY(.74); } }
+.viz--last .cap { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .3s; }
+.viz--last .cap b { font-weight: 600; color: var(--app-accent); }
+.app-btn:is(:hover, :focus-visible) .viz--last .cap { opacity: 1; }
 
 /* =========================================================================
    STIL — Terminal Modernism   (levande: scanline · caret · grid)
@@ -1507,6 +1614,180 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 [data-style="jacquard"] .system__title::before { content: "⁙ "; color: var(--jq-madder); }
 [data-style="jacquard"] .live { border-radius: 1px; background: var(--jq-madder); }
 
+/* =========================================================================
+   STIL — Sprängskissen   (cyanotypi: sidan är ett ritningsblad från ritkontoret)
+   Konceptet: en sammanställningsritning känner bara en hierarki — POS. 1 är
+   sammanställningen, resten är detaljer som INGÅR I den. Syntes är POS. 1 och
+   ritad i snitt (man ser in i navet); de tre andra är POS. 2–4 med benämning
+   efter sin funktion i maskinen. Hierarkin står dessutom i ritningens egen
+   grammatik: Syntes bär referensbeteckningen ▲A, och varje underapp bär en
+   lägestolerans ⊕ Ø0,2 A — deras läge är definierat FRÅN navet, aldrig tvärtom.
+   Stycklistan i namnrutan säger samma sak i klartext, och markerar vilken del
+   som pekas ut när man hovrar.
+   Rörelse-etik: ritstiftets. Inget lyser, inget glider — linjer dras, delar
+   gängas på plats och mått sätts. Ingen skugga finns på ett blad.
+   ========================================================================= */
+[data-style="sprangskiss"] {
+  --bg: #0E3358; --surface: #14406C; --line: #4E7FAE;
+  --text: #EAF3FB; --muted: #93B6D4; --accent: #FFFFFF;
+  --font-display: var(--font-mono); --font-body: var(--font-mono); --font-ui: var(--font-mono);
+  --btn-radius: 0px; --anim-draw: .9s; --anim-ease: cubic-bezier(.32, .72, .28, 1);
+  --sk-red: #FF7A5C; --sk-ink: #EAF3FB;
+}
+/* blåkopian: fint rutnät, grövre decimeterlinjer och ljuset från kopieringen */
+[data-style="sprangskiss"] body {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(234, 243, 251, .05) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(90deg, rgba(234, 243, 251, .05) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(0deg, rgba(234, 243, 251, .075) 0 1px, transparent 1px 45px),
+    repeating-linear-gradient(90deg, rgba(234, 243, 251, .075) 0 1px, transparent 1px 45px),
+    radial-gradient(125vmax 90vmax at 50% -14%, rgba(140, 200, 255, .17), transparent 62%),
+    linear-gradient(180deg, #0F3659, #0A2742);
+}
+[data-style="sprangskiss"] #app { overflow-x: clip; } /* ett blad rullar aldrig i sidled */
+
+/* pennorna: navet i vit tusch, detaljerna i var sin färgkrita */
+[data-style="sprangskiss"] .app-row[data-app="syntes"] { --app-accent: #FFFFFF; }
+[data-style="sprangskiss"] .app-row[data-app="signal"] { --app-accent: #FFC9B4; }
+[data-style="sprangskiss"] .app-row[data-app="todos"]  { --app-accent: #FFE7AE; }
+[data-style="sprangskiss"] .app-row[data-app="stronk"] { --app-accent: #BFE9CF; }
+
+/* --- topbaren är bladets övre textrad --- */
+[data-style="sprangskiss"] .wordmark { letter-spacing: .34em; text-transform: uppercase; font-weight: 500; }
+[data-style="sprangskiss"] .wordmark::after {
+  content: "· SAMMANSTÄLLNING"; margin-left: .8em;
+  font-size: .58em; letter-spacing: .2em; color: var(--muted); vertical-align: 12%;
+}
+[data-style="sprangskiss"] .style-switch__btn,
+[data-style="sprangskiss"] .style-switch__lock {
+  border-radius: 0; background: transparent; border-color: rgba(234, 243, 251, .45);
+}
+
+/* --- vyerna: rena linjeramar, inga skuggor och ingen fyllning --- */
+[data-style="sprangskiss"] .app-btn {
+  border: 1px solid rgba(234, 243, 251, .5);
+  background: rgba(234, 243, 251, .03);
+  box-shadow: none;
+}
+[data-style="sprangskiss"] .app-btn:is(:hover, :focus-visible) {
+  border-color: var(--app-accent);
+  background: rgba(234, 243, 251, .055);
+}
+/* tangentbordsfokus = hover: namnet viker upp och vyn tar över */
+[data-style="sprangskiss"] .app-btn:focus-visible .app-btn__name { transform: translateY(-1.9rem) scale(.78); }
+[data-style="sprangskiss"] .app-btn:focus-visible .app-btn__anim { opacity: 1; }
+[data-style="sprangskiss"] .app-btn__name {
+  font-size: 1.15rem; font-weight: 500; letter-spacing: .34em; text-indent: .34em;
+  text-transform: uppercase; color: var(--text);
+}
+[data-style="sprangskiss"] .app-btn { color: var(--muted); }
+
+/* --- POS. 1 ÄR NAVET: den enda vyn i snitt. Snittade väggar hatchas i 45°,
+       ramen dubbleras till huvudvy — resten är detaljvyer. --- */
+[data-style="sprangskiss"] .app-row[data-app="syntes"] .app-btn {
+  border-color: rgba(255, 255, 255, .92);
+  outline: 1px solid rgba(255, 255, 255, .5); outline-offset: -5px;
+  background: rgba(234, 243, 251, .05);
+}
+[data-style="sprangskiss"] .app-row[data-app="syntes"] .app-btn__fx::before {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(234, 243, 251, .32) 0 1px, transparent 1px 6px);
+  -webkit-mask-image: linear-gradient(90deg, #000 0 42px, transparent 42px calc(100% - 42px), #000 calc(100% - 42px));
+  mask-image: linear-gradient(90deg, #000 0 42px, transparent 42px calc(100% - 42px), #000 calc(100% - 42px));
+}
+
+/* vilotext: positionsnummer och benämning, som på bladet */
+[data-style="sprangskiss"] .app-btn::before {
+  position: absolute; left: 0; right: 0; bottom: 9px; z-index: 3; text-align: center;
+  font-family: var(--font-mono); font-size: .54rem; letter-spacing: .2em;
+  color: var(--muted); pointer-events: none; transition: opacity .25s ease;
+}
+[data-style="sprangskiss"] .app-btn[data-name="syntes"]::before { content: "POS. 1 · HUVUDENHET · REFERENSPLAN FÖR POS. 2–4"; color: #CBDDF0; }
+[data-style="sprangskiss"] .app-btn[data-name="signal"]::before { content: "POS. 2 · SIGNALGIVARE · INGÅR I POS. 1"; }
+[data-style="sprangskiss"] .app-btn[data-name="todos"]::before  { content: "POS. 3 · SPÄRRVERK · INGÅR I POS. 1"; }
+[data-style="sprangskiss"] .app-btn[data-name="stronk"]::before { content: "POS. 4 · FJÄDERPAKET · INGÅR I POS. 1"; }
+[data-style="sprangskiss"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
+
+/* ritningens egen grammatik för hierarkin: navet ÄR referensplanet, de tre
+   andra har bara ett läge i förhållande till det. Står kvar även vid hover. */
+[data-style="sprangskiss"] .app-btn::after {
+  position: absolute; left: 11px; top: 10px; z-index: 3;
+  font-family: var(--font-mono); font-size: .5rem; letter-spacing: .06em; line-height: 1.35;
+  color: var(--app-accent); border: 1px solid currentColor; padding: 1px 4px;
+  opacity: .8; pointer-events: none;
+}
+[data-style="sprangskiss"] .app-btn[data-name="syntes"]::after { content: "▲ │ A"; opacity: 1; }
+[data-style="sprangskiss"] .app-btn:not([data-name="syntes"])::after { content: "⊕ │ Ø0,2 │ A"; }
+
+/* --- bladet: ritningsram, zonlister, stycklista och namnruta (injiceras) --- */
+[data-style="sprangskiss"] .sk-sheet {
+  position: fixed; inset: 8px; z-index: 0; pointer-events: none;
+  font-family: var(--font-mono); color: var(--muted);
+}
+[data-style="sprangskiss"] .sk-frame {
+  position: absolute; inset: 18px; border: 1px solid rgba(234, 243, 251, .42);
+}
+[data-style="sprangskiss"] .sk-zone { position: absolute; display: flex; font-size: .46rem; letter-spacing: .1em; opacity: .6; }
+[data-style="sprangskiss"] .sk-zone b { flex: 1; display: grid; place-items: center; font-weight: 400; }
+[data-style="sprangskiss"] .sk-zone--top,
+[data-style="sprangskiss"] .sk-zone--bottom { left: 18px; right: 18px; height: 18px; }
+[data-style="sprangskiss"] .sk-zone--top { top: 0; }
+[data-style="sprangskiss"] .sk-zone--bottom { bottom: 0; }
+[data-style="sprangskiss"] .sk-zone--left,
+[data-style="sprangskiss"] .sk-zone--right { top: 18px; bottom: 18px; width: 18px; flex-direction: column; }
+[data-style="sprangskiss"] .sk-zone--left { left: 0; }
+[data-style="sprangskiss"] .sk-zone--right { right: 0; }
+[data-style="sprangskiss"] .sk-zone b + b { border-left: 1px solid rgba(234, 243, 251, .3); }
+[data-style="sprangskiss"] .sk-zone--left b + b,
+[data-style="sprangskiss"] .sk-zone--right b + b { border-left: 0; border-top: 1px solid rgba(234, 243, 251, .3); }
+
+[data-style="sprangskiss"] .sk-block {
+  position: absolute; left: 18px; bottom: 18px; width: 292px; display: none;
+  border: 1px solid rgba(234, 243, 251, .55);
+  background: rgba(10, 39, 66, .72);
+}
+[data-style="sprangskiss"] .sk-row {
+  display: grid; grid-template-columns: 26px 1fr 24px 46px; align-items: center;
+  font-size: .48rem; letter-spacing: .07em; min-height: 15px;
+}
+[data-style="sprangskiss"] .sk-row i { padding: 2px 5px; font-style: normal; border-left: 1px solid rgba(234, 243, 251, .22); }
+[data-style="sprangskiss"] .sk-row i:first-child { border-left: 0; text-align: center; }
+[data-style="sprangskiss"] .sk-row--head { border-top: 1px solid rgba(234, 243, 251, .55); border-bottom: 1px solid rgba(234, 243, 251, .55); opacity: .75; }
+[data-style="sprangskiss"] .sk-mon { opacity: 0; transition: opacity .3s ease; }
+[data-style="sprangskiss"] .sk-title { padding: 6px 7px 7px; display: grid; gap: 1px; border-top: 1px solid rgba(234, 243, 251, .3); }
+[data-style="sprangskiss"] .sk-title__name { font-size: .72rem; letter-spacing: .16em; color: var(--text); }
+[data-style="sprangskiss"] .sk-title__sub { font-size: .5rem; letter-spacing: .18em; margin-bottom: 3px; }
+[data-style="sprangskiss"] .sk-title__meta { font-size: .46rem; letter-spacing: .08em; opacity: .8; }
+@media (min-width: 1180px) { [data-style="sprangskiss"] .sk-block { display: block; } }
+
+/* bladet svarar: den vy man pekar på markeras i stycklistan. Hovras navet
+   kvitteras alla tre som monterade — sammanställningen är hel. */
+[data-style="sprangskiss"] .sk-row[data-pos] { transition: color .3s ease, background .3s ease; }
+[data-style="sprangskiss"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sk-row:not(.sk-row--head) { color: var(--text); }
+[data-style="sprangskiss"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sk-row[data-pos="2"] .sk-mon,
+[data-style="sprangskiss"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sk-row[data-pos="3"] .sk-mon,
+[data-style="sprangskiss"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sk-row[data-pos="4"] .sk-mon { opacity: .9; }
+[data-style="sprangskiss"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .sk-row[data-pos="2"],
+[data-style="sprangskiss"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .sk-row[data-pos="3"],
+[data-style="sprangskiss"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .sk-row[data-pos="4"] {
+  color: var(--text); background: rgba(234, 243, 251, .12);
+}
+
+/* --- anteckningarna: info och systemhälsa som textrutor på bladet --- */
+[data-style="sprangskiss"] .info-toggle { border-radius: 0; border-color: rgba(234, 243, 251, .45); }
+[data-style="sprangskiss"] .info-panel,
+[data-style="sprangskiss"] .system__panel {
+  border-radius: 0; border-color: rgba(234, 243, 251, .55);
+  background: rgba(10, 39, 66, .9); box-shadow: none;
+}
+[data-style="sprangskiss"] .system__toggle { border-radius: 0; border-color: rgba(234, 243, 251, .45); background: rgba(10, 39, 66, .9); }
+[data-style="sprangskiss"] .info-stack li { border-radius: 0; border-color: rgba(234, 243, 251, .35); }
+[data-style="sprangskiss"] .lang__bar, [data-style="sprangskiss"] .sys-row__bar { border-radius: 0; background: rgba(234, 243, 251, .18); }
+[data-style="sprangskiss"] .lang__bar > span, [data-style="sprangskiss"] .sys-row__bar > span { border-radius: 0; }
+[data-style="sprangskiss"] .system__title { letter-spacing: .16em; text-transform: uppercase; font-size: .8rem; }
+[data-style="sprangskiss"] .system__title::before { content: "⌗ "; color: var(--muted); }
+[data-style="sprangskiss"] .live { border-radius: 0; }
+
 /* ============================ Reduced motion ============================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
@@ -1528,4 +1809,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   /* väven blir smalare men trådarna behåller sin ordning */
   [data-style="jacquard"] .app-btn__name { font-size: 1.05rem !important; letter-spacing: .14em; }
   [data-style="jacquard"] .app-btn::before { font-size: .5rem !important; letter-spacing: .1em; }
+  /* bladet krymper till A5: ramen och positionstexten står kvar, listan vek */
+  [data-style="sprangskiss"] .app-btn__name { font-size: 1rem !important; letter-spacing: .22em; text-indent: .22em; }
+  [data-style="sprangskiss"] .app-btn::before { font-size: .46rem !important; letter-spacing: .1em; }
+  [data-style="sprangskiss"] .sk-sheet { inset: 4px; }
+  [data-style="sprangskiss"] .sk-frame { inset: 12px; }
+  [data-style="sprangskiss"] .sk-zone--top, [data-style="sprangskiss"] .sk-zone--bottom { left: 12px; right: 12px; height: 12px; }
+  [data-style="sprangskiss"] .sk-zone--left, [data-style="sprangskiss"] .sk-zone--right { top: 12px; bottom: 12px; width: 12px; }
+  [data-style="sprangskiss"] .app-row[data-app="syntes"] .app-btn__fx::before {
+    -webkit-mask-image: linear-gradient(90deg, #000 0 26px, transparent 26px calc(100% - 26px), #000 calc(100% - 26px));
+    mask-image: linear-gradient(90deg, #000 0 26px, transparent 26px calc(100% - 26px), #000 calc(100% - 26px));
+  }
 }
