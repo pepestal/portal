@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-07-27T21:47:07.067Z",
+  "generatedAt": "2026-07-27T22:38:25.385Z",
   "ecosystem": {
-    "files": 512,
-    "lines": 64048,
+    "files": 514,
+    "lines": 64619,
     "apps": 4
   },
   "projects": {
     "signal": {
       "name": "Signal",
       "available": true,
-      "files": 316,
-      "lines": 50402,
+      "files": 318,
+      "lines": 50973,
       "languages": [
         {
           "name": "TypeScript",
-          "lines": 22174
+          "lines": 22397
         },
         {
           "name": "Python",
-          "lines": 17858
+          "lines": 18071
         },
         {
           "name": "Markdown",
-          "lines": 9412
+          "lines": 9473
         },
         {
           "name": "CSS",

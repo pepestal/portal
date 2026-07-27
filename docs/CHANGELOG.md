@@ -6,6 +6,38 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- Stil `fuga` ("Fugan") — tolfte stilen i rotationen: sidan är ett **arbetsblad ur en fuga
+  i öppen partitur** (handgjort papper med formens vattrade linjer, järngallbläck brunnat
+  av tid, fyra system med altklav, tonart och taktart, klammer och systemtaktstreck, samt
+  namnruta nere till vänster). Konceptet är kontrapunktens hierarki, hårdare än någon
+  annan stils: **i en fuga finns ingen andra melodi.** Allt som klingar ÄR subjektet,
+  omskrivet. Syntes ställer det — en enda gång, i takt 1 — och de tre andra äger ingen
+  egen tonföljd alls: Signal är svaret en kvint upp (`comes`), Todos samma toner speglade
+  kring b (`inversio`), Stronk samma toner i dubbla notvärden (`augmentatio`). Det står
+  också i koden: bara `FG_SUBJ` finns, de tre räknas fram ur den. Särställningen syns i
+  vilotillståndet på tre mekaniska sätt — navets system är det enda som **har musik** på
+  bladets vänstersida, de tre bär i stället en **flerstaktspaus** vars siffra är deras
+  väntan på navet (2, 4 och 6 takter), och navet är det enda som är skrivet i **bläck**
+  medan de tre står i analyspennans kritfärger, för en härledning är en anteckning om
+  något annat. Insatserna bär dessutom sin tid i sekunder (`T. 3 · +6,7 s`), ett tal som
+  bara existerar för att navet satt `M.M. 72`. En `fuga`-enhancer injicerar bladet (fyra
+  system mätta på radernas mittlinjer, klammer, pauser, subjektet till vänster och
+  härledningarna till höger) och river det vid stilbyte; noterna skrivs bara ut när
+  marginalerna rymmer dem, annars står systemen tomma. Bladet svarar på pekaren: en
+  härledning kan **aldrig** visas utan sin källa — pekar man på någon av de tre skrivs
+  deras insats ut till höger samtidigt som subjektet till vänster mörknar till fullt
+  bläck; pekar man på navet skrivs alla tre på en gång och navets eget system får
+  strettot. Fyra hovrar i samma notspråk: strettot där fyra insatser ljuder samtidigt, var
+  och en i sin apps kritfärg (Syntes), svaret som stiger en kvint ur blyertskällan med den
+  enda formelbrytande tonen inringad, det tonala svaret (Signal), noterna som faller till
+  sin spegelbild kring en ritad axel (Todos), och notvärdena som fördubblas — huvudena
+  öppnar sig, två taktstreck till måste dras (Stronk). Rörelse-etiken är skrivandets:
+  ingenting glider och ingenting lyser, noterna sätts en i taget **i takt**, och
+  fördröjningen räknas ur notens läge i takten — därför tar augmentationen exakt dubbelt
+  så lång tid att skriva ut som subjektet. All notskrift är ritad geometri (klav, förtecken,
+  nothuvuden, balkar), inte ett notteckensnitt. Skelettet orört; `:is(:hover,
+  :focus-visible)` genomgående och skrivtakten nollas under `prefers-reduced-motion`.
+  Arkiverad som skärmdumpar i `variations/fuga/`.
 - Stil `bikupa` ("Bikupan") — elfte stilen i rotationen: sidan är en **vaxkaka i motljus**
   (ljuset uppifrån, kupans mörker i kanterna, cellrutnät i ljust vax, foder lagrat högt
   och ramens ovanlist överst med biodlarens krita). Konceptet ligger i vad cellerna

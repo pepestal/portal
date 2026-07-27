@@ -19,6 +19,7 @@ export const styles = [
   { id: 'sprangskiss',  label: 'Sprängskissen' },
   { id: 'synop',        label: 'Synoptiken' },
   { id: 'bikupa',       label: 'Bikupan' },
+  { id: 'fuga',         label: 'Fugan' },
 ]
 
 export const DEFAULT_STYLE = 'terminal'

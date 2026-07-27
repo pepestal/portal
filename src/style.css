@@ -8,13 +8,15 @@
      editorial     graverad linje ritas   bläck-bock + strike  tally-streck (loggbok)
      bank          area-kurva sveper      progress-ring sluts  viktplattor staplas
      singularitet  puls + kurs tickar     listan bockar sig    skivstång gör reps
-     (kvitto/vaxel/jacquard/sprangskiss/synop: se respektive stilblock längre ned)
+     (kvitto/vaxel/jacquard/sprangskiss/synop/bikupa/fuga: se respektive stilblock nedan)
 
    Rörelse-etik: terminal snappar (stegat), editorial ritar långsamt, bank
    glider med tyngd, jacquard går taktfast i vävens takt, sprangskiss rör sig
-   som ett ritstift — linjer dras, delar gängas på plats, mått sätts — och synop
+   som ett ritstift — linjer dras, delar gängas på plats, mått sätts — synop
    rör sig som en analys: pennan drar en isobar i taget, och det enda som verkligen
-   rör sig är hela systemet. Att lägga till en stil/app = markup i main.js + block här.
+   rör sig är hela systemet — och fuga rör sig som en penna över notplanet: noterna
+   sätts en i taget, i takt, aldrig snabbare än satsen tillåter.
+   Att lägga till en stil/app = markup i main.js + block här.
    ========================================================================= */
 
 /* ---------- Tokens (default = terminal) ---------- */
@@ -121,7 +123,8 @@ body {
 [data-style="jacquard"] .av[data-for="jacquard"],
 [data-style="sprangskiss"] .av[data-for="sprangskiss"],
 [data-style="synop"] .av[data-for="synop"],
-[data-style="bikupa"] .av[data-for="bikupa"] { display: grid; }
+[data-style="bikupa"] .av[data-for="bikupa"],
+[data-style="fuga"] .av[data-for="fuga"] { display: grid; }
 
 /* --- Info-toggle + panel (droppar under knappen) --- */
 .info-toggle {
@@ -429,6 +432,20 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .viz--svansdans .cap b { font-weight: 600; color: var(--bk-pollen); }
 .app-btn:is(:hover, :focus-visible) .viz--svansdans .cap { opacity: 1; }
 
+/* fuga · strettot: subjektet skrivs ut i bläck, och innan det tystnat faller de
+   tre andra in ovanpå — var och en i sin apps kritfärg, var och en fyra
+   åttondelar efter den förra. Det är den enda knappen där alla fyra ljuder
+   samtidigt, och de ljuder samma tonföljd. */
+.viz--stretto { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--stretto svg { width: min(288px, 76vw); height: auto; overflow: visible; }
+.viz--stretto .dux { color: var(--fg-black); }
+.viz--stretto .insats { opacity: .8; }
+.viz--stretto .insats[data-app="signal"] { color: var(--fg-bla); --d: 6; }
+.viz--stretto .insats[data-app="todos"]  { color: var(--fg-gron); --d: 12; }
+.viz--stretto .insats[data-app="stronk"] { color: var(--fg-violett); --d: 18; }
+.app-btn:is(:hover, :focus-visible) .viz--stretto .not,
+.app-btn:is(:hover, :focus-visible) .viz--stretto .balk { opacity: 1; }
+
 /* =========================================================================
    ANIMATIONER — SIGNAL
    ========================================================================= */
@@ -600,6 +617,23 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .viz--nektar .cap b { font-weight: 600; color: var(--bk-nektar); }
 .app-btn:is(:hover, :focus-visible) .viz--nektar .cap { opacity: 1; }
 
+/* fuga · comes: subjektet ligger kvar i rödkrita under, och ur det stiger svaret
+   en kvint upp — varje not lyfter sig från källans plats till sin egen. En enda
+   ton bryter formeln (kvinttonen besvaras med tonikan) och ringas in med
+   pennan. Även avvikelsen är alltså mätt från navet. */
+.viz--comes { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--comes svg { width: min(288px, 76vw); height: auto; overflow: visible; }
+.viz--comes .ur { color: var(--fg-penna); opacity: 0; transition: opacity .3s ease; }
+.viz--comes .svar { color: var(--fg-bla); }
+.viz--comes .tonal {
+  fill: none; stroke: var(--fg-penna); stroke-width: 1.2;
+  stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset .5s var(--anim-ease) 1.15s;
+}
+.viz--comes .tlbl { fill: var(--fg-penna); font-family: var(--font-mono); font-size: 6.4px; letter-spacing: .1em; text-anchor: middle; opacity: 0; transition: opacity .3s ease 1.5s; }
+.app-btn:is(:hover, :focus-visible) .viz--comes .ur { opacity: .45; }
+.app-btn:is(:hover, :focus-visible) .viz--comes .tonal { stroke-dashoffset: 0; }
+.app-btn:is(:hover, :focus-visible) .viz--comes .tlbl { opacity: 1; }
+
 /* =========================================================================
    ANIMATIONER — TODOS
    ========================================================================= */
@@ -768,6 +802,22 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .viz--forsegling .cap { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .11em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease 1.2s; }
 .viz--forsegling .cap b { font-weight: 600; color: var(--bk-vax-ljus); }
 .app-btn:is(:hover, :focus-visible) .viz--forsegling .cap { opacity: 1; }
+
+/* fuga · inversio: samma tonföljd vänd upp och ner. Spegelaxeln dras först —
+   utan den är speglingen inte mätbar — och sedan faller varje not till sin
+   spegelbild. Uppgången blir nedgång. Inversionen äger ingen egen tonföljd,
+   bara subjektets och en axel. */
+.viz--inversio { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--inversio svg { width: min(288px, 76vw); height: auto; overflow: visible; }
+.viz--inversio .ur { color: var(--fg-penna); opacity: 0; transition: opacity .3s ease; }
+.viz--inversio .svar { color: var(--fg-gron); }
+.viz--inversio .axel {
+  stroke: var(--fg-penna); stroke-width: 1; stroke-dasharray: 3 2.6;
+  opacity: 0; transition: opacity .3s ease .12s;
+}
+.viz--inversio .albl { fill: var(--fg-penna); font-family: var(--font-mono); font-size: 6.4px; letter-spacing: .1em; opacity: 0; transition: opacity .3s ease .3s; }
+.app-btn:is(:hover, :focus-visible) .viz--inversio .ur { opacity: .45; }
+.app-btn:is(:hover, :focus-visible) .viz--inversio :is(.axel, .albl) { opacity: 1; }
 
 /* =========================================================================
    ANIMATIONER — STRONK
@@ -939,6 +989,24 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .viz--pollenlast .cap { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease 1.25s; }
 .viz--pollenlast .cap b { font-weight: 600; color: var(--bk-pollen); }
 .app-btn:is(:hover, :focus-visible) .viz--pollenlast .cap { opacity: 1; }
+
+/* fuga · augmentatio: inte en enda ton tillkommer — varje notvärde fördubblas.
+   Noterna glider isär till dubbel bredd, huvudena öppnar sig till halv- och
+   helnoter, och två taktstreck till måste dras för att rymma samma tema.
+   Spännet under växer från två takter till fyra. Tyngdlyftarens variant. */
+.viz--augmentatio { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.viz--augmentatio svg { width: min(288px, 76vw); height: auto; overflow: visible; }
+.viz--augmentatio .ur { color: var(--fg-penna); opacity: 0; transition: opacity .3s ease; }
+.viz--augmentatio .svar { color: var(--fg-violett); }
+.viz--augmentatio .taktstreck { stroke: var(--fg-notplan); stroke-width: 1; opacity: 0; transition: opacity .25s ease calc(var(--t) * var(--fg-puls)); }
+.viz--augmentatio .spann {
+  fill: none; stroke: var(--fg-penna); stroke-width: 1; opacity: 0;
+  transform-box: view-box; transform-origin: 56px 40px; transform: scaleX(.5);
+  transition: opacity .3s ease .2s, transform .85s var(--anim-ease) .34s;
+}
+.app-btn:is(:hover, :focus-visible) .viz--augmentatio .ur { opacity: .45; }
+.app-btn:is(:hover, :focus-visible) .viz--augmentatio .taktstreck { opacity: .85; }
+.app-btn:is(:hover, :focus-visible) .viz--augmentatio .spann { opacity: 1; transform: none; }
 
 /* =========================================================================
    STIL — Terminal Modernism   (levande: scanline · caret · grid)
@@ -2546,8 +2614,232 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 [data-style="bikupa"] .system__title::before { content: "⬡ "; color: var(--bk-nektar); }
 [data-style="bikupa"] .live { background: var(--bk-nektar); }
 
+/* =========================================================================
+   STIL — Fugan   (arbetsbladet: sidan är en fuga i öppen partitur)
+   Hierarkin är kontrapunktens och den är hårdare än någon annan stils: i en
+   fuga finns ingen andra melodi. Allt som klingar ÄR subjektet, omskrivet.
+   Syntes ställer det — en enda gång, i takt 1, i bläck — och de tre andra
+   äger ingen egen tonföljd alls: Signal är svaret en kvint upp, Todos är
+   samma toner speglade kring b, Stronk är samma toner i dubbla notvärden.
+   Ta bort subjektet och de tre har bokstavligen ingenting att skriva.
+   Det syns i vilotillståndet på tre sätt: navet är den enda stämma som har
+   musik på vänstersidan, de tre bär i stället en flerstaktspaus vars siffra
+   är deras väntan på navet (2, 4 och 6 takter), och navet är det enda som är
+   skrivet i BLÄCK — de tre står i analyspennans kritfärger, för en härledning
+   är en anteckning om något annat.
+   Rörelse-etik: skrivandets. Ingenting glider och ingenting lyser; noterna
+   sätts en i taget, i takt, och fördröjningen räknas ur notens läge i takten.
+   Därför tar augmentationen exakt dubbelt så lång tid att skriva ut — precis
+   som den tar dubbelt så lång tid att spela.
+   ========================================================================= */
+[data-style="fuga"] {
+  --bg: #D7C9A4; --surface: #EBE0C0; --line: #B09A6E;
+  --text: #2A2013; --muted: #6E5C3E; --accent: #9C2F22;
+  --font-display: var(--font-serif); --font-body: var(--font-serif); --font-ui: var(--font-mono);
+  --btn-radius: 1px; --anim-draw: .9s; --anim-ease: cubic-bezier(.3, .72, .34, 1);
+  --fg-black: #2A2013;      /* järngallbläck, brunnat av tid */
+  --fg-notplan: #6E5F42;    /* notplanets tryckta linjer, blekare än bläcket */
+  --fg-penna: #9C2F22;      /* analyspennans rödkrita */
+  --fg-bla: #1F4C7A; --fg-gron: #3D6438; --fg-violett: #63356E;
+  --fg-puls: .045s;         /* en åttondel, i skrivtakt */
+}
+/* handgjort papper: vattrade linjer från formens tråd, ljuset från fönstret
+   uppe till vänster och ålderns fläckar nedåt kanterna */
+[data-style="fuga"] body {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(94, 74, 40, .045) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(0deg, rgba(94, 74, 40, .03) 0 1px, transparent 1px 27px),
+    radial-gradient(58vmax 42vmax at 16% 8%, rgba(255, 250, 230, .55), transparent 64%),
+    radial-gradient(50vmax 40vmax at 92% 96%, rgba(122, 88, 34, .2), transparent 62%),
+    linear-gradient(174deg, #E2D5B1, #CBB88C);
+}
+[data-style="fuga"] .topbar { position: relative; z-index: 1; padding-top: calc(1.5rem + 22px); }
+[data-style="fuga"] .wordmark { letter-spacing: .04em; font-weight: 600; }
+[data-style="fuga"] .wordmark::after {
+  content: "· PARTITUR"; margin-left: .7em;
+  font-family: var(--font-mono); font-size: .55em; letter-spacing: .2em; color: var(--muted); vertical-align: 14%;
+}
+[data-style="fuga"] .style-switch__btn,
+[data-style="fuga"] .style-switch__lock { border-radius: 1px; background: rgba(255, 249, 230, .5); border-color: rgba(120, 98, 58, .45); }
+
+/* bläck åt navet, krita åt de tre: den som är källa skrivs för alltid, den som
+   är härledd antecknas */
+[data-style="fuga"] .app-row[data-app="syntes"] { --app-accent: var(--fg-black); }
+[data-style="fuga"] .app-row[data-app="signal"] { --app-accent: var(--fg-bla); }
+[data-style="fuga"] .app-row[data-app="todos"]  { --app-accent: var(--fg-gron); }
+[data-style="fuga"] .app-row[data-app="stronk"] { --app-accent: var(--fg-violett); }
+
+/* --- knappen: en inklistrad lapp på partituret. Halvgenomskinlig, så systemet
+       under läses genom pappret; vid hover blir den ogenomskinlig och det som
+       står skrivet på lappen tar över. --- */
+[data-style="fuga"] .app-btn {
+  background: rgba(240, 231, 202, .78);
+  border: 1px solid rgba(112, 90, 52, .4);
+  box-shadow: 0 2px 6px rgba(58, 42, 16, .17), inset 0 0 0 1px rgba(255, 250, 232, .45);
+  transition: background .45s ease, box-shadow .45s var(--anim-ease), border-color .4s ease;
+}
+[data-style="fuga"] .app-btn:is(:hover, :focus-visible) {
+  background: rgba(247, 240, 216, .99);
+  border-color: rgba(72, 56, 28, .6);
+  box-shadow: 0 7px 18px rgba(58, 42, 16, .24);
+}
+[data-style="fuga"] .app-btn:focus-visible { outline-color: var(--fg-penna); }
+[data-style="fuga"] .app-btn:focus-visible .app-btn__name { transform: translateY(-1.9rem) scale(.78); }
+[data-style="fuga"] .app-btn:focus-visible .app-btn__anim { opacity: 1; }
+[data-style="fuga"] .app-btn__fx { display: none; }
+/* notexemplet behöver hela lappens nederdel: system + underskrift ryms inte i
+   skelettets normala animationsyta */
+[data-style="fuga"] .app-btn__anim { inset: 2.15rem 0 .35rem; }
+[data-style="fuga"] .app-btn__name {
+  font-size: 1.5rem; font-weight: 500; letter-spacing: .06em; color: var(--fg-black);
+  font-style: italic; /* stämbeteckningen skrivs för hand, inte sätts */
+}
+/* Navets lapp är renskriften: ogenomskinligt papper, dubbel bläckram, och en
+   aning större — allt annat på bladet är anteckningar om den. */
+[data-style="fuga"] .app-row[data-app="syntes"] .app-btn {
+  background: rgba(248, 241, 218, .97); transform: scale(1.015);
+  box-shadow: 0 3px 9px rgba(58, 42, 16, .22), inset 0 0 0 1px rgba(255, 250, 232, .6), inset 0 0 0 4px rgba(42, 32, 19, .1);
+  border-color: rgba(52, 40, 20, .62);
+}
+
+/* rollen: vad lappen bär, och varifrån den har det */
+[data-style="fuga"] .app-btn::before {
+  position: absolute; left: 0; right: 0; bottom: 9px; z-index: 3; text-align: center;
+  padding: 0 1rem; font-family: var(--font-mono); font-size: .52rem; letter-spacing: .12em;
+  color: rgba(58, 44, 22, .78); pointer-events: none; transition: opacity .3s ease;
+}
+[data-style="fuga"] .app-btn[data-name="syntes"]::before { content: "DUX · HÄRIFRÅN HÄMTAR DE TRE SIN TONFÖLJD"; color: var(--fg-black); }
+[data-style="fuga"] .app-btn[data-name="signal"]::before { content: "COMES · SUBJEKTET EN KVINT UPP, TONALT SVAR"; }
+[data-style="fuga"] .app-btn[data-name="todos"]::before  { content: "INVERSIO · SUBJEKTET SPEGLAT KRING b"; }
+[data-style="fuga"] .app-btn[data-name="stronk"]::before { content: "AUGMENTATIO · SUBJEKTET I DUBBLA NOTVÄRDEN"; }
+[data-style="fuga"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
+/* hörnnoteringen: insatsen i takter och i sekunder. Sekunderna finns bara för
+   att navet satt ett tempo — utan M.M. 72 är "+13,3 s" inte ett tal. */
+[data-style="fuga"] .app-btn::after {
+  position: absolute; left: 11px; top: 9px; z-index: 3;
+  font-family: var(--font-mono); font-size: .5rem; letter-spacing: .08em;
+  color: var(--fg-penna); border: 1px solid currentColor; border-radius: 1px; padding: 1px 5px;
+  pointer-events: none; opacity: .85;
+}
+[data-style="fuga"] .app-btn[data-name="syntes"]::after { content: "T. 1 · M.M. 72"; color: var(--fg-black); opacity: 1; font-weight: 700; }
+[data-style="fuga"] .app-btn[data-name="signal"]::after { content: "T. 3 · +6,7 s"; }
+[data-style="fuga"] .app-btn[data-name="todos"]::after  { content: "T. 5 · +13,3 s"; }
+[data-style="fuga"] .app-btn[data-name="stronk"]::after { content: "T. 7 · +20,0 s"; }
+
+/* --- notskriftens grammatik: samma i knappen som på bladet --- */
+[data-style="fuga"] .linje { stroke: var(--fg-notplan); stroke-width: 1; opacity: .8; }
+[data-style="fuga"] .klav :is(rect, path) { fill: var(--fg-black); stroke: none; }
+[data-style="fuga"] .fortecken { fill: none; stroke: var(--fg-black); stroke-width: 1.3; stroke-linecap: round; }
+[data-style="fuga"] .taktart { fill: var(--fg-black); font-family: var(--font-serif); font-weight: 600; text-anchor: middle; dominant-baseline: central; }
+[data-style="fuga"] .not ellipse { fill: currentColor; }
+[data-style="fuga"] .not--oppen ellipse { fill: transparent; stroke: currentColor; stroke-width: 1.6; }
+[data-style="fuga"] :is(.skaft, .balk) { stroke: currentColor; stroke-linecap: round; }
+[data-style="fuga"] .skaft { stroke-width: 1.15; }
+[data-style="fuga"] .balk { stroke-width: 2.8; }
+
+/* skrivandet i knappen: noten sätts på källans plats och flyttar sig sedan till
+   sin egen — operationen syns, inte bara resultatet */
+[data-style="fuga"] .app-btn :is(.not, .balk) {
+  opacity: 0; transition: opacity .16s ease calc((var(--t) + var(--d, 0)) * var(--fg-puls));
+}
+[data-style="fuga"] .app-btn .svar .not {
+  transform-box: view-box; transform: translate(var(--dx, 0), var(--dy, 0));
+  transition: opacity .16s ease calc(var(--t) * var(--fg-puls)),
+              transform .55s var(--anim-ease) calc(var(--t) * var(--fg-puls) + .26s);
+}
+[data-style="fuga"] .app-btn:is(:hover, :focus-visible) :is(.not, .balk) { opacity: 1; }
+[data-style="fuga"] .app-btn:is(:hover, :focus-visible) .svar .not { transform: none; }
+/* augmentationen öppnar noterna medan de glider isär: fylld fjärdedel blir
+   ihålig halvnot, och det är hela skillnaden mellan de två stämmorna */
+[data-style="fuga"] .viz--augmentatio .svar .not--oppen ellipse {
+  fill: currentColor; stroke-width: 0;
+  transition: fill .45s ease calc(var(--t) * var(--fg-puls) + .3s), stroke-width .45s ease calc(var(--t) * var(--fg-puls) + .3s);
+}
+[data-style="fuga"] .app-btn:is(:hover, :focus-visible) .viz--augmentatio .svar .not--oppen ellipse { fill: transparent; stroke-width: 1.6; }
+[data-style="fuga"] .cap { font-family: var(--font-mono); font-size: .54rem; letter-spacing: .1em; color: var(--muted); opacity: 0; transition: opacity .4s ease 1.3s; }
+[data-style="fuga"] .cap b { font-weight: 600; color: var(--fg-black); font-variant-numeric: tabular-nums; }
+[data-style="fuga"] .app-btn:is(:hover, :focus-visible) .cap { opacity: 1; }
+
+/* --- bladet under allt (injiceras): fyra system, klammer, pauser, namnruta --- */
+[data-style="fuga"] .fg-ark { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+[data-style="fuga"] .fg-ark i { font-style: normal; }
+[data-style="fuga"] .fg-huvud {
+  position: absolute; left: 0; right: 0; top: 0; height: 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  border-bottom: 1px solid rgba(88, 68, 34, .3);
+  font-family: var(--font-mono); font-size: .5rem; letter-spacing: .18em; color: var(--muted);
+  white-space: nowrap; overflow: hidden;
+}
+[data-style="fuga"] .fg-titel { color: var(--fg-black); }
+[data-style="fuga"] .fg-fot {
+  position: absolute; left: clamp(1.25rem, 4vw, 2.5rem); bottom: 1.4rem;
+  display: grid; gap: 3px; max-width: 46vw;
+  font-family: var(--font-mono); font-size: .5rem; letter-spacing: .13em; color: var(--muted);
+  border-left: 2px solid rgba(88, 68, 34, .4); padding-left: .6rem;
+}
+[data-style="fuga"] .fg-fot b:first-child { color: var(--fg-black); font-weight: 600; }
+[data-style="fuga"] .fg-plan { position: absolute; inset: 0; width: 100%; height: 100%; }
+[data-style="fuga"] .fg-klammer { fill: none; stroke: var(--fg-black); stroke-width: 2.2; opacity: .75; }
+[data-style="fuga"] .fg-systemstreck { stroke: var(--fg-black); stroke-width: 1.3; opacity: .75; }
+[data-style="fuga"] .fg-slut { stroke-width: 3; }
+/* flerstaktspausen: siffran är rösten väntan på navet, mätt i takter */
+[data-style="fuga"] .fg-paus rect { fill: var(--fg-notplan); }
+[data-style="fuga"] .fg-paus line { stroke: var(--fg-notplan); stroke-width: 1.4; }
+[data-style="fuga"] .fg-paus text { fill: var(--fg-black); font-family: var(--font-serif); font-weight: 600; font-size: 15px; text-anchor: middle; }
+[data-style="fuga"] .fg-tystnad { opacity: .62; transition: opacity .45s ease; }
+[data-style="fuga"] .fg-etikett { fill: var(--muted); font-family: var(--font-mono); font-size: 8px; letter-spacing: .14em; text-anchor: middle; }
+[data-style="fuga"] .fg-takt { fill: var(--fg-penna); font-family: var(--font-mono); font-size: 10px; text-anchor: middle; }
+[data-style="fuga"] .fg-lbl { fill: var(--fg-penna); font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .12em; }
+[data-style="fuga"] .fg-klaff { fill: none; stroke: var(--fg-penna); stroke-width: 1; opacity: .85; }
+[data-style="fuga"] .fg-dux { color: var(--fg-black); opacity: .62; transition: opacity .5s ease; }
+[data-style="fuga"] .fg-harledning[data-app="signal"] { color: var(--fg-bla); }
+[data-style="fuga"] .fg-harledning[data-app="todos"]  { color: var(--fg-gron); }
+[data-style="fuga"] .fg-harledning[data-app="stronk"] { color: var(--fg-violett); }
+[data-style="fuga"] .fg-harledning[data-app="syntes"] { color: var(--fg-black); }
+[data-style="fuga"] .fg-insats[data-app="signal"] { color: var(--fg-bla); }
+[data-style="fuga"] .fg-insats[data-app="todos"]  { color: var(--fg-gron); }
+[data-style="fuga"] .fg-insats[data-app="stronk"] { color: var(--fg-violett); }
+[data-style="fuga"] .fg-insats { opacity: .82; }
+
+/* --- bladet svarar på pekaren -----------------------------------------------
+   En härledning kan aldrig visas utan sin källa: pekar man på någon av de tre
+   skrivs deras insats ut till höger, OCH subjektet till vänster mörknar till
+   fullt bläck — det är det man egentligen tittar på. Pekar man på navet skrivs
+   alla tre på en gång, och navets eget system får strettot: fyra insatser som
+   ljuder samtidigt. Det är syntesen, och bara navet kan hålla den. */
+[data-style="fuga"] .fg-harledning { --fg-skriv: 0; }
+[data-style="fuga"] .fg-harledning :is(.not, .balk) {
+  opacity: var(--fg-skriv); transition: opacity .18s ease calc((var(--t) + var(--d, 0)) * var(--fg-puls));
+}
+[data-style="fuga"] .fg-lbl { opacity: var(--fg-skriv); transition: opacity .3s ease; }
+[data-style="fuga"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .fg-harledning[data-app="signal"],
+[data-style="fuga"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .fg-harledning[data-app="todos"],
+[data-style="fuga"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .fg-harledning[data-app="stronk"],
+[data-style="fuga"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .fg-harledning { --fg-skriv: 1; }
+[data-style="fuga"] body:has(.app-btn:is(:hover, :focus-visible)) .fg-dux { opacity: 1; }
+[data-style="fuga"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="signal"],
+[data-style="fuga"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="todos"],
+[data-style="fuga"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="stronk"],
+[data-style="fuga"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .fg-tystnad { opacity: 1; }
+
+/* --- anteckningsblocken: info och systemhälsa som marginalanteckningar --- */
+[data-style="fuga"] .info-toggle { border-radius: 50%; border-color: rgba(112, 90, 52, .5); background: rgba(255, 249, 230, .5); }
+[data-style="fuga"] .info-panel,
+[data-style="fuga"] .system__panel {
+  border-radius: 2px; border-color: rgba(112, 90, 52, .5);
+  background: rgba(243, 235, 209, .97); box-shadow: 0 10px 26px rgba(58, 42, 16, .28);
+}
+[data-style="fuga"] .system__toggle { border-radius: 50%; border-color: rgba(112, 90, 52, .5); background: rgba(243, 235, 209, .97); }
+[data-style="fuga"] .info-stack li { border-radius: 1px; border-color: rgba(112, 90, 52, .4); }
+[data-style="fuga"] .system__title { font-family: var(--font-serif); font-style: italic; }
+[data-style="fuga"] .live { background: var(--fg-penna); }
+
 /* ============================ Reduced motion ============================ */
 @media (prefers-reduced-motion: reduce) {
+  /* skrivtakten ligger i fördröjningar, inte i varaktigheter — de nollas separat */
+  [data-style="fuga"] { --fg-puls: 0s; }
+  [data-style="fuga"] :is(.tonal, .tlbl, .albl, .spann, .cap, .taktstreck) { transition-delay: 0s !important; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 
@@ -2599,4 +2891,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   [data-style="bikupa"] .app-btn[data-name="signal"]::before { content: "NEKTARCELL → DANSGOLVET"; }
   [data-style="bikupa"] .app-btn[data-name="todos"]::before  { content: "YNGELCELL ← DANSGOLVET"; }
   [data-style="bikupa"] .app-btn[data-name="stronk"]::before { content: "POLLENCELL ← DANSGOLVET"; }
+  /* bladet i fickformat: systemen står kvar men noterna är redan bortgallrade
+     av bredmåttet, och rollerna kortas till operationen — den är hela poängen */
+  [data-style="fuga"] .app-btn__name { font-size: 1.15rem !important; letter-spacing: .04em; }
+  [data-style="fuga"] .app-btn::before { font-size: .44rem !important; letter-spacing: .08em; bottom: 7px; }
+  [data-style="fuga"] .app-btn::after { left: 8px; top: 8px; font-size: .44rem; }
+  [data-style="fuga"] .app-btn[data-name="syntes"]::before { content: "DUX · SUBJEKTET STÄLLS HÄR"; }
+  [data-style="fuga"] .app-btn[data-name="signal"]::before { content: "COMES · SUBJEKTET EN KVINT UPP"; }
+  [data-style="fuga"] .app-btn[data-name="todos"]::before  { content: "INVERSIO · SUBJEKTET SPEGLAT"; }
+  [data-style="fuga"] .app-btn[data-name="stronk"]::before { content: "AUGMENTATIO · DUBBLA NOTVÄRDEN"; }
+  [data-style="fuga"] .fg-fot { display: none; }
 }

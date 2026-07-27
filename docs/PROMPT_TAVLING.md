@@ -44,8 +44,10 @@ tvärtom. Tidigare bidrag har gjort navet till kvittots inringade rad, till
 himlainstrumentets lysande centrum, till telefonistens växelbord, till inslaget
 som binder de tre varptrådarna till tyg och till ritningens POS. 1 — sammanställningen
 som de tre detaljerna måttsätts från, till väderkartans lågtryckscentrum L, som
-isobarerna sluter sig kring och de tre fronterna utgår ur, och till vaxkakans dansgolv —
-den enda cell som hålls TOM, eftersom den inte lagrar en sak utan en riktning; gör något
+isobarerna sluter sig kring och de tre fronterna utgår ur, till vaxkakans dansgolv —
+den enda cell som hålls TOM, eftersom den inte lagrar en sak utan en riktning — och till
+fugans subjekt, den enda tonföljd som finns på bladet, som de tre andra rösterna bara är
+omskrivningar av (svar, spegling, förstoring); gör något
 eget: en wrap kring de andra, källan de springer ur, dirigenten, blodomloppet. Detta är
 tävlingens konceptuella kärna.
 
@@ -59,7 +61,7 @@ det syns att de inte kan definiera sig själva.
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
 `bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
-`bikupa`) — inte för inspiration utan för att
+`bikupa`, `fuga`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Tolka uppgiften oväntat; en stark idé
 konsekvent genomförd slår tio effekter.
 
