@@ -14,6 +14,12 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
 - Arkitekturen: en rad i `src/styles.js` + ett `[data-style="<id>"]`-block i
   `src/style.css` + vid behov en enhancer i `src/main.js` (följ mönstret från
   singularitet/kvitto: injicera DOM vid stilbyte, städa i cleanup).
+- **Flyttar du raderna: sätt `width` själv.** Skelettets `.app-row` bär en bredd
+  avsedd för den lodräta kolumnen (`min(100%, knapp + gap + info)` ≈ 500 px). Lägger
+  din stil raderna på tvären blir den bredden flexbasis per rad, och radbrytningen
+  slår till långt innan knapparna faktiskt är för breda (så tappade `singularitet`
+  sin fjärde port). Kolla horisontell scroll på smal skärm efteråt: `.info-panel`
+  är ankrad mitt i raden, så en rad ute i kanten kan knuffa ut den ur sidan.
 - **Skelettets markup rörs aldrig.** Vill du bygga en helscen som ersätter det
   (à la `orrery`) måste avsteget flaggas och dokumenteras som förankrat undantag.
 - Alla **fyra appar** (Syntes, Signal, Todos, Stronk) ska vara klickbara länkar
