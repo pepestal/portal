@@ -131,6 +131,20 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 - CLAUDE.md: dokumenterat undantag för byggtidsläsning av grann-repona (ej runtime-koppling).
 
 ### Fixat
+- **Horisontell scroll på smal skärm i alla stilar.** Knappens bredd var `min(480px, 86vw)`
+  medan raden också rymmer mellanrum + info-knapp och `.rows` har sidopadding — `vw` räknar
+  dessutom in rullisten. Summan blev bredare än sidan under ~580px, så varje besök på mobil
+  fick en sidledes rullist. Radens geometri ligger nu i fyra tokens (`--btn-max`, `--row-gap`,
+  `--info-size`, `--rows-pad`); raden kapas till `min(100%, knapp + gap + info)` och knappen
+  krymper med den (`min-width: 0`) i stället för att räkna i `vw`. Samma `vw`-fälla rättad i
+  kvittots kassaapparat (`min(520px, 96vw)` → `96%`), och jacquards varplager följer nu
+  knappens bredd via samma tokens så trådarna står kvar i linje med panelerna i alla bredder.
+  Verifierat 0 px överskott i alla nio stilar vid 320/360/390/430/560/600 px, även med
+  info-panel och systemhälsa öppna.
+- Animationerna kunde klippas av knappkanten på smal skärm när knappen krympte
+  (`.viz`-måtten är satta mot en bredare knapp) — `.viz, .viz svg { max-width: 100% }`.
+- Stilnamnet i switchern spillde ut över låsknappen i kvitto på smal skärm; kortas nu med
+  ellips i stället. 11ch-golvet finns kvar där det får plats, så switchern inte hoppar.
 - Orrery kraschade i produktion: `canvas.clientWidth = innerWidth` kastar TypeError i
   strict mode (ES-moduler) — tilldelningen till read-only-egenskapen borttagen. Den
   fristående `design-lab/orrery.html` kör sloppy mode där felet tystas, vilket är exakt

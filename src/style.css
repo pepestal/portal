@@ -32,6 +32,11 @@
   --btn-radius: 8px;
   --anim-draw: .8s; --anim-ease: cubic-bezier(.6, 0, .4, 1);
   --app-accent: var(--accent);
+
+  /* Radens geometri på ett ställe. Raden kapas till `100%` av .rows innehålls-
+     bredd, så knapp + mellanrum + info-knapp aldrig blir bredare än sidan —
+     `vw` duger inte, den räknar in rullisten och ger horisontell scroll. */
+  --btn-max: 480px; --row-gap: .9rem; --info-size: 30px; --rows-pad: 1.25rem;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,7 +59,7 @@ body {
 }
 .wordmark { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; letter-spacing: .02em; }
 
-.style-switch { display: flex; align-items: center; gap: .4rem; }
+.style-switch { display: flex; align-items: center; gap: .4rem; min-width: 0; }
 .style-switch__btn, .style-switch__lock {
   font-family: var(--font-ui); font-size: .8rem; color: var(--text);
   background: var(--surface); border: 1px solid var(--line); border-radius: 7px;
@@ -62,17 +67,26 @@ body {
   transition: border-color .25s ease, color .25s ease, background .25s ease;
 }
 .style-switch__btn { min-width: 30px; }
-.style-switch__name { font-family: var(--font-ui); font-size: .74rem; color: var(--muted); min-width: 11ch; text-align: center; }
+/* 11ch golv så switchern inte hoppar när stilnamnet byter längd. Där golvet
+   släpps (kvitto på smal skärm) kortas namnet i stället för att knuffa ut sidan. */
+.style-switch__name {
+  font-family: var(--font-ui); font-size: .74rem; color: var(--muted);
+  min-width: 11ch; text-align: center;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
 .style-switch__btn:hover, .style-switch__lock:hover { border-color: var(--accent); color: var(--accent); }
 .style-switch__lock.is-locked { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
 
-.rows { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(1.25rem, 3vw, 2.25rem); padding: 2rem 1.25rem 4rem; }
-.app-row { position: relative; display: flex; align-items: center; gap: .9rem; }
+.rows { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(1.25rem, 3vw, 2.25rem); padding: 2rem var(--rows-pad) 4rem; }
+.app-row {
+  position: relative; display: flex; align-items: center; gap: var(--row-gap);
+  width: min(100%, calc(var(--btn-max) + var(--row-gap) + var(--info-size)));
+}
 
 /* --- Den stora knappen (samma storlek i alla stilar) --- */
 .app-btn {
   position: relative; overflow: hidden; isolation: isolate;
-  width: min(480px, 86vw); min-height: 116px;
+  width: var(--btn-max); min-width: 0; min-height: 116px; /* min-width:0 → får krympa med raden */
   display: grid; place-items: center;
   text-decoration: none; color: var(--muted);
   background: var(--surface); border: 1px solid var(--line);
@@ -94,6 +108,9 @@ body {
 .app-btn__fx { position: absolute; inset: 0; z-index: 0; pointer-events: none; border-radius: inherit; overflow: hidden; }
 
 .av { position: absolute; inset: 0; display: none; place-items: center; }
+/* Ingen animation får bli bredare än knappen den bor i — vizzarnas `vw`-mått är
+   satta mot en bredare knapp och skulle annars klippas på smal skärm. */
+.viz, .viz svg { max-width: 100%; }
 [data-style="terminal"] .av[data-for="terminal"],
 [data-style="editorial"] .av[data-for="editorial"],
 [data-style="bank"] .av[data-for="bank"],
@@ -105,7 +122,7 @@ body {
 
 /* --- Info-toggle + panel (droppar under knappen) --- */
 .info-toggle {
-  flex: none; width: 30px; height: 30px; border-radius: 50%;
+  flex: none; width: var(--info-size); height: var(--info-size); border-radius: 50%;
   background: transparent; border: 1px solid var(--line); color: var(--muted);
   font-family: var(--font-ui); font-size: .8rem; font-style: italic; cursor: pointer;
   transition: border-color .3s ease, color .3s ease, background .3s ease;
@@ -969,7 +986,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 /* --- topbaren är kassaapparaten; kvittot matas ut ur slitsen --- */
 [data-style="kvitto"] .topbar {
   position: relative; z-index: 5;
-  width: min(520px, 96vw); margin: 0 auto;
+  width: min(520px, 96%); margin: 0 auto; /* %, inte vw — vw räknar in rullisten */
   padding: .85rem 1.1rem 1.2rem;
   background: linear-gradient(180deg, #3D4148, #23262B 55%, #101215);
   border-radius: 0 0 14px 14px;
@@ -1574,8 +1591,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
        alla panelerna och syns i gliporna mellan dem --- */
 [data-style="jacquard"] .jq-loom { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 [data-style="jacquard"] .jq-column {
-  position: absolute; top: 0; bottom: 0; width: min(480px, 86vw);
-  left: calc(50% - 15px - .45rem); transform: translateX(-50%); /* i linje med panelerna */
+  /* samma bredd som knappen får av raden — .jq-loom fyller samma yta som .rows */
+  position: absolute; top: 0; bottom: 0;
+  width: min(var(--btn-max), calc(100% - var(--rows-pad) * 2 - var(--row-gap) - var(--info-size)));
+  left: calc(50% - var(--info-size) / 2 - var(--row-gap) / 2); transform: translateX(-50%); /* i linje med panelerna */
 }
 [data-style="jacquard"] .jq-loom .th {
   position: absolute; top: 0; bottom: 0; left: var(--x); width: 2px; margin-left: -1px;
@@ -1644,7 +1663,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
     radial-gradient(125vmax 90vmax at 50% -14%, rgba(140, 200, 255, .17), transparent 62%),
     linear-gradient(180deg, #0F3659, #0A2742);
 }
-[data-style="sprangskiss"] #app { overflow-x: clip; } /* ett blad rullar aldrig i sidled */
 
 /* pennorna: navet i vit tusch, detaljerna i var sin färgkrita */
 [data-style="sprangskiss"] .app-row[data-app="syntes"] { --app-accent: #FFFFFF; }
@@ -1794,6 +1812,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 
 /* ============================ Responsivt ============================ */
+/* Extremt smal skärm: kassaapparaten hålls kvar på en rad (den är en apparat,
+   inte en spalt) — ramen kryper ihop i stället för att knuffa ut sidan. */
+@media (max-width: 360px) {
+  [data-style="kvitto"] .topbar { padding-left: .7rem; padding-right: .7rem; }
+}
 @media (max-width: 560px) {
   .topbar { flex-direction: column; align-items: flex-start; gap: .8rem; }
   .app-btn__name { font-size: 1.2rem !important; }
