@@ -37,6 +37,8 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
   räknas, fyra kopior gör det inte.
 - Sidan förblir statisk. Respektera `prefers-reduced-motion` och ge
   tangentbordsfokus samma upplevelse som hover.
+- **Texten är ransonerad.** Se ”Skriv inte det du kan visa” nedan — den är inte en
+  stilfråga utan en regel, och den kontrolleras av `npm run check:copy` i bygget.
 
 ## Syntes är navet — ge den en särställning
 
@@ -64,6 +66,36 @@ tre underapparna bär en egenskap som bevisligen kommer ur navet (en lägestoler
 referensplanet, ett tryck som lutar in mot L, en bäring som mättes på dansgolvet), så att
 det syns att de inte kan definiera sig själva.
 
+**Men:** de exemplen är *geometri*, inte text. En lägestolerans är två tecken i ett
+hörn, inte en mening om referensplan. Läs nästa avsnitt innan du skriver en enda
+bokstav på skärmen — det är den vanligaste och dyraste missen i tävlingen.
+
+## Skriv inte det du kan visa
+
+Bidraget bedöms på vad som **syns**, inte på vad det påstår om sig självt. Tretton
+bidrag in är det här den enskilt största kvalitetsskillnaden mellan stilarna, och
+den vanligaste anledningen till att ett i övrigt skickligt bygge känns fjantigt.
+
+- **Ingen förklaringsrad under knappen.** `.app-btn::before` med en mening i är
+  förbjuden mark. Navets särställning ska framgå av geometri, färg, läge eller
+  rörelse — aldrig av en rad som talar om att den är navet.
+- **Etiketter är mätvärden, inte meningar.** Riktmärke ~16 tecken, inga verb, inget
+  efterled efter tankstreck. `⊕ Ø0,2 A`, `+0,04 s`, `1002 ↘`, `T. 3` är rätt.
+  `DUX · HÄRIFRÅN HÄMTAR DE TRE SIN TONFÖLJD` är fel — och skrev du "härifrån",
+  "här blir", "utgår från" eller "får sin … av" har du med största sannolikhet just
+  ersatt en bild med en bildtext.
+- **Hover-texten beskriver inte bilden.** Man tittar redan på den. Siffra och term
+  räcker: `P-VÅG +40 ms`, inte `FÖRMAK · P-VÅG 40 ms EFTER NODEN — ALDRIG FÖRE`.
+- **Förklara aldrig din egen metafor.** Ingen ordboksfotnot, ingen etymologi, inget
+  skämt som pekar på att det är ett skämt, ingen rad som argumenterar för konceptet.
+- **Rollspela inte.** Påhittade firmanamn, "kassör: <ditt modellnamn>", interna
+  skämt om tävlingen eller om att sidan saknar backend — bort. Formen bär humorn;
+  copy som pekar på skämtet dödar det.
+- Konceptet förklaras i `docs/CHANGELOG.md` och i kodkommentarer, **inte på skärmen**.
+
+Testet innan du lämnar in: täck över all text i din stil. Syns det fortfarande vilken
+rad som är navet? Gör det inte det är det geometrin som ska fixas, inte texten.
+
 ## Tävlingens kärna: konceptet
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
@@ -77,9 +109,12 @@ konsekvent genomförd slår tio effekter.
 1. **Verifiera live:** kör dev-servern, ta skärmdumpar av grundläget + alla
    fyra hover-tillstånden (forcera `:hover` vid behov), och regressionskolla
    minst en befintlig stil.
-2. **Uppdatera docs** enligt CLAUDE.md: `CHANGELOG.md`, `STATUS.md`,
+2. **Kör `npm run check:copy`.** Den failar på för långa etiketter och på de
+   formuleringar som listas ovan. Den ingår i `prebuild` — ett bidrag som inte
+   passerar den går inte att deploya.
+3. **Uppdatera docs** enligt CLAUDE.md: `CHANGELOG.md`, `STATUS.md`,
    `ROADMAP.md`, `README.md` vid behov.
-3. **Arkivera bidraget:** spara en representativ skärmdump (gärna med hover
+4. **Arkivera bidraget:** spara en representativ skärmdump (gärna med hover
    aktiv) i `variations/<stil-id>/`. Fristående kodversioner av bidraget görs
    inte — stilen i produktion ÄR bidraget.
 
