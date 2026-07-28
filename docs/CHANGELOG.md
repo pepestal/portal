@@ -6,6 +6,24 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Stil: Älven** (`alv`, femtonde bidraget) — en driftbild över ett vattendrag i
+  mörker. Syntes är **källan**: KM 0 som kilometertalen räknas från och den enda
+  raden uppströms om allt; underapparna är **biflöden** med var sitt vatten (klart
+  fjällvatten, humusbrunt myrvatten, grön glaciärmjölk). Navmekaniken är
+  **konservering som geometri**: enhancern ritar varje gren med bredden k × rader
+  ur `stats.json` (samma k för alla fyra), vattnen blandas inte vid sammanflödena
+  utan ligger kvar som band — huvudfårans bredd ÄR summan av delarna, och
+  pegelplåtarna skriver samma aritmetik i riktiga tal (4 470 → 57 2xx → 59 1xx →
+  66 4xx, identiskt med systemhälsan). Pekas ett biflöde ut spåras dess vatten
+  hela vägen genom fåran och tillskottet (`+52 xxx`) skrivs vid sammanflödet;
+  pekas källan ut tänds hela systemet. Hovers: älvens längsprofil som stegar i
+  grenarnas färger vid varje sammanflöde (syntes), vårflodens hydrograf med
+  HQ-linje (signal), flottningens räkneverk med drivande stockar (todos),
+  turbinen under last med fallhöjden 171 m = 712 − 541 ur hörntaggarnas höjdtal
+  (stronk). Kartlagret mäts i DOM:en, ritas om vid resize/scroll och viker sig
+  helt när vänstermarginalen inte rymmer fåran; tangentbordsfokus ger samma
+  upplevelse som hover och stilens berättarfördröjningar nollas vid
+  reduced motion.
 - **Kaosklass i tävlingen.** Stilsystemet delas i två pooler: klassisk och kaos. En
   stilmodul som sätter `chaos: true` hamnar i kaos-poolen och visas bara när den nya
   **Kaos-togglen** i topbaren är på; pilar/rotation bläddrar inom aktiv pool, och

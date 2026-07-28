@@ -32,8 +32,10 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   finns, som de tre är omskrivningar av (fuga), sinusknutan — taktgivaren som inte går att
   avbilda, så allt man ser av den ÄR de tre andra (sinus), nyckelplåten K — plåten som bär
   konturen och all text, den de tre färgplåtarna riktas mot och den enda som inte kan
-  ligga ur pass (tryckark).
-- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): fjorton stilar — `terminal`
+  ligga ur pass (tryckark), källan — KM 0 som kilometertalen räknas från, där de tre
+  biflödenas vatten ligger kvar som band i fåran så att älvens bredd ÄR summan av
+  delarna (alv).
+- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): femton stilar — `terminal`
   (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
   `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära
   portar, stjärnfält, levande siffror), `kvitto` (Kvittot — ur tävlingsbidraget
@@ -69,7 +71,12 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   står för KEY, inte black, och Syntes är nyckelplåten — den som bär konturen och all text
   medan C/Y/M bara bär färg. De tre är vinkelmätta mot nyckelns 45° och vandrar ur pass
   med varsin färgad dubbelkontur; nyckeln kan per definition inte ligga snett, för den är
-  nollan de ställs in efter).
+  nollan de ställs in efter) och `alv` (Älven — en driftbild över ett vattendrag i
+  mörker: Syntes är källan, KM 0 som kilometertalen räknas från, underapparna är
+  biflöden med var sitt vatten. Grenarna ritas med bredden k × rader ur stats.json,
+  vattnen blandas inte vid sammanflödena utan ligger kvar som band — huvudfårans
+  bredd ÄR summan av delarna, och pegelplåtarna skriver samma aritmetik i riktiga
+  tal, identiska med systemhälsans).
   Varje stil bär egen
   palett, typografi och animationsuttryck under sin `[data-style]`. Skelettet står still
   för alla **utom `orrery`**, som är en helscen och medvetet ersätter det (döljer
@@ -84,7 +91,7 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)). Kaos-poolen ligger bakom en **Kaos-toggle**
   i topbaren och har egen rotation; `?style=` och låset följer stilens klass.
   **Inga kaosbidrag finns ännu** — togglen är avstängd tills det första landar.
-- **Femtiosex unika hover-animationer** — femtiotvå i skelett-matrisen (fyra appar × tretton stilar,
+- **Sextio unika hover-animationer** — femtiosex i skelett-matrisen (fyra appar × fjorton skelett-stilar,
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
   singularitet injicerar stjärnfält/parallax/3D-tilt och tickande siffror (kurs, reps);
@@ -124,6 +131,12 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   marginalen (smal skärm) hoppas instrumenten över och hörnstämpeln bär vinkeln ensam.
   Rastercellen ≈ 9 px står i både CSS (`--tr-cell`) och JS (`TR_CELL`) och måste hållas
   lika. Hovras navet dras hela arket i pass via `:has`. Delar count-up.
+  alv injicerar kartlagret (källpunkt på navets radmitt, fyra grenar strukna med bredden
+  k × rader ur stats, pegelplåtar med kumulativ summa efter varje sammanflöde, fotrad med
+  avläsningsdatum), mätt i DOM:en och omritat vid resize/scroll — hovras ett biflöde
+  spåras dess vatten genom hela fåran och tillskottet skrivs vid sammanflödet; hovras
+  källan tänds alla fyra. Ryms inte fåran i vänstermarginalen döljs lagret helt. Delar
+  count-up.
 - **En stil = en modul (2026-07-28):** per-stil-koden bor i `src/styles/<id>.js` +
   `src/styles/<id>.css`; `styles.js` är registret, `shared.js` det lilla som delas, och
   `main.js` (234 rader) vet inget om enskilda stilar. Nya bidrag rör aldrig `main.js`
@@ -149,8 +162,8 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 1. **Fler stilar** — `singularitet` (fjärde), `kvitto` (femte), `orrery` (sjätte,
    första helscenen) och `vaxel` (sjunde) kom 2026-07-23, `jacquard` (åttonde)
    2026-07-26 samt `sprangskiss` (nionde), `synop` (tionde), `bikupa` (elfte)
-   2026-07-27 samt `fuga` (tolfte), `sinus` (trettonde) och `tryckark` (fjortonde)
-   2026-07-28; en ny skelett-stil =
+   2026-07-27 samt `fuga` (tolfte), `sinus` (trettonde), `tryckark` (fjortonde)
+   och `alv` (femtonde) 2026-07-28; en ny skelett-stil =
    modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
    `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
 2. **Första kaosbidraget** — kaosklassens infrastruktur (pool + toggle) är på plats

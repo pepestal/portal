@@ -1,0 +1,285 @@
+/* =========================================================================
+   STIL — Älven   (driftbilden: sidan är ett vattendrag i mörker, mätt i pegel)
+   Hierarkin ligger i hydrologin. Syntes är KÄLLAN — punkten där älven rinner
+   upp, KM 0 som alla kilometertal räknas från och den enda rad som ligger
+   uppströms om allt. De tre underapparna är BIFLÖDEN: var och en bär sitt
+   eget vatten (klart fjällvatten, brunt myrvatten, grön glaciärmjölk) och
+   ingen av dem når havet annat än genom navets fåra.
+   Det mekaniska beviset är konservering: varje gren ritas med en bredd
+   proportionell mot appens verkliga radantal ur stats.json, och vid ett
+   sammanflöde blandas vattnen inte (som Rio Negro/Solimões) utan ligger kvar
+   som synliga band i älven — huvudfårans bredd ÄR summan av delarna, mätbar
+   med ögat. Pegelstationerna längs fåran skriver samma aritmetik i siffror:
+   4 470 → 56 932 → 58 793 → 66 108, identiskt med systemhälsans rader.
+   Rörelse-etik: vattnets. Ingenting hoppar — allt rinner, alltid nedströms.
+   Strömmen syns bara när någon pekar; i vila står kartan stilla som en
+   driftbild gör.
+   ========================================================================= */
+[data-style="alv"] {
+  --bg: #071110; --surface: #0D1C1A; --line: #23413C;
+  --text: #D8EAE5; --muted: #64857D; --accent: #5FD9C4;
+  --font-display: var(--font-sans); --font-body: var(--font-sans); --font-ui: var(--font-mono);
+  --btn-radius: 3px; --anim-draw: 1s; --anim-ease: cubic-bezier(.3, .7, .25, 1);
+  /* vattnen: fyra flöden, fyra färger — det är så man ser uppströms ursprung
+     i en verklig älv, långt efter att grenarna gått ihop */
+  --alv-kalla: #C9F2E7;  /* källvatten — klarast av allt */
+  --alv-sig:   #4EC3E6;  /* fjällvatten — kallt och blått */
+  --alv-myr:   #C9963F;  /* myrvatten — humusbrunt */
+  --alv-glac:  #7EDCA4;  /* glaciärmjölk — grönvit av stenmjöl */
+}
+/* natten över avrinningsområdet: en svag ljusning där vattnet går, mörker mot
+   kanterna, och driftcentralens blyga rutnät under alltihop */
+[data-style="alv"] body {
+  background-image:
+    radial-gradient(70vmax 60vmax at 12% 30%, rgba(95, 217, 196, .055), transparent 62%),
+    radial-gradient(90vmax 70vmax at 50% 112%, rgba(2, 6, 5, .85), transparent 64%),
+    repeating-linear-gradient(0deg, rgba(216, 234, 229, .017) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(90deg, rgba(216, 234, 229, .017) 0 1px, transparent 1px 56px),
+    linear-gradient(180deg, #0A1614, #071110 55%, #050C0B);
+}
+[data-style="alv"] .wordmark { letter-spacing: .04em; font-weight: 600; }
+[data-style="alv"] .wordmark::after {
+  content: "· PEGELNÄT"; margin-left: .7em;
+  font-family: var(--font-mono); font-size: .55em; letter-spacing: .2em; color: var(--muted); vertical-align: 14%;
+}
+[data-style="alv"] .style-switch__btn,
+[data-style="alv"] .style-switch__lock {
+  border-radius: 3px; background: rgba(6, 14, 13, .5); border-color: rgba(95, 217, 196, .28);
+}
+
+/* varje rad bär sitt eget vatten — samma färg i knappens kant, i grenen ute i
+   kartan och i bandet nere i huvudfåran */
+[data-style="alv"] .app-row[data-app="syntes"] { --app-accent: var(--alv-kalla); }
+[data-style="alv"] .app-row[data-app="signal"] { --app-accent: var(--alv-sig); }
+[data-style="alv"] .app-row[data-app="todos"]  { --app-accent: var(--alv-myr); }
+[data-style="alv"] .app-row[data-app="stronk"] { --app-accent: var(--alv-glac); }
+
+/* --- knappen: en mätstation vid sitt vatten. Flödet går åt vänster — mot
+       fåran — så vattnet står i knappens vänsterkant och tonar av inåt --- */
+[data-style="alv"] .app-btn {
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--app-accent) 13%, var(--surface)), var(--surface) 44%);
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--app-accent) 72%, transparent);
+}
+[data-style="alv"] .app-btn:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--app-accent) 55%, var(--line));
+  box-shadow: inset 3px 0 0 var(--app-accent), 0 0 22px color-mix(in srgb, var(--app-accent) 14%, transparent);
+}
+[data-style="alv"] .app-btn__name { font-weight: 600; letter-spacing: .03em; color: var(--text); }
+/* tangentbordet får samma vatten som pekaren: fokus lyfter namnet och tänder
+   animationen precis som hover — skelettets fokusring står orörd ovanpå */
+[data-style="alv"] .app-btn:focus-visible .app-btn__name { transform: translateY(-1.9rem) scale(.78); }
+[data-style="alv"] .app-btn:focus-visible .app-btn__anim { opacity: 1; }
+/* källans rad: grundvattnet står redan i dagen — ett ljus ur vänsterkanten som
+   ingen annan rad har, och strax utanför den ligger själva källpunkten */
+[data-style="alv"] .app-row[data-app="syntes"] .app-btn {
+  background:
+    radial-gradient(220px 130% at 0% 50%, color-mix(in srgb, var(--alv-kalla) 20%, transparent), transparent 70%),
+    var(--surface);
+}
+
+/* hörnetiketten: läget i älvens eget koordinatsystem. Kilometertalen räknas
+   från källan och höjderna faller nedströms — KM 0 finns bara på en rad, och
+   ingen av de andra kan ange sitt läge utan den. */
+[data-style="alv"] .app-btn::after {
+  position: absolute; right: 14px; top: 10px; z-index: 3;
+  font-family: var(--font-mono); font-size: .5rem; letter-spacing: .07em;
+  color: var(--app-accent); border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+  background: rgba(4, 11, 10, .55); padding: 1px 5px;
+  opacity: .85; pointer-events: none;
+}
+[data-style="alv"] .app-btn[data-name="syntes"]::after { content: "KM 0 · 712 M Ö.H."; opacity: 1; font-weight: 700; }
+[data-style="alv"] .app-btn[data-name="signal"]::after { content: "KM 14 · 634 M Ö.H."; }
+[data-style="alv"] .app-btn[data-name="todos"]::after  { content: "KM 23 · 598 M Ö.H."; }
+[data-style="alv"] .app-btn[data-name="stronk"]::after { content: "KM 31 · 541 M Ö.H."; }
+
+/* --- kartlagret (injiceras): grenarna, källpunkten, pegelplåtarna ------------
+   Ritas i DOM-mått av enhancern och om vid resize/scroll. Grenarnas bredd är
+   data: px = k × rader, samma k för alla fyra — summan i fåran är därmed
+   geometri, inte påstående. --- */
+[data-style="alv"] .alv-lager { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+[data-style="alv"] .alv-lager.is-dold { display: none; }
+[data-style="alv"] .alv-karta { position: absolute; inset: 0; width: 100%; height: 100%; }
+[data-style="alv"] .alv-gren { color: var(--alv-kalla); }
+[data-style="alv"] .alv-gren[data-app="signal"] { color: var(--alv-sig); }
+[data-style="alv"] .alv-gren[data-app="todos"]  { color: var(--alv-myr); }
+[data-style="alv"] .alv-gren[data-app="stronk"] { color: var(--alv-glac); }
+[data-style="alv"] .alv-gren .vatten {
+  fill: none; stroke: currentColor; stroke-linecap: butt; opacity: .5;
+  transition: opacity .5s ease, filter .5s ease;
+}
+/* strömmen: en tunn drift av ljus inne i grenen, nedströms, bara när någon
+   pekar — i vila rör sig ingenting på en karta */
+[data-style="alv"] .alv-gren .strom {
+  fill: none; stroke: color-mix(in srgb, #FFFFFF 55%, currentColor); stroke-width: 1.6;
+  stroke-linecap: round; stroke-dasharray: 3 14; opacity: 0; transition: opacity .4s ease;
+}
+@keyframes alv-drift { to { stroke-dashoffset: -17; } }
+/* källpunkten: kartografens källmärke — ring i ring, vattnet stiger ur marken */
+[data-style="alv"] .alv-kallpunkt circle { fill: var(--bg); stroke: var(--alv-kalla); stroke-width: 1.4; }
+[data-style="alv"] .alv-kallpunkt .ring {
+  fill: none; opacity: .45; transform-box: fill-box; transform-origin: center;
+  transition: opacity .4s ease, transform .6s var(--anim-ease);
+}
+/* pegelplåtarna: stationens avläsning. Talen är stats.json rakt av — samma
+   siffror som systemhälsan — och varje plåt sitter där fåran just växt. */
+[data-style="alv"] .alv-karta text {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em;
+  fill: var(--muted); paint-order: stroke; stroke: #071110; stroke-width: 4px; stroke-linejoin: round;
+  transition: fill .4s ease, opacity .4s ease;
+}
+[data-style="alv"] .alv-pegel line { stroke: var(--muted); stroke-width: 1; opacity: .6; }
+[data-style="alv"] .alv-pegel .mynning { fill: var(--text); font-weight: 700; }
+/* tillskottet: grenens eget tal, framme först när grenen pekas ut */
+[data-style="alv"] .alv-gren .inc { fill: currentColor; opacity: 0; }
+
+/* --- kartan svarar på pekaren -----------------------------------------------
+   Pekas ett biflöde ut lyser HELA dess väg: grenen, bandet nedför huvudfåran,
+   tillskottet vid sammanflödet. Vattnet är spårbart därför att det aldrig
+   blandas. Pekas källan ut tänds alltihop — hela systemet är hennes vatten. */
+[data-style="alv"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .alv-gren[data-app="signal"] .vatten,
+[data-style="alv"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .alv-gren[data-app="todos"] .vatten,
+[data-style="alv"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .alv-gren[data-app="stronk"] .vatten,
+[data-style="alv"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .alv-gren .vatten {
+  opacity: .96; filter: drop-shadow(0 0 7px color-mix(in srgb, currentColor 55%, transparent));
+}
+[data-style="alv"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .alv-gren[data-app="signal"] :is(.strom, .inc),
+[data-style="alv"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .alv-gren[data-app="todos"] :is(.strom, .inc),
+[data-style="alv"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .alv-gren[data-app="stronk"] :is(.strom, .inc),
+[data-style="alv"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .alv-gren :is(.strom, .inc) { opacity: 1; }
+[data-style="alv"] body:has(.app-btn:is(:hover, :focus-visible)) .alv-gren .strom { animation: alv-drift 1.1s linear infinite; }
+[data-style="alv"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .alv-kallpunkt .ring { opacity: .9; transform: scale(1.45); }
+[data-style="alv"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .alv-karta text { fill: var(--text); }
+
+/* fotraden: nätets omfattning och när det lästes av — bägge sanna, ur stats */
+[data-style="alv"] .alv-fot {
+  position: absolute; left: clamp(1.25rem, 4vw, 2.5rem); bottom: 1rem;
+  font-style: normal; font-family: var(--font-mono); font-size: .5rem;
+  letter-spacing: .16em; color: var(--muted); white-space: nowrap;
+  /* plåten ligger där fåran går — chippet håller den läsbar mot vattnet */
+  background: rgba(7, 17, 16, .78); padding: 2px 7px; border-radius: 2px;
+}
+
+/* --- journalen: info och systemhälsa som driftcentralens paneler --- */
+[data-style="alv"] .info-toggle { border-color: rgba(95, 217, 196, .3); background: rgba(6, 14, 13, .5); }
+[data-style="alv"] .info-panel,
+[data-style="alv"] .system__panel {
+  border-radius: 6px; border-color: rgba(95, 217, 196, .28);
+  background: rgba(9, 20, 18, .94); box-shadow: 0 12px 34px rgba(0, 0, 0, .5);
+}
+[data-style="alv"] .system__toggle { border-color: rgba(95, 217, 196, .3); background: rgba(9, 20, 18, .94); }
+[data-style="alv"] .system__title::before { content: "≋ "; color: var(--accent); }
+[data-style="alv"] .live { background: var(--accent); }
+[data-style="alv"] .info-stack li { border-color: rgba(95, 217, 196, .25); }
+
+/* ---------- Hover-animationer: fyra hydrometriska mätningar ---------- */
+
+/* alv · längsprofilen: hela älven i ett diagram — flödet mot kilometertalet.
+   Kurvan stegar uppåt exakt där grenarna kommer in, och varje steg är ritat i
+   SITT vatten. Detta är den enda vy som rymmer alla fyra talen: syntesen. */
+.viz--langsprofil { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+/* profilens ruta är högre än de andra (kilometeraxeln) — smalare bredd håller
+   den plus cap-raden inom knappens animationsyta */
+.viz--langsprofil svg { width: min(238px, 62vw); height: auto; overflow: visible; }
+.viz--langsprofil .ax { stroke: var(--muted); stroke-width: 1; opacity: .5; }
+.viz--langsprofil .km { fill: var(--muted); font-family: var(--font-mono); font-size: 5.6px; letter-spacing: .08em; text-anchor: middle; }
+.viz--langsprofil .profil {
+  fill: none; stroke: var(--alv-kalla); stroke-width: 1.6; stroke-linejoin: round;
+  stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.2s var(--anim-ease);
+}
+.viz--langsprofil .stig { stroke-width: 2.4; opacity: 0; transition: opacity .3s ease; }
+.viz--langsprofil .stig[data-app="signal"] { stroke: var(--alv-sig); transition-delay: .34s; }
+.viz--langsprofil .stig[data-app="todos"]  { stroke: var(--alv-myr); transition-delay: .62s; }
+.viz--langsprofil .stig[data-app="stronk"] { stroke: var(--alv-glac); transition-delay: .84s; }
+.viz--langsprofil .punkt { fill: var(--alv-kalla); opacity: 0; transition: opacity .3s ease 1.05s; }
+.app-btn:is(:hover, :focus-visible) .viz--langsprofil .profil { stroke-dashoffset: 0; }
+.app-btn:is(:hover, :focus-visible) .viz--langsprofil :is(.stig, .punkt) { opacity: 1; }
+.viz--langsprofil .cap { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease 1.1s; }
+.viz--langsprofil .cap b { font-weight: 600; color: var(--alv-kalla); }
+.app-btn:is(:hover, :focus-visible) .viz--langsprofil .cap { opacity: 1; }
+
+/* alv · hydrografen: vårfloden går genom stationen — kurvan stiger brant,
+   toppar vid HQ-strecket och sjunker undan långsamt. En köpsignal ritad som
+   vatten: en topp man mäter, inte en åsikt man har. */
+.viz--hydrograf { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.viz--hydrograf svg { width: min(276px, 72vw); height: auto; overflow: visible; }
+.viz--hydrograf .ax { stroke: var(--muted); stroke-width: 1; opacity: .5; }
+.viz--hydrograf .kurva {
+  fill: none; stroke: var(--alv-sig); stroke-width: 1.8; stroke-linejoin: round;
+  stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.15s var(--anim-ease);
+}
+.viz--hydrograf .hq { stroke: var(--alv-sig); stroke-width: 1; stroke-dasharray: 3 3; opacity: 0; transition: opacity .4s ease .55s; }
+.viz--hydrograf .hqlbl { fill: var(--alv-sig); font-family: var(--font-mono); font-size: 6px; letter-spacing: .1em; text-anchor: end; opacity: 0; transition: opacity .4s ease .55s; }
+.viz--hydrograf .topp { fill: var(--alv-sig); opacity: 0; transition: opacity .3s ease .6s; }
+.app-btn:is(:hover, :focus-visible) .viz--hydrograf .kurva { stroke-dashoffset: 0; }
+.app-btn:is(:hover, :focus-visible) .viz--hydrograf :is(.hq, .hqlbl) { opacity: .9; }
+.app-btn:is(:hover, :focus-visible) .viz--hydrograf .topp { opacity: 1; animation: alv-puls 1.6s ease-out .6s infinite; }
+@keyframes alv-puls { 0%, 100% { r: 2.2; } 50% { r: 3.4; } }
+.viz--hydrograf .cap { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease 1.05s; }
+.viz--hydrograf .cap b { font-weight: 600; color: var(--alv-sig); }
+.app-btn:is(:hover, :focus-visible) .viz--hydrograf .cap { opacity: 1; }
+
+/* alv · flottningen: uppgifterna är timmer — diskreta stockar som driver
+   nedströms (åt vänster, mot fåran) och räknas i grinden en och en. Det är
+   samma vatten som bär dem alla; räkneverket bara bokför det. */
+.viz--flottning { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.viz--flottning svg { width: min(276px, 72vw); height: auto; overflow: hidden; }
+.viz--flottning .grind line { stroke: var(--alv-myr); stroke-width: 2; opacity: .85; }
+.viz--flottning .grind .balk { stroke-width: 1; stroke-dasharray: 2 3; opacity: .5; }
+.viz--flottning .stock {
+  fill: color-mix(in srgb, var(--alv-myr) 72%, #5A3A10); stroke: rgba(0, 0, 0, .4); stroke-width: .6;
+}
+.viz--flottning .yta { stroke: var(--alv-myr); stroke-width: 1; opacity: .3; }
+.app-btn:is(:hover, :focus-visible) .viz--flottning .stock {
+  animation: alv-flotta 3.4s linear infinite;
+  animation-delay: calc(var(--i) * -0.68s);
+}
+@keyframes alv-flotta {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  30%  { transform: translate(-100px, -.8px) rotate(-.6deg); }
+  65%  { transform: translate(-215px, .8px) rotate(.5deg); }
+  100% { transform: translate(-330px, 0) rotate(0deg); }
+}
+.viz--flottning .cap { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .9s; }
+.viz--flottning .cap b { font-weight: 600; color: var(--alv-myr); }
+.app-btn:is(:hover, :focus-visible) .viz--flottning .cap { opacity: 1; }
+
+/* alv · turbinen: styrkan är vattnets arbete. Tilloppstuben faller in från
+   källans höjd, löphjulet går runt under last och utloppet driver vidare
+   nedströms. Fallet 171 m är höjdtalens egen differens: 712 − 541. */
+.viz--turbin { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.viz--turbin svg { width: min(276px, 72vw); height: auto; overflow: visible; }
+.viz--turbin .tub { fill: none; stroke: var(--alv-glac); stroke-width: 3; stroke-linecap: round; opacity: .55; }
+.viz--turbin .utlopp { fill: none; stroke: var(--alv-glac); stroke-width: 3; stroke-linecap: round; opacity: .35; }
+.viz--turbin .utstrom {
+  fill: none; stroke: color-mix(in srgb, #FFFFFF 55%, var(--alv-glac)); stroke-width: 1.4;
+  stroke-linecap: round; stroke-dasharray: 3 12; opacity: 0; transition: opacity .4s ease .5s;
+}
+.viz--turbin .hjul { color: var(--alv-glac); }
+.viz--turbin .hjul .rim { fill: none; stroke: currentColor; stroke-width: 1.6; }
+.viz--turbin .hjul .blad { fill: currentColor; }
+.viz--turbin .nav { fill: var(--text); }
+.viz--turbin .rot { transform-box: view-box; transform-origin: 40px 24px; }
+.viz--turbin .varv { fill: var(--muted); font-family: var(--font-mono); font-size: 6px; letter-spacing: .1em; text-anchor: end; opacity: 0; transition: opacity .4s ease .45s; }
+.app-btn:is(:hover, :focus-visible) .viz--turbin .rot { animation: alv-varv 1.1s linear infinite; }
+.app-btn:is(:hover, :focus-visible) .viz--turbin .utstrom { opacity: .9; animation: alv-drift 1s linear infinite; }
+.app-btn:is(:hover, :focus-visible) .viz--turbin .varv { opacity: 1; }
+@keyframes alv-varv { to { transform: rotate(360deg); } }
+.viz--turbin .cap { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease 1s; }
+.viz--turbin .cap b { font-weight: 600; color: var(--alv-glac); }
+.app-btn:is(:hover, :focus-visible) .viz--turbin .cap { opacity: 1; }
+
+/* ---------- Reduced motion: berättartakten ligger i fördröjningar — de nollas
+   här så att allt står framme direkt; själva rörelsedödandet gör skelettet ---------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-style="alv"] :is(.stig, .punkt, .cap, .hq, .hqlbl, .topp, .varv, .utstrom, .inc, .strom) { transition-delay: 0s !important; }
+}
+
+/* ---------- Responsivt: kartlagret sköts av enhancern (döljs när marginalen
+   inte rymmer fåran); knappens vattenkant och etiketterna bär då konceptet ---------- */
+@media (max-width: 560px) {
+  [data-style="alv"] .app-btn__name { font-size: 1.1rem !important; }
+  [data-style="alv"] .app-btn::after { right: 8px; top: 8px; font-size: .44rem; }
+  [data-style="alv"] .alv-fot { display: none; }
+}
