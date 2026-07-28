@@ -234,7 +234,7 @@ export default {
           <clipPath id="tk-s-lupp"><circle cx="${lx}" cy="${ly}" r="${lr}" /></clipPath>
         </defs>
         ${ordning.map(([, b, , , dx, dy]) => `<g class="kors" style="${off(dx, dy)};stroke:${TR_FARG[b]}">
-          ${trKors(cx, cy, b === 'K' ? 12 : 10)}</g>`).join('')}
+          ${trKors(cx, cy, 11)}</g>`).join('')}
         <g clip-path="url(#tk-s-lupp)">
           ${ordning.map(([, b, , , dx, dy]) => `<g class="lager" style="${off(dx, dy)}">
             <rect x="${lx - 26}" y="${ly - 26}" width="52" height="52" fill="url(#tk-s-${b})" /></g>`).join('')}
