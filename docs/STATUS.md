@@ -91,7 +91,8 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   CLAUDE.md/styles.js.
 - **Rotation:** slumpad stil vid varje besök (undviker samma som förra). Switcher i
   topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage);
-  `?style=<id>` deep-linkar.
+  `?style=<id>` deep-linkar. Tangentbord: ←/→ bläddrar i aktiv pool, ↑/↓ växlar
+  mellan vanligt läge och kaos.
 - **Två tävlingsklasser (2026-07-28):** *klassisk* (klär skelettet, vanliga
   rotationen — [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md)) och *kaos* (`chaos: true`
   i modulen — inget skelett, fritt mönsterbrott, bara de fyra länkarna heliga;

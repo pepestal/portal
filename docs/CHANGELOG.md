@@ -6,6 +6,10 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- Bind piltangent ↑/↓ till lägesväxlingen: samma sak som Kaos-knappen — växlar
+  mellan vanligt läge och kaos och slumpar en stil ur den nya poolen. ←/→
+  bläddrar som förut inom aktiv pool. Tangenterna släpps igenom i textfält och
+  när kaos-poolen är tom, så scroll/markörnavigation inte kapas i onödan.
 - **Kaosstil: Pangea** (`pangea`, första kaosbidraget) — sidan har ingen bakgrund.
   Mönsterbrottet: varje pixel i viewporten navigerar. Det som ser ut som bakgrund
   är smält berg, och smältan ÄR Syntes — ett enda fullskärms-`<a>` underst i

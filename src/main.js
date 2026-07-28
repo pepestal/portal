@@ -196,18 +196,22 @@ function stepStyle(delta) {
   reflectLock()
 }
 
+/* Växlar mellan vanligt läge och kaos: slumpar en stil ur den nya poolen.
+   Delas av topbarens Kaos-knapp och piltangenterna ↑/↓. */
+function toggleMode() {
+  const next = modeOf(document.documentElement.dataset.style) === 'chaos' ? 'normal' : 'chaos'
+  if (!pools[next].length) return
+  const pool = pools[next]
+  applyStyle(pool[Math.floor(Math.random() * pool.length)])
+  reflectLock()
+}
+
 document.querySelector('.style-switch').addEventListener('click', (e) => {
   const act = e.target.closest('[data-act]')?.dataset.act
   if (!act) return
   if (act === 'next') stepStyle(1)
   else if (act === 'prev') stepStyle(-1)
-  else if (act === 'chaos') {
-    const next = modeOf(document.documentElement.dataset.style) === 'chaos' ? 'normal' : 'chaos'
-    if (!pools[next].length) return
-    const pool = pools[next]
-    applyStyle(pool[Math.floor(Math.random() * pool.length)])
-    reflectLock()
-  }
+  else if (act === 'chaos') toggleMode()
   else if (act === 'lock') {
     const isLocked = localStorage.getItem(LS_LOCK) === document.documentElement.dataset.style
     if (isLocked) localStorage.removeItem(LS_LOCK)
@@ -216,15 +220,21 @@ document.querySelector('.style-switch').addEventListener('click', (e) => {
   }
 })
 
-/* Piltangenter ←/→ bläddrar stil (som prev/next). Hoppar över om fokus ligger
-   i ett textfält, så vanlig markörnavigation inte kapas. */
+/* Piltangenter: ←/→ bläddrar stil i aktiv pool (som prev/next), ↑/↓ växlar
+   mellan vanligt läge och kaos (som Kaos-knappen). Hoppar över om fokus ligger
+   i ett textfält, så vanlig markörnavigation inte kapas; ↑/↓ släpps också
+   igenom när kaos-poolen är tom, så tangenterna kan fortsätta skrolla. */
 document.addEventListener('keydown', (e) => {
-  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
+  const horis = e.key === 'ArrowLeft' || e.key === 'ArrowRight'
+  const vert = e.key === 'ArrowUp' || e.key === 'ArrowDown'
+  if (!horis && !vert) return
   if (e.metaKey || e.ctrlKey || e.altKey) return
   const t = e.target
   if (t.isContentEditable || t.matches?.('input, textarea, select')) return
+  if (vert && !pools.chaos.length) return
   e.preventDefault()
-  stepStyle(e.key === 'ArrowRight' ? 1 : -1)
+  if (horis) stepStyle(e.key === 'ArrowRight' ? 1 : -1)
+  else toggleMode()
 })
 
 /* ============================ Info-paneler ============================ */

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-07-28T11:04:15.214Z",
+  "generatedAt": "2026-07-28T17:21:29.902Z",
   "ecosystem": {
-    "files": 523,
-    "lines": 66534,
+    "files": 524,
+    "lines": 66573,
     "apps": 4
   },
   "projects": {
     "signal": {
       "name": "Signal",
       "available": true,
-      "files": 327,
-      "lines": 52888,
+      "files": 328,
+      "lines": 52927,
       "languages": [
         {
           "name": "TypeScript",
