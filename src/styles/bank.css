@@ -1,0 +1,63 @@
+/* =========================================================================
+   STIL — Private Bank   (tungt/taktilt: lyft, mjuk skugga, sheen)
+   ========================================================================= */
+[data-style="bank"] {
+  --bg: #0B0B0C; --surface: #141416; --line: #232327;
+  --text: #E6E6E3; --muted: #82827B; --accent: #C9B79C;
+  --font-display: var(--font-sans); --font-body: var(--font-sans); --font-ui: var(--font-mono);
+  --btn-radius: 9999px; --anim-draw: 1.1s; --anim-ease: cubic-bezier(.22, .7, .3, 1);
+}
+[data-style="bank"] .app-row[data-app="syntes"] { --app-accent: #C6CAD3; }
+[data-style="bank"] .app-row[data-app="signal"] { --app-accent: #9BB0C9; }
+[data-style="bank"] .app-row[data-app="todos"]  { --app-accent: #C9B79C; }
+[data-style="bank"] .app-row[data-app="stronk"] { --app-accent: #C99C9C; }
+[data-style="bank"] .app-btn { box-shadow: 0 6px 26px -14px rgba(0, 0, 0, .7); }
+[data-style="bank"] .app-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px -18px rgba(0, 0, 0, .85); }
+[data-style="bank"] .app-btn__name { text-transform: uppercase; letter-spacing: .28em; font-size: 1.15rem; font-weight: 500; }
+[data-style="bank"] .app-btn__fx::before { content: ""; position: absolute; top: 0; bottom: 0; width: 45%; left: -70%; background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--accent) 22%, transparent), transparent); transform: skewX(-18deg); transition: left .85s var(--anim-ease); }
+[data-style="bank"] .app-btn:hover .app-btn__fx::before { left: 130%; }
+[data-style="bank"] .style-switch__btn,
+[data-style="bank"] .style-switch__lock { border-radius: 9999px; }
+[data-style="bank"] .system__panel { border-radius: 20px; }
+
+/* ---------- Hover-animationer: en per app ---------- */
+
+/* bank · tre allokeringar glider ihop till en samlad position */
+.viz--alloc { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.viz--alloc .bar { display: flex; gap: 3px; width: 150px; height: 10px; }
+.viz--alloc .seg {
+  width: var(--w); height: 100%; border-radius: 5px; background: var(--app-accent);
+  opacity: 0; transform: scaleX(.2); transform-origin: left;
+  transition: transform .55s var(--anim-ease) calc(var(--i) * 140ms), opacity .35s ease calc(var(--i) * 140ms);
+}
+.viz--alloc .seg:nth-child(2) { filter: brightness(.82); }
+.viz--alloc .seg:nth-child(3) { filter: brightness(.62); }
+.app-btn:hover .viz--alloc .seg { opacity: 1; transform: scaleX(1); }
+.viz--alloc .val { font-family: var(--font-mono); font-size: .78rem; color: var(--text); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .5s; }
+.app-btn:hover .viz--alloc .val { opacity: 1; }
+
+/* bank · mjuk area-kurva sveper fram + värde räknas upp */
+.viz--area { position: absolute; inset: 16px 20px; }
+.viz--area .area-clip { position: absolute; inset: 0; clip-path: inset(0 100% 0 0); transition: clip-path var(--anim-draw) var(--anim-ease); }
+.app-btn:hover .viz--area .area-clip { clip-path: inset(0 0 0 0); }
+.viz--area svg { width: 100%; height: 100%; }
+.viz--area .curve { fill: none; stroke: var(--app-accent); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.viz--area .val { position: absolute; right: 0; bottom: -.4rem; font-family: var(--font-mono); font-size: .8rem; color: var(--text); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease calc(var(--anim-draw) * .55); }
+.app-btn:hover .viz--area .val { opacity: 1; }
+
+/* bank · cirkulär progress-ring sluts + bock */
+.viz--ring svg { width: 54px; height: 54px; }
+.viz--ring .rt { fill: none; stroke: var(--line); stroke-width: 3; }
+.viz--ring .rp { fill: none; stroke: var(--app-accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 113; stroke-dashoffset: 113; transform: rotate(-90deg); transform-origin: center; transform-box: fill-box; transition: stroke-dashoffset var(--anim-draw) var(--anim-ease); }
+.viz--ring .rc { fill: none; stroke: var(--app-accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset .35s var(--anim-ease) calc(var(--anim-draw) * .75); }
+.app-btn:hover .viz--ring .rp { stroke-dashoffset: 0; }
+.app-btn:hover .viz--ring .rc { stroke-dashoffset: 0; }
+
+/* bank · viktplattor glider in och staplas + kg räknas upp */
+.viz--plates { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.viz--plates .rack { position: relative; display: flex; align-items: center; justify-content: center; gap: 5px; width: 150px; height: 40px; }
+.viz--plates .rod { position: absolute; left: 6%; right: 6%; top: 50%; height: 3px; background: var(--line); border-radius: 3px; transform: translateY(-50%); }
+.viz--plates .plate { position: relative; width: 9px; height: var(--h); background: var(--app-accent); border-radius: 2px; opacity: 0; transform: translateY(10px) scaleY(.6); transition: transform .5s var(--anim-ease) calc(var(--i) * 85ms), opacity .35s ease calc(var(--i) * 85ms); }
+.app-btn:hover .viz--plates .plate { opacity: 1; transform: translateY(0) scaleY(1); }
+.viz--plates .val { font-family: var(--font-mono); font-size: .78rem; color: var(--text); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .5s; }
+.app-btn:hover .viz--plates .val { opacity: 1; }

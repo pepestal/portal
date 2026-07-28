@@ -11,9 +11,35 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
 ## Ramarna (läs först, bryt aldrig utan att flagga)
 
 - Läs `CLAUDE.md`, `docs/STATUS.md` och `README.md` innan du börjar.
-- Arkitekturen: en rad i `src/styles.js` + ett `[data-style="<id>"]`-block i
-  `src/style.css` + vid behov en enhancer i `src/main.js` (följ mönstret från
-  singularitet/kvitto: injicera DOM vid stilbyte, städa i cleanup).
+- **Ditt bidrag bor i egna filer — `src/main.js` och `src/style.css` rörs inte.**
+  En stil = `src/styles/<id>.js` + `src/styles/<id>.css` + **en rad** i registret
+  `src/styles.js`. Modulen default-exporterar:
+
+  ```js
+  import './<id>.css'
+  import { makeCountEnhancer } from '../shared.js'   // valfritt
+
+  export default {
+    id: '<id>',
+    label: '<Namnet i växlaren>',
+    anim: { syntes: `…`, signal: `…`, todos: `…`, stronk: `…` },
+    enhancer,          // valfritt — se nedan
+  }
+  ```
+
+  `anim` är hover-markupen per app (ett `<div class="av" data-for="<id>">` styck).
+  Bara den aktiva stilens markup renderas, så din stil kostar ingenting i DOM:en
+  när någon annan visas — men den byggs också om vid varje stilbyte, så lägg
+  ingenting där som antar att den överlevt.
+
+  `enhancer` körs efter att markupen satts och ska returnera en cleanup som river
+  allt du injicerat. Behöver du bara uppräkning av siffror räcker
+  `makeCountEnhancer('<id>')` ur `src/shared.js`. Följ mönstret från
+  `singularitet`/`kvitto`: injicera vid stilbyte, städa i cleanup.
+
+  Allt du delar med andra stilar ska hämtas ur `src/shared.js` (`nf`,
+  `prefersReduced`, `countUp`, `makeCountEnhancer`). Lägg inte till nya delade
+  hjälpare utan att flagga — hör de bara hemma i din stil ska de bo i din fil.
 - **Flyttar du raderna: sätt `width` själv.** Skelettets `.app-row` bär en bredd
   avsedd för den lodräta kolumnen (`min(100%, knapp + gap + info)` ≈ 500 px). Lägger
   din stil raderna på tvären blir den bredden flexbasis per rad, och radbrytningen
@@ -31,7 +57,8 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
   är lika. Lägg skalan i en variabel på båda ställena, bryt på samma bredder, och snäpp
   det som ska gå att räkna till rutan.
 - **Skelettets markup rörs aldrig.** Vill du bygga en helscen som ersätter det
-  (à la `orrery`) måste avsteget flaggas och dokumenteras som förankrat undantag.
+  (à la `orrery`) måste avsteget flaggas och dokumenteras som förankrat undantag;
+  sätt då `fullscene: true` i modulen och lämna `anim` tomt.
 - Alla **fyra appar** (Syntes, Signal, Todos, Stronk) ska vara klickbara länkar
   med **en egen, unik hover-animation per app** — samma koncept i fyra uttryck
   räknas, fyra kopior gör det inte.
@@ -101,8 +128,9 @@ rad som är navet? Gör det inte det är det geometrin som ska fixas, inte texte
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
 `bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
 `bikupa`, `fuga`, `sinus`) — inte för inspiration utan för att
-**inte** återanvända deras grepp. Tolka uppgiften oväntat; en stark idé
-konsekvent genomförd slår tio effekter.
+**inte** återanvända deras grepp. Varje stil ligger i `src/styles/<id>.js` och
+`src/styles/<id>.css`, så du kan läsa en i taget. Tolka uppgiften oväntat; en
+stark idé konsekvent genomförd slår tio effekter.
 
 ## Innan du lämnar in
 

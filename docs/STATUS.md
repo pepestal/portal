@@ -28,13 +28,13 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   lassen blir till bäringar för de tre andra (bikupa), subjektet — den enda tonföljd som
   finns, som de tre är omskrivningar av (fuga), sinusknutan — taktgivaren som inte går att
   avbilda, så allt man ser av den ÄR de tre andra (sinus).
-- **Stil-system** (`src/styles.js` + `src/style.css`): tretton stilar — `terminal`
+- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): tretton stilar — `terminal`
   (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
   `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära
   portar, stjärnfält, levande siffror), `kvitto` (Kvittot — ur tävlingsbidraget
   `variations/kvitto.html`: topbaren blir kassaapparat, apparna varurader på ett
   termokvitto som skrivs ut), `orrery` (Orrery — himlainstrument: apparna som
-  världar i omlopp kring ett nav, byggd i `src/orrery.js`), `vaxel` (Växeln —
+  världar i omlopp kring ett nav, byggd i `src/styles/orrery.js`), `vaxel` (Växeln —
   telefonstation ~1915: bakelit, mässingsplåtar, linjelampor; Syntes är växelbordet
   och inkommande-lampan ringer via `:has` när en underapp hovras), `jacquard`
   (Jacquardväven — uppspänd vävstol i oblekt lin med växtfärgad varp: underapparna
@@ -70,7 +70,7 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage);
   `?style=<id>` deep-linkar.
 - **Femtiotvå unika hover-animationer** — fyrtioåtta i skelett-matrisen (fyra appar × tolv stilar,
-  `.viz--*` i `src/style.css`; på hover viker knappnamnet upp och animationen tar scenen)
+  `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
   singularitet injicerar stjärnfält/parallax/3D-tilt och tickande siffror (kurs, reps);
   kvitto injicerar kvittots huvud/fot med realtidsklocka och streckkod (hover: kassörens penna,
@@ -101,6 +101,14 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   taktstreck, hovras navet skrivs alla tre och retledningen dras nedför sidan. Rutnätets
   millimetertal finns på båda ställena (CSS `--sn-mm`, JS `k`) och måste hållas lika.
   Delar count-up.
+- **En stil = en modul (2026-07-28):** per-stil-koden bor i `src/styles/<id>.js` +
+  `src/styles/<id>.css`; `styles.js` är registret, `shared.js` det lilla som delas, och
+  `main.js` (234 rader) vet inget om enskilda stilar. Nya bidrag rör aldrig `main.js`
+  eller `style.css` — se [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md). Bygget är oförändrat:
+  Vite buntar ändå ihop allt till en JS- och en CSS-fil.
+- **Bara aktiv stils markup i DOM:en (2026-07-28):** `mountAnim` byter hover-varianterna
+  vid stilbyte i stället för att rendera alla tretton. 1232 → 285 DOM-noder, och en ny
+  stil kostar inte längre något i vila.
 - **Textransonering (2026-07-28):** samtliga stilar är genomgångna och rensade från
   bildtext som förklarar konceptet i stället för att visa det — förklaringsraden under
   knappen är borta i alla åtta stilar som hade en, hover-texterna kortade till siffra +
@@ -120,8 +128,8 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
    första helscenen) och `vaxel` (sjunde) kom 2026-07-23, `jacquard` (åttonde)
    2026-07-26 samt `sprangskiss` (nionde), `synop` (tionde), `bikupa` (elfte)
    2026-07-27 samt `fuga` (tolfte) och `sinus` (trettonde) 2026-07-28; en ny skelett-stil =
-   token/`.viz--*`-block + en rad i `styles.js`, en helscen = egen modul (som
-   `src/orrery.js`) + en rad i `styles.js`.
+   modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
+   `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
 3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut

@@ -44,9 +44,16 @@ Statisk klient utan backend. Vite bygger `index.html` + `src/` till statiska fil
 Länkar ut till andra appar via URL; ingen runtime app-till-app-kommunikation.
 
 - `src/main.js` — renderar skelettet, sköter stilrotation, info-paneler och systemhälsa.
+  Vet ingenting om enskilda stilar.
+- `src/style.css` — skelettets egen CSS (bas, topbar, rader, info-panel, systemhälsa).
 - `src/apps.js` — appregistret (lägg till en app = en rad).
-- `src/styles.js` + `src/style.css` — stilregister och per-stil tokens/animationer.
-- `src/orrery.js` — helscen-enhancern för stilen `orrery` (bygger/river en egen scen som ersätter skelettet).
+- `src/styles.js` — stilregistret: importerar en modul per stil.
+- `src/styles/<id>.js` + `src/styles/<id>.css` — **en stil per filpar.** Modulen
+  default-exporterar `{ id, label, anim, enhancer? }` och importerar sin egen CSS.
+  `anim` är hover-markup per app; bara den aktiva stilens markup ligger i DOM:en.
+  `src/styles/orrery.js` är helscenen som ersätter skelettet (`fullscene: true`).
+- `src/shared.js` — det lilla stilarna delar: `nf`, `prefersReduced`, `countUp`,
+  `makeCountEnhancer`.
 - `scripts/generate-stats.mjs` → `src/data/stats.json` — byggtidsstatistik (körs via
   `predev`/`prebuild`). Se **dokumenterat undantag** i [`CLAUDE.md`](CLAUDE.md).
 - `scripts/check-copy.mjs` — textransoneringen: failar bygget på knappetiketter och

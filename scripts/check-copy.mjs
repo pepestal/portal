@@ -9,17 +9,23 @@
  * ("— MEN TAKTEN ÄR NODENS"). Regeln står i docs/PROMPT_TAVLING.md; det här
  * skriptet ger den tänder.
  *
- * Kontrollerar bara SYNLIG text — `content:`-värden på knappen i style.css och
- * hover-texternas .cap/.read/.fig i main.js/orrery.js. Kodkommentarer får och
+ * Kontrollerar bara SYNLIG text — `content:`-värden på knappen i stilarnas CSS
+ * och hover-texternas .cap/.read/.fig i stilarnas JS. Kodkommentarer får och
  * ska fortsätta förklara konceptet; det är på skärmen det inte hör hemma.
+ *
+ * Läser hela `src/styles/` plus skelettets egna filer, så ett nytt bidrag
+ * granskas automatiskt — inget behöver läggas till här.
  *
  * Körs via `npm run check:copy` och automatiskt i `prebuild`.
  */
-import { readFileSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+import { readFileSync, readdirSync } from 'node:fs'
+import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
+const STYLES = join(ROOT, 'src', 'styles')
+const filer = (ext) => readdirSync(STYLES).filter((f) => f.endsWith(ext)).map((f) => join(STYLES, f))
+const rel = (p) => relative(ROOT, p).replace(/\\/g, '/')
 
 /** Knappetiketten är ett mätvärde. Längre än så är det en mening. */
 const MAX_LABEL = 30
@@ -56,26 +62,28 @@ function granska(fil, text, max, sort) {
   for (const [re, varfor] of FORBJUDNA) if (re.test(t)) anmark(fil, t, varfor)
 }
 
-/* --- Knappetiketter: content: på .app-btn::before/::after i style.css ---
+/* --- Knappetiketter: content: på .app-btn::before/::after ---
    Bara knappen själv, inte `.app-btn__name::before` (kvittots varurad m.fl.). */
-const css = readFileSync(join(ROOT, 'src', 'style.css'), 'utf8')
 const REGEL = /\.app-btn(?!__)[^{;]*::(?:before|after)[^{]*\{([^}]*)\}/g
-for (const [, block] of css.matchAll(REGEL)) {
-  const m = block.match(/content:\s*"((?:[^"\\]|\\.)*)"/)
-  if (!m) continue
-  // CSS-escapes (\2002 m.fl.) räknas som ett tecken, inte som sin källkod
-  const text = m[1].replace(/\\[0-9a-f]{1,6}\s?/gi, ' ')
-  granska('src/style.css', text, MAX_LABEL, 'knappetikett')
+for (const fil of [...filer('.css'), join(ROOT, 'src', 'style.css')]) {
+  const css = readFileSync(fil, 'utf8')
+  for (const [, block] of css.matchAll(REGEL)) {
+    const m = block.match(/content:\s*"((?:[^"\\]|\\.)*)"/)
+    if (!m) continue
+    // CSS-escapes (\2002 m.fl.) räknas som ett tecken, inte som sin källkod
+    const text = m[1].replace(/\\[0-9a-f]{1,6}\s?/gi, ' ')
+    granska(rel(fil), text, MAX_LABEL, 'knappetikett')
+  }
 }
 
 /* --- Hover-texter: .cap/.read/.fig i knappvarianterna --- */
 const CAP = /<span class="(?:cap|read|fig|note)"[^>]*>([\s\S]*?)<\/span>/g
-for (const fil of ['src/main.js', 'src/orrery.js']) {
-  const js = readFileSync(join(ROOT, fil), 'utf8')
+for (const fil of [...filer('.js'), join(ROOT, 'src', 'main.js')]) {
+  const js = readFileSync(fil, 'utf8')
   for (const [, inner] of js.matchAll(CAP)) {
     // strippa taggar och mallsträngar — kvar blir det användaren faktiskt läser
     const text = inner.replace(/<[^>]*>/g, '').replace(/\$\{[^}]*\}/g, '').replace(/\s+/g, ' ')
-    granska(fil, text, MAX_CAP, 'hover-text')
+    granska(rel(fil), text, MAX_CAP, 'hover-text')
   }
 }
 

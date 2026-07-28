@@ -6,6 +6,24 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Ändrat
+- **En stil = en modul.** All per-stil-kod flyttas ur `main.js`/`style.css` till
+  `src/styles/<id>.js` + `src/styles/<id>.css`. `styles.js` blir registret som
+  importerar dem, och modulen default-exporterar `{ id, label, anim, enhancer? }` och
+  importerar sin egen CSS. `main.js` går från 1992 till 234 rader och vet inte längre
+  något om enskilda stilar; `style.css` från 3239 till 260 (bara skelettet). Det delade
+  blir `src/shared.js` (`nf`, `prefersReduced`, `countUp`, `makeCountEnhancer`).
+  Bakgrund: varje nytt tävlingsbidrag redigerade samma två filer, vilket gör att
+  samtidiga bidrag krockar och att en tävlande måste läsa tolv stilars kod för att hitta
+  sin egen. **Bygget påverkas inte** — Vite buntar statiska importer till samma utfil,
+  och `orrery` låg redan i egen fil utan att ge en egen chunk. Filuppdelningen är för
+  människor, inte för webbläsaren.
+- **Bara den aktiva stilens hover-markup renderas.** Förr bakade `appRow` in alla
+  stilars varianter i varje knapp och CSS visade en av dem — med tretton stilar blev det
+  45 dolda `.av`-block och 1232 DOM-noder, och kostnaden växte med varje bidrag. Nu byter
+  `mountAnim` ut markupen vid stilbyte: **285 noder, 4 varianter**. Samtidigt försvinner
+  en dold koppling — listan i `style.css` där varje stil måste räkna upp sig själv för
+  att synas alls är ersatt av en enda regel. Cleanup körs före markupbytet, så enhancers
+  aldrig håller kvar element som rivits.
 - **Textransonera samtliga tretton stilar.** Efter tretton bidrag hade ett mönster satt
   sig: stilarna *berättade* sitt koncept i stället för att visa det. Värst var
   förklaringsraden under knappen (`.app-btn::before`), som låg framme i vila och i
@@ -34,6 +52,9 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
   kodkommentarer får och ska fortsätta förklara konceptet. Ingår i `prebuild`, så ett
   bidrag som inte passerar går inte att deploya. Körd mot koden före ransoneringen fångar
   den 48 strängar.
+- Separationskravet i [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md): bidraget bor i egna
+  filer, `main.js` och `style.css` rörs inte, och modulkontraktet står utskrivet med
+  kodexempel.
 - Avsnittet **”Skriv inte det du kan visa”** i [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) —
   hårda regler för nästa tävlande agent, plus testet: täck över all text i din stil, syns
   det fortfarande vilken rad som är navet? Prompten var orsaken — den bad om en *mekanisk*

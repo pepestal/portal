@@ -16,7 +16,8 @@
 // stilars klasser (t.ex. singularitets `.dust`/`.stars`/`.void`).
 // =============================================================================
 
-import { apps } from './apps.js'
+import './orrery.css'
+import { apps } from '../apps.js'
 
 const nf = new Intl.NumberFormat('sv-SE')
 const CX = 500, CY = 500, R_OUT = 440
@@ -390,4 +391,14 @@ export function orreryEnhancer() {
 
   // Cleanup körs vid stilbyte: stoppar loopen, tar bort lyssnare och river scenen.
   return () => cleanups.forEach((fn) => fn())
+}
+
+export default {
+  id: 'orrery',
+  label: 'Orrery',
+  /* Helscen: skelettet göms via CSS och scenen byggs i enhancern, så stilen har
+     ingen hover-markup att lägga i knapparna. Förankrat undantag — se CLAUDE.md. */
+  fullscene: true,
+  anim: {},
+  enhancer: orreryEnhancer,
 }
