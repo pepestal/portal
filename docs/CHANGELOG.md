@@ -6,6 +6,22 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Kaosstil: Pangea** (`pangea`, första kaosbidraget) — sidan har ingen bakgrund.
+  Mönsterbrottet: varje pixel i viewporten navigerar. Det som ser ut som bakgrund
+  är smält berg, och smältan ÄR Syntes — ett enda fullskärms-`<a>` underst i
+  scenen; underapparna är basaltplattor som flyter på navet, så särställningen är
+  topologi: mellan två plattor korsar man alltid Syntes. Plattornas area skalar
+  med `rader` ur `stats.json` (Signal en kontinent, Todos en kobbe), driften drivs
+  av samma konvektionsfält som för gnistorna, och varje tillstånd har mekanik:
+  smältan konvekterar i vila; en glöd följer markören **under** skorpan
+  (närmandet); hovrad platta pinnas (lätt att träffa) och hettas underifrån medan
+  raderna räknas upp; lämnad platta svalnar långsamt (efterglöd); klicket får
+  eruptionsring + vitglött uppflammande utan att navigationen kapas; hovrad smälta
+  tänder SYNTES med värmedaller och navets radantal. Tab når alla fyra (navet
+  först), fokus ger vitglött rim längs klippformen i stället för skelettets
+  rektangel, reduced motion fryser scenen till stillbild med konceptet intakt,
+  och cleanupen river scen, canvas, lyssnare och rAF-loop. Kaos-togglen har
+  därmed sitt första bidrag och är aktiv.
 - **Stil: Tunnelbanan** (`tunnelbana`, sextonde bidraget) — en linjenätskarta i
   Becks schematiska tradition: papper, primärfärger, bara räta vinklar och mjuka
   krökar. Grön linje är Signal, röd Todos, blå Stronk, och navmekaniken är ren

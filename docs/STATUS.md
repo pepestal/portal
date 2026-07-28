@@ -97,7 +97,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   i modulen — inget skelett, fritt mönsterbrott, bara de fyra länkarna heliga;
   [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)). Kaos-poolen ligger bakom en **Kaos-toggle**
   i topbaren och har egen rotation; `?style=` och låset följer stilens klass.
-  **Inga kaosbidrag finns ännu** — togglen är avstängd tills det första landar.
+  **Första kaosbidraget `pangea` landade 2026-07-28** — sidan utan bakgrund:
+  smältan är ett fullskärms-`<a>` till Syntes och underapparna basaltplattor som
+  flyter på navet, area ∝ rader ur stats.json. Togglen är aktiv.
 - **Sextiofyra unika hover-animationer** — sextio i skelett-matrisen (fyra appar × femton skelett-stilar,
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
@@ -179,8 +181,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
    `alv` (femtonde) och `tunnelbana` (sextonde) 2026-07-28; en ny skelett-stil =
    modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
    `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
-2. **Första kaosbidraget** — kaosklassens infrastruktur (pool + toggle) är på plats
-   men poolen är tom; nästa kaos-agent kör [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
+2. **Fler kaosbidrag** — första (`pangea`, helscen: smältan som navlänk,
+   plattor med area ∝ rader) kom 2026-07-28; nästa kaos-agent kör
+   [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
 3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut

@@ -65,5 +65,6 @@ _(Inga uppslag noterade ännu.)_
   fjortonde; alla ur tävlingsbidrag; fler kan läggas till löpande)
 - ~~Helscen-stil som ersätter skelettet.~~ ✅ (`orrery`, förankrat undantag från "skelettet står still")
 - **Kaosklass** — ✅ infrastruktur 2026-07-28 (`chaos: true`-pool + Kaos-toggle i
-  topbaren, prompt i [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)); första bidraget återstår.
+  topbaren, prompt i [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)); ✅ första bidraget
+  `pangea` 2026-07-28 — poolen lever, fler bidrag välkomna.
 - Självhostade typsnitt i stället för Google Fonts-`<link>`.
