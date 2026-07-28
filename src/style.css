@@ -1287,7 +1287,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 [data-style="singularitet"] .app-btn:hover .app-btn__fx::after { opacity: .95; }
 
-/* --- namnet sugs in i porten; dimensionsrad byts mot "kliv igenom →" --- */
+/* --- namnet sugs in i porten; pilen tänds i dess ställe --- */
 [data-style="singularitet"] .app-btn__name {
   font-size: 1.05rem; font-weight: 300; letter-spacing: .3em; padding-left: .3em;
   text-transform: uppercase; color: var(--text);
@@ -1295,22 +1295,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   transition: transform .45s var(--anim-ease), opacity .4s ease, filter .4s ease;
 }
 [data-style="singularitet"] .app-btn:hover .app-btn__name { transform: scale(.5); opacity: 0; filter: blur(8px); }
-[data-style="singularitet"] .app-btn::before,
 [data-style="singularitet"] .app-btn::after {
   position: absolute; left: 0; right: 0; bottom: 13%; z-index: 3; text-align: center;
   font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em; pointer-events: none;
-}
-[data-style="singularitet"] .app-btn::before { color: var(--muted); transition: opacity .3s ease; }
-[data-style="singularitet"] .app-btn[data-name="syntes"]::before { content: "hjärtats dimension"; }
-[data-style="singularitet"] .app-btn[data-name="signal"]::before { content: "marknadens dimension"; }
-[data-style="singularitet"] .app-btn[data-name="todos"]::before  { content: "ordningens dimension"; }
-[data-style="singularitet"] .app-btn[data-name="stronk"]::before { content: "järnets dimension"; }
-[data-style="singularitet"] .app-btn::after {
-  content: "kliv igenom →"; color: var(--app-accent);
+  content: "→"; color: var(--app-accent);
   opacity: 0; transform: translateY(6px);
   transition: opacity .35s ease .15s, transform .35s var(--anim-ease) .15s;
 }
-[data-style="singularitet"] .app-btn:hover::before { opacity: 0; }
 [data-style="singularitet"] .app-btn:hover::after { opacity: 1; transform: none; }
 
 /* --- aperturen: världen fyller hela porten, kanterna tonar ut --- */
@@ -1784,10 +1775,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   font-family: var(--font-mono); font-size: .58rem; letter-spacing: .22em;
   color: var(--muted); pointer-events: none; transition: opacity .25s ease;
 }
-[data-style="vaxel"] .app-btn[data-name="syntes"]::before { content: "VÄXELBORD · TELEFONIST I TJÄNST"; color: var(--vx-brass); }
-[data-style="vaxel"] .app-btn[data-name="signal"]::before { content: "ANKN. 101 · FONDBÖRSEN"; }
-[data-style="vaxel"] .app-btn[data-name="todos"]::before  { content: "ANKN. 202 · EXPEDITIONEN"; }
-[data-style="vaxel"] .app-btn[data-name="stronk"]::before { content: "ANKN. 303 · ATLETKLUBBEN"; }
+[data-style="vaxel"] .app-btn[data-name="syntes"]::before { content: "VÄXELBORD"; color: var(--vx-brass); }
+[data-style="vaxel"] .app-btn[data-name="signal"]::before { content: "ANKN. 101"; }
+[data-style="vaxel"] .app-btn[data-name="todos"]::before  { content: "ANKN. 202"; }
+[data-style="vaxel"] .app-btn[data-name="stronk"]::before { content: "ANKN. 303"; }
 [data-style="vaxel"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* --- SYNTES ÄR VÄXELBORDET: mässingsram + inkommande-lampa. Hovra en
@@ -1922,10 +1913,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   background: linear-gradient(90deg, transparent, rgba(247, 242, 229, .88) 14%, rgba(247, 242, 229, .88) 86%, transparent);
   text-shadow: 0 1px 0 rgba(255, 252, 240, .9);
 }
-[data-style="jacquard"] .app-btn[data-name="syntes"]::before { content: "TUSKAFT · HÄR BLIR TRÅD TILL TYG"; color: #5A4A30; }
-[data-style="jacquard"] .app-btn[data-name="signal"]::before { content: "VARPTRÅD I · KRAPPROTT"; }
-[data-style="jacquard"] .app-btn[data-name="todos"]::before  { content: "VARPTRÅD II · VEJDEBLÅTT"; }
-[data-style="jacquard"] .app-btn[data-name="stronk"]::before { content: "VARPTRÅD III · RESEDAGULT"; }
+[data-style="jacquard"] .app-btn[data-name="syntes"]::before { content: "TUSKAFT"; color: #5A4A30; }
+[data-style="jacquard"] .app-btn[data-name="signal"]::before { content: "KRAPP"; }
+[data-style="jacquard"] .app-btn[data-name="todos"]::before  { content: "VEJDE"; }
+[data-style="jacquard"] .app-btn[data-name="stronk"]::before { content: "RESEDA"; }
 [data-style="jacquard"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* --- SYNTES ÄR INSLAGET: den enda panelen som är väv, inte bara trådar.
@@ -2104,10 +2095,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   font-family: var(--font-mono); font-size: .54rem; letter-spacing: .2em;
   color: var(--muted); pointer-events: none; transition: opacity .25s ease;
 }
-[data-style="sprangskiss"] .app-btn[data-name="syntes"]::before { content: "POS. 1 · HUVUDENHET · REFERENSPLAN FÖR POS. 2–4"; color: #CBDDF0; }
-[data-style="sprangskiss"] .app-btn[data-name="signal"]::before { content: "POS. 2 · SIGNALGIVARE · INGÅR I POS. 1"; }
-[data-style="sprangskiss"] .app-btn[data-name="todos"]::before  { content: "POS. 3 · SPÄRRVERK · INGÅR I POS. 1"; }
-[data-style="sprangskiss"] .app-btn[data-name="stronk"]::before { content: "POS. 4 · FJÄDERPAKET · INGÅR I POS. 1"; }
+[data-style="sprangskiss"] .app-btn[data-name="syntes"]::before { content: "POS. 1 · HUVUDENHET"; color: #CBDDF0; }
+[data-style="sprangskiss"] .app-btn[data-name="signal"]::before { content: "POS. 2 · SIGNALGIVARE"; }
+[data-style="sprangskiss"] .app-btn[data-name="todos"]::before  { content: "POS. 3 · SPÄRRVERK"; }
+[data-style="sprangskiss"] .app-btn[data-name="stronk"]::before { content: "POS. 4 · FJÄDERPAKET"; }
 [data-style="sprangskiss"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* ritningens egen grammatik för hierarkin: navet ÄR referensplanet, de tre
@@ -2263,10 +2254,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   font-family: var(--font-mono); font-size: .54rem; letter-spacing: .16em;
   color: var(--muted); pointer-events: none; transition: opacity .25s ease;
 }
-[data-style="synop"] .app-btn[data-name="syntes"]::before { content: "▼ LÅGTRYCKSCENTRUM · TRE FRONTER UTGÅR HÄRIFRÅN"; color: var(--sy-ink); }
-[data-style="synop"] .app-btn[data-name="signal"]::before { content: "▲▲▲ KALLFRONT · UTGÅR FRÅN L"; }
-[data-style="synop"] .app-btn[data-name="todos"]::before  { content: "◗◗◗ VARMFRONT · UTGÅR FRÅN L"; }
-[data-style="synop"] .app-btn[data-name="stronk"]::before { content: "▲◗▲ OCKLUSION · UTGÅR FRÅN L"; }
+[data-style="synop"] .app-btn[data-name="syntes"]::before { content: "▼ LÅGTRYCKSCENTRUM"; color: var(--sy-ink); }
+[data-style="synop"] .app-btn[data-name="signal"]::before { content: "▲▲▲ KALLFRONT"; }
+[data-style="synop"] .app-btn[data-name="todos"]::before  { content: "◗◗◗ VARMFRONT"; }
+[data-style="synop"] .app-btn[data-name="stronk"]::before { content: "▲◗▲ OCKLUSION"; }
 [data-style="synop"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* stationsavläsningen i hörnet: varje underapp ligger högre än navets 984, och
@@ -2574,7 +2565,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 [data-style="bikupa"] .app-row[data-app="syntes"] .app-btn { transform: scale(1.014); }
 
-/* vilotexten: vad cellen är till för — och hos de tre, vem som bestämde det */
+/* vilotexten: vad cellen bär. Ett ord — vem som bestämde det syns på
+   flygvektorerna, det behöver inte skrivas ut. */
 [data-style="bikupa"] .app-btn::before {
   position: absolute; left: 0; right: 0; bottom: 10px; z-index: 3; text-align: center;
   padding: 0 calc(var(--bk-cut) + 8px); /* håller texten innanför cellens sneda väggar */
@@ -2584,12 +2576,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   color: rgba(48, 24, 3, .92); text-shadow: 0 1px 0 rgba(255, 236, 186, .3);
 }
 [data-style="bikupa"] .app-btn[data-name="syntes"]::before {
-  content: "DANSGOLVET · TOM CELL — HÄR BLIR LASS TILL RIKTNING";
+  content: "DANSGOLVET";
   color: var(--bk-vax-ljus); text-shadow: 0 1px 3px rgba(20, 10, 2, .9);
 }
-[data-style="bikupa"] .app-btn[data-name="signal"]::before { content: "NEKTARCELL · SPEJAREN RAPPORTERAR TILL DANSGOLVET"; }
-[data-style="bikupa"] .app-btn[data-name="todos"]::before  { content: "YNGELCELL · BYGGBIET FÅR SIN SYSSLA AV DANSGOLVET"; }
-[data-style="bikupa"] .app-btn[data-name="stronk"]::before { content: "POLLENCELL · DRAGAREN FLYGER DANSGOLVETS BÄRING"; }
+[data-style="bikupa"] .app-btn[data-name="signal"]::before { content: "NEKTAR"; }
+[data-style="bikupa"] .app-btn[data-name="todos"]::before  { content: "YNGEL"; }
+[data-style="bikupa"] .app-btn[data-name="stronk"]::before { content: "POLLEN"; }
 [data-style="bikupa"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* hörnetiketten: de tre bär var sin bäring UR navet — navet bär temperaturen
@@ -2792,16 +2784,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   border-color: rgba(52, 40, 20, .62);
 }
 
-/* rollen: vad lappen bär, och varifrån den har det */
+/* rollen, med fugans egna termer — operationen står i noterna på bladet */
 [data-style="fuga"] .app-btn::before {
   position: absolute; left: 0; right: 0; bottom: 9px; z-index: 3; text-align: center;
   padding: 0 1rem; font-family: var(--font-mono); font-size: .52rem; letter-spacing: .12em;
   color: rgba(58, 44, 22, .78); pointer-events: none; transition: opacity .3s ease;
 }
-[data-style="fuga"] .app-btn[data-name="syntes"]::before { content: "DUX · HÄRIFRÅN HÄMTAR DE TRE SIN TONFÖLJD"; color: var(--fg-black); }
-[data-style="fuga"] .app-btn[data-name="signal"]::before { content: "COMES · SUBJEKTET EN KVINT UPP, TONALT SVAR"; }
-[data-style="fuga"] .app-btn[data-name="todos"]::before  { content: "INVERSIO · SUBJEKTET SPEGLAT KRING b"; }
-[data-style="fuga"] .app-btn[data-name="stronk"]::before { content: "AUGMENTATIO · SUBJEKTET I DUBBLA NOTVÄRDEN"; }
+[data-style="fuga"] .app-btn[data-name="syntes"]::before { content: "DUX"; color: var(--fg-black); }
+[data-style="fuga"] .app-btn[data-name="signal"]::before { content: "COMES"; }
+[data-style="fuga"] .app-btn[data-name="todos"]::before  { content: "INVERSIO"; }
+[data-style="fuga"] .app-btn[data-name="stronk"]::before { content: "AUGMENTATIO"; }
 [data-style="fuga"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 /* hörnnoteringen: insatsen i takter och i sekunder. Sekunderna finns bara för
    att navet satt ett tempo — utan M.M. 72 är "+13,3 s" inte ett tal. */
@@ -3021,18 +3013,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   30% { opacity: .55; } 58%, 100% { opacity: 0; }
 }
 
-/* vilotillståndets bevis, tryckt på varje kanal: vad den slår själv, och vad
-   den faktiskt slår */
-[data-style="sinus"] .app-btn::before {
-  position: absolute; left: 0; right: 0; bottom: 8px; z-index: 3; text-align: center;
-  padding: 0 1rem; font-family: var(--font-mono); font-size: .52rem; letter-spacing: .1em;
-  color: var(--muted); pointer-events: none; transition: opacity .25s linear;
-}
-[data-style="sinus"] .app-btn[data-name="syntes"]::before { content: "TAKTGIVARE · HÄRIFRÅN HAR ALLA FYRA SIN FREKVENS"; color: var(--sn-rod); }
-[data-style="sinus"] .app-btn[data-name="signal"]::before { content: "EGEN 60/min → DRIVEN 72/min"; }
-[data-style="sinus"] .app-btn[data-name="todos"]::before  { content: "EGEN 45/min → DRIVEN 72/min"; }
-[data-style="sinus"] .app-btn[data-name="stronk"]::before { content: "EGEN 32/min → DRIVEN 72/min"; }
-[data-style="sinus"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
+/* Ingen vilotext i knappen: egenrytmen står redan på kanaletiketten till vänster
+   om remsan, och navets tomma kanal är påståendet. */
 /* hörnstämpeln: kanalens plats i retledningen, mätt från nodens avfyrning */
 [data-style="sinus"] .app-btn::after {
   position: absolute; left: 11px; top: 9px; z-index: 3;
@@ -3225,30 +3207,21 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   [data-style="synop"] .app-btn::before { font-size: .44rem !important; letter-spacing: .1em; }
   [data-style="synop"] .sy-iso { left: calc(var(--r) * -.62); width: calc(var(--r) * 1.24); }
   [data-style="synop"] .sy-eye b { font-size: 1.8rem; }
-  /* kakan i fickformat: cellerna behåller sin sexkant men får grundare spetsar,
-     och etiketterna kortas till relationen — den är det enda som måste med */
+  /* kakan i fickformat: cellerna behåller sin sexkant men får grundare spetsar.
+     Etiketterna är redan ett ord och behöver ingen mobilversion. */
   [data-style="bikupa"] { --bk-cut: 15px; --bk-soly: 116px; }
   [data-style="bikupa"] .app-btn__name { font-size: 1.05rem !important; letter-spacing: .03em; }
   [data-style="bikupa"] .app-btn::before { font-size: .44rem !important; letter-spacing: .08em; bottom: 8px; }
   [data-style="bikupa"] .app-btn::after { left: 18px; top: 9px; font-size: .44rem; }
-  [data-style="bikupa"] .app-btn[data-name="syntes"]::before { content: "DANSGOLVET · TOM CELL"; }
-  [data-style="bikupa"] .app-btn[data-name="signal"]::before { content: "NEKTARCELL → DANSGOLVET"; }
-  [data-style="bikupa"] .app-btn[data-name="todos"]::before  { content: "YNGELCELL ← DANSGOLVET"; }
-  [data-style="bikupa"] .app-btn[data-name="stronk"]::before { content: "POLLENCELL ← DANSGOLVET"; }
   /* bladet i fickformat: systemen står kvar men noterna är redan bortgallrade
-     av bredmåttet, och rollerna kortas till operationen — den är hela poängen */
+     av bredmåttet */
   [data-style="fuga"] .app-btn__name { font-size: 1.15rem !important; letter-spacing: .04em; }
   [data-style="fuga"] .app-btn::before { font-size: .44rem !important; letter-spacing: .08em; bottom: 7px; }
   [data-style="fuga"] .app-btn::after { left: 8px; top: 8px; font-size: .44rem; }
-  [data-style="fuga"] .app-btn[data-name="syntes"]::before { content: "DUX · SUBJEKTET STÄLLS HÄR"; }
-  [data-style="fuga"] .app-btn[data-name="signal"]::before { content: "COMES · SUBJEKTET EN KVINT UPP"; }
-  [data-style="fuga"] .app-btn[data-name="todos"]::before  { content: "INVERSIO · SUBJEKTET SPEGLAT"; }
-  [data-style="fuga"] .app-btn[data-name="stronk"]::before { content: "AUGMENTATIO · DUBBLA NOTVÄRDEN"; }
   [data-style="fuga"] .fg-fot { display: none; }
   /* remsan i fickformat: kanaletiketterna sitter kvar, men fotnoteringen tar
      halva pappret på en telefon och rullas ihop */
   [data-style="sinus"] .app-btn__name { font-size: 1.05rem !important; letter-spacing: .12em; text-indent: .12em; }
-  [data-style="sinus"] .app-btn::before { font-size: .44rem !important; letter-spacing: .08em; bottom: 7px; }
   [data-style="sinus"] .app-btn::after { left: 8px; top: 8px; font-size: .44rem; }
   [data-style="sinus"] .app-btn[data-name="syntes"]::after { content: "KAN 1 · t = 0"; }
   [data-style="sinus"] .app-btn[data-name="signal"]::after { content: "KAN 2 · +0,04 s"; }
