@@ -20,6 +20,7 @@ export const styles = [
   { id: 'synop',        label: 'Synoptiken' },
   { id: 'bikupa',       label: 'Bikupan' },
   { id: 'fuga',         label: 'Fugan' },
+  { id: 'sinus',        label: 'Sinusrytmen' },
 ]
 
 export const DEFAULT_STYLE = 'terminal'

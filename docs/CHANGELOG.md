@@ -6,6 +6,37 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- Stil `sinus` ("Sinusrytmen") — trettonde stilen i rotationen: sidan är en **EKG-remsa på
+  millimeterpapper** (fin ruta 1 mm, storruta 5 mm, tegelrött rutnät på varmt papper, fyra
+  kanaler med baslinje och maskinens kalibreringspuls, remsans huvud med inställningar och
+  slagräknare, avläsningen nere till vänster). Konceptet vilar på ett faktum ingen annan
+  stil kunnat använda: **sinusknutan går inte att avbilda.** Nodens signal är för svag för
+  att nå huden, så den kanal som ÄR taktgivaren är den enda som är tom — allt man någonsin
+  ser av navet är de tre andra. Därför bär navets kanal bara röda taktstreck (tid), medan
+  de tre bär kurvor (spänning): Signal är förmaket med P-vågen, Todos är AV-noden som
+  *håller* impulsen 0,08 s, Stronk är kammaren med QRS. Särställningen är mekanisk och
+  syns i vilotillståndet: varje underapp bär sin **egenrytm** — 60, 45 och 32/min, vad den
+  slår om noden tystnar — och sedan samma **drivna 72/min**; tre olika egna tal, ett
+  gemensamt lånat. Placeringen säger samma sak igen: varje kurva sitter `fördröjning ×
+  pappershastighet` till höger om taktstrecket, alltså 2, 6 och 10 millimeterrutor — mätbart
+  på papperet, inte påstått. Även takten kan räknas ur pappret (`600 ÷ 8,3 storrutor =
+  72/min`). En `sinus`-enhancer injicerar remsan (baslinjer mätta på radernas mittlinjer,
+  kalibreringspuls per kanal, taktstreck ur nodens frekvens tvärs alla fyra, måttsättning
+  vid första slaget) och river den vid stilbyte; rutnätets millimetertal i CSS och JS är
+  desamma, annars vore måttsättningen en lögn. I vila är sidans enda rörelse **gnistan som
+  vandrar taktstreck för taktstreck längs navets kanal** i verklig tid — noden fyrar av
+  vare sig någon tittar eller ej. Pekar man på en underapp skrivs hennes andel av slaget ut
+  vid varje taktstreck; pekar man på navet skrivs alla tre samtidigt och **retledningen**
+  dras nedför sidan, en lutande linje vars lutning ÄR fördröjningen. Fyra hovrar med fyra
+  olika verb: hela slaget samlat och skrivet med de tre andras pennor, i verklig tid, två
+  slag 0,83 s isär (Syntes), stylusen som drar P-vågen i konstant fart över ett utsnitt med
+  dubbel förstärkning (Signal), impulsen som **stannar** i porten medan fyra rutor räknas av
+  och sedan släpps vidare till kammaren (Todos), och kraftslaget som mäts mot
+  kalibreringspulsen — 12 mm = 2,4 mV, egen kraft men lånad takt (Stronk). Rörelse-etiken är
+  stylusens: `--anim-ease` är `linear` i hela stilen, för pappret matas med konstant
+  hastighet, och allt som händer är en andel av `--sn-rr` — sidans enda tempo. Skelettet
+  orört; `:is(:hover, :focus-visible)` genomgående och fördröjningarna nollas under
+  `prefers-reduced-motion`. Arkiverad som skärmdumpar i `variations/sinus/`.
 - Stil `fuga` ("Fugan") — tolfte stilen i rotationen: sidan är ett **arbetsblad ur en fuga
   i öppen partitur** (handgjort papper med formens vattrade linjer, järngallbläck brunnat
   av tid, fyra system med altklav, tonart och taktart, klammer och systemtaktstreck, samt

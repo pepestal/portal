@@ -25,6 +25,11 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
   fokus blir osynligt. Rita den inåt i stället (t.ex. låt knappens bakgrund/ram byta färg)
   och lägg glödet med `filter: drop-shadow()`, som följer clip-path; `box-shadow` gör det
   inte, den ritas mot den rektangulära boxen och klipps av på diagonalerna.
+- **Påstår din stil ett mått måste det stämma på båda ställena.** Ligger rutnätet i CSS
+  (`background-image`) och geometrin i JS (enhancerns `getBoundingClientRect`) räknar de i
+  var sitt tal — och i samma sekund du skriver ut "+0,04 s = 2 rutor" har du lovat att de
+  är lika. Lägg skalan i en variabel på båda ställena, bryt på samma bredder, och snäpp
+  det som ska gå att räkna till rutan.
 - **Skelettets markup rörs aldrig.** Vill du bygga en helscen som ersätter det
   (à la `orrery`) måste avsteget flaggas och dokumenteras som förankrat undantag.
 - Alla **fyra appar** (Syntes, Signal, Todos, Stronk) ska vara klickbara länkar
@@ -47,7 +52,9 @@ som de tre detaljerna måttsätts från, till väderkartans lågtryckscentrum L,
 isobarerna sluter sig kring och de tre fronterna utgår ur, till vaxkakans dansgolv —
 den enda cell som hålls TOM, eftersom den inte lagrar en sak utan en riktning — och till
 fugans subjekt, den enda tonföljd som finns på bladet, som de tre andra rösterna bara är
-omskrivningar av (svar, spegling, förstoring); gör något
+omskrivningar av (svar, spegling, förstoring) — och till EKG-remsans sinusknuta, taktgivaren
+som är den enda struktur på sidan som INTE går att avbilda, eftersom dess signal aldrig når
+huden: allt man någonsin ser av navet är de tre andra; gör något
 eget: en wrap kring de andra, källan de springer ur, dirigenten, blodomloppet. Detta är
 tävlingens konceptuella kärna.
 
@@ -61,7 +68,7 @@ det syns att de inte kan definiera sig själva.
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
 `bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
-`bikupa`, `fuga`) — inte för inspiration utan för att
+`bikupa`, `fuga`, `sinus`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Tolka uppgiften oväntat; en stark idé
 konsekvent genomförd slår tio effekter.
 
