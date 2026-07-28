@@ -263,7 +263,6 @@ const SYNTES = {
           <i class="mote" style="--a:250deg;--c:#F97B76;--d:1s"></i>
           <span class="core"></span>
         </span>
-        <span class="cap">tre världar · en puls</span>
       </div>
       ${dust()}
     </div>`,
@@ -273,7 +272,6 @@ const SYNTES = {
         <svg viewBox="0 0 200 40" preserveAspectRatio="none">
           <ellipse class="ink" cx="100" cy="20" rx="95" ry="15" pathLength="100" />
         </svg>
-        <span class="note">navet!</span>
       </div>
     </div>`,
   vaxel: `
@@ -284,7 +282,6 @@ const SYNTES = {
           <span class="jack" style="--i:1;--c:#86A268"><i class="cord"></i></span>
           <span class="jack" style="--i:2;--c:#CB7C43"><i class="cord"></i></span>
         </span>
-        <span class="cap">tre linjer · en telefonist</span>
       </div>
     </div>`,
   jacquard: `
@@ -297,7 +294,6 @@ const SYNTES = {
           <i class="warp" style="--x:82%;--c:#7C6A1C;--i:2"></i>
           <i class="skyttel"></i>
         </span>
-        <span class="cap">inslaget binder de tre</span>
       </div>
     </div>`,
   sprangskiss: `
@@ -334,7 +330,7 @@ const SYNTES = {
             <path class="arrow" d="M60,42 l6,-2.2 v4.4 z M142,42 l-6,-2.2 v4.4 z" />
           </g>
         </svg>
-        <span class="cap">POS. 1 · HUVUDENHET — 3 DELAR MONTERADE</span>
+        <span class="cap">3 DELAR</span>
       </div>
     </div>`,
   synop: `
@@ -351,7 +347,7 @@ const SYNTES = {
           </g>
           <text class="eye" x="108" y="24">L</text>
         </svg>
-        <span class="cap">L 984 hPa · <b class="count" data-to="3" data-suffix=" FRONTER · ETT SYSTEM">0 FRONTER · ETT SYSTEM</b></span>
+        <span class="cap">L 984 hPa · <b class="count" data-to="3" data-suffix=" FRONTER">0 FRONTER</b></span>
       </div>
     </div>`,
   bikupa: `
@@ -368,7 +364,7 @@ const SYNTES = {
           <path class="bi" d="${BK_DANS}" pathLength="100" />
           ${BK_FOLJARE}
         </svg>
-        <span class="cap">SVANSDANS α 40° · <b class="count" data-to="3" data-suffix=" ANVISNINGAR UT">0 ANVISNINGAR UT</b></span>
+        <span class="cap">α 40° · <b class="count" data-to="3" data-suffix=" BÄRINGAR">0 BÄRINGAR</b></span>
       </div>
     </div>`,
   /* fuga · strettot: subjektet skrivs i bläck, och innan det hunnit tystna
@@ -385,7 +381,7 @@ const SYNTES = {
           <g class="insats" data-app="stronk">${fgNoter(FG_AUG.slice(0, 2), { x0: 146, k: 5 }).svg}</g>
           <g class="dux">${fgNoter(FG_SUBJ, { x0: 56, k: 5 }).svg}</g>
         </svg>
-        <span class="cap">STRETTO · <b class="count" data-to="4" data-suffix=" INSATSER — ETT SUBJEKT">0 INSATSER — ETT SUBJEKT</b></span>
+        <span class="cap">STRETTO · <b class="count" data-to="4" data-suffix=" INSATSER">0 INSATSER</b></span>
       </div>
     </div>`,
   /* sinus · slaget: den enda kanal där hela hjärtslaget står samlat, och det är
@@ -419,10 +415,10 @@ const SYNTES = {
             <path d="M${x0},44 H${(x0 + rr).toFixed(1)}" pathLength="100" />
             <text x="${(x0 + rr / 2).toFixed(1)}" y="42">R–R 0,83 s</text>
           </g>
-          <text class="sa" x="${x0}" y="5.4">SA ⊙ FYRAR</text>
+          <text class="sa" x="${x0}" y="5.4">SA ⊙</text>
           <text class="gain" x="210" y="44">VERKLIG TID · ${SN_BPM}/min</text>
         </svg>
-        <span class="cap">NODEN SYNS ALDRIG SJÄLV · <b class="count" data-to="3" data-suffix=" PENNOR SVARAR">0 PENNOR SVARAR</b></span>
+        <span class="cap">R–R 0,83 s · <b class="count" data-to="3" data-suffix=" PENNOR">0 PENNOR</b></span>
       </div>
     </div>`
   })(),
@@ -480,7 +476,7 @@ const SIGNAL = {
         <span class="tape">
           <i class="m m--d" style="--i:0"></i><i class="m m--p" style="--i:1"></i><i class="m m--d" style="--i:2"></i><i class="g"></i><i class="m m--d" style="--i:3"></i><i class="m m--d" style="--i:4"></i><i class="m m--d" style="--i:5"></i><i class="m m--p" style="--i:6"></i><i class="g"></i><i class="m m--p" style="--i:7"></i><i class="m m--d" style="--i:8"></i><i class="m m--d" style="--i:9"></i><i class="m m--p" style="--i:10"></i>
         </span>
-        <span class="read">telegram: <b>KÖP</b> — vidare till växeln</span>
+        <span class="read"><b>KÖP</b></span>
       </div>
     </div>`,
   jacquard: `
@@ -492,7 +488,7 @@ const SIGNAL = {
             <path class="wave" d="M0,17 Q100,-24 200,17" />
           </svg>
         </span>
-        <span class="read">spänning <b class="count" data-to="512" data-suffix=" cN">0 cN</b> · varpen darrar</span>
+        <span class="read">spänning <b class="count" data-to="512" data-suffix=" cN">0 cN</b></span>
       </div>
     </div>`,
   sprangskiss: `
@@ -511,7 +507,7 @@ const SIGNAL = {
             </g>`).join('')}
           <circle class="flag" cx="210" cy="8" r="6.6" pathLength="100" />
         </svg>
-        <span class="cap">MÄTVÄRDE 42,41 · ÖVER ÖVRE GRÄNS <b>→ SÄLJ</b></span>
+        <span class="cap">42,41 · <b>ÖVER GRÄNS</b></span>
       </div>
     </div>`,
   synop: `
@@ -552,7 +548,7 @@ const SIGNAL = {
             <g class="pekare"><path d="M0,-2 l3.6,-5.4 h-7.2 z" /></g>
           </g>
         </svg>
-        <span class="cap">SOCKERHALT <b class="count" data-to="46" data-suffix=" %">0 %</b> · RIK KÄLLA — <b>KÖP</b></span>
+        <span class="cap">SOCKERHALT <b class="count" data-to="46" data-suffix=" %">0 %</b></span>
       </div>
     </div>`,
   /* fuga · comes: subjektet ligger kvar i blyerts under, och ur det stiger
@@ -568,7 +564,7 @@ const SIGNAL = {
           <circle class="tonal" cx="${56 + 4 * 9}" cy="${fgY(FG_COMES[FG_TONAL][0], 34)}" r="7.6" pathLength="100" />
           <text class="tlbl" x="${56 + 4 * 9}" y="43">TONALT SVAR</text>
         </svg>
-        <span class="cap">COMES · SVARET EN KVINT UPP — INSATS T. 3</span>
+        <span class="cap">COMES · T. 3</span>
       </div>
     </div>`,
   /* sinus · P-vågen: förmaket är det första som hör noden, och utslaget är så
@@ -597,7 +593,7 @@ const SIGNAL = {
           <text class="gain" x="210" y="44">UTSNITT ×6 · 10 mm/mV</text>
           <line class="penna" x1="0" y1="4" x2="0" y2="44" />
         </svg>
-        <span class="cap">FÖRMAK · P-VÅG <b class="count" data-to="40" data-suffix=" ms EFTER NODEN">0 ms EFTER NODEN</b> — ALDRIG FÖRE</span>
+        <span class="cap">P-VÅG · +<b class="count" data-to="40" data-suffix=" ms">0 ms</b></span>
       </div>
     </div>`
   })(),
@@ -647,7 +643,7 @@ const TODOS = {
   singularitet: `
     <div class="av" data-for="singularitet" aria-hidden="true">
       <div class="viz viz--selfcheck">
-        ${[['öppna portalen', '.05'], ['hälsa på grannarna', '.4'], ['vinn designtävlingen', '.75']].map(([t, d]) => `
+        ${[['pull main', '.05'], ['write tests', '.4'], ['deploy', '.75']].map(([t, d]) => `
           <span class="task" style="--t:${d}s"><span class="box"></span><span class="txt">${t}</span></span>`).join('')}
       </div>
       ${dust()}
@@ -666,7 +662,7 @@ const TODOS = {
           ${[['22%', '30%'], ['46%', '68%'], ['74%', '30%']].map(([x, y], i) => `
             <i class="hole" style="--x:${x};--y:${y};--i:${i}"></i>`).join('')}
         </span>
-        <span class="cap">tre hål · dagens mönster stansat</span>
+        <span class="cap">3 hål</span>
       </div>
     </div>`,
   sprangskiss: `
@@ -685,7 +681,7 @@ const TODOS = {
           <path class="arc" d="M40,23 m0,-22 a22,22 0 0 0 -11,2.95" pathLength="100" />
           <text class="lbl" x="66" y="35">30°</text>
         </svg>
-        <span class="cap">SPÄRR <b class="count" data-to="3" data-suffix="/3">0/3</b> · EJ ÅTERGÅNG</span>
+        <span class="cap">SPÄRR <b class="count" data-to="3" data-suffix="/3">0/3</b></span>
       </div>
     </div>`,
   synop: `
@@ -703,7 +699,7 @@ const TODOS = {
               <i class="n"><b class="n8">8</b><b class="n4">4</b><b class="n0">0</b></i>
             </span>`).join('')}
         </span>
-        <span class="cap">UPPKLARNANDE · <b class="count" data-to="3" data-suffix="/3 AVKLARADE">0/3 AVKLARADE</b></span>
+        <span class="cap">UPPKLARNANDE · <b class="count" data-to="3" data-suffix="/3">0/3</b></span>
       </div>
     </div>`,
   bikupa: `
@@ -724,7 +720,7 @@ const TODOS = {
               <text class="lbl" x="${cx}" y="44">${t}</text>
             </g>`).join('')}
         </svg>
-        <span class="cap"><b class="count" data-to="3" data-suffix=" CELLER TÄCKTA">0 CELLER TÄCKTA</b> · FÖRRÅDET SLUTET</span>
+        <span class="cap"><b class="count" data-to="3" data-suffix=" CELLER TÄCKTA">0 CELLER TÄCKTA</b></span>
       </div>
     </div>`,
   /* fuga · inversio: samma tonföljd, vänd upp och ner kring mittlinjens b.
@@ -741,7 +737,7 @@ const TODOS = {
           <g class="ur">${fgNoter(FG_SUBJ, { x0: 56, k: 9 }).svg}</g>
           <g class="svar">${fgNoter(FG_INV, { x0: 56, k: 9, ur: FG_SUBJ }).svg}</g>
         </svg>
-        <span class="cap">INVERSIO · SUBJEKTET SPEGLAT — INSATS T. 5</span>
+        <span class="cap">INVERSIO · T. 5</span>
       </div>
     </div>`,
   /* sinus · hålltiden: AV-noden är den enda struktur vars arbete inte har någon
@@ -776,7 +772,7 @@ const TODOS = {
           <text class="sa" x="${x0}" y="5.4">SA ⊙</text>
           <text class="gain" x="210" y="44">TIDSLUPP ×6</text>
         </svg>
-        <span class="cap">AV-NOD · HÅLLER <b class="count" data-to="80" data-suffix=" ms">0 ms</b> — MEN FÅR ALLTID SITT UPPDRAG UTIFRÅN</span>
+        <span class="cap">AV-NOD · <b class="count" data-to="80" data-suffix=" ms">0 ms</b></span>
       </div>
     </div>`
   })(),
@@ -861,7 +857,7 @@ const STRONK = {
           </span>
           <span class="crank"><i class="arm"></i></span>
         </span>
-        <span class="cap"><b class="count" data-to="24" data-suffix=" vev">0 vev</b> · ringer upp styrkan</span>
+        <span class="cap"><b class="count" data-to="24" data-suffix=" vev">0 vev</b></span>
       </div>
     </div>`,
   jacquard: `
@@ -875,7 +871,7 @@ const STRONK = {
           </i>
           <i class="trampa"></i>
         </span>
-        <span class="cap"><b class="count" data-to="12" data-suffix=" skott">0 skott</b> · repsväv</span>
+        <span class="cap"><b class="count" data-to="12" data-suffix=" skott">0 skott</b></span>
       </div>
     </div>`,
   sprangskiss: `
@@ -910,7 +906,7 @@ const STRONK = {
           ${BARB}
           <text class="kt" x="132" y="12">95 kt</text>
         </svg>
-        <span class="cap">VINDSTYRKA <b class="count" data-to="12" data-suffix=" BEAUFORT">0 BEAUFORT</b> · ORKAN</span>
+        <span class="cap"><b class="count" data-to="12" data-suffix=" BEAUFORT">0 BEAUFORT</b></span>
       </div>
     </div>`,
   bikupa: `
@@ -935,11 +931,10 @@ const STRONK = {
           </g>
           <g class="vag">
             <path class="pil" d="M82,41 v3 M82,45.4 l-2.4,-3.6 h4.8 z" />
-            <text class="mg" x="212" y="41">1/3 AV KROPPSVIKTEN</text>
           </g>
-          <text class="hz" x="212" y="14">VINGSLAG 230 Hz</text>
+          <text class="hz" x="212" y="14">230 Hz</text>
         </svg>
-        <span class="cap">LAST <b class="count" data-to="30" data-suffix=" mg">0 mg</b> · TUR 3/3 · HEM TILL KAKAN</span>
+        <span class="cap">LAST <b class="count" data-to="30" data-suffix=" mg">0 mg</b></span>
       </div>
     </div>`,
   /* fuga · augmentatio: inte en not tillkommer — varje notvärde fördubblas, och
@@ -958,7 +953,7 @@ const STRONK = {
           <g class="svar">${fgNoter(FG_AUG, { x0: 56, k: 4.8, ur: FG_SUBJ }).svg}</g>
           <path class="spann" d="M56,38 v4 H209.6 v-4" />
         </svg>
-        <span class="cap">AUGMENTATIO · SAMMA TONER PÅ <b class="count" data-to="4" data-suffix=" TAKTER">0 TAKTER</b></span>
+        <span class="cap">AUGMENTATIO · <b class="count" data-to="4" data-suffix=" TAKTER">0 TAKTER</b></span>
       </div>
     </div>`,
   /* sinus · kraftslaget: kammaren är den enda som verkligen tar i — QRS är
@@ -991,7 +986,7 @@ const STRONK = {
           <text class="sa" x="${x0}" y="5.4">SA ⊙</text>
           <text class="gain" x="210" y="44">5 mm/mV · TIDSLUPP ×3</text>
         </svg>
-        <span class="cap">KAMMARE · R <b class="count" data-to="12" data-suffix=" mm ÖVER NOLLINJEN">0 mm ÖVER NOLLINJEN</b> — MEN TAKTEN ÄR NODENS</span>
+        <span class="cap">R <b class="count" data-to="12" data-suffix=" mm">0 mm</b> · 2,4 mV</span>
       </div>
     </div>`
   })(),
@@ -1260,7 +1255,7 @@ function kvittoEnhancer() {
   head.innerHTML = `
     <span class="kv-shop">Portal &amp; Söner</span>
     <span class="kv-dim">— LÄNKHANDEL SEDAN 1994 —</span>
-    <span class="kv-dim">Org.nr 556677-8899 · Kassa 03 · Kassör: FABLE-5</span>
+    <span class="kv-dim">Org.nr 556677-8899 · Kassa 03 · Kassör 07</span>
     <span class="kv-dim kv-dt"></span>
     <span class="kv-rule" aria-hidden="true"></span>
     <span class="kv-cols" aria-hidden="true"><i>ARTIKEL</i><i>À-PRIS</i></span>`
@@ -1270,16 +1265,14 @@ function kvittoEnhancer() {
   foot.innerHTML = `
     <span class="kv-rule" aria-hidden="true"></span>
     <span class="kv-row kv-strong"><i>SUMMA</i><i>0:00</i></span>
-    <span class="kv-row kv-dim"><i>Varav moms 25% på kreativitet</i><i>0:00</i></span>
-    <span class="kv-row kv-dim"><i>Rabatt: "UTANFÖR BOXEN"</i><i>−100%</i></span>
+    <span class="kv-row kv-dim"><i>Varav moms 25 %</i><i>0:00</i></span>
     <span class="kv-row kv-strong"><i>ATT BETALA</i><i>0:00</i></span>
-    <span class="kv-row kv-dim"><i>Betalsätt</i><i>HOVER</i></span>
-    <span class="kv-row kv-dim"><i>Du har sparat idag</i><i>en backend</i></span>
+    <span class="kv-row kv-dim"><i>Betalsätt</i><i>KORT</i></span>
     <span class="kv-rule" aria-hidden="true"></span>
     <span class="kv-barcode" aria-hidden="true"></span>
     <span class="kv-dim">7 350094 219942</span>
     <span class="kv-thanks">TACK FÖR DITT BESÖK<br>VÄLKOMMEN ÅTER</span>
-    <span class="kv-dim">Bytesrätt gäller ej hyperlänkar.</span>
+    <span class="kv-dim">Öppet köp 30 dagar mot kvitto.</span>
     <span class="kv-tear" aria-hidden="true">✂ · — · — · RIV HÄR · — · — · ✂</span>`
 
   const bc = foot.querySelector('.kv-barcode')
@@ -1474,7 +1467,6 @@ function synopEnhancer() {
       </div>
       <div class="sy-foot">
         <span>${stats.ecosystem.apps} STATIONER · ${nf.format(stats.ecosystem.lines)} RADER OBSERVATION</span>
-        <span class="sy-note">SYNOPTISK, GR. <em>synoptikós</em> — ”SEDD TILLSAMMANS”</span>
       </div>
     </div>`
   document.body.prepend(chart)
@@ -1613,10 +1605,10 @@ function bikupaEnhancer() {
    subjektet med den — en härledning kan inte visas utan sin källa.
    Geometrin mäts i DOM:en: varje system ligger på sin rads mittlinje. */
 const FG_STAMMOR = [
-  ['syntes', 0, 1, 'DUX · SUBJEKTET'],       // ställer temat i takt 1
-  ['signal', 2, 3, 'COMES · KVINTEN UPP'],   // tiger två takter, faller in i t. 3
-  ['todos', 4, 5, 'INVERSIO · SPEGLAD'],
-  ['stronk', 6, 7, 'AUGMENTATIO · 2:1'],
+  ['syntes', 0, 1, 'DUX'],           // ställer temat i takt 1
+  ['signal', 2, 3, 'COMES'],         // tiger två takter, faller in i t. 3
+  ['todos', 4, 5, 'INVERSIO'],
+  ['stronk', 6, 7, 'AUGMENTATIO'],
 ]
 const FG_MM = 72
 const FG_TAKT = (60 / FG_MM) * 4                    // en 4/4-takt i sekunder
@@ -1646,8 +1638,7 @@ function fugaEnhancer() {
     </i>
     <svg class="fg-plan" xmlns="http://www.w3.org/2000/svg"></svg>
     <i class="fg-fot">
-      <b>SUBJEKTET STÄLLS EN GÅNG — BESVARAS TRE</b>
-      <b>EN TAKT = ${fgSek(1)} s · VARJE INSATS MÄTT FRÅN TAKT 1</b>
+      <b>EN TAKT = ${fgSek(1)} s</b>
       <b>${stats.ecosystem.apps} STÄMMOR · ${nf.format(stats.ecosystem.lines)} TAKTER I VERKET</b>
     </i>`
   document.body.prepend(ark)
@@ -1694,11 +1685,11 @@ function fugaEnhancer() {
           <text class="fg-takt" x="${r(x0 - 4)}" y="${r(fgY(8, bas, sp) - sp * .8)}">1</text>
           ${s.svg}
           <path class="fg-klaff" d="M${r(x0 - 6)},${r(fgY(0, bas, sp) + sp * 1.5)} v${r(sp * .5)} H${r(s.slut)} v${r(-sp * .5)}" />
-          <text class="fg-etikett" x="${r((x0 + s.slut) / 2)}" y="${r(fgY(0, bas, sp) + sp * 2.9)}">SUBJEKTET · T. 1–2</text>
+          <text class="fg-etikett" x="${r((x0 + s.slut) / 2)}" y="${r(fgY(0, bas, sp) + sp * 2.9)}">T. 1–2</text>
         </g>`
       }
-      return `<g class="fg-tystnad" data-app="${id}">${fgPaus(x0 + 12, bas, sp, paus)}
-        <text class="fg-etikett" x="${r(x0 + 12 + sp * 1.4)}" y="${r(fgY(0, bas, sp) + sp * 2.2)}">TIGER ${paus} TAKTER</text></g>`
+      // Flerstaktspausens egen siffra säger redan hur många takter rösten tiger.
+      return `<g class="fg-tystnad" data-app="${id}">${fgPaus(x0 + 12, bas, sp, paus)}</g>`
     }).join('') : ''
 
     // Högra sidan: härledningarna. Oskrivna tills någon pekar på navet eller på dem.
@@ -1712,7 +1703,7 @@ function fugaEnhancer() {
     const hoger = visa ? FG_STAMMOR.map(([id, paus, takt, namn], i) => {
       const bas = basar[i]
       const lbl = `<text class="fg-lbl" x="${r(xr)}" y="${r(fgY(8, bas, sp) - sp * .8)}">${
-        paus ? `T. ${takt} · +${fgSek(paus)} s · ${namn}` : 'T. 9 · STRETTO · ALLA FYRA PÅ EN GÅNG'}</text>`
+        paus ? `T. ${takt} · +${fgSek(paus)} s · ${namn}` : 'T. 9 · STRETTO'}</text>`
       if (!paus) {
         const kv = k * .62
         return `<g class="fg-harledning" data-app="syntes">${lbl}
@@ -1769,7 +1760,6 @@ function sinusEnhancer() {
       <b>RYTM: SINUS · REGELBUNDEN · ${apps.length} KANALER KOPPLADE</b>
       <b>TAKT UR PAPPRET: 600 ÷ 8,3 STORRUTOR = ${SN_BPM}/min</b>
       <b>PR 0,16 s · QRS 0,09 s · QT 0,38 s · ${nf.format(stats.ecosystem.lines)} RADER REGISTRERADE</b>
-      <b class="sn-rod">NODENS EGEN KURVA SAKNAS PÅ REMSAN — DEN LÄSES UR DE TRE</b>
     </i>`
   document.body.prepend(remsa)
   cleanups.push(() => remsa.remove())
@@ -1848,8 +1838,8 @@ function sinusEnhancer() {
         <path class="sn-kal" transform="translate(${M} ${y})" d="${snKal(s)}" pathLength="100" />
         <text class="sn-lbl" x="${M}" y="${y - s.mm(9.6)}">KAN ${i + 1} · ${namn}</text>
         <text class="sn-egen" x="${M}" y="${y - s.mm(6.8)}">${nav
-          ? `TAKTGIVARE · ${egen}/min · EJ AVBILDBAR`
-          : `EGEN ${egen}/min → DRIVEN ${SN_BPM}/min`}</text>
+          ? `${egen}/min`
+          : `EGEN ${egen}/min → ${SN_BPM}/min`}</text>
         ${slagen}${matt}
       </g>`
     }).join('')

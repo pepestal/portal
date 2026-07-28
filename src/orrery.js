@@ -122,12 +122,12 @@ export function orreryEnhancer() {
         </svg>
         <a class="orr-core" href="${(appById.syntes || { url: '#' }).url}" data-app="syntes"
            aria-label="Öppna Syntes — navet">
-          <span class="orr-core__label">Syntes · navet</span>
+          <span class="orr-core__label">Syntes</span>
         </a>
         ${WORLDS.map(worldMarkup).join('')}
       </div>
     </div>
-    <div class="orr-status" aria-hidden="true"><span class="orr-status__dot"></span> 3 världar · 1 nav · systemet nominellt</div>`
+    <div class="orr-status" aria-hidden="true"><span class="orr-status__dot"></span> SYSTEM NOMINELLT</div>`
   document.body.appendChild(scene)
   cleanups.push(() => scene.remove())
 
