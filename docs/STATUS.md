@@ -30,8 +30,10 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   kring och de tre fronterna utgår ur (synop), dansgolvet — kakans enda tomma cell, där
   lassen blir till bäringar för de tre andra (bikupa), subjektet — den enda tonföljd som
   finns, som de tre är omskrivningar av (fuga), sinusknutan — taktgivaren som inte går att
-  avbilda, så allt man ser av den ÄR de tre andra (sinus).
-- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): tretton stilar — `terminal`
+  avbilda, så allt man ser av den ÄR de tre andra (sinus), nyckelplåten K — plåten som bär
+  konturen och all text, den de tre färgplåtarna riktas mot och den enda som inte kan
+  ligga ur pass (tryckark).
+- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): fjorton stilar — `terminal`
   (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
   `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära
   portar, stjärnfält, levande siffror), `kvitto` (Kvittot — ur tävlingsbidraget
@@ -63,7 +65,11 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   (P-vågen), Todos är AV-noden som håller impulsen 0,08 s, Stronk är kammaren (QRS). Var och
   en bär sin egenrytm — 60, 45 och 32/min — och sedan samma drivna 72/min, och sitter
   `fördröjning × pappershastighet` till höger om taktstrecket: 2, 6 och 10 rutor, mätbart
-  på pappret).
+  på pappret) och `tryckark` (Tryckarket — ett ark på väg genom en fyrfärgspress: K i CMYK
+  står för KEY, inte black, och Syntes är nyckelplåten — den som bär konturen och all text
+  medan C/Y/M bara bär färg. De tre är vinkelmätta mot nyckelns 45° och vandrar ur pass
+  med varsin färgad dubbelkontur; nyckeln kan per definition inte ligga snett, för den är
+  nollan de ställs in efter).
   Varje stil bär egen
   palett, typografi och animationsuttryck under sin `[data-style]`. Skelettet står still
   för alla **utom `orrery`**, som är en helscen och medvetet ersätter det (döljer
@@ -72,7 +78,7 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 - **Rotation:** slumpad stil vid varje besök (undviker samma som förra). Switcher i
   topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage);
   `?style=<id>` deep-linkar.
-- **Femtiotvå unika hover-animationer** — fyrtioåtta i skelett-matrisen (fyra appar × tolv stilar,
+- **Femtiosex unika hover-animationer** — femtiotvå i skelett-matrisen (fyra appar × tretton stilar,
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
   singularitet injicerar stjärnfält/parallax/3D-tilt och tickande siffror (kurs, reps);
@@ -104,6 +110,14 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   taktstreck, hovras navet skrivs alla tre och retledningen dras nedför sidan. Rutnätets
   millimetertal finns på båda ställena (CSS `--sn-mm`, JS `k`) och måste hållas lika.
   Delar count-up.
+  tryckark skriver plåtdata (färg, rastervinkel, passningsfel) som CSS-variabler på
+  raderna — knappens raster, dubbelkonturen och pappersdriften läser dem därifrån — och
+  injicerar arket mätt i DOM:en (skärmärken, passaxlar genom navets rad, passkors med
+  varsitt passningsfel, vinkelmätare med nyckelns 45° som gemensamt referensben,
+  färgkontrollremsa, slugrad), rivet vid stilbyte och omritat vid resize; ryms inte
+  marginalen (smal skärm) hoppas instrumenten över och hörnstämpeln bär vinkeln ensam.
+  Rastercellen ≈ 9 px står i både CSS (`--tr-cell`) och JS (`TR_CELL`) och måste hållas
+  lika. Hovras navet dras hela arket i pass via `:has`. Delar count-up.
 - **En stil = en modul (2026-07-28):** per-stil-koden bor i `src/styles/<id>.js` +
   `src/styles/<id>.css`; `styles.js` är registret, `shared.js` det lilla som delas, och
   `main.js` (234 rader) vet inget om enskilda stilar. Nya bidrag rör aldrig `main.js`
@@ -129,7 +143,8 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 1. **Fler stilar** — `singularitet` (fjärde), `kvitto` (femte), `orrery` (sjätte,
    första helscenen) och `vaxel` (sjunde) kom 2026-07-23, `jacquard` (åttonde)
    2026-07-26 samt `sprangskiss` (nionde), `synop` (tionde), `bikupa` (elfte)
-   2026-07-27 samt `fuga` (tolfte) och `sinus` (trettonde) 2026-07-28; en ny skelett-stil =
+   2026-07-27 samt `fuga` (tolfte), `sinus` (trettonde) och `tryckark` (fjortonde)
+   2026-07-28; en ny skelett-stil =
    modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
    `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
 2. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.

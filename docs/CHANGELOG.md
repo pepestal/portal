@@ -51,6 +51,38 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
   [`TEXTGRANSKNING.md`](TEXTGRANSKNING.md).
 
 ### Tillagt
+- Stil `tryckark` ("Tryckarket") — fjortonde stilen i rotationen: sidan är ett **ark på väg
+  genom en fyrfärgspress** (papper i obestruket offset-vitt med nyckelplåtens eget
+  45°-raster, skärmärken i hörnen, passaxlar genom navets rad, vinkelmätare i
+  vänstermarginalen, passkors i höger, färgkontrollremsa längs bakkanten och slugrad i
+  foten). Konceptet vilar på en bokstav de flesta läser fel: **K i CMYK står för KEY, inte
+  black.** Nyckelplåten är den plåt som bär bilden — konturen, detaljen, all text — medan
+  de tre andra bara bär färg; tar man bort en färgplåt blir arket felfärgat, tar man bort
+  nyckeln blir det oläsbart. Syntes är nyckelplåten, Signal är C, Todos är Y, Stronk är M,
+  och varenda läsbar bokstav på sidan är tryckt i nyckelns svarta — underapparna syns
+  bara som rastertoner och dubbelkonturer. Särställningen är mekanisk och dubbel, och
+  båda benen syns i vilotillståndet: **rastervinkeln** — C 15°, Y 0°, M 75° är alla satta
+  mot nyckelns 45°, så vinkelmätarna i marginalen delar referensben och nyckelns mätare
+  är den enda med ett enda ben — och **passningen** — de tre plåtarna vandrar (pappret
+  sträcker sig i pressen) och lämnar en färgad dubbelkontur, men nyckeln kan per
+  definition inte ligga snett, för den ÄR nollan de andra ställs in efter. Sidans enda
+  rörelse i vila är tre plåtar som söker sig kring en fjärde som står still. En
+  `tryckark`-enhancer skriver plåtdata (färg, vinkel, passningsfel) som CSS-variabler på
+  raderna och injicerar arket mätt i DOM:en (rivs vid stilbyte, ritas om vid resize);
+  rastercellen ≈ 9 px står i både CSS (`--tr-cell`) och JS (`TR_CELL`), så passningsfelen
+  är samma bråkdelar av samma cell överallt. Fyra hovrar med pressens egna mätdon:
+  passkorsen dras i pass och lupen går från moiré till rosett — fyra raster i rätt
+  inbördes vinkel ger ett mönster ingen av dem innehåller — samtidigt som **hela arket**
+  dras i pass via `:has` (Syntes), rastret vrids från nyckelns 45° ned till sina egna 15°
+  och moirébältena löses upp medan gradbågen mäter Δ30° (Signal), tonkilen skrivs ut
+  steg för steg och 50 %-fältet trycks som de 58 % punktökningen gör det till (Todos),
+  och fältet körs till fullton medan densitometernålen slår till D 1,45 — under nyckelns
+  inristade 1,80, alltid högst på arket (Stronk). Rörelse-etiken är pressens: färg ligger
+  på pappret eller inte, så allt i knapparna sker i steg (`steps(1)`, ett tryckverk i
+  taget) och det enda som glider är pappersdriften. Under `prefers-reduced-motion`
+  stannar driften men plåtarna lämnas kvar **ur pass** — felet ska synas, bara inte röra
+  sig. Skelettet orört; `:is(:hover, :focus-visible)` genomgående. Arkiverad som
+  skärmdumpar i `variations/tryckark/`.
 - `scripts/check-copy.mjs` + `npm run check:copy` — byggkontroll som failar på synlig text
   som förklarar i stället för att visa: knappetiketter över 30 tecken eller 5 ord,
   hover-texter över 40 tecken, och formuleringar som `härifrån`, `utgår från`, `hämtar`

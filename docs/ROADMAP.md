@@ -61,7 +61,7 @@ _(Inga uppslag noterade ännu.)_
 - ~~Per-app **unika** animationer per stil.~~ ✅ (tolv st, matris app × stil)
 - ~~Fler stilar i rotationen.~~ ✅ (`singularitet` — fjärde, `kvitto` — femte, `orrery` — sjätte
   och första helscenen, `vaxel` — sjunde, `jacquard` — åttonde, `sprangskiss` — nionde,
-  `synop` — tionde, `bikupa` — elfte, `fuga` — tolfte, `sinus` — trettonde; alla ur
-  tävlingsbidrag; fler kan läggas till löpande)
+  `synop` — tionde, `bikupa` — elfte, `fuga` — tolfte, `sinus` — trettonde, `tryckark` —
+  fjortonde; alla ur tävlingsbidrag; fler kan läggas till löpande)
 - ~~Helscen-stil som ersätter skelettet.~~ ✅ (`orrery`, förankrat undantag från "skelettet står still")
 - Självhostade typsnitt i stället för Google Fonts-`<link>`.

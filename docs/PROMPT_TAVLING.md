@@ -104,7 +104,10 @@ den enda cell som hålls TOM, eftersom den inte lagrar en sak utan en riktning �
 fugans subjekt, den enda tonföljd som finns på bladet, som de tre andra rösterna bara är
 omskrivningar av (svar, spegling, förstoring) — och till EKG-remsans sinusknuta, taktgivaren
 som är den enda struktur på sidan som INTE går att avbilda, eftersom dess signal aldrig når
-huden: allt man någonsin ser av navet är de tre andra; gör något
+huden: allt man någonsin ser av navet är de tre andra — och till tryckarkets nyckelplåt
+(K i CMYK står för KEY, inte black): den enda plåt som bär kontur och text, den de tre
+färgplåtarna vinkelmäts mot och den enda som inte KAN ligga ur pass, eftersom den är
+nollan de andra ställs in efter; gör något
 eget: en wrap kring de andra, källan de springer ur, dirigenten, blodomloppet. Detta är
 tävlingens konceptuella kärna.
 
@@ -120,7 +123,7 @@ bokstav på skärmen — det är den vanligaste och dyraste missen i tävlingen.
 
 ## Skriv inte det du kan visa
 
-Bidraget bedöms på vad som **syns**, inte på vad det påstår om sig självt. Tretton
+Bidraget bedöms på vad som **syns**, inte på vad det påstår om sig självt. Fjorton
 bidrag in är det här den enskilt största kvalitetsskillnaden mellan stilarna, och
 den vanligaste anledningen till att ett i övrigt skickligt bygge känns fjantigt.
 
@@ -148,7 +151,7 @@ rad som är navet? Gör det inte det är det geometrin som ska fixas, inte texte
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
 `bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
-`bikupa`, `fuga`, `sinus`) — inte för inspiration utan för att
+`bikupa`, `fuga`, `sinus`, `tryckark`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Varje stil ligger i `src/styles/<id>.js` och
 `src/styles/<id>.css`, så du kan läsa en i taget. Tolka uppgiften oväntat; en
 stark idé konsekvent genomförd slår tio effekter.

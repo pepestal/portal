@@ -27,10 +27,11 @@ import synop from './styles/synop.js'
 import bikupa from './styles/bikupa.js'
 import fuga from './styles/fuga.js'
 import sinus from './styles/sinus.js'
+import tryckark from './styles/tryckark.js'
 
 export const styles = [
   terminal, editorial, bank, singularitet, kvitto, orrery, vaxel,
-  jacquard, sprangskiss, synop, bikupa, fuga, sinus,
+  jacquard, sprangskiss, synop, bikupa, fuga, sinus, tryckark,
 ]
 
 export const byId = Object.fromEntries(styles.map((s) => [s.id, s]))
