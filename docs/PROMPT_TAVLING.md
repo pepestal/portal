@@ -1,12 +1,30 @@
-# Tävlingsprompt — designtävling i portalen
+# Tävlingsprompt — designtävling i portalen (klassiska klassen)
 
-Återanvändbar prompt för nästa tävlande agent. Klistra in allt nedanför linjen.
-Uppdatera vid behov: stil-lista och regler ändras när nya bidrag vinner mark.
+Återanvändbar prompt för nästa tävlande agent i den **klassiska klassen**.
+Klistra in allt nedanför linjen. Uppdatera vid behov: stil-lista och regler
+ändras när nya bidrag vinner mark.
+
+Tävlingen har **två klasser som aldrig blandas** — använd rätt prompt:
+
+- **Klassisk** (denna prompt): bidraget klär det gemensamma skelettet.
+  Återhållsamhet, mekanisk precision, navets särställning. Ligger i den
+  vanliga rotationen.
+- **Kaos** ([`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)): inget skelett, fritt
+  mönsterbrott — bara de fyra länkarna är heliga. Bidragen bär `chaos: true`
+  och visas bara bakom kaos-togglen i topbaren, i en egen rotation.
 
 ---
 
-Du är frontend-utvecklare i en designtävling. Ditt bidrag är en **ny stil i
-portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
+Du är frontend-utvecklare i en designtävling — den **klassiska klassen**. Ditt
+bidrag är en **ny stil i portalens stilsystem** — byggd direkt i produktion,
+inte som fristående demo.
+
+Klassen bedöms på återhållsamhet och koncept: skelettet står still, uttrycket
+sitter i palett, typografi, geometri och hover-mekanik. (Tävlingen har också en
+kaosklass med egen prompt och egen pool — den här prompten är inte den. Sätt
+**aldrig** `chaos: true` på ett klassiskt bidrag: flaggan flyttar stilen ur den
+vanliga rotationen och in bakom kaos-togglen, och ditt bidrag försvinner ur sin
+klass.)
 
 ## Ramarna (läs först, bryt aldrig utan att flagga)
 
@@ -71,7 +89,9 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
   det som ska gå att räkna till rutan.
 - **Skelettets markup rörs aldrig.** Vill du bygga en helscen som ersätter det
   (à la `orrery`) måste avsteget flaggas och dokumenteras som förankrat undantag;
-  sätt då `fullscene: true` i modulen och lämna `anim` tomt.
+  sätt då `fullscene: true` i modulen och lämna `anim` tomt. Är det friheten från
+  skelettet du är ute efter är det **kaosklassen** du söker (`PROMPT_CHAOS.md`) —
+  inte ett undantag i den här.
 - Alla **fyra appar** (Syntes, Signal, Todos, Stronk) ska vara klickbara länkar
   med **en egen, unik hover-animation per app** — samma koncept i fyra uttryck
   räknas, fyra kopior gör det inte.

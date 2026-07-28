@@ -78,6 +78,12 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 - **Rotation:** slumpad stil vid varje besök (undviker samma som förra). Switcher i
   topbaren för att bläddra, plus **lås** som pinnar en favorit (localStorage);
   `?style=<id>` deep-linkar.
+- **Två tävlingsklasser (2026-07-28):** *klassisk* (klär skelettet, vanliga
+  rotationen — [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md)) och *kaos* (`chaos: true`
+  i modulen — inget skelett, fritt mönsterbrott, bara de fyra länkarna heliga;
+  [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)). Kaos-poolen ligger bakom en **Kaos-toggle**
+  i topbaren och har egen rotation; `?style=` och låset följer stilens klass.
+  **Inga kaosbidrag finns ännu** — togglen är avstängd tills det första landar.
 - **Femtiosex unika hover-animationer** — femtiotvå i skelett-matrisen (fyra appar × tretton stilar,
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
@@ -147,7 +153,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
    2026-07-28; en ny skelett-stil =
    modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
    `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
-2. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
+2. **Första kaosbidraget** — kaosklassens infrastruktur (pool + toggle) är på plats
+   men poolen är tom; nästa kaos-agent kör [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
+3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut
 

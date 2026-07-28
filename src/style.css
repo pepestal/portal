@@ -63,7 +63,7 @@ body {
 .wordmark { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; letter-spacing: .02em; }
 
 .style-switch { display: flex; align-items: center; gap: .4rem; min-width: 0; }
-.style-switch__btn, .style-switch__lock {
+.style-switch__btn, .style-switch__lock, .style-switch__chaos {
   font-family: var(--font-ui); font-size: .8rem; color: var(--text);
   background: var(--surface); border: 1px solid var(--line); border-radius: 7px;
   padding: .35rem .6rem; cursor: pointer; line-height: 1;
@@ -77,8 +77,10 @@ body {
   min-width: 11ch; text-align: center;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.style-switch__btn:hover, .style-switch__lock:hover { border-color: var(--accent); color: var(--accent); }
+.style-switch__btn:hover, .style-switch__lock:hover, .style-switch__chaos:not(:disabled):hover { border-color: var(--accent); color: var(--accent); }
 .style-switch__lock.is-locked { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.style-switch__chaos.is-on { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.style-switch__chaos:disabled { opacity: .45; cursor: default; }
 
 .rows { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(1.25rem, 3vw, 2.25rem); padding: 2rem var(--rows-pad) 4rem; }
 .app-row {

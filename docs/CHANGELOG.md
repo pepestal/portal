@@ -5,6 +5,18 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 
 ## [Ej släppt]
 
+### Tillagt
+- **Kaosklass i tävlingen.** Stilsystemet delas i två pooler: klassisk och kaos. En
+  stilmodul som sätter `chaos: true` hamnar i kaos-poolen och visas bara när den nya
+  **Kaos-togglen** i topbaren är på; pilar/rotation bläddrar inom aktiv pool, och
+  `?style=<id>` och låset följer stilens klass. Togglen är avstängd (med förklarande
+  `title`) tills första kaosbidraget finns — i dag är kaos-poolen tom. Ny
+  tävlingsprompt [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md): inget skelett, fritt
+  mönsterbrott, bara de fyra länkarna (ur `src/apps.js`) plus tangentbord,
+  reduced-motion, cleanup och `check:copy` är heliga; bedöms på WHOA-faktor.
+  [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) förtydligad som **klassiska klassens**
+  prompt: klassiska bidrag sätter aldrig `chaos: true`.
+
 ### Ändrat
 - **Knapparna länkar skarpt** i stället för `#`: Syntes → `https://syntes.dev`, Signal →
   `https://signal.syntes.dev`, Todos → `https://ethos.syntes.dev`, Stronk →

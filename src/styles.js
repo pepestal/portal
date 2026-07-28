@@ -11,6 +11,11 @@
 //               räcker `makeCountEnhancer('<id>')` ur `src/shared.js`.
 //   fullscene — bara `orrery`: stilen ersätter skelettet i stället för att
 //               klä om det. Förankrat undantag, se CLAUDE.md och STATUS.md.
+//   chaos     — valfri. Markerar bidraget som KAOSKLASS (docs/PROMPT_CHAOS.md):
+//               stilen ingår inte i den vanliga rotationen utan visas bara när
+//               kaos-togglen i topbaren är på. Kontraktet i övrigt är detsamma.
+//               I kaosklassen är helscen (fullscene: true) normalfallet, inget
+//               undantag. Klassiska bidrag sätter ALDRIG denna flagga.
 //
 // Modulen importerar själv sin CSS (`import './<id>.css'`), så registret är det
 // enda stället som behöver röras när ett nytt bidrag läggs till.

@@ -32,7 +32,10 @@ Portal är ett **showroom / design-experiment** — en sida med stora app-knappa
   delar ett och samma skelett men bär egen palett, typografi och animationer; `orrery` är en
   **helscen** som medvetet ersätter skelettet (förankrat undantag). Stilen **roterar slumpmässigt**
   vid varje besök; en switcher låter dig bläddra och **låsa** en favorit. `?style=<id>` i URL:en
-  deep-linkar till en specifik stil.
+  deep-linkar till en specifik stil. Sedan 2026-07-28 finns även en **kaosklass**
+  (moduler med `chaos: true` — fritt mönsterbrott utan skelett, se
+  [`docs/PROMPT_CHAOS.md`](docs/PROMPT_CHAOS.md)) bakom en Kaos-toggle i topbaren,
+  med egen rotation; poolen är ännu tom och togglen avstängd tills första bidraget.
 - **Info-paneler + systemhälsa** visar riktig projektdata (filer, rader, språk, stack)
   som genereras vid **byggtid** ur grann-repona — inte via runtime-koppling.
 
@@ -49,7 +52,8 @@ Länkar ut till andra appar via URL; ingen runtime app-till-app-kommunikation.
 - `src/apps.js` — appregistret (lägg till en app = en rad).
 - `src/styles.js` — stilregistret: importerar en modul per stil.
 - `src/styles/<id>.js` + `src/styles/<id>.css` — **en stil per filpar.** Modulen
-  default-exporterar `{ id, label, anim, enhancer? }` och importerar sin egen CSS.
+  default-exporterar `{ id, label, anim, enhancer?, chaos? }` och importerar sin egen
+  CSS; `chaos: true` lägger stilen i kaos-poolen bakom topbarens Kaos-toggle.
   `anim` är hover-markup per app; bara den aktiva stilens markup ligger i DOM:en.
   `src/styles/orrery.js` är helscenen som ersätter skelettet (`fullscene: true`).
 - `src/shared.js` — det lilla stilarna delar: `nf`, `prefersReduced`, `countUp`,

@@ -97,6 +97,8 @@ document.querySelector('#app').innerHTML = `
       <button class="style-switch__btn" data-act="next" aria-label="Nästa stil">›</button>
       <button class="style-switch__lock" data-act="lock" aria-pressed="false"
               aria-label="Lås stilen">Lås</button>
+      <button class="style-switch__chaos" data-act="chaos" aria-pressed="false"
+              aria-label="Växla kaosläge">Kaos</button>
     </div>
   </header>
 
@@ -110,9 +112,23 @@ document.querySelector('#app').innerHTML = `
 /* ============================ Stilrotation ============================ */
 const LS_LOCK = 'portal.lockedStyle'
 const LS_LAST = 'portal.lastStyle'
+const LS_MODE = 'portal.mode'
 const nameEl = document.getElementById('style-name')
 const lockBtn = document.querySelector('[data-act="lock"]')
-const ids = styles.map((s) => s.id)
+const chaosBtn = document.querySelector('[data-act="chaos"]')
+
+/* Två klasser i rotationen: klassiska stilar och kaosbidrag (`chaos: true` i
+   modulen, se docs/PROMPT_CHAOS.md). Poolerna delar register men blandas aldrig —
+   kaos-poolen visas bara när togglen i topbaren är på. */
+const pools = {
+  normal: styles.filter((s) => !s.chaos).map((s) => s.id),
+  chaos: styles.filter((s) => s.chaos).map((s) => s.id),
+}
+const modeOf = (id) => (byId[id]?.chaos ? 'chaos' : 'normal')
+if (!pools.chaos.length) {
+  chaosBtn.disabled = true
+  chaosBtn.title = 'Inga kaosbidrag ännu'
+}
 const animSlots = [...document.querySelectorAll('.app-row')].map((row) => [
   row.dataset.app, row.querySelector('.app-btn__anim'),
 ])
@@ -131,10 +147,19 @@ function applyStyle(id) {
   // Städa FÖRE markupbytet: enhancern kan hålla element som nu försvinner.
   if (cleanupEnhancer) { cleanupEnhancer(); cleanupEnhancer = null }
   document.documentElement.dataset.style = id
+  document.documentElement.dataset.mode = modeOf(id)
   nameEl.textContent = style.label
   localStorage.setItem(LS_LAST, id)
+  localStorage.setItem(LS_MODE, modeOf(id))
   mountAnim(style)
   cleanupEnhancer = style.enhancer ? style.enhancer() : null
+  reflectChaos()
+}
+
+function reflectChaos() {
+  const on = document.documentElement.dataset.mode === 'chaos'
+  chaosBtn.setAttribute('aria-pressed', String(on))
+  chaosBtn.classList.toggle('is-on', on)
 }
 
 function reflectLock() {
@@ -145,11 +170,15 @@ function reflectLock() {
   lockBtn.classList.toggle('is-locked', !!active)
 }
 
+/* `?style=` och låset pekar på en stil oavsett klass — läget följer stilen.
+   Utan dem slumpas ur den pool som var aktiv sist (kaos kräver att poolen finns). */
 function pickInitial() {
   const wanted = new URLSearchParams(location.search).get('style')
-  if (wanted && ids.includes(wanted)) return wanted
+  if (wanted && byId[wanted]) return wanted
   const locked = localStorage.getItem(LS_LOCK)
-  if (locked && ids.includes(locked)) return locked
+  if (locked && byId[locked]) return locked
+  const mode = localStorage.getItem(LS_MODE) === 'chaos' && pools.chaos.length ? 'chaos' : 'normal'
+  const ids = pools[mode]
   const last = localStorage.getItem(LS_LAST)
   const pool = ids.length > 1 ? ids.filter((id) => id !== last) : ids
   return pool[Math.floor(Math.random() * pool.length)]
@@ -158,10 +187,12 @@ function pickInitial() {
 applyStyle(pickInitial())
 reflectLock()
 
-/* Bläddra n steg i stilrotationen (wrap:ar åt båda håll). */
+/* Bläddra n steg i den aktiva poolens rotation (wrap:ar åt båda håll). */
 function stepStyle(delta) {
-  const cur = ids.indexOf(document.documentElement.dataset.style)
-  applyStyle(ids[(cur + delta + ids.length) % ids.length])
+  const cur = document.documentElement.dataset.style
+  const pool = pools[modeOf(cur)]
+  const i = pool.indexOf(cur)
+  applyStyle(pool[(i + delta + pool.length) % pool.length])
   reflectLock()
 }
 
@@ -170,6 +201,13 @@ document.querySelector('.style-switch').addEventListener('click', (e) => {
   if (!act) return
   if (act === 'next') stepStyle(1)
   else if (act === 'prev') stepStyle(-1)
+  else if (act === 'chaos') {
+    const next = modeOf(document.documentElement.dataset.style) === 'chaos' ? 'normal' : 'chaos'
+    if (!pools[next].length) return
+    const pool = pools[next]
+    applyStyle(pool[Math.floor(Math.random() * pool.length)])
+    reflectLock()
+  }
   else if (act === 'lock') {
     const isLocked = localStorage.getItem(LS_LOCK) === document.documentElement.dataset.style
     if (isLocked) localStorage.removeItem(LS_LOCK)
