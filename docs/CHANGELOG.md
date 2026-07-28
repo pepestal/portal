@@ -6,6 +6,32 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Kaosstil: Hinnan** (`hinnan`, fjärde kaosbidraget) — sidan har en baksida.
+  Mönsterbrottet: en webbsida är en yta med en framsida och ingenting annat —
+  ingen tjocklek, inget bakom. Här är sidan en spänd hinna, och **ingenting
+  ligger på den**: allt du ser är något som trycker på den inifrån. Länkarna är
+  svällningar i materialet och bokstäverna i namnen är relief pressad ut
+  bakifrån — det finns ingen ruta, ingen knapp och ingen text, bara höjd och ett
+  släpljus som faller snett över den. Vid vila är reliefen nästan utplånad; det
+  är trycket som skärper den. **Du är på andra sidan:** pekaren trycker åt
+  motsatt håll och buktar IN hinnan, och rynkorna löper vidare som riktiga vågor
+  — hela scenen är ett höjdfält som körs genom vågekvationen (två substeg per
+  bildruta) och skuggas mot ljuset per bildpunkt, inte en samling effekter.
+  **Materialet är ändligt:** dras en av de tre ut helt planas de andra två ut.
+  Syntes är navet materiellt — navet ÄR den breda svällningen hela duken vilar
+  över, de tre trycker igenom PÅ den, och navet kan aldrig ligga lägre än den
+  högsta av dem. Underappernas radie är riktig data (`rader^¼` ur `stats.json`).
+  **Materialet tar stryk:** där dina händer har varit ligger hinnan kvar en aning
+  slak, och slakheten sparas mellan besöken (`localStorage`) — femte gången har
+  duken formen av dina egna vanor. Och står du still en stund märker det som är
+  bakom att du slutat röra dig: en hand trycks igenom hinnan i närheten av
+  pekaren, och drar sig undan om du går emot den. Klick spänner till
+  bristningsgränsen och skickar en chockvåg över duken innan navigationen tar
+  över (ingen `preventDefault`). Hover och fokus ger identiskt tryck, Tab når
+  alla fyra, reduced motion ger en stillbild där höjdfältet löses i ett steg —
+  ingen loop, ingen våg och ingenting bakom som rör sig — och cleanupen river
+  scen, canvas, samtliga lyssnare och rAF-loopen. Kaos-poolen har därmed fyra
+  bidrag.
 - **Kaosstil: Dynamon** (`dynamo`, tredje kaosbidraget) — ingenting på sidan är
   gratis. Mönsterbrottet: en webbsida lyser av sig själv, lyser lika starkt
   oavsett om du är där, och kan inte gå sönder. Här går strömmen genom sidan i

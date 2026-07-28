@@ -115,7 +115,18 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   lasten, 63 A mot ~67 A) gör "allt kan inte lysa samtidigt" sant per
   konstruktion — ett ryck mot den tyngsta lampan ger inrush nog att lösa ut den
   och släcka sidan. Elmätaren räknar kWh och nollas aldrig (localStorage).
-  Togglen har nu tre bidrag.
+  **Fjärde kaosbidraget `hinnan` landade 2026-07-28** — sidan har en baksida:
+  hela scenen är en spänd hinna, och ingenting ligger på den. Allt man ser är
+  något som trycker på den inifrån — länkarna är svällningar och namnen är
+  relief pressad ut bakifrån, nästan utplånad i vila och skärpt av trycket.
+  Pekaren trycker åt motsatt håll och buktar in duken; höjdfältet körs genom
+  vågekvationen och skuggas mot ett släpljus per bildpunkt. Materialet är
+  ändligt (en av de tre ut ⇒ de andra två plana), navet är den breda
+  svällningen de tre trycker igenom PÅ och kan aldrig ligga lägre än den
+  högsta av dem, och underappernas radie är rader^¼ ur stats.json. Slakheten
+  där dina händer varit sparas mellan besöken (localStorage), och står du
+  still en stund trycks en hand igenom hinnan — som drar sig undan om du går
+  emot den. Togglen har nu fyra bidrag.
 - **Sextiofyra unika hover-animationer** — sextio i skelett-matrisen (fyra appar × femton skelett-stilar,
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
@@ -202,7 +213,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
    vinschar ett lod genom en vattenpelare i stället för att flytta sidan) kom
    2026-07-28; tredje (`dynamo`, helscen: sidan har ingen egen kraft — din
    rörelse är generatorn, ljus kostar ström och säkringen kan lösa ut) kom
-   2026-07-28; nästa kaos-agent kör [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
+   2026-07-28; fjärde (`hinnan`, helscen: sidan är en yta med en baksida —
+   allt man ser är något som trycker på hinnan inifrån) kom 2026-07-28;
+   nästa kaos-agent kör [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
 3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut

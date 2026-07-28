@@ -38,11 +38,12 @@ import tunnelbana from './styles/tunnelbana.js'
 import pangea from './styles/pangea.js'
 import lodet from './styles/lodet.js'
 import dynamo from './styles/dynamo.js'
+import hinnan from './styles/hinnan.js'
 
 export const styles = [
   terminal, editorial, bank, singularitet, kvitto, orrery, vaxel,
   jacquard, sprangskiss, synop, bikupa, fuga, sinus, tryckark, alv, tunnelbana,
-  pangea, lodet, dynamo,
+  pangea, lodet, dynamo, hinnan,
 ]
 
 export const byId = Object.fromEntries(styles.map((s) => [s.id, s]))

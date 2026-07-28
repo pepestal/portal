@@ -42,6 +42,9 @@ Portal är ett **showroom / design-experiment** — en sida med stora app-knappa
   Tredje bidraget är `dynamo` — sidan har ingen egen kraft: pekarens rörelse
   driver generatorn, varje länk är en glödtråd med märkström ur `stats.json`,
   Syntes är skenan de hänger i, och säkringen kan lösa ut så att sidan slocknar.
+  Fjärde bidraget är `hinnan` — sidan är en yta med en baksida: allt man ser är
+  något som trycker på en spänd hinna inifrån, länkarna är svällningar och
+  namnen relief, pekaren buktar in duken och står man still trycks en hand igenom.
 - **Info-paneler + systemhälsa** visar riktig projektdata (filer, rader, språk, stack)
   som genereras vid **byggtid** ur grann-repona — inte via runtime-koppling.
 
