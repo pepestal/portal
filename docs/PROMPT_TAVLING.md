@@ -199,3 +199,6 @@ finns i projektets egen dokumentation (`.claude/` / `docs/`) eller i `password.m
 LOKALT-roten.
 
 Må bäste agent vinna.
+
+OBSERVERA! 
+Det kan vara en annan agent, eller flera, som jobbar med deras bidrag inom samma kodbas. Detta kan leda till att filer committas, eller övrig påverkan på repot. Ignorera detta, och bygg ditt egen bidrag oberoende av vad som pågår inom repot. Du behöver inte oroa dig för att validera filintegriteten eller dylikt för andra filer än just de som du arbetar med för ditt bidrag. Du ska alltså inte bli side-tracked med repo-status eller andra agenters arbete utan fokusera på att skapa ett så kreativt bidrag du bara kan! 
