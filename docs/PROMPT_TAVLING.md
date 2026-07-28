@@ -131,7 +131,11 @@ nollan de andra ställs in efter — och till älvens källa, KM 0 som alla kilo
 räknas från: de tre underapparna är biflöden vars vatten inte blandas vid
 sammanflödena utan ligger kvar som band i fåran, så att huvudfårans bredd bevisligen
 ÄR summan av delarna (bredderna är k × radantalen ur stats.json, och pegelplåtarna
-skriver samma aritmetik i riktiga tal); gör något
+skriver samma aritmetik i riktiga tal) — och till linjenätets bytespunkt: tre
+tunnelbanelinjer som korsar varandra ute på kartan UTAN station, och en enda plats
+där de delar perrong — navets rad, där alla tre löper genom kapseln; varje underapp
+bär sin restid dit (`◉ N MIN`) och mellanstationerna ritas ut så att talet går att
+räkna på kartan; gör något
 eget: en wrap kring de andra, dirigenten, blodomloppet. Detta är
 tävlingens konceptuella kärna.
 
@@ -147,7 +151,7 @@ bokstav på skärmen — det är den vanligaste och dyraste missen i tävlingen.
 
 ## Skriv inte det du kan visa
 
-Bidraget bedöms på vad som **syns**, inte på vad det påstår om sig självt. Femton
+Bidraget bedöms på vad som **syns**, inte på vad det påstår om sig självt. Sexton
 bidrag in är det här den enskilt största kvalitetsskillnaden mellan stilarna, och
 den vanligaste anledningen till att ett i övrigt skickligt bygge känns fjantigt.
 
@@ -175,7 +179,7 @@ rad som är navet? Gör det inte det är det geometrin som ska fixas, inte texte
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
 `bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
-`bikupa`, `fuga`, `sinus`, `tryckark`, `alv`) — inte för inspiration utan för att
+`bikupa`, `fuga`, `sinus`, `tryckark`, `alv`, `tunnelbana`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Varje stil ligger i `src/styles/<id>.js` och
 `src/styles/<id>.css`, så du kan läsa en i taget. Tolka uppgiften oväntat; en
 stark idé konsekvent genomförd slår tio effekter.

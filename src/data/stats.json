@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-28T10:39:26.457Z",
+  "generatedAt": "2026-07-28T10:46:32.394Z",
   "ecosystem": {
     "files": 523,
-    "lines": 66488,
+    "lines": 66534,
     "apps": 4
   },
   "projects": {
@@ -10,7 +10,7 @@
       "name": "Signal",
       "available": true,
       "files": 327,
-      "lines": 52842,
+      "lines": 52888,
       "languages": [
         {
           "name": "TypeScript",
@@ -22,7 +22,7 @@
         },
         {
           "name": "Markdown",
-          "lines": 9959
+          "lines": 10005
         },
         {
           "name": "CSS",

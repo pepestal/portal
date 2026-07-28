@@ -6,6 +6,29 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Stil: Tunnelbanan** (`tunnelbana`, sextonde bidraget) — en linjenätskarta i
+  Becks schematiska tradition: papper, primärfärger, bara räta vinklar och mjuka
+  krökar. Grön linje är Signal, röd Todos, blå Stronk, och navmekaniken är ren
+  **topologi**: Syntes är nätets **enda bytespunkt**. Linjerna korsar varandra ute
+  på kartan utan station — den enda plats där de delar perrong är navets rad, där
+  alla tre löper parallellt genom bytespunktens kapsel; en underapp kan inte nå en
+  annan utan att passera navet. Mekaniken syns i vilan: knapparna är genomskinliga
+  stationer som linjerna löper igenom, varje underapp bär sin restid till
+  bytespunkten (`◉ N MIN`, 1 station = 1 minut) och mellanstationerna ritas ut på
+  den lodräta sträckan så att talet går att räkna på kartan (N−1 punkter + ankomst);
+  navet bär `SPÅR 1–6` — den enda station som behöver sex spår, räknebara i navets
+  hover. Rörelse-etiken är den tryckta kartans: allt som rör sig är tåg, och tåg
+  går bara när en station pekas ut — då dämpas övriga linjer, ett tåg löper längs
+  linjen IN mot navet (aldrig ut) och bytespunktens kapselring kvitterar med den
+  ankommande linjens färg; pekas navet ut går alla tre tågen samtidigt. Hovers som
+  kartans förstoringsrutor: bytesplanen med sex spår, tre samtidiga tåg och två
+  resenärer som byter in mot mittenlinjen (syntes), blocksignaler som slår om
+  bakom ett accelererande tåg, 80 km/h (signal), vagnskartan ovanför dörren där
+  markören stegar sex hållplatser från kapseln och de passerade fylls i (todos),
+  bergrumssektionen där rulltrappan dras ner till plattformen och djupmåttet växer
+  till −30 m (stronk). Nätet mäts i DOM:en, ritas om vid resize/scroll och rivs
+  vid stilbyte; tågen ställs in helt vid reduced motion och tangentbordsfokus ger
+  samma upplevelse som hover.
 - **Stil: Älven** (`alv`, femtonde bidraget) — en driftbild över ett vattendrag i
   mörker. Syntes är **källan**: KM 0 som kilometertalen räknas från och den enda
   raden uppströms om allt; underapparna är **biflöden** med var sitt vatten (klart

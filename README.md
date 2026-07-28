@@ -28,7 +28,7 @@ Portal är ett **showroom / design-experiment** — en sida med stora app-knappa
 (en per app i ekosystemet), var med en hover-animation och en info-knapp. Poängen
 är hur det känns, inte att navigera vidare.
 
-- **Stil-system:** flera estetiker (`terminal`, `editorial`, `bank`, `singularitet`, `kvitto`, `vaxel`, `jacquard`, `sprangskiss`, `synop`, `bikupa`, `fuga`, `sinus`, `tryckark`, `alv`)
+- **Stil-system:** flera estetiker (`terminal`, `editorial`, `bank`, `singularitet`, `kvitto`, `vaxel`, `jacquard`, `sprangskiss`, `synop`, `bikupa`, `fuga`, `sinus`, `tryckark`, `alv`, `tunnelbana`)
   delar ett och samma skelett men bär egen palett, typografi och animationer; `orrery` är en
   **helscen** som medvetet ersätter skelettet (förankrat undantag). Stilen **roterar slumpmässigt**
   vid varje besök; en switcher låter dig bläddra och **låsa** en favorit. `?style=<id>` i URL:en

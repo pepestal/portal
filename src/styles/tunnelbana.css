@@ -1,0 +1,246 @@
+/* =========================================================================
+   STIL — Tunnelbanan   (linjenätskartan: sidan är ett nät med EN bytespunkt)
+   Tre linjer i primärfärg — grön (Signal), röd (Todos), blå (Stronk) — löper
+   tvärs över kartan i Becks schematiska geometri: bara räta vinklar och mjuka
+   krökar. Ute på kartan korsar linjerna varandra UTAN station; den enda plats
+   där de delar perrong är navets rad, där alla tre går parallellt genom
+   bytespunktens kapsel. Det är nätets byggnadsregel, inte en dekoration:
+   en underapp kan inte nå en annan utan att passera Syntes.
+   Mekaniken i vila: varje underapp bär sin restid till bytespunkten
+   (`◉ N MIN`, 1 station = 1 minut) och mellanstationerna ritas ut på linjen —
+   talet går att räkna på kartan. Navet bär SPÅR 1–6: den enda station som
+   behöver sex spår, och de sex går att räkna i navets hover-förstoring.
+   Rörelse-etik: en tryckt karta står still. Allt som rör sig är tåg, och tåg
+   går bara när man pekar på en station — då löper de längs linjen IN mot
+   bytespunkten, aldrig ut. Hovern är kartans förstoringsruta: stationens
+   detalj (bytesplan, blocksignaler, vagnskarta, bergrumssektion) i inset.
+   ========================================================================= */
+[data-style="tunnelbana"] {
+  --bg: #F6F4ED; --surface: #FFFFFF; --line: #DAD6C9;
+  --text: #16181C; --muted: #767A80; --accent: #0080C5;
+  --font-display: var(--font-sans); --font-body: var(--font-sans); --font-ui: var(--font-sans);
+  --btn-radius: 12px; --anim-draw: .9s; --anim-ease: cubic-bezier(.3, .7, .25, 1);
+  --tb-gron: #0F9D46; --tb-rod: #D71D24; --tb-bla: #0080C5; --tb-ink: #16181C;
+}
+[data-style="tunnelbana"] body { background: var(--bg); }
+
+/* --- kartbladet: dubbel ram som på ett tryckt nätblad --- */
+[data-style="tunnelbana"] .tb-net { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+[data-style="tunnelbana"] .tb-net::before {
+  content: ""; position: absolute; inset: 10px;
+  border: 1.5px solid rgba(22, 24, 28, .38);
+}
+[data-style="tunnelbana"] .tb-net::after {
+  content: ""; position: absolute; inset: 15px;
+  border: .5px solid rgba(22, 24, 28, .28);
+}
+[data-style="tunnelbana"] .tb-karta { width: 100%; height: 100%; }
+
+/* linjerna: hela nätet i vila. Dämpas en linje är det för att en annan har
+   trafik — hierarkin görs med opacitet, aldrig med borttagning. */
+[data-style="tunnelbana"] .tb-line { transition: opacity .35s ease; }
+[data-style="tunnelbana"] .tb-line[data-app="signal"] { color: var(--tb-gron); }
+[data-style="tunnelbana"] .tb-line[data-app="todos"] { color: var(--tb-rod); }
+[data-style="tunnelbana"] .tb-line[data-app="stronk"] { color: var(--tb-bla); }
+[data-style="tunnelbana"] .tb-bas { fill: none; stroke: currentColor; stroke-width: 5; }
+[data-style="tunnelbana"] .tb-stn circle { fill: var(--bg); stroke: currentColor; stroke-width: 2; }
+/* tåget: en dash som löper nav→station-sträckan baklänges, dvs. anländer till
+   bytespunkten. Syns bara när dess station har trafik (hover/fokus). */
+[data-style="tunnelbana"] .tb-tag {
+  fill: none; stroke: currentColor; stroke-width: 9; stroke-linecap: round;
+  stroke-dasharray: 9 91; stroke-dashoffset: -91; opacity: 0;
+}
+@keyframes tb-anlopp { from { stroke-dashoffset: -91; } to { stroke-dashoffset: 0; } }
+[data-style="tunnelbana"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .tb-line:not([data-app="signal"]),
+[data-style="tunnelbana"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .tb-line:not([data-app="todos"]),
+[data-style="tunnelbana"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .tb-line:not([data-app="stronk"]) { opacity: .22; }
+[data-style="tunnelbana"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .tb-line[data-app="signal"] .tb-tag,
+[data-style="tunnelbana"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .tb-line[data-app="todos"] .tb-tag,
+[data-style="tunnelbana"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .tb-line[data-app="stronk"] .tb-tag,
+[data-style="tunnelbana"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .tb-tag {
+  opacity: 1; animation: tb-anlopp 2.8s linear infinite;
+}
+/* bytespunkten kvitterar: kapselns ram tar den ankommande linjens färg */
+[data-style="tunnelbana"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-gron); }
+[data-style="tunnelbana"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-rod); }
+[data-style="tunnelbana"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-bla); }
+
+/* --- topbar som kartans titellist --- */
+[data-style="tunnelbana"] .topbar { position: relative; z-index: 1; }
+[data-style="tunnelbana"] .wordmark { font-weight: 800; letter-spacing: .01em; }
+[data-style="tunnelbana"] .wordmark::after {
+  content: "· LINJENÄT 2026"; margin-left: .7em;
+  font-size: .55em; font-weight: 700; letter-spacing: .18em; color: var(--muted); vertical-align: 12%;
+}
+[data-style="tunnelbana"] .style-switch__btn,
+[data-style="tunnelbana"] .style-switch__lock {
+  background: #FFFFFF; border-color: rgba(22, 24, 28, .28); border-radius: 8px; color: var(--tb-ink);
+}
+
+/* --- stationerna: knappen är genomskinlig så linjen löper genom den --- */
+[data-style="tunnelbana"] .app-row[data-app="syntes"] { --app-accent: var(--tb-ink); }
+[data-style="tunnelbana"] .app-row[data-app="signal"] { --app-accent: var(--tb-gron); }
+[data-style="tunnelbana"] .app-row[data-app="todos"] { --app-accent: var(--tb-rod); }
+[data-style="tunnelbana"] .app-row[data-app="stronk"] { --app-accent: var(--tb-bla); }
+[data-style="tunnelbana"] .app-btn {
+  background: transparent;
+  border: 1px solid rgba(22, 24, 28, .16);
+  transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+/* hovern öppnar förstoringsrutan: bladet blir vitt så detaljen får ett rent ark */
+[data-style="tunnelbana"] .app-btn:is(:hover, :focus-visible) {
+  background: #FFFFFF;
+  border-color: rgba(22, 24, 28, .55);
+  box-shadow: 0 10px 26px rgba(22, 24, 28, .1);
+}
+[data-style="tunnelbana"] .app-btn:focus-visible .app-btn__name { transform: translateY(-1.9rem) scale(.78); }
+[data-style="tunnelbana"] .app-btn:focus-visible .app-btn__anim { opacity: 1; }
+/* stationssymbolen sitter PÅ linjen: ring i linjens färg med pappersfylld
+   mitt — och navets är den enda kapseln, ritad över alla tre spårlägena */
+[data-style="tunnelbana"] .app-btn__fx::before {
+  content: ""; position: absolute; left: 17%; top: 50%; transform: translate(-50%, -50%);
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--bg); border: 2.5px solid var(--app-accent);
+  transition: opacity .3s ease, border-color .35s ease;
+}
+[data-style="tunnelbana"] .app-row[data-app="syntes"] .app-btn__fx::before {
+  width: 18px; height: 46px; border-radius: 10px;
+}
+[data-style="tunnelbana"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { opacity: 0; }
+/* stationsnamnet: skylt på pappersbotten så linjen inte skär genom texten */
+[data-style="tunnelbana"] .app-btn__name {
+  font-size: 1.35rem; font-weight: 700; letter-spacing: .01em; color: var(--tb-ink);
+  background: var(--bg); padding: .12em .5em; border-radius: 6px;
+}
+/* hörnetiketten: underappens restid till bytespunkten — talet går att räkna
+   som stationer på linjen (mellanstationerna sätts i tunnelbana.js, TB_MIN).
+   Navet bär spårnumren; de sex räknas i navets egen förstoring. */
+[data-style="tunnelbana"] .app-btn::after {
+  position: absolute; left: 16px; top: 11px; z-index: 3;
+  font-size: .55rem; font-weight: 700; letter-spacing: .12em;
+  color: var(--app-accent); font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+[data-style="tunnelbana"] .app-btn[data-name="syntes"]::after { content: "SPÅR 1–6"; }
+[data-style="tunnelbana"] .app-btn[data-name="signal"]::after { content: "◉ 4 MIN"; }
+[data-style="tunnelbana"] .app-btn[data-name="todos"]::after { content: "◉ 6 MIN"; }
+[data-style="tunnelbana"] .app-btn[data-name="stronk"]::after { content: "◉ 3 MIN"; }
+
+/* info-knappen står på kartan — pappersbotten så linjen inte löper genom den */
+[data-style="tunnelbana"] .info-toggle { background: var(--bg); border-color: rgba(22, 24, 28, .3); }
+[data-style="tunnelbana"] .info-panel,
+[data-style="tunnelbana"] .system__panel {
+  background: #FFFFFF; border-color: rgba(22, 24, 28, .22); border-radius: 10px;
+  box-shadow: 0 14px 34px rgba(22, 24, 28, .14);
+}
+[data-style="tunnelbana"] .system__toggle { background: #FFFFFF; border-color: rgba(22, 24, 28, .25); }
+[data-style="tunnelbana"] .info-stack li { border-color: rgba(22, 24, 28, .22); border-radius: 5px; }
+[data-style="tunnelbana"] .system__title::before { content: "◉ "; color: var(--tb-ink); }
+[data-style="tunnelbana"] .live { background: var(--tb-gron); }
+
+/* ---------- Hover-förstoringarna: en per station ---------- */
+[data-style="tunnelbana"] .viz { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+[data-style="tunnelbana"] .viz svg { width: min(272px, 70vw); height: auto; overflow: visible; }
+[data-style="tunnelbana"] .viz .cap {
+  font-family: var(--font-sans); font-size: .58rem; font-weight: 600; letter-spacing: .14em;
+  color: var(--muted); font-variant-numeric: tabular-nums;
+  opacity: 0; transition: opacity .4s ease 1.4s;
+}
+[data-style="tunnelbana"] .viz .cap b { font-weight: 800; color: var(--tb-ink); }
+[data-style="tunnelbana"] .app-btn:is(:hover, :focus-visible) .viz .cap { opacity: 1; }
+
+/* navet · bytet: kartans tre streck är spårPAR — här syns alla sex spåren,
+   kapseln över dem, och tre tåg som löper in samtidigt. Två resenärer byter
+   in mot mittenlinjen: det är det enda stället i nätet där det går. */
+.viz--bytet .spnr { fill: var(--muted); font-family: var(--font-sans); font-size: 5px; font-weight: 700; }
+.viz--bytet .spar { stroke-width: 2.5; }
+.viz--bytet .spar--gron { stroke: var(--tb-gron); }
+.viz--bytet .spar--rod { stroke: var(--tb-rod); }
+.viz--bytet .spar--bla { stroke: var(--tb-bla); }
+.viz--bytet .hall { fill: var(--bg); stroke: var(--tb-ink); stroke-width: 2; }
+.viz--bytet .tag { transition: transform 1.15s var(--anim-ease); }
+.viz--bytet .tag--gron { fill: var(--tb-gron); }
+.viz--bytet .tag--rod { fill: var(--tb-rod); transition-delay: .12s; }
+.viz--bytet .tag--bla { fill: var(--tb-bla); transition-delay: .24s; }
+.app-btn:is(:hover, :focus-visible) .viz--bytet .tag--gron { transform: translateX(106px); }
+.app-btn:is(:hover, :focus-visible) .viz--bytet .tag--rod { transform: translateX(-104px); }
+.app-btn:is(:hover, :focus-visible) .viz--bytet .tag--bla { transform: translateX(106px); }
+.viz--bytet .byte { fill: var(--tb-ink); opacity: 0; transition: opacity .3s ease 1.45s, transform .5s var(--anim-ease) 1.5s; }
+.app-btn:is(:hover, :focus-visible) .viz--bytet .byte { opacity: 1; }
+.app-btn:is(:hover, :focus-visible) .viz--bytet .byte--a { transform: translateY(7px); }
+.app-btn:is(:hover, :focus-visible) .viz--bytet .byte--b { transform: translateY(-7px); }
+
+/* signal · blocksignalerna: tåget accelererar genom blocken, signalerna slår
+   om bakom det — den sista står i kör medan hastigheten läses upp */
+.viz--forsignal .rals { stroke: var(--tb-ink); stroke-width: 1.5; opacity: .8; }
+.viz--forsignal .sig line { stroke: var(--muted); stroke-width: 1.5; }
+.viz--forsignal .sig .gron { fill: var(--tb-gron); }
+.viz--forsignal .sig .rod { fill: var(--tb-rod); opacity: 0; transition: opacity .12s linear calc(.35s + var(--i) * .4s); }
+.viz--forsignal .sig--fri .rod { display: none; }
+.viz--forsignal .tag rect { fill: var(--tb-gron); }
+.viz--forsignal .tag .fon { fill: var(--bg); }
+.viz--forsignal .tag { transition: transform 1.55s cubic-bezier(.55, .04, .85, .5); }
+.app-btn:is(:hover, :focus-visible) .viz--forsignal .tag { transform: translateX(152px); }
+.app-btn:is(:hover, :focus-visible) .viz--forsignal .sig .rod { opacity: 1; }
+.viz--forsignal .cap b { color: var(--tb-gron); }
+
+/* todos · vagnskartan: linjediagrammet ovanför dörren. Resan börjar i
+   bytespunktens kapsel; markören stegar — steps(6), tåg glider inte mellan
+   hållplatser i ett vagnsdiagram — och de passerade fylls i. */
+.viz--vagnskarta .ln { stroke: var(--tb-rod); stroke-width: 3; }
+.viz--vagnskarta .hpl { fill: var(--bg); stroke: var(--tb-ink); stroke-width: 2; }
+.viz--vagnskarta .stn { fill: var(--bg); stroke: var(--tb-rod); stroke-width: 1.8; }
+.viz--vagnskarta .stn.pass { transition: fill .18s linear calc(var(--i) * .225s); }
+.app-btn:is(:hover, :focus-visible) .viz--vagnskarta .stn.pass { fill: var(--tb-rod); }
+.viz--vagnskarta .mark { fill: none; stroke: var(--tb-ink); stroke-width: 2.2; transition: transform 1.35s steps(6); }
+.app-btn:is(:hover, :focus-visible) .viz--vagnskarta .mark { transform: translateX(141px); }
+.viz--vagnskarta .cap b { color: var(--tb-rod); }
+
+/* stronk · bergrummet: sektion genom djupstationen. Rulltrappan dras ner
+   genom berget, salen sprängs ur, tåget står inne — och djupmåttet växer
+   till −30 m: tyngd mätt i meter berg ovanför perrongen. */
+.viz--bergrum .mark0 { stroke: var(--tb-ink); stroke-width: 1.5; }
+.viz--bergrum .berg line { stroke: var(--tb-ink); stroke-width: 1; opacity: .16; }
+.viz--bergrum .rull {
+  fill: none; stroke: var(--tb-ink); stroke-width: 2;
+  stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset .9s var(--anim-ease);
+}
+.viz--bergrum .steg line { stroke: var(--tb-ink); stroke-width: 1.4; opacity: 0; transition: opacity .2s linear calc(.15s + var(--i) * .14s); }
+.viz--bergrum .grotta {
+  fill: rgba(0, 128, 197, .09); fill-opacity: 0; stroke: var(--tb-bla); stroke-width: 2;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset .9s var(--anim-ease) .5s, fill-opacity .4s ease .9s;
+}
+.viz--bergrum .plf { stroke: var(--tb-ink); stroke-width: 1.5; opacity: 0; transition: opacity .3s ease 1.05s; }
+.viz--bergrum .front rect { fill: var(--tb-bla); }
+.viz--bergrum .front .ruta { fill: var(--bg); }
+.viz--bergrum .front { opacity: 0; transition: opacity .35s ease 1.15s; }
+.viz--bergrum .djup {
+  transform: scaleY(0); transform-box: view-box; transform-origin: 198px 7px;
+  transition: transform .9s var(--anim-ease) .3s;
+}
+.viz--bergrum .lod { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.viz--bergrum .pil { fill: var(--muted); }
+.app-btn:is(:hover, :focus-visible) .viz--bergrum .rull { stroke-dashoffset: 0; }
+.app-btn:is(:hover, :focus-visible) .viz--bergrum .steg line { opacity: .9; }
+.app-btn:is(:hover, :focus-visible) .viz--bergrum .grotta { stroke-dashoffset: 0; fill-opacity: 1; }
+.app-btn:is(:hover, :focus-visible) .viz--bergrum :is(.plf, .front) { opacity: 1; }
+.app-btn:is(:hover, :focus-visible) .viz--bergrum .djup { transform: scaleY(1); }
+.viz--bergrum .cap b { color: var(--tb-bla); }
+
+/* ---------- Reduced motion: kartan är redan tryckt ---------- */
+@media (prefers-reduced-motion: reduce) {
+  /* inga tåg i trafik — nätet, dämpningen och sluttillstånden räcker */
+  [data-style="tunnelbana"] .tb-tag { display: none; }
+  /* skrivtakten ligger i fördröjningar; de nollas så sluttillstånden syns direkt */
+  [data-style="tunnelbana"] .viz :is(.tag, .byte, .stn, .mark, .sig .rod, .steg line, .grotta, .plf, .front, .djup, .cap) { transition-delay: 0s !important; }
+}
+
+/* ---------- Smal skärm: fickformatet av samma blad ---------- */
+@media (max-width: 560px) {
+  [data-style="tunnelbana"] .app-btn__name { font-size: 1.1rem !important; }
+  [data-style="tunnelbana"] .app-btn::after { left: 10px; top: 8px; font-size: .48rem; }
+  [data-style="tunnelbana"] .app-btn__fx::before { left: 12%; }
+  [data-style="tunnelbana"] .viz .cap { font-size: .5rem; }
+  [data-style="tunnelbana"] .tb-net::after { display: none; }
+}
