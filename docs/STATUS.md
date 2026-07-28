@@ -105,7 +105,17 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   stället ut ett lod genom en mörk vattenpelare, och det är lodets NÄRHET, inte
   skrollposition, som avgör vad som lyser upp. De tre underapparna är beten på
   fasta djup (grunt→djupt = stigande radantal ur stats.json), Syntes är
-  havsbottnen som aldrig vilar i totalt mörker. Togglen har nu två bidrag.
+  havsbottnen som aldrig vilar i totalt mörker. **Tredje kaosbidraget `dynamo`
+  landade 2026-07-28** — sidan har ingen egen kraft: pekarens rörelse driver
+  svänghjulet, och står du still faller spänningen tills sidan brunnit ner till
+  glöd. Varje länk är en glödtråd med märkström ur stats.json (rader/1000 A);
+  Syntes ÄR skenan de tre hänger i, så all deras ström går genom navet och varje
+  skensegment lyser efter vad det bär. Tänds den tunga lasten sjunker spänningen
+  för allt annat, och huvudsäkringen (största IEC-storleken UNDER anslutna
+  lasten, 63 A mot ~67 A) gör "allt kan inte lysa samtidigt" sant per
+  konstruktion — ett ryck mot den tyngsta lampan ger inrush nog att lösa ut den
+  och släcka sidan. Elmätaren räknar kWh och nollas aldrig (localStorage).
+  Togglen har nu tre bidrag.
 - **Sextiofyra unika hover-animationer** — sextio i skelett-matrisen (fyra appar × femton skelett-stilar,
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
@@ -190,6 +200,8 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 2. **Fler kaosbidrag** — första (`pangea`, helscen: smältan som navlänk,
    plattor med area ∝ rader) kom 2026-07-28; andra (`lodet`, helscen: scroll
    vinschar ett lod genom en vattenpelare i stället för att flytta sidan) kom
+   2026-07-28; tredje (`dynamo`, helscen: sidan har ingen egen kraft — din
+   rörelse är generatorn, ljus kostar ström och säkringen kan lösa ut) kom
    2026-07-28; nästa kaos-agent kör [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
 3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 

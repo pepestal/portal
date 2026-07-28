@@ -39,6 +39,9 @@ Portal är ett **showroom / design-experiment** — en sida med stora app-knappa
   smältan är navets fullskärmslänk och underapparna plattor som flyter på den.
   Andra bidraget är `lodet` — scrollhjulet vinschar ett lod genom en vattenpelare
   i stället för att flytta sidan, och det är lodets närhet som avslöjar länkarna.
+  Tredje bidraget är `dynamo` — sidan har ingen egen kraft: pekarens rörelse
+  driver generatorn, varje länk är en glödtråd med märkström ur `stats.json`,
+  Syntes är skenan de hänger i, och säkringen kan lösa ut så att sidan slocknar.
 - **Info-paneler + systemhälsa** visar riktig projektdata (filer, rader, språk, stack)
   som genereras vid **byggtid** ur grann-repona — inte via runtime-koppling.
 

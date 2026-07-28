@@ -1,0 +1,190 @@
+/* =========================================================================
+   STIL — Dynamon   (KAOSKLASS, HELSCEN: sidan har ingen egen kraft)
+
+   Regeln som bryts: en webbsida lyser av sig själv. Den lyser lika starkt
+   oavsett om du är där, den kostar ingenting att titta på, och den kan inte
+   gå sönder. Här går strömmen genom sidan i stället för runt den:
+
+     · Din rörelse ÄR generatorn. Svänghjulet drivs av pekarens hastighet
+       (tangentnedslag vevar också). Slutar du röra dig faller spänningen och
+       sidan brinner ner till glöd — den slocknar när ingen tittar.
+     · Ljus kostar. Varje länk är en glödtråd med märkström ur stats.json
+       (rader/1000 A). När den tunga lasten tänds sjunker spänningen i skenan
+       och ALLT annat mörknar — det är så "du kan inte få allt tänt samtidigt"
+       visas i stället för skrivs.
+     · Sidan kan gå sönder. Huvudsäkringen väljs som den största standard-
+       storleken (IEC 60898) UNDER ekosystemets anslutna last — 63 A mot ~67 A
+       just nu — så "allt kan inte lysa samtidigt" är sant per konstruktion och
+       inte ett hittepåtal. En kall glödtråd drar dessutom överström när den får
+       spänning, och stöten skalar med hur fort pekaren kom: slängs den på den
+       tyngsta lampan löser säkringen ut och allt blir svart tills brytaren
+       slår till igen.
+
+   Syntes är navet, mekaniskt: Syntes ÄR skenan. De tre underapparna hänger i
+   den, all deras ström går genom den, och varje segment lyser efter hur mycket
+   ström just det segmentet bär — ljusast vid inmatningen, ett steg mörkare
+   efter varje avgrening, svart efter den sista. Navets tråd kan aldrig brinna
+   svagare än den ljusaste underappen.
+
+   Färg är temperatur, inte identitet: ingen app har en egen kulör. Allt är
+   volfram och koppar mot svart, och en app som är kall ÄR mörkröd.
+
+   prefers-reduced-motion: ingen rAF-loop, ingen generator, ingen säkring och
+   ingen brytare (`.is-static`). Nätet står på fast spänning i en stillbild;
+   hover/fokus växlar diskret till full glöd. Konceptet står kvar utan rörelse.
+
+   Allt ritat: src/styles/dynamo.js. Prefix `dyn-`, canvas för skena,
+   svänghjul, amperemeter och rumsljus; DOM för länkar och skyltar.
+   ========================================================================= */
+[data-style="dynamo"] {
+  --bg: #07050A; --surface: #100A08; --line: #2A1B12;
+  --text: #E8D3B4; --muted: #7A6A56; --accent: #FF9A3C;
+  --font-display: var(--font-mono); --font-body: var(--font-mono); --font-ui: var(--font-mono);
+  --btn-radius: 2px; --anim-ease: cubic-bezier(.2, .7, .3, 1);
+}
+[data-style="dynamo"] body { overflow: hidden; background: #07050A; }
+/* Skelettet göms; topbaren (switcher + kaos-toggle) ligger kvar ovanpå scenen */
+[data-style="dynamo"] .rows,
+[data-style="dynamo"] .system { display: none; }
+[data-style="dynamo"] .topbar { position: relative; z-index: 60; }
+[data-style="dynamo"] .wordmark { letter-spacing: .22em; text-transform: uppercase; font-size: .8rem; }
+
+/* --- Scenen: maskinrummet --- */
+.dyn-scene {
+  position: fixed; inset: 0; z-index: 1; overflow: hidden;
+  background:
+    radial-gradient(140% 70% at 50% 112%, rgba(90, 44, 16, .22), transparent 62%),
+    #07050A;
+  animation: dyn-in 1s var(--anim-ease);
+}
+@keyframes dyn-in { from { opacity: 0; } }
+.dyn-canvas { position: absolute; inset: 0; z-index: 1; display: block; pointer-events: none; }
+
+/* --- En glödtråd = en länk. --heat (0–1) och --lit (volframfärg) sätts per
+       frame i JS; all CSS här läser bara av dem. --- */
+.dyn-lamp,
+.dyn-bus { --heat: 0; --lit: #3E2E26; }
+
+.dyn-lamp {
+  position: absolute; top: 0; left: 0; z-index: 3;
+  width: var(--dyn-size, 100px); height: var(--dyn-size, 100px);
+  display: grid; place-items: center; text-decoration: none; color: inherit;
+  border-radius: 50%; outline: none; cursor: pointer; will-change: transform;
+}
+.dyn-lamp__glass {
+  position: absolute; inset: 8%; border-radius: 50%;
+  background: radial-gradient(circle at 42% 34%,
+    color-mix(in srgb, var(--lit) calc(var(--heat) * 42%), transparent) 0%,
+    transparent 70%);
+  border: 1px solid color-mix(in srgb, var(--lit) calc(14% + var(--heat) * 70%), transparent);
+  box-shadow:
+    0 0 calc(4px + var(--heat) * 64px) color-mix(in srgb, var(--lit) calc(10% + var(--heat) * 70%), transparent),
+    inset 0 0 calc(3px + var(--heat) * 26px) color-mix(in srgb, var(--lit) calc(var(--heat) * 55%), transparent);
+}
+.dyn-lamp__fil {
+  position: absolute; left: 8%; right: 8%; top: 22%; height: 56%; overflow: visible;
+}
+.dyn-lamp__fil path {
+  fill: none; stroke: var(--lit); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px var(--lit));
+}
+
+/* Skenan = Syntes. Kopparen ritas på canvas; ankaret är träffytan + skylten. */
+.dyn-bus {
+  position: absolute; top: 0; left: 0; z-index: 3; display: block;
+  text-decoration: none; color: inherit; outline: none; cursor: pointer;
+  border-radius: 3px; will-change: transform;
+}
+
+/* --- Skyltar: graverad mässing. Läsbara även i brownout (golv i --muted). --- */
+.dyn-lamp__plate {
+  position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+  text-align: center; white-space: nowrap; pointer-events: none;
+}
+.dyn-bus__plate {
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  white-space: nowrap; pointer-events: none;
+}
+.dyn-plate__name {
+  display: block; font-family: var(--font-mono); font-size: .74rem;
+  text-transform: uppercase; letter-spacing: .3em;
+  color: color-mix(in srgb, var(--lit) calc(24% + var(--heat) * 76%), var(--muted));
+  text-shadow: 0 0 calc(2px + var(--heat) * 18px) color-mix(in srgb, var(--lit) calc(var(--heat) * 70%), transparent);
+}
+.dyn-plate__rate {
+  display: block; margin-top: .34em; font-family: var(--font-mono); font-size: .62rem;
+  letter-spacing: .14em; font-variant-numeric: tabular-nums;
+  color: color-mix(in srgb, var(--lit) calc(10% + var(--heat) * 55%), var(--muted));
+}
+.dyn-bus__plate .dyn-plate__name { display: inline-block; letter-spacing: .5em; font-size: .92rem; }
+.dyn-bus__plate .dyn-plate__rate { display: inline-block; margin: 0 0 0 1.2em; }
+
+/* Fokus ger samma sak som pekaren — och syns även när nätet är dött. */
+.dyn-lamp:focus-visible .dyn-lamp__glass,
+.dyn-bus:focus-visible {
+  outline: 2px solid #FFEBC8; outline-offset: 5px;
+  box-shadow: 0 0 30px rgba(255, 200, 130, .55);
+}
+
+/* --- Instrument --- */
+.dyn-gauge {
+  position: absolute; top: 0; left: 0; z-index: 3; pointer-events: none;
+  display: flex; align-items: baseline; gap: .3em;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  color: #FFC98C; text-shadow: 0 0 14px rgba(255, 150, 60, .45);
+}
+.dyn-gauge__amp { font-size: 1.5rem; letter-spacing: .02em; }
+.dyn-gauge__unit { font-size: .7rem; letter-spacing: .2em; color: #C08A56; }
+.dyn-gauge__fuse {
+  margin-left: .9em; font-size: .6rem; letter-spacing: .18em; color: #B4472C;
+  border: 1px solid #6E2A1A; border-radius: 2px; padding: .18em .5em; align-self: center;
+}
+.dyn-meter {
+  position: absolute; top: 0; left: 0; z-index: 3; pointer-events: none;
+  display: flex; align-items: baseline; gap: .4em;
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: .68rem; letter-spacing: .16em; color: #8C7455;
+  border-top: 1px solid #2A1B12; padding-top: .4em;
+}
+.dyn-meter__val { color: #C6A377; }
+
+/* Huvudbrytaren: klicka och mörklägg nätet med flit. */
+.dyn-breaker {
+  position: absolute; top: 0; left: 0; z-index: 4;
+  width: 34px; height: 52px; padding: 0; cursor: pointer;
+  background: #140D0A; border: 1px solid #33200F; border-radius: 3px;
+}
+.dyn-breaker__lever {
+  position: absolute; left: 50%; top: 5px; width: 14px; height: 20px; margin-left: -7px;
+  border-radius: 2px; background: linear-gradient(180deg, #C98A3E, #6E4318);
+  box-shadow: 0 0 10px rgba(255, 160, 60, .35);
+  transition: transform .18s var(--anim-ease), background .18s linear;
+}
+.dyn-breaker:focus-visible { outline: 2px solid #FFEBC8; outline-offset: 3px; }
+.dyn-scene.is-tripped .dyn-breaker__lever {
+  transform: translateY(22px);
+  background: linear-gradient(180deg, #8E3A22, #4A1B0E);
+  box-shadow: 0 0 14px rgba(230, 70, 40, .55);
+}
+.dyn-scene.is-tripped .dyn-breaker { border-color: #7A2A18; }
+
+/* --- Rumsvinjett + ljusstöt vid klick --- */
+.dyn-vignette {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: radial-gradient(130% 95% at 50% 55%, transparent 42%, rgba(2, 1, 4, .82) 100%);
+}
+.dyn-vignette::after { content: ""; position: absolute; inset: 0; background: #FFE6BE; opacity: 0; }
+.dyn-scene.is-strike .dyn-vignette::after { animation: dyn-strike .26s ease-out; }
+@keyframes dyn-strike { 0% { opacity: .22; } 100% { opacity: 0; } }
+
+/* --- Stillbild: nätet på fast spänning, ingen loop, ingen brytare --- */
+.dyn-scene.is-static .dyn-lamp { --heat: .72; --lit: #FF9E38; }
+.dyn-scene.is-static .dyn-bus { --heat: 1; --lit: #FFF0CE; }
+.dyn-scene.is-static .dyn-lamp:hover,
+.dyn-scene.is-static .dyn-lamp:focus-visible { --heat: 1; --lit: #FFF0CE; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dyn-scene { animation: none; }
+  .dyn-breaker__lever { transition: none; }
+  .dyn-scene.is-strike .dyn-vignette::after { animation: none; }
+}

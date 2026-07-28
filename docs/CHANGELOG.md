@@ -6,6 +6,30 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Kaosstil: Dynamon** (`dynamo`, tredje kaosbidraget) — ingenting på sidan är
+  gratis. Mönsterbrottet: en webbsida lyser av sig själv, lyser lika starkt
+  oavsett om du är där, och kan inte gå sönder. Här går strömmen genom sidan i
+  stället för runt den. **Din rörelse är generatorn** — svänghjulet drivs av
+  pekarens hastighet (tangentnedslag vevar också), och står du still faller
+  spänningen tills sidan brunnit ner till glöd på 5–10 s. **Ljuset kostar:**
+  varje länk är en glödtråd med en märkström ur `stats.json` (rader/1000 A), och
+  när den tunga lasten tänds sjunker spänningen i skenan så att ALLT annat
+  mörknar samtidigt som generatorn hörbart går tyngre (hjulet bromsas av lasten).
+  **Sidan kan gå sönder:** huvudsäkringen väljs som den största standardstorleken
+  (IEC 60898) under ekosystemets anslutna last — 63 A mot ~67 A — så "allt kan
+  inte lysa samtidigt" är sant per konstruktion; dessutom drar en kall glödtråd
+  inrush när den får spänning, och stöten skalar med hur fort pekaren kom, så ett
+  ryck mot den tyngsta lampan löser ut säkringen och släcker sidan tills brytaren
+  slår till (en klickbar huvudbrytare gör mekaniken upptäckbar). Syntes är navet
+  mekaniskt: Syntes ÄR skenan, de tre hänger i den, all deras ström går genom
+  den, varje skensegment lyser efter hur mycket ström just det segmentet bär
+  (svart efter sista avgreningen) och navets tråd kan aldrig brinna svagare än
+  den ljusaste underappen. Färg är temperatur, inte identitet — ingen app har en
+  egen kulör. Elmätaren nere till höger räknar kWh och nollas aldrig: den ligger
+  kvar i `localStorage` mellan besöken. Hover och fokus ger identisk glöd, Tab
+  når alla fyra, reduced motion ger en stillbild på fast spänning utan loop,
+  generator, säkring eller brytare, och cleanupen river scen, canvas, samtliga
+  lyssnare och rAF-loopen. Kaos-poolen har därmed tre bidrag.
 - **Kaosstil: Lodet** (`lodet`, andra kaosbidraget) — scrollhjulet flyttar aldrig
   sidan. Mönsterbrottet: i stället för att röra en yta över innehåll i
   dokumentordning vinschar hjulet ut ett lod genom en mörk vattenpelare, och
