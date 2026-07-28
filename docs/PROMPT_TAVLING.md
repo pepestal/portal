@@ -19,18 +19,31 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
   import './<id>.css'
   import { makeCountEnhancer } from '../shared.js'   // valfritt
 
+  const viz = (app, inre) => `
+    <div class="av" data-for="<id>" aria-hidden="true">
+      <div class="viz viz--<eget-namn>">${inre}</div>
+    </div>`
+
   export default {
     id: '<id>',
     label: '<Namnet i växlaren>',
-    anim: { syntes: `…`, signal: `…`, todos: `…`, stronk: `…` },
-    enhancer,          // valfritt — se nedan
+    anim: {
+      syntes: viz('syntes', `…`),
+      signal: viz('signal', `…`),
+      todos: viz('todos', `…`),
+      stronk: viz('stronk', `…`),
+    },
+    enhancer: minEnhancer,     // valfritt — se nedan
   }
   ```
 
-  `anim` är hover-markupen per app (ett `<div class="av" data-for="<id>">` styck).
-  Bara den aktiva stilens markup renderas, så din stil kostar ingenting i DOM:en
-  när någon annan visas — men den byggs också om vid varje stilbyte, så lägg
-  ingenting där som antar att den överlevt.
+  `anim` är hover-markupen per app. Varje variant är ett
+  `<div class="av" data-for="<id>" aria-hidden="true">` — `data-for` behövs för att
+  `makeCountEnhancer` ska hitta sina siffror, och `aria-hidden` för att animationen
+  är dekor: knappens tillgängliga namn är app-namnet, inte din viz. Bara den aktiva
+  stilens markup renderas, så din stil kostar ingenting i DOM:en när någon annan
+  visas — men den byggs också om vid varje stilbyte, så lägg ingenting där som
+  antar att den överlevt.
 
   `enhancer` körs efter att markupen satts och ska returnera en cleanup som river
   allt du injicerat. Behöver du bara uppräkning av siffror räcker
@@ -62,6 +75,14 @@ portalens stilsystem** — byggd direkt i produktion, inte som fristående demo.
 - Alla **fyra appar** (Syntes, Signal, Todos, Stronk) ska vara klickbara länkar
   med **en egen, unik hover-animation per app** — samma koncept i fyra uttryck
   räknas, fyra kopior gör det inte.
+- **Länkarna är skarpa och adressen kommer ur `src/apps.js` — aldrig ur din kod.**
+  Knapparna går till `syntes.dev`, `signal.syntes.dev`, `ethos.syntes.dev` och
+  `stronk.syntes.dev` (Todos bor på *ethos*; app-id:t är ändå `todos`, för alla
+  stilars selektorer och stats-nyckeln hänger på det — byt det inte). Klär du bara
+  om skelettet sköter `main.js` länkarna och du behöver inte göra något. Bygger du
+  en **helscen** med egna `<a>` måste du läsa `apps.js` som `orrery` gör
+  (`appById[id].url`) — hårdkoda aldrig en adress och skriv aldrig `href="#"`, då
+  bryter din stil sidans enda funktion. `src/apps.js` redigeras inte av ett bidrag.
 - Sidan förblir statisk. Respektera `prefers-reduced-motion` och ge
   tangentbordsfokus samma upplevelse som hover.
 - **Texten är ransonerad.** Se ”Skriv inte det du kan visa” nedan — den är inte en
@@ -140,9 +161,19 @@ stark idé konsekvent genomförd slår tio effekter.
 2. **Kör `npm run check:copy`.** Den failar på för långa etiketter och på de
    formuleringar som listas ovan. Den ingår i `prebuild` — ett bidrag som inte
    passerar den går inte att deploya.
-3. **Uppdatera docs** enligt CLAUDE.md: `CHANGELOG.md`, `STATUS.md`,
+3. **Kontrollera att länkarna lever i din stil.** Ingen `href="#"`, inga
+   hårdkodade adresser:
+
+   ```js
+   [...document.querySelectorAll('a[href]')].map((a) => [a.dataset.name || a.dataset.app, a.getAttribute('href')])
+   ```
+
+   Fyra rader ut, alla mot `*.syntes.dev`. Klipper din stil knappens form eller
+   lägger något ovanpå den: klicka faktiskt på alla fyra och kontrollera att inget
+   overlay-lager äter träffytan (`pointer-events: none` på dekor).
+4. **Uppdatera docs** enligt CLAUDE.md: `CHANGELOG.md`, `STATUS.md`,
    `ROADMAP.md`, `README.md` vid behov.
-4. **Arkivera bidraget:** spara en representativ skärmdump (gärna med hover
+5. **Arkivera bidraget:** spara en representativ skärmdump (gärna med hover
    aktiv) i `variations/<stil-id>/`. Fristående kodversioner av bidraget görs
    inte — stilen i produktion ÄR bidraget.
 
