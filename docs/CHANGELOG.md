@@ -6,6 +6,12 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Ändrat
+- **Knapparna länkar skarpt** i stället för `#`: Syntes → `https://syntes.dev`, Signal →
+  `https://signal.syntes.dev`, Todos → `https://ethos.syntes.dev`, Stronk →
+  `https://stronk.syntes.dev`. Todos bor på *ethos*; app-id:t `todos` lämnas orört
+  eftersom alla stilars selektorer (`[data-app="todos"]`) och stats-nyckeln hänger på det.
+  Gäller båda vägarna in — skelettets knappar och orrery-scenens världar läser samma
+  `src/apps.js`.
 - **En stil = en modul.** All per-stil-kod flyttas ur `main.js`/`style.css` till
   `src/styles/<id>.js` + `src/styles/<id>.css`. `styles.js` blir registret som
   importerar dem, och modulen default-exporterar `{ id, label, anim, enhancer? }` och

@@ -16,6 +16,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 
 - **Delat skelett** (`src/main.js`): stora centrerade knappar, en per app (Syntes,
   Signal, Todos, Stronk), var med en info-knapp; plus en systemhälsa-panel.
+- **Knapparna länkar skarpt** (sedan 2026-07-28): `syntes.dev`, `signal.syntes.dev`,
+  `ethos.syntes.dev` (Todos bor på *ethos* — id:t `todos` är kvar eftersom stilarnas
+  selektorer och stats-nyckeln hänger på det) och `stronk.syntes.dev`.
 - **Syntes är navet** — den övergripande dashboarden som tar emot, syntetiserar och
   pumpar information mellan underapparna (t.ex. säljsignal från Signal → uppgift i
   Todos). Varje stil ger den en särställning: merge-diagram (terminal), venn-snitt
@@ -123,14 +126,13 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 
 ## Nästa konkreta steg
 
-1. **Riktiga URL:er** på knapparna (nu `#` i `src/apps.js`) när apparnas adresser finns.
-2. **Fler stilar** — `singularitet` (fjärde), `kvitto` (femte), `orrery` (sjätte,
+1. **Fler stilar** — `singularitet` (fjärde), `kvitto` (femte), `orrery` (sjätte,
    första helscenen) och `vaxel` (sjunde) kom 2026-07-23, `jacquard` (åttonde)
    2026-07-26 samt `sprangskiss` (nionde), `synop` (tionde), `bikupa` (elfte)
    2026-07-27 samt `fuga` (tolfte) och `sinus` (trettonde) 2026-07-28; en ny skelett-stil =
    modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
    `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
-3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
+2. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut
 

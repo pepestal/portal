@@ -8,28 +8,30 @@ export const apps = [
     // Stilarna får gärna ge Syntes en särställning — den är hjärtat.
     id: 'syntes',
     name: 'Syntes',
-    url: '#',
+    url: 'https://syntes.dev',
     tagline: 'Navet — tar emot, syntetiserar och pumpar information mellan apparna',
     anim: 'hub',
   },
   {
     id: 'signal',
     name: 'Signal',
-    url: '#',
+    url: 'https://signal.syntes.dev',
     tagline: 'Finansdata & köp-/säljsignaler',
     anim: 'graph',
   },
   {
+    // Appen heter Todos i portalen men bor på ethos.syntes.dev — id:t styr
+    // stilarnas selektorer och stats-nyckeln, så det lämnas orört.
     id: 'todos',
     name: 'Todos',
-    url: '#',
+    url: 'https://ethos.syntes.dev',
     tagline: 'Uppgifter & dagliga listor',
     anim: 'progress',
   },
   {
     id: 'stronk',
     name: 'Stronk',
-    url: '#',
+    url: 'https://stronk.syntes.dev',
     tagline: 'Gympass-tracker',
     anim: 'reps',
   },
