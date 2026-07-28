@@ -37,6 +37,8 @@ Portal är ett **showroom / design-experiment** — en sida med stora app-knappa
   [`docs/PROMPT_CHAOS.md`](docs/PROMPT_CHAOS.md)) bakom en Kaos-toggle i topbaren,
   med egen rotation; första bidraget är `pangea` — sidan utan bakgrund, där
   smältan är navets fullskärmslänk och underapparna plattor som flyter på den.
+  Andra bidraget är `lodet` — scrollhjulet vinschar ett lod genom en vattenpelare
+  i stället för att flytta sidan, och det är lodets närhet som avslöjar länkarna.
 - **Info-paneler + systemhälsa** visar riktig projektdata (filer, rader, språk, stack)
   som genereras vid **byggtid** ur grann-repona — inte via runtime-koppling.
 

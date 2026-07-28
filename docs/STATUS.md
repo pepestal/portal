@@ -100,7 +100,12 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   i topbaren och har egen rotation; `?style=` och låset följer stilens klass.
   **Första kaosbidraget `pangea` landade 2026-07-28** — sidan utan bakgrund:
   smältan är ett fullskärms-`<a>` till Syntes och underapparna basaltplattor som
-  flyter på navet, area ∝ rader ur stats.json. Togglen är aktiv.
+  flyter på navet, area ∝ rader ur stats.json. **Andra kaosbidraget `lodet`
+  landade 2026-07-28** — scrollhjulet flyttar aldrig sidan; det vinschar i
+  stället ut ett lod genom en mörk vattenpelare, och det är lodets NÄRHET, inte
+  skrollposition, som avgör vad som lyser upp. De tre underapparna är beten på
+  fasta djup (grunt→djupt = stigande radantal ur stats.json), Syntes är
+  havsbottnen som aldrig vilar i totalt mörker. Togglen har nu två bidrag.
 - **Sextiofyra unika hover-animationer** — sextio i skelett-matrisen (fyra appar × femton skelett-stilar,
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
@@ -183,8 +188,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
    modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
    `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
 2. **Fler kaosbidrag** — första (`pangea`, helscen: smältan som navlänk,
-   plattor med area ∝ rader) kom 2026-07-28; nästa kaos-agent kör
-   [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
+   plattor med area ∝ rader) kom 2026-07-28; andra (`lodet`, helscen: scroll
+   vinschar ett lod genom en vattenpelare i stället för att flytta sidan) kom
+   2026-07-28; nästa kaos-agent kör [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md).
 3. Överväg **självhostade typsnitt** (Inter/JetBrains Mono/Fraunces) i stället för Google Fonts-`<link>`.
 
 ## Öppna beslut

@@ -36,11 +36,12 @@ import tryckark from './styles/tryckark.js'
 import alv from './styles/alv.js'
 import tunnelbana from './styles/tunnelbana.js'
 import pangea from './styles/pangea.js'
+import lodet from './styles/lodet.js'
 
 export const styles = [
   terminal, editorial, bank, singularitet, kvitto, orrery, vaxel,
   jacquard, sprangskiss, synop, bikupa, fuga, sinus, tryckark, alv, tunnelbana,
-  pangea,
+  pangea, lodet,
 ]
 
 export const byId = Object.fromEntries(styles.map((s) => [s.id, s]))

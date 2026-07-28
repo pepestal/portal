@@ -6,6 +6,26 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Kaosstil: Lodet** (`lodet`, andra kaosbidraget) — scrollhjulet flyttar aldrig
+  sidan. Mönsterbrottet: i stället för att röra en yta över innehåll i
+  dokumentordning vinschar hjulet ut ett lod genom en mörk vattenpelare, och
+  det är LODETS NÄRHET — inte skrollposition — som avgör vad som lyser upp.
+  De tre underapparna är fosforescerande beten på fasta djup (ordningen grunt→
+  djupt följer stigande radantal ur `stats.json`, riktig data), Syntes är
+  havsbottnen — bandet som aldrig vilar i totalt mörker och den enda grund
+  lodet till slut sjunker mot; ankarlinor löper från varje bete ner till den,
+  alltid svagt synliga. Varje tillstånd har egen mekanik: vattnet andas i vila
+  (skimmer, bubblor); lodet driver mjukt mot det bete man närmar sig och en
+  störning i vattnet följer pekaren; hover/fokus ger IDENTISK full glöd (inget
+  skillnad mellan mus och tangentbord) med en spänd lina mellan lodet och
+  betet, och räknar upp ett riktigt djup i meter (⌊1.6·√rader⌋); ett lämnat
+  bete falnar inte till noll utan lämnar ett kvarstående skimmer resten av
+  sessionen — vattnet minns; klicket rycker lodet mot ytan i en ren visuell
+  ljusstöt (canvas, länken själv rörs aldrig) utan att navigationen kapas. Tab
+  når alla fyra i djupordning, reduced motion fryser till en fullt upplyst
+  stillbild med linan hängande rakt ner, och cleanupen river scen, canvas,
+  wheel/touch/pointer/fokus-lyssnare och rAF-loopen. Kaos-poolen har därmed
+  två bidrag.
 - Bind piltangent ↑/↓ till lägesväxlingen: samma sak som Kaos-knappen — växlar
   mellan vanligt läge och kaos och slumpar en stil ur den nya poolen. ←/→
   bläddrar som förut inom aktiv pool. Tangenterna släpps igenom i textfält och
