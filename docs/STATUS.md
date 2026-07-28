@@ -101,6 +101,13 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   taktstreck, hovras navet skrivs alla tre och retledningen dras nedför sidan. Rutnätets
   millimetertal finns på båda ställena (CSS `--sn-mm`, JS `k`) och måste hållas lika.
   Delar count-up.
+- **Textransonering (2026-07-28):** samtliga stilar är genomgångna och rensade från
+  bildtext som förklarar konceptet i stället för att visa det — förklaringsraden under
+  knappen är borta i alla åtta stilar som hade en, hover-texterna kortade till siffra +
+  term, rollspelsskämten torrlagda. Hörntaggarna (`::after`) är orörda; de är mätvärden
+  och bär hierarkin. Regeln står i [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) och kontrolleras
+  av `npm run check:copy` i `prebuild`. Beslut per sträng:
+  [`TEXTGRANSKNING.md`](TEXTGRANSKNING.md).
 - **Byggtidsdata:** `scripts/generate-stats.mjs` går igenom grann-repona och skriver
   `src/data/stats.json` (filer, rader, språk, stack). Info-panelerna och systemhälsan
   läser den. Körs automatiskt via `predev`/`prebuild`. Se dokumenterat undantag i CLAUDE.md.

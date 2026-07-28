@@ -5,7 +5,41 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 
 ## [Ej släppt]
 
+### Ändrat
+- **Textransonera samtliga tretton stilar.** Efter tretton bidrag hade ett mönster satt
+  sig: stilarna *berättade* sitt koncept i stället för att visa det. Värst var
+  förklaringsraden under knappen (`.app-btn::before`), som låg framme i vila och i
+  klartext förklarade appens förhållande till navet — `DUX · HÄRIFRÅN HÄMTAR DE TRE SIN
+  TONFÖLJD`, `DANSGOLVET · TOM CELL — HÄR BLIR LASS TILL RIKTNING`, `TUSKAFT · HÄR BLIR
+  TRÅD TILL TYG`. Alla 32 sådana rader är borta eller nerkortade till en term
+  (`DUX`, `DANSGOLVET`, `NEKTAR`, `POS. 2 · SIGNALGIVARE`). Hörntaggen (`::after`) står
+  kvar orörd — `⊕ │ Ø0,2 │ A`, `α 40° · 1,4 km`, `KAN 2 · FÖRMAK · +0,04 s` är mätvärden,
+  inte bildtext, och det är de som bär hierarkin. Hover-texterna kortas till siffra och
+  term (`R 12 mm · 2,4 mV` i stället för `KAMMARE · R 12 mm ÖVER NOLLINJEN — MEN TAKTEN ÄR
+  NODENS`), och rollspelsskämten torrläggs: kvittots `varav moms 25% på kreativitet`,
+  `Rabatt: "UTANFÖR BOXEN"` och `Du har sparat idag — en backend` bort, kassörsnamnet
+  avsignerat; växelns påhittade firmanamn bort; singularitets `vinn designtävlingen` bytt
+  mot riktiga todo-rader. Synops etymologifotnot (`SYNOPTISK, GR. synoptikós — "SEDD
+  TILLSAMMANS"`) och sinus `NODENS EGEN KURVA SAKNAS PÅ REMSAN — DEN LÄSES UR DE TRE` är
+  borta helt — en stil ska inte argumentera för sig själv. Ingen stil tappar sitt koncept:
+  bikupan är fortfarande en vaxkaka med ett tomt dansgolv, sinus fortfarande en remsa vars
+  navkanal saknar kurva. Sidan slutar bara förklara det. Underlag och rad-för-rad-beslut:
+  [`TEXTGRANSKNING.md`](TEXTGRANSKNING.md).
+
 ### Tillagt
+- `scripts/check-copy.mjs` + `npm run check:copy` — byggkontroll som failar på synlig text
+  som förklarar i stället för att visa: knappetiketter över 30 tecken eller 5 ord,
+  hover-texter över 40 tecken, och formuleringar som `härifrån`, `utgår från`, `hämtar`
+  och moralkakor efter tankstreck (`— men …`). Granskar bara synliga strängar —
+  kodkommentarer får och ska fortsätta förklara konceptet. Ingår i `prebuild`, så ett
+  bidrag som inte passerar går inte att deploya. Körd mot koden före ransoneringen fångar
+  den 48 strängar.
+- Avsnittet **”Skriv inte det du kan visa”** i [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) —
+  hårda regler för nästa tävlande agent, plus testet: täck över all text i din stil, syns
+  det fortfarande vilken rad som är navet? Prompten var orsaken — den bad om en *mekanisk*
+  särställning och gav exempel som agenterna skrev ut som bildtext i stället för att rita.
+- [`docs/TEXTGRANSKNING.md`](TEXTGRANSKNING.md) — genomgången av all synlig text i de
+  tretton stilarna, med diagnos, beslut per sträng och vad som medvetet lämnades kvar.
 - Stil `sinus` ("Sinusrytmen") — trettonde stilen i rotationen: sidan är en **EKG-remsa på
   millimeterpapper** (fin ruta 1 mm, storruta 5 mm, tegelrött rutnät på varmt papper, fyra
   kanaler med baslinje och maskinens kalibreringspuls, remsans huvud med inställningar och
