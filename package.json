@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "stats": "node scripts/generate-stats.mjs",
+    "check:copy": "node scripts/check-copy.mjs",
     "predev": "node scripts/generate-stats.mjs",
     "dev": "vite",
-    "prebuild": "node scripts/generate-stats.mjs",
+    "prebuild": "node scripts/generate-stats.mjs && node scripts/check-copy.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },

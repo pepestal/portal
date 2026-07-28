@@ -49,6 +49,9 @@ Länkar ut till andra appar via URL; ingen runtime app-till-app-kommunikation.
 - `src/orrery.js` — helscen-enhancern för stilen `orrery` (bygger/river en egen scen som ersätter skelettet).
 - `scripts/generate-stats.mjs` → `src/data/stats.json` — byggtidsstatistik (körs via
   `predev`/`prebuild`). Se **dokumenterat undantag** i [`CLAUDE.md`](CLAUDE.md).
+- `scripts/check-copy.mjs` — textransoneringen: failar bygget på knappetiketter och
+  hover-texter som förklarar stilens koncept i stället för att visa det (körs via
+  `prebuild`). Regeln står i [`docs/PROMPT_TAVLING.md`](docs/PROMPT_TAVLING.md).
 
 ## Teknikstack
 
@@ -69,6 +72,7 @@ npm install
 npm run dev        # regenererar stats + startar Vite dev-server
 npm run build      # regenererar stats + produktionsbygge till dist/
 npm run stats      # bara: regenerera src/data/stats.json ur grann-repona
+npm run check:copy # textransoneringen: hittar bildtexter som borde vara bild
 ```
 
 > `stats`-steget läser `../Signal`, `../todos`, `../stronk`, `../syntes`. Finns de inte
