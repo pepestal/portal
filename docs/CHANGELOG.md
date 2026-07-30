@@ -6,6 +6,13 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- 📸 **`docs/dev_pics/` — visuell tidslinje, nytt absolut krav (2026-07-30).** Inför en
+  skärmdump per UI-synlig uppdatering, i en mapp `NNN_kort_beskrivning/`, med index i
+  [`dev_pics/README.md`](dev_pics/README.md). Kravet ligger på samma nivå som
+  changelog-kravet och är skrivet in i [`../CLAUDE.md`](../CLAUDE.md). Källa: live-adressen
+  om ändringen är deployad, annars lokal dev-server. Ekosystemets norm:
+  [`documentation_standard.md` §7](https://github.com/pepestal/lokalt-docs/blob/main/docs/documentation_standard.md#7-utvecklingsbilder-docsdev_pics).
+  Portal är nästan bara UI — i praktiken kräver varje ändring här en bild.
 - **Kaosstil: Hinnan** (`hinnan`, fjärde kaosbidraget) — sidan har en baksida.
   Mönsterbrottet: en webbsida är en yta med en framsida och ingenting annat —
   ingen tjocklek, inget bakom. Här är sidan en spänd hinna, och **ingenting

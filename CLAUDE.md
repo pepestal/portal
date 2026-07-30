@@ -27,6 +27,16 @@ Läses automatiskt av Claude Code och gäller alla agenter i portal-repot. Håll
 1. Uppdatera [`README.md`](README.md) om struktur/stack/uppstart ändrats.
 2. Notera ändringen i [`docs/CHANGELOG.md`](docs/CHANGELOG.md) (imperativ, svenska).
 3. Uppdatera [`docs/STATUS.md`](docs/STATUS.md)/[`docs/ROADMAP.md`](docs/ROADMAP.md) om nuläge/plan ändrats.
+4. 📸 **Syns ändringen i appen: spara en skärmdump i [`docs/dev_pics/`](docs/dev_pics/)** —
+   ny mapp `NNN_kort_beskrivning/`, bild tagen med Playwright MCP mot **live-adressen om
+   ändringen är deployad, annars lokal dev-server**, plus en rad i
+   [`docs/dev_pics/README.md`](docs/dev_pics/README.md). Flödet och namnreglerna står där.
+   Portal är **nästan bara** UI — i praktiken kräver varje ändring här en bild. Rör
+   ändringen en kaosstil: fota den stilen, och ta med ett läge där animationen/interaktionen
+   syns. Ingen visuell effekt → hoppa över, men **säg att du hoppade över och varför**.
+
+Kravet är absolut, på samma nivå som changelog-kravet. Bilderna är projekthistorik: de
+committas, och en gammal mapp döps aldrig om eller skrivs över.
 
 ## Ton & arbetssätt
 
