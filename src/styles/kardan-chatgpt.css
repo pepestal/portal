@@ -1,0 +1,68 @@
+/* Kardanen — maskinrum i olja och gjutjärn. Syntes är den genomgående huvudaxeln:
+   navets dubbellager är enda nolläget (0°); tre utväxlingar tar kraft därifrån. */
+[data-style="kardan-chatgpt"] {
+  --bg: #121714; --surface: #202923; --line: #485249; --text: #e7e1cf; --muted: #9ca395;
+  --accent: #d4a74a; --font-display: var(--font-serif); --font-body: var(--font-sans); --font-ui: var(--font-mono);
+  --btn-radius: 3px; --anim-draw: .6s; --anim-ease: cubic-bezier(.22,.82,.25,1);
+  --kd-brass: #d4a74a; --kd-steel: #b8c1b8; --kd-oil: #0b100d; --kd-green: #a9c85d;
+}
+[data-style="kardan-chatgpt"] body {
+  background: radial-gradient(80vmax 62vmax at 50% 24%, #27342b 0%, transparent 54%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.018) 0 1px, transparent 1px 82px), #121714;
+}
+[data-style="kardan-chatgpt"] .topbar { position:relative; z-index:1; }
+[data-style="kardan-chatgpt"] .wordmark { color:var(--kd-brass); font-family:var(--font-serif); font-weight:600; letter-spacing:.14em; text-transform:uppercase; }
+[data-style="kardan-chatgpt"] .wordmark::after { content:'· AXELLINJE'; font:500 .5em var(--font-mono); color:var(--muted); letter-spacing:.18em; margin-left:.8em; vertical-align:14%; }
+[data-style="kardan-chatgpt"] .style-switch__btn,[data-style="kardan-chatgpt"] .style-switch__lock { border-radius:2px; border-color:#596052; background:#1b221d; }
+
+/* huvudaxeln är samma lodräta metallstav mellan samtliga rader */
+[data-style="kardan-chatgpt"] .rows { position:relative; }
+[data-style="kardan-chatgpt"] .rows::before { content:""; position:absolute; z-index:0; top:1.7rem; bottom:1.7rem; left:50%; width:14px; transform:translateX(-50%); border:1px solid #637066; border-radius:7px; background:repeating-linear-gradient(90deg,#465047 0 2px,#aeb9ae 3px 5px,#465047 6px 9px); box-shadow:0 0 0 4px rgba(6,10,7,.45), 0 0 18px rgba(212,167,74,.14); }
+[data-style="kardan-chatgpt"] .app-row { --app-accent:var(--kd-steel); position:relative; z-index:1; }
+[data-style="kardan-chatgpt"] .app-row[data-app="syntes"] { --app-accent:var(--kd-brass); }
+[data-style="kardan-chatgpt"] .app-row[data-app="signal"] { --app-accent:#a6c7b0; }
+[data-style="kardan-chatgpt"] .app-row[data-app="todos"] { --app-accent:#d8b86b; }
+[data-style="kardan-chatgpt"] .app-row[data-app="stronk"] { --app-accent:#c98b68; }
+[data-style="kardan-chatgpt"] .app-btn { overflow:visible; border:1px solid #566157; background:linear-gradient(125deg,#29342d,#18201b 54%,#111713); box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -8px 15px rgba(0,0,0,.2),0 9px 22px rgba(0,0,0,.25); transition:border-color .3s,box-shadow .3s,background .3s; }
+[data-style="kardan-chatgpt"] .app-btn:is(:hover,:focus-visible) { background:linear-gradient(125deg,#344339,#1e2922 54%,#141b16); border-color:var(--app-accent); box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 0 0 1px color-mix(in srgb,var(--app-accent) 28%,transparent),0 10px 28px rgba(0,0,0,.33); outline:none; }
+/* kuggen griper i axeln i varje rad, men navets är ett dubbelt lager */
+[data-style="kardan-chatgpt"] .app-btn__fx::before { content:""; position:absolute; z-index:1; left:50%; top:50%; width:34px; height:34px; transform:translate(-50%,-50%); border:5px dotted var(--app-accent); border-radius:50%; background:radial-gradient(circle,#121714 0 22%,#869087 24% 32%,#101611 35%); box-shadow:0 0 0 3px #111712,0 0 0 4px #697467; transition:transform .7s var(--anim-ease),border-color .3s; }
+[data-style="kardan-chatgpt"] .app-row[data-app="syntes"] .app-btn__fx::before { width:48px;height:48px;border:7px dotted var(--kd-brass); box-shadow:0 0 0 3px #111712,0 0 0 5px #a77c2e,0 0 0 8px #111712; }
+[data-style="kardan-chatgpt"] .app-btn:is(:hover,:focus-visible) .app-btn__fx::before { transform:translate(-50%,-50%) rotate(180deg); }
+[data-style="kardan-chatgpt"] .app-btn__name { position:relative; z-index:2; color:var(--text); background:#18201b; border:1px solid #566157; padding:.2em .85em .25em; font-family:var(--font-serif); font-size:1.38rem; letter-spacing:.08em; text-transform:uppercase; box-shadow:0 1px 0 rgba(255,255,255,.08); }
+[data-style="kardan-chatgpt"] .app-row[data-app="syntes"] .app-btn__name { border-color:var(--kd-brass); color:#f2dc9e; font-size:1.52rem; }
+[data-style="kardan-chatgpt"] .app-btn:focus-visible .app-btn__name { transform:translateY(-1.9rem) scale(.78); }
+[data-style="kardan-chatgpt"] .app-btn:focus-visible .app-btn__anim { opacity:1; }
+[data-style="kardan-chatgpt"] .app-btn::after { position:absolute; left:12px;top:10px;z-index:4; font:600 .5rem var(--font-mono); letter-spacing:.12em; color:var(--app-accent); pointer-events:none; }
+[data-style="kardan-chatgpt"] .app-btn[data-name="syntes"]::after { content:'AXEL 0°'; }
+[data-style="kardan-chatgpt"] .app-btn[data-name="signal"]::after { content:'12:1'; }
+[data-style="kardan-chatgpt"] .app-btn[data-name="todos"]::after { content:'4 STEG'; }
+[data-style="kardan-chatgpt"] .app-btn[data-name="stronk"]::after { content:'480 NM'; }
+[data-style="kardan-chatgpt"] .info-toggle { border-radius:50%; background:#1a211c; border-color:#596359; }
+[data-style="kardan-chatgpt"] .info-panel,[data-style="kardan-chatgpt"] .system__panel { background:#1a211c; border-color:#596359; box-shadow:0 14px 30px rgba(0,0,0,.38); }
+[data-style="kardan-chatgpt"] .system__title::before { content:'◉ ';color:var(--kd-brass); }
+[data-style="kardan-chatgpt"] .live { background:var(--kd-green); box-shadow:0 0 8px var(--kd-green); }
+
+/* fyra individuella maskinoperationer */
+[data-style="kardan-chatgpt"] .viz { display:flex; flex-direction:column;align-items:center;gap:2px; }
+[data-style="kardan-chatgpt"] .viz svg { width:min(280px,76vw);height:auto;overflow:visible; }
+[data-style="kardan-chatgpt"] .viz .cap { font:600 .52rem var(--font-mono);letter-spacing:.11em;color:var(--muted);opacity:0;transition:opacity .25s ease .75s; }
+[data-style="kardan-chatgpt"] .viz .cap b { color:var(--app-accent);font-weight:700;font-variant-numeric:tabular-nums; }
+[data-style="kardan-chatgpt"] .app-btn:is(:hover,:focus-visible) .viz .cap { opacity:1; }
+/* regulator */
+.viz--regulator .shaft,.viz--regulator .arms path { fill:none;stroke:var(--kd-steel);stroke-width:3;stroke-linecap:round; }
+.viz--regulator .hub { fill:var(--kd-brass);stroke:#f0d68d;stroke-width:2; }
+.viz--regulator .arms { transform-origin:108px 27px;transition:transform .8s var(--anim-ease); }
+.viz--regulator .arms circle { fill:#53665a;stroke:var(--kd-steel);stroke-width:2; }
+.viz--regulator .belt { fill:none;stroke:var(--app-accent);stroke-width:3;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset .55s var(--anim-ease); }
+.viz--regulator .b2{transition-delay:.18s}.viz--regulator .b3{transition-delay:.36s}
+.app-btn:is(:hover,:focus-visible) .viz--regulator .arms { transform:scale(.6,1.55); }.app-btn:is(:hover,:focus-visible) .viz--regulator .belt { stroke-dashoffset:0; }
+/* escapement */
+.viz--escapement .wheel{fill:#253128;stroke:var(--app-accent);stroke-width:2}.viz--escapement .tooth{stroke:var(--app-accent);stroke-width:2;transform-origin:108px 27px;transform:rotate(calc(var(--i)*30deg));}.viz--escapement .pallet{fill:none;stroke:var(--kd-brass);stroke-width:3;stroke-linejoin:round;transform-origin:66px 27px;transition:transform .5s steps(2);}.viz--escapement .pivot{fill:var(--kd-brass)}.viz--escapement .trace{stroke:var(--muted);stroke-dasharray:3 4}.app-btn:is(:hover,:focus-visible) .viz--escapement .wheel,.app-btn:is(:hover,:focus-visible) .viz--escapement .tooth{animation:kd-turn .8s steps(12) infinite}.app-btn:is(:hover,:focus-visible) .viz--escapement .pallet{transform:rotate(22deg)}
+/* geneva */
+.viz--geneva .drive{fill:#354238;stroke:var(--kd-brass);stroke-width:2;transform-origin:72px 27px}.viz--geneva .pin{fill:var(--kd-brass);transform-origin:72px 27px}.viz--geneva .star{fill:#1a221c;stroke:var(--app-accent);stroke-width:3}.viz--geneva .slot{fill:none;stroke:var(--app-accent);stroke-width:4;stroke-linecap:round;transform-origin:142px 27px;transform:rotate(calc(var(--d)*1deg))}.viz--geneva .guide{stroke:var(--muted);stroke-width:2}.app-btn:is(:hover,:focus-visible) .viz--geneva .drive,.app-btn:is(:hover,:focus-visible) .viz--geneva .pin{animation:kd-turn 1s linear infinite}.app-btn:is(:hover,:focus-visible) .viz--geneva .star,.app-btn:is(:hover,:focus-visible) .viz--geneva .slot{animation:kd-quarter 1s steps(4) infinite}
+/* winch */
+.viz--winch .drum{fill:#253128;stroke:var(--app-accent);stroke-width:4}.viz--winch .core{fill:var(--kd-brass)}.viz--winch .marks{stroke:var(--kd-steel);stroke-width:2}.viz--winch .rope,.viz--winch .hook{fill:none;stroke:var(--kd-steel);stroke-width:2.5}.viz--winch .load{fill:#3c483d;stroke:var(--app-accent);stroke-width:2;transform:translateY(10px);transition:transform .8s var(--anim-ease)}.viz--winch .drum,.viz--winch .core,.viz--winch .marks{transform-origin:76px 27px}.app-btn:is(:hover,:focus-visible) .viz--winch .drum,.app-btn:is(:hover,:focus-visible) .viz--winch .core,.app-btn:is(:hover,:focus-visible) .viz--winch .marks{animation:kd-turn .65s linear infinite}.app-btn:is(:hover,:focus-visible) .viz--winch .load{transform:translateY(-8px)}
+@keyframes kd-turn{to{transform:rotate(1turn)}}@keyframes kd-quarter{to{transform:rotate(1turn)}}
+@media (prefers-reduced-motion:reduce){[data-style="kardan-chatgpt"] *{animation-duration:.001ms!important;animation-iteration-count:1!important}.viz .cap{transition-delay:0s!important}.viz--winch .load{transform:translateY(-8px)}}
+@media (max-width:560px){[data-style="kardan-chatgpt"] .rows::before{left:50%;width:10px}[data-style="kardan-chatgpt"] .app-btn__name{font-size:1.1rem!important}[data-style="kardan-chatgpt"] .app-btn__fx::before{width:28px;height:28px}.viz .cap{font-size:.46rem}}

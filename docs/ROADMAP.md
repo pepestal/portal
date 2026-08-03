@@ -62,7 +62,7 @@ _(Inga uppslag noterade ännu.)_
 - ~~Fler stilar i rotationen.~~ ✅ (`singularitet` — fjärde, `kvitto` — femte, `orrery` — sjätte
   och första helscenen, `vaxel` — sjunde, `jacquard` — åttonde, `sprangskiss` — nionde,
   `synop` — tionde, `bikupa` — elfte, `fuga` — tolfte, `sinus` — trettonde, `tryckark` —
-  fjortonde; alla ur tävlingsbidrag; fler kan läggas till löpande)
+  fjortonde, `kardan-chatgpt` — sjuttonde; alla ur tävlingsbidrag; fler kan läggas till löpande)
 - ~~Helscen-stil som ersätter skelettet.~~ ✅ (`orrery`, förankrat undantag från "skelettet står still")
 - **Kaosklass** — ✅ infrastruktur 2026-07-28 (`chaos: true`-pool + Kaos-toggle i
   topbaren, prompt i [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)); ✅ första bidraget

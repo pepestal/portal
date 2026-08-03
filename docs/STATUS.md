@@ -35,8 +35,9 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   ligga ur pass (tryckark), källan — KM 0 som kilometertalen räknas från, där de tre
   biflödenas vatten ligger kvar som band i fåran så att älvens bredd ÄR summan av
   delarna (alv), bytespunkten — nätets enda station där alla tre linjer delar perrong,
-  som underapparna bär sin restid till i räknebara mellanstationer (tunnelbana).
-- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): sexton stilar — `terminal`
+  som underapparna bär sin restid till i räknebara mellanstationer (tunnelbana) och till Kardanen · chatgpt (`kardan-chatgpt`), där Syntes är
+ den genomgående huvudaxeln och de andra tre är olika drivna mekanismer.
+- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): sjutton klassiska stilar — `terminal`
   (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
   `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära
   portar, stjärnfält, levande siffror), `kvitto` (Kvittot — ur tävlingsbidraget
@@ -205,7 +206,8 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
    första helscenen) och `vaxel` (sjunde) kom 2026-07-23, `jacquard` (åttonde)
    2026-07-26 samt `sprangskiss` (nionde), `synop` (tionde), `bikupa` (elfte)
    2026-07-27 samt `fuga` (tolfte), `sinus` (trettonde), `tryckark` (fjortonde),
-   `alv` (femtonde) och `tunnelbana` (sextonde) 2026-07-28; en ny skelett-stil =
+   `alv` (femtonde) och `tunnelbana` (sextonde) 2026-07-28 samt
+  `kardan-chatgpt` (sjuttonde, Kardanen · chatgpt); en ny skelett-stil =
    modulen `src/styles/<id>.{js,css}` + en rad i `styles.js`; en helscen (som
    `src/styles/orrery.js`) sätter dessutom `fullscene: true`.
 2. **Fler kaosbidrag** — första (`pangea`, helscen: smältan som navlänk,

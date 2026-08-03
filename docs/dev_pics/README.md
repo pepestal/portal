@@ -37,4 +37,4 @@ Normen i sin helhet:
 
 | Nr | Datum | Uppdatering | Källa | Bilder |
 |---|---|---|---|---|
-| — | — | _Inga bilder än. Nästa uppdatering som syns i UI:t blir `001_...`._ | — | — |
+| 001 | 2026-08-03 | Kardanen · chatgpt — klassisk stil med genomgående huvudaxel | Lokal `http://127.0.0.1:5176/?style=kardan-chatgpt` | `001_kardanen_chatgpt/start.png`, `start_mobil.png` |

@@ -6,6 +6,15 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Stil: Kardanen · chatgpt** (`kardan-chatgpt`, sjuttonde klassiska
+  bidraget) — ett mörkt maskinrum där Syntes är den genomgående huvudaxeln.
+  Axeln går synligt genom hela knappstapeln; navets dubbellager och `AXEL 0°`
+  är nolläget, medan Signal, Todos och Stronk griper i den med respektive
+  utväxling/indexering/vridmoment. Hovers: Watt-regulator med tre remdrifter
+  (Syntes), gånghjul med ankare (Signal), Genevakors med fyra exakta steg
+  (Todos), och vinsch som lyfter last (Stronk). Skelettet är orört,
+  tangentbordsfokus använder samma läge som hover och reduced motion lämnar
+  slutläget utan loopar. Arkiverad i `variations/kardan-chatgpt/`.
 - 📸 **`docs/dev_pics/` — visuell tidslinje, nytt absolut krav (2026-07-30).** Inför en
   skärmdump per UI-synlig uppdatering, i en mapp `NNN_kort_beskrivning/`, med index i
   [`dev_pics/README.md`](dev_pics/README.md). Kravet ligger på samma nivå som
