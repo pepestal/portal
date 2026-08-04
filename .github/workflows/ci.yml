@@ -1,0 +1,49 @@
+name: CI
+
+# Grinden som gör "testerna är gröna" mekaniskt i stället för en bedömning.
+# Se handbok/docs/server_agent_setup.md §5.4 för varför den behövs.
+#
+# ⚠️ Repot har INGA tester och ingen typkontroll (ren JavaScript, ingen
+# TypeScript). Det som kontrolleras är att bygget går igenom och att
+# textransoneringen håller. En grön bock betyder alltså "sidan byggs och
+# texterna är inom regeln", inte "portalen fungerar".
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # Samma major som Dockerfile (node:22-alpine).
+          node-version: "22"
+          cache: npm
+      # `ci`, inte `install`: låsfilen ska styra, annars byggs andra versioner
+      # än de som deployas.
+      - run: npm ci
+
+      # Egen steg trots att `prebuild` kör samma skript: faller ransoneringen
+      # vill man se DET i jobbnamnet, inte "build misslyckades".
+      #
+      # Skriptet har tänder — det läser alla stilar i src/styles/ och fäller
+      # knapptexter över 30 tecken, hover-texter över 40, mer än fem ord, och en
+      # lista formuleringar som i praktiken alltid betyder "jag ersatte en bild
+      # med en bildtext". Regeln står i docs/PROMPT_TAVLING.md.
+      - name: Textransonering (check:copy)
+        run: npm run check:copy
+
+      # `prebuild` kör generate-stats.mjs, som räknar filer och rader i
+      # grann-repona. På runnern finns de inte — skriptet är byggt för det och
+      # behåller värdena ur incheckade src/data/stats.json. Bygget testar alltså
+      # inte statsgenereringen mot riktiga repon, bara att den inte kraschar.
+      - name: Build
+        run: npm run build
