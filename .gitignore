@@ -25,3 +25,9 @@ dist-ssr
 
 # Playwright MCP-utdata
 .playwright-mcp/
+
+# Claude Code: agentens worktrees och den lokala include-listan.
+# Låg tidigare i .git/info/exclude, vilket fungerar men inte följer med en
+# klon — raden försvann alltså så fort repot klonades om.
+.claude/worktrees/
+.worktreeinclude
