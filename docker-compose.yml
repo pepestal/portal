@@ -4,6 +4,10 @@ services:
     image: portal
     container_name: portal
     restart: unless-stopped
+    environment:
+      # Loggarna ska ha samma tidsbas som resten av stacken, som kör svensk tid.
+      # Se handbok/docs/server_drift.md §1.4.
+      TZ: ${APP_TIMEZONE:-Europe/Stockholm}
     ports:
       - "127.0.0.1:8300:80"   # loopback för felsökning; utåt nås tjänsten via Caddy
     networks:
