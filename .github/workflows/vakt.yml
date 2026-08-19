@@ -1,0 +1,80 @@
+name: Vakt
+
+# Vakten som håller CI på rätt runner — i **båda** riktningarna.
+#
+# **Varför den finns.** `runs-on` står i varje workflowfil och glöms därför aldrig — men en
+# **ny** fil föds med `ubuntu-latest`, eftersom det är vad varje exempel på internet visar.
+# Då hade ett privat repo tyst börjat bränna GitHub-minuter igen, och det märks först när
+# kontots tak tar slut mitt i något annat (vilket hände 2026-08-18).
+#
+# 🛑 **Och åt andra hållet är felet värre.** Ett *publikt* repo som pekar mot hemserverns
+# runner låter en främlings fork-PR köra vilken kod som helst på en maskin i samma nät som
+# produktionen. Därför har vakten två lägen, och läget står i repovariabeln `RUNNER_LAGE`:
+#
+# | `RUNNER_LAGE` | Betyder | Använd i |
+# |---|---|---|
+# | `egen` (förval) | allt ska vara `self-hosted` | privata repon |
+# | `github` | inget får vara `self-hosted` | **publika repon** |
+#
+# ⚠️ **Egen workflow och inte ett steg i CI:n.** De riktiga workflowsen har `paths`-filter på
+# sina egna kataloger; en ny fil under `.github/workflows/` matchar inte nödvändigtvis dem,
+# och då hade vakten inte körts just när den behövdes. Den här lyssnar på hela katalogen.
+#
+# **Undantag per fil** står i `RUNNER_UNDANTAG`, kommaseparerat. Det ska vara obekvämt att
+# lägga till ett, och synligt i diffen när någon gör det.
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+
+jobs:
+  runner:
+    # 🛑 **`ubuntu-latest` med flit — `portal` är publikt.** Vakten själv får inte köra på
+    # hemserverns runner, av exakt det skäl den finns för att upprätthålla.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Varje workflow pekar mot rätt runner
+        env:
+          LAGE: ${{ vars.RUNNER_LAGE }}
+          UNDANTAG: ${{ vars.RUNNER_UNDANTAG }}
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, re, sys
+
+          lage = (os.environ.get("LAGE") or "egen").strip()
+          undantag = {r.strip() for r in (os.environ.get("UNDANTAG") or "").split(",") if r.strip()}
+          if lage not in ("egen", "github"):
+              sys.exit(f"RUNNER_LAGE är '{lage}' — måste vara 'egen' eller 'github'.")
+
+          fel = []
+          for f in sorted(pathlib.Path(".github/workflows").glob("*.yml")):
+              if f.name in undantag:
+                  continue
+              for rad, text in enumerate(f.read_text().splitlines(), 1):
+                  m = re.match(r"\s*runs-on:\s*(\S+)", text)
+                  if not m:
+                      continue
+                  varde = m.group(1)
+                  if lage == "egen" and varde != "self-hosted":
+                      fel.append(f"{f}:{rad}  runs-on: {varde}")
+                  if lage == "github" and varde == "self-hosted":
+                      fel.append(f"{f}:{rad}  runs-on: {varde}")
+
+          if not fel:
+              print(f"Alla workflows stämmer med RUNNER_LAGE={lage}.")
+              sys.exit(0)
+
+          if lage == "egen":
+              print("Dessa jobb skulle köra hos GitHub och kosta minuter:\n")
+          else:
+              print("🛑 Dessa jobb skulle köra på hemserverns runner — i ett PUBLIKT repo.")
+              print("   En fork-PR kan då köra vilken kod som helst på maskinen.\n")
+          for r in fel:
+              print("  " + r)
+          print("\nRätta raden, eller lägg filen i repovariabeln RUNNER_UNDANTAG och")
+          print("skriv skälet i filen den gäller.")
+          sys.exit(1)
+          PY
