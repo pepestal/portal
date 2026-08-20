@@ -5,6 +5,40 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 
 ## [Ej släppt]
 
+### Ändrat
+- 🔴 **Skelettet bygger om till rutnät: två spalter på dator, en nedskalad på mobil, och
+  aldrig skroll** — kravet i [`LAYOUT.md`](LAYOUT.md). Mätt före: femton av sexton
+  skelettstilar spillde över med ~350 px på `1440×900`, ~535 px på `1280×720` och ~290 px
+  på Pixel 9 (singularitet 1 092). **Mätt efter: 0 px i samtliga 20 stilar, i alla tre
+  vyporter.**
+  - `.rows` är ett rutnät vars radantal räknas ur antalet appar delat på antalet spalter,
+    så en sjunde app kräver ingen ny PR. Kortet har ingen egen höjd — rutnätet fördelar
+    den yta `.rows` fick, och kortet fyller sin cell upp till 116 px som *tak*.
+  - `100dvh` i stället för `100vh`: på Android krymper `vh` inte när adressfältet fälls
+    in, så en sida som ryms i `100vh` kan skrolla ändå.
+  - `.info-toggle` 30 → **44 px**, och systemhälsan flyttas till vänstra hörnet på mobil
+    där den låg ovanpå sista radens info-knapp.
+  - `sinus` får `enspalt: true` — remsans enda påstående är att `+0,04 s` ÄR två
+    millimeterrutor åt höger på samma papper, och två spalter ger två papper.
+  - `lodet` får `overscroll-behavior-y: contain`: stilens mönsterbrott är att dragrörelsen
+    betyder något annat än att flytta sidan, så webbläsarens pull-to-refresh offras där.
+
+### Fixat
+- 🔴 **Stängda info-paneler förlängde dokumentet.** De är `position: absolute` inuti
+  `.app-row` och bidrog till `scrollHeight` trots att de var osynliga — 209 px på Pixel 9,
+  alltså två tredjedelar av all mobilskroll. Varken `visibility: hidden` eller
+  `content-visibility: hidden` räcker; den senare hoppar över innehållet men lämnar
+  elementets egen låda med padding kvar och gav 18 px i varje stil. Löst med
+  `display: none` + `transition-behavior: allow-discrete` + `@starting-style`, som tar
+  bort lådan helt och behåller övergången.
+
+### Borttaget
+- **Stilen `kvitto`** — modulen, dess CSS, tävlingsbidraget `variations/kvitto.html` och
+  registerraden. Borttagen på Peters begäran 2026-08-20. ⚠️ Äldre changelog-poster och
+  `dev_pics`-mappar som nämner kvittot är **avsiktligt orörda** — de var sanna när de
+  skrevs, och samma princip gäller här som för Syntes-loggen.
+
+
 ### Tillagt
 - 🔴 **Nytt layoutkrav: [`docs/LAYOUT.md`](LAYOUT.md)** — två spalter på dator, en
   nedskalad spalt på mobil, och **aldrig skroll**. Beställt av Peter 2026-08-20 efter att
