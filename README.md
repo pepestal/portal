@@ -3,11 +3,12 @@
 > En landningssida som samlar ekosystemets appar i ett nav.
 
 Portal är ekosystemets **ingång i webbläsaren**: en minimalistisk startsida som
-länkar vidare till apparna (Syntes, Signal, Todos, Stronk) med små animationer och en
-system-health-widget. **Syntes är navet** — den övergripande dashboard som tar emot,
-syntetiserar och pumpar information mellan underapparna — och stilarna ger den en
-särställning. Portal är **fristående** — den *länkar* till Syntes men pratar aldrig
-med den i runtime och äger ingen egen data.
+länkar vidare till apparna (Signal, Ethos, Hexis, scales, ser/sys) med små animationer
+och en system-health-widget. En sjätte plats, **Syntes**, står kvar men är **vilande** —
+appen var ett händelsenav fram till 2026-08-20, då bussen revs, och `syntes.dev` svarar
+sedan dess `404`. Kortet renderas därför utan länk (`dormant: true` i `src/apps.js`).
+Portal är **fristående** — den *länkar* till apparna men pratar aldrig med dem i runtime
+och äger ingen egen data.
 
 **Status:** se [`docs/STATUS.md`](docs/STATUS.md) — börja där om du ska ta vid.
 
@@ -37,7 +38,8 @@ Portal är ett **showroom / design-experiment** — en sida med stora app-knappa
   (moduler med `chaos: true` — fritt mönsterbrott utan skelett, se
   [`docs/PROMPT_CHAOS.md`](docs/PROMPT_CHAOS.md)) bakom en Kaos-toggle i topbaren,
   med egen rotation; första bidraget är `pangea` — sidan utan bakgrund, där
-  smältan är navets fullskärmslänk och underapparna plattor som flyter på den.
+  smältan är en fullskärmslänk och apparna plattor som flyter på den. ⚠️ `pangea` är
+  en av de tretton stilar som ännu inte är omkomponerade efter att navet revs.
   Andra bidraget är `lodet` — scrollhjulet vinschar ett lod genom en vattenpelare
   i stället för att flytta sidan, och det är lodets närhet som avslöjar länkarna.
   Tredje bidraget är `dynamo` — sidan har ingen egen kraft: pekarens rörelse
@@ -96,8 +98,14 @@ npm run stats      # bara: regenerera src/data/stats.json ur grann-repona
 npm run check:copy # textransoneringen: hittar bildtexter som borde vara bild
 ```
 
-> `stats`-steget läser `../Signal`, `../todos`, `../stronk`, `../syntes`. Finns de inte
-> bredvid (t.ex. på servern) behålls senast kända värden i `src/data/stats.json`.
+> `stats`-steget läser grannrepona i `../`: `signal_backend`, `signal_frontend`, `ethos`,
+> `stronk` (Hexis bor kvar i den katalogen), `scales` och `sersys`. Finns de inte bredvid
+> (t.ex. på servern) behålls senast kända värden i `src/data/stats.json`.
+>
+> ⚠️ **Kör bygget från en worktree hittas inga grannrepon** — `../` är då worktree-roten,
+> inte `~/lab`, och varje projekt stämplas `"stale": true`. Lägg worktreen i `~/lab/` om
+> du ska bygga, och kontrollera `git status` efteråt: en `stale`-stämplad `stats.json`
+> ska aldrig committas.
 
 ## Konventioner
 

@@ -3,8 +3,8 @@
    Hierarkin är kontrapunktens och den är hårdare än någon annan stils: i en
    fuga finns ingen andra melodi. Allt som klingar ÄR subjektet, omskrivet.
    Syntes ställer det — en enda gång, i takt 1, i bläck — och de tre andra
-   äger ingen egen tonföljd alls: Signal är svaret en kvint upp, Todos är
-   samma toner speglade kring b, Stronk är samma toner i dubbla notvärden.
+   äger ingen egen tonföljd alls: Signal är svaret en kvint upp, Ethos är
+   samma toner speglade kring b, Hexis är samma toner i dubbla notvärden.
    Ta bort subjektet och de tre har bokstavligen ingenting att skriva.
    Det syns i vilotillståndet på tre sätt: navet är den enda stämma som har
    musik på vänstersidan, de tre bär i stället en flerstaktspaus vars siffra
@@ -50,8 +50,8 @@
    är härledd antecknas */
 [data-style="fuga"] .app-row[data-app="syntes"] { --app-accent: var(--fg-black); }
 [data-style="fuga"] .app-row[data-app="signal"] { --app-accent: var(--fg-bla); }
-[data-style="fuga"] .app-row[data-app="todos"]  { --app-accent: var(--fg-gron); }
-[data-style="fuga"] .app-row[data-app="stronk"] { --app-accent: var(--fg-violett); }
+[data-style="fuga"] .app-row[data-app="ethos"]  { --app-accent: var(--fg-gron); }
+[data-style="fuga"] .app-row[data-app="hexis"] { --app-accent: var(--fg-violett); }
 
 /* --- knappen: en inklistrad lapp på partituret. Halvgenomskinlig, så systemet
        under läses genom pappret; vid hover blir den ogenomskinlig och det som
@@ -94,8 +94,8 @@
 }
 [data-style="fuga"] .app-btn[data-name="syntes"]::before { content: "DUX"; color: var(--fg-black); }
 [data-style="fuga"] .app-btn[data-name="signal"]::before { content: "COMES"; }
-[data-style="fuga"] .app-btn[data-name="todos"]::before  { content: "INVERSIO"; }
-[data-style="fuga"] .app-btn[data-name="stronk"]::before { content: "AUGMENTATIO"; }
+[data-style="fuga"] .app-btn[data-name="ethos"]::before  { content: "INVERSIO"; }
+[data-style="fuga"] .app-btn[data-name="hexis"]::before { content: "AUGMENTATIO"; }
 [data-style="fuga"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 /* hörnnoteringen: insatsen i takter och i sekunder. Sekunderna finns bara för
    att navet satt ett tempo — utan M.M. 72 är "+13,3 s" inte ett tal. */
@@ -107,8 +107,8 @@
 }
 [data-style="fuga"] .app-btn[data-name="syntes"]::after { content: "T. 1 · M.M. 72"; color: var(--fg-black); opacity: 1; font-weight: 700; }
 [data-style="fuga"] .app-btn[data-name="signal"]::after { content: "T. 3 · +6,7 s"; }
-[data-style="fuga"] .app-btn[data-name="todos"]::after  { content: "T. 5 · +13,3 s"; }
-[data-style="fuga"] .app-btn[data-name="stronk"]::after { content: "T. 7 · +20,0 s"; }
+[data-style="fuga"] .app-btn[data-name="ethos"]::after  { content: "T. 5 · +13,3 s"; }
+[data-style="fuga"] .app-btn[data-name="hexis"]::after { content: "T. 7 · +20,0 s"; }
 
 /* --- notskriftens grammatik: samma i knappen som på bladet --- */
 [data-style="fuga"] .linje { stroke: var(--fg-notplan); stroke-width: 1; opacity: .8; }
@@ -178,12 +178,12 @@
 [data-style="fuga"] .fg-klaff { fill: none; stroke: var(--fg-penna); stroke-width: 1; opacity: .85; }
 [data-style="fuga"] .fg-dux { color: var(--fg-black); opacity: .62; transition: opacity .5s ease; }
 [data-style="fuga"] .fg-harledning[data-app="signal"] { color: var(--fg-bla); }
-[data-style="fuga"] .fg-harledning[data-app="todos"]  { color: var(--fg-gron); }
-[data-style="fuga"] .fg-harledning[data-app="stronk"] { color: var(--fg-violett); }
+[data-style="fuga"] .fg-harledning[data-app="ethos"]  { color: var(--fg-gron); }
+[data-style="fuga"] .fg-harledning[data-app="hexis"] { color: var(--fg-violett); }
 [data-style="fuga"] .fg-harledning[data-app="syntes"] { color: var(--fg-black); }
 [data-style="fuga"] .fg-insats[data-app="signal"] { color: var(--fg-bla); }
-[data-style="fuga"] .fg-insats[data-app="todos"]  { color: var(--fg-gron); }
-[data-style="fuga"] .fg-insats[data-app="stronk"] { color: var(--fg-violett); }
+[data-style="fuga"] .fg-insats[data-app="ethos"]  { color: var(--fg-gron); }
+[data-style="fuga"] .fg-insats[data-app="hexis"] { color: var(--fg-violett); }
 [data-style="fuga"] .fg-insats { opacity: .82; }
 
 /* --- bladet svarar på pekaren -----------------------------------------------
@@ -198,13 +198,13 @@
 }
 [data-style="fuga"] .fg-lbl { opacity: var(--fg-skriv); transition: opacity .3s ease; }
 [data-style="fuga"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .fg-harledning[data-app="signal"],
-[data-style="fuga"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .fg-harledning[data-app="todos"],
-[data-style="fuga"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .fg-harledning[data-app="stronk"],
+[data-style="fuga"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .fg-harledning[data-app="ethos"],
+[data-style="fuga"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .fg-harledning[data-app="hexis"],
 [data-style="fuga"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .fg-harledning { --fg-skriv: 1; }
 [data-style="fuga"] body:has(.app-btn:is(:hover, :focus-visible)) .fg-dux { opacity: 1; }
 [data-style="fuga"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="signal"],
-[data-style="fuga"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="todos"],
-[data-style="fuga"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="stronk"],
+[data-style="fuga"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="ethos"],
+[data-style="fuga"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .fg-tystnad[data-app="hexis"],
 [data-style="fuga"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .fg-tystnad { opacity: 1; }
 
 /* --- anteckningsblocken: info och systemhälsa som marginalanteckningar --- */
@@ -230,8 +230,8 @@
 .viz--stretto .dux { color: var(--fg-black); }
 .viz--stretto .insats { opacity: .8; }
 .viz--stretto .insats[data-app="signal"] { color: var(--fg-bla); --d: 6; }
-.viz--stretto .insats[data-app="todos"]  { color: var(--fg-gron); --d: 12; }
-.viz--stretto .insats[data-app="stronk"] { color: var(--fg-violett); --d: 18; }
+.viz--stretto .insats[data-app="ethos"]  { color: var(--fg-gron); --d: 12; }
+.viz--stretto .insats[data-app="hexis"] { color: var(--fg-violett); --d: 18; }
 .app-btn:is(:hover, :focus-visible) .viz--stretto .not,
 .app-btn:is(:hover, :focus-visible) .viz--stretto .balk { opacity: 1; }
 

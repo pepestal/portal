@@ -21,7 +21,7 @@ const RATCHET = (() => {
    inte. Stycklistan är hierarkin i klartext: POS. 1 är sammanställningen, de
    tre andra är detaljer som ingår i den. Den läser appregistret + byggtids-
    statistiken, så bladet beskriver det verkliga ekosystemet. */
-const SK_PART = { syntes: 'HUVUDENHET', signal: 'SIGNALGIVARE', todos: 'SPÄRRVERK', stronk: 'FJÄDERPAKET' }
+const SK_PART = { syntes: 'HUVUDENHET', signal: 'SIGNALGIVARE', ethos: 'SPÄRRVERK', hexis: 'FJÄDERPAKET' }
 function sprangskissEnhancer() {
   const cleanups = []
   const sheet = document.createElement('div')
@@ -121,7 +121,7 @@ export default {
       <span class="cap">42,41 · <b>ÖVER GRÄNS</b></span>
     </div>
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="sprangskiss" aria-hidden="true">
     <div class="viz viz--sparr">
       <svg viewBox="0 0 96 46" preserveAspectRatio="xMidYMid meet">
@@ -140,7 +140,7 @@ export default {
       <span class="cap">SPÄRR <b class="count" data-to="3" data-suffix="/3">0/3</b></span>
     </div>
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="sprangskiss" aria-hidden="true">
     <div class="viz viz--last">
       <svg viewBox="0 0 140 46" preserveAspectRatio="xMidYMid meet">

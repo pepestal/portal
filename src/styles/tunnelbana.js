@@ -3,7 +3,7 @@ import { makeCountEnhancer } from '../shared.js'
 
 /* Tunnelbanan: sidan är en linjenätskarta i Becks schematiska tradition —
    45°/90°-geometri, primärfärger på papper. Tre linjer: grön (Signal), röd
-   (Todos), blå (Stronk). Navets särställning är ren topologi: SYNTES ÄR NÄTETS
+   (Ethos), blå (Hexis). Navets särställning är ren topologi: SYNTES ÄR NÄTETS
    ENDA BYTESPUNKT. De tre linjerna korsar varandra ute på kartan utan station,
    och den enda plats där man kan byta mellan dem är navets perrong — kapseln
    som spänner över alla tre spårparen. En underapp kan inte nå en annan utan
@@ -16,8 +16,8 @@ import { makeCountEnhancer } from '../shared.js'
 /* Restid till bytespunkten per linje. Hörnetiketterna i tunnelbana.css
    (`◉ 4 MIN` m.fl.) bär samma tal — ändras de ena måste de andra med,
    annars ljuger kartan om sina egna mellanstationer. */
-const TB_MIN = { signal: 4, todos: 6, stronk: 3 }
-const TB_APPAR = ['signal', 'todos', 'stronk']
+const TB_MIN = { signal: 4, ethos: 6, hexis: 3 }
+const TB_APPAR = ['signal', 'ethos', 'hexis']
 const SVG_NS = 'http://www.w3.org/2000/svg'
 
 /* En linje är en bygel: in från kartkanten längs navets rad, 90°-krök med
@@ -60,8 +60,8 @@ function tunnelbanaEnhancer() {
     const xL1 = Math.max(h.left - 58, 14)
     const rutt = {
       signal: { o: -11, sida: 1, bx: xR1 },
-      todos: { o: 0, sida: -1, bx: xL1 },
-      stronk: { o: 11, sida: 1, bx: xR2 },
+      ethos: { o: 0, sida: -1, bx: xL1 },
+      hexis: { o: 11, sida: 1, bx: xR2 },
     }
     svg.innerHTML = TB_APPAR.map((app) => {
       const t = btn(app)?.getBoundingClientRect()
@@ -149,10 +149,10 @@ export default {
         </svg>
         <span class="cap"><b class="count" data-to="80" data-suffix=" KM/H">0 KM/H</b></span>
       </div>`),
-    /* todos · vagnskartan: linjediagrammet ovanför dörren. Resan börjar i
+    /* ethos · vagnskartan: linjediagrammet ovanför dörren. Resan börjar i
        bytespunkten (kapselsymbolen), markören stegar sex hållplatser och de
        passerade fylls i — kvar står de öppna. Sex steg = hörnetikettens 6 MIN. */
-    todos: viz('todos', `
+    ethos: viz('ethos', `
       <div class="viz viz--vagnskarta">
         <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
           <line class="ln" x1="14" y1="24" x2="202" y2="24" />
@@ -163,10 +163,10 @@ export default {
         </svg>
         <span class="cap"><b class="count" data-to="6" data-prefix="◉ +" data-suffix=" MIN">◉ +0 MIN</b></span>
       </div>`),
-    /* stronk · bergrummet: sektionen genom den blå linjens djupstation.
+    /* hexis · bergrummet: sektionen genom den blå linjens djupstation.
        Rulltrappan dras ner genom berget, salen sprängs ur, och djupmåttet
        växer till −30 m — tyngden mätt i meter berg ovanför perrongen. */
-    stronk: viz('stronk', `
+    hexis: viz('hexis', `
       <div class="viz viz--bergrum">
         <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
           <line class="mark0" x1="8" y1="7" x2="208" y2="7" />

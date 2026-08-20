@@ -35,7 +35,7 @@ export default {
         </svg>
         <span class="cap">12 TÄNDER · <b class="count" data-to="6" data-suffix=" HZ">0 HZ</b></span>
       </div>`),
-    todos: viz(`
+    ethos: viz(`
       <div class="viz--geneva">
         <svg viewBox="0 0 216 52" preserveAspectRatio="xMidYMid meet">
           <circle class="drive" cx="72" cy="27" r="12" /><circle class="pin" cx="72" cy="15" r="2.8" />
@@ -45,7 +45,7 @@ export default {
         </svg>
         <span class="cap">INDEX <b class="count" data-to="4" data-prefix="0/" >0/4</b></span>
       </div>`),
-    stronk: viz(`
+    hexis: viz(`
       <div class="viz--winch">
         <svg viewBox="0 0 216 52" preserveAspectRatio="xMidYMid meet">
           <circle class="drum" cx="76" cy="27" r="17" /><circle class="core" cx="76" cy="27" r="5" />

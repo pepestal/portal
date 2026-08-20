@@ -9,8 +9,12 @@
 }
 [data-style="bank"] .app-row[data-app="syntes"] { --app-accent: #C6CAD3; }
 [data-style="bank"] .app-row[data-app="signal"] { --app-accent: #9BB0C9; }
-[data-style="bank"] .app-row[data-app="todos"]  { --app-accent: #C9B79C; }
-[data-style="bank"] .app-row[data-app="stronk"] { --app-accent: #C99C9C; }
+[data-style="bank"] .app-row[data-app="ethos"]  { --app-accent: #C9B79C; }
+[data-style="bank"] .app-row[data-app="hexis"] { --app-accent: #C99C9C; }
+[data-style="bank"] .app-row[data-app="scales"] { --app-accent: #A9BCA9; }
+[data-style="bank"] .app-row[data-app="sersys"] { --app-accent: #B0A9C9; }
+[data-style="bank"] .app-row.is-dormant { --app-accent: #4E4E52; }
+[data-style="bank"] .app-row.is-dormant .app-btn:hover { transform: none; box-shadow: 0 6px 26px -14px rgba(0, 0, 0, .7); }
 [data-style="bank"] .app-btn { box-shadow: 0 6px 26px -14px rgba(0, 0, 0, .7); }
 [data-style="bank"] .app-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px -18px rgba(0, 0, 0, .85); }
 [data-style="bank"] .app-btn__name { text-transform: uppercase; letter-spacing: .28em; font-size: 1.15rem; font-weight: 500; }
@@ -22,19 +26,18 @@
 
 /* ---------- Hover-animationer: en per app ---------- */
 
-/* bank · tre allokeringar glider ihop till en samlad position */
-.viz--alloc { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.viz--alloc .bar { display: flex; gap: 3px; width: 150px; height: 10px; }
-.viz--alloc .seg {
-  width: var(--w); height: 100%; border-radius: 5px; background: var(--app-accent);
-  opacity: 0; transform: scaleX(.2); transform-origin: left;
-  transition: transform .55s var(--anim-ease) calc(var(--i) * 140ms), opacity .35s ease calc(var(--i) * 140ms);
+/* bank · positionen töms: stapeln rinner ur och saldot står på noll. Ingen
+   uppräkning här — det är hela skillnaden mot de fem andra korten. */
+.viz--avslutat { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.viz--avslutat .bar { width: 150px; height: 10px; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
+.viz--avslutat .seg {
+  display: block; width: 100%; height: 100%; border-radius: 5px; background: var(--app-accent);
+  transform: scaleX(1); transform-origin: left; opacity: .5;
+  transition: transform .9s var(--anim-ease), opacity .9s ease;
 }
-.viz--alloc .seg:nth-child(2) { filter: brightness(.82); }
-.viz--alloc .seg:nth-child(3) { filter: brightness(.62); }
-.app-btn:hover .viz--alloc .seg { opacity: 1; transform: scaleX(1); }
-.viz--alloc .val { font-family: var(--font-mono); font-size: .78rem; color: var(--text); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .5s; }
-.app-btn:hover .viz--alloc .val { opacity: 1; }
+.app-btn:hover .viz--avslutat .seg { transform: scaleX(0); opacity: .15; }
+.viz--avslutat .val { font-family: var(--font-mono); font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .7s; }
+.app-btn:hover .viz--avslutat .val { opacity: 1; }
 
 /* bank · mjuk area-kurva sveper fram + värde räknas upp */
 .viz--area { position: absolute; inset: 16px 20px; }
@@ -61,3 +64,30 @@
 .app-btn:hover .viz--plates .plate { opacity: 1; transform: translateY(0) scaleY(1); }
 .viz--plates .val { font-family: var(--font-mono); font-size: .78rem; color: var(--text); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .5s; }
 .app-btn:hover .viz--plates .val { opacity: 1; }
+
+/* bank · taktmätaren dras upp och pendeln går; lodet ligger på 72 */
+.viz--metronom { display: flex; align-items: center; gap: .7rem; }
+.viz--metronom svg { width: 76px; height: 58px; overflow: visible; }
+.viz--metronom .hus { fill: none; stroke: var(--line); stroke-width: 1.6; stroke-linejoin: round; }
+.viz--metronom .stav { stroke: var(--app-accent); stroke-width: 1.6; stroke-linecap: round; transform-origin: 30px 40px; transform: rotate(0deg); }
+.viz--metronom .lod { fill: var(--app-accent); transform-origin: 30px 40px; }
+.app-btn:hover .viz--metronom .stav,
+.app-btn:hover .viz--metronom .lod { animation: bk-takt .833s var(--anim-ease) infinite alternate; }
+@keyframes bk-takt { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
+.viz--metronom .val { font-family: var(--font-mono); font-size: .78rem; color: var(--text); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .45s; }
+.app-btn:hover .viz--metronom .val { opacity: 1; }
+
+/* bank · drygt en månads drift, ett fält per dygn, fylls vänster→höger */
+.viz--drift { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.viz--drift .dygn { display: flex; gap: 2px; width: 168px; height: 18px; }
+.viz--drift .dygn i {
+  flex: 1; border-radius: 1px; background: var(--line);
+  transform: scaleY(.3); transform-origin: bottom;
+  transition: transform .3s var(--anim-ease) calc(var(--i) * 26ms), background .3s ease calc(var(--i) * 26ms);
+}
+.app-btn:hover .viz--drift .dygn i { transform: scaleY(1); background: var(--app-accent); }
+/* ett dygn med en anmärkning — annars är stapeln en dekoration utan avläsning */
+.viz--drift .dygn i:nth-child(19) { --avvik: 1; }
+.app-btn:hover .viz--drift .dygn i:nth-child(19) { background: #C9A96F; transform: scaleY(.62); }
+.viz--drift .val { font-family: var(--font-mono); font-size: .78rem; color: var(--text); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .85s; }
+.app-btn:hover .viz--drift .val { opacity: 1; }

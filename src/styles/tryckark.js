@@ -35,8 +35,8 @@ const TR_LUPP = 14
 const TR_PLAT = [
   ['syntes', 'K', 45, 1.80, 0, 0],
   ['signal', 'C', 15, 1.40, 0.42, -0.26],
-  ['todos', 'Y', 0, 1.00, -0.48, 0.32],
-  ['stronk', 'M', 75, 1.45, 0.32, 0.44],
+  ['ethos', 'Y', 0, 1.00, -0.48, 0.32],
+  ['hexis', 'M', 75, 1.45, 0.32, 0.44],
 ]
 const TR_FARG = { K: 'var(--tr-k)', C: 'var(--tr-c)', Y: 'var(--tr-y)', M: 'var(--tr-m)' }
 const trKomma = (v, d = 2) => v.toFixed(d).replace('.', ',')
@@ -294,7 +294,7 @@ export default {
      steg för steg — 10, 25, 40, 50, 75, 100 — och vid 50 % sätts måttet: punkten
      trycks större än den är på plåten. Nominellt värde står i nyckelns svarta
      skala under kilen; det uppmätta är gult. */
-  todos: (() => {
+  ethos: (() => {
   /* Kilen skrivs med de nominella tonvärdena — utom 50 %-fältet, som trycks som
      det faktiskt blir: punkten breder ut sig i pappret och täcker 58 %. Fältet
      är alltså mörkare än sin egen siffra, och det syns bredvid grannarna. */
@@ -322,7 +322,7 @@ export default {
      rastret körs upp till 100 % och färgskiktet mäts med densitometer. Men
      skalan är inte dess egen: nyckelns fullton står inristad vid 1,80 och är
      alltid högst på arket. Nålen går till 1,45 och stannar där. */
-  stronk: (() => {
+  hexis: (() => {
   const D_M = 1.45, D_K = 1.80
   const px = 10, py = 5, pb = 56, ph = 28, x0 = 86, x1 = 204, y = 27
   const dPos = (d) => +(x0 + (x1 - x0) * d / 2).toFixed(2)

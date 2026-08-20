@@ -43,8 +43,8 @@ const linesOf = (id) => stats.projects[id]?.lines || 1000
 // Per platta: glödton, hemposition (fraktioner av viewporten) och blob-frö.
 const PLATES = [
   { id: 'signal', hue: '#FFC978', hx: 0.19, hy: 0.62, seed: 7 },
-  { id: 'todos', hue: '#FF9E64', hx: 0.62, hy: 0.24, seed: 3 },
-  { id: 'stronk', hue: '#FF6B4A', hx: 0.78, hy: 0.66, seed: 11 },
+  { id: 'ethos', hue: '#FF9E64', hx: 0.62, hy: 0.24, seed: 3 },
+  { id: 'hexis', hue: '#FF6B4A', hx: 0.78, hy: 0.66, seed: 11 },
 ]
 
 // Konvektionsceller: position (fraktioner), omloppsradie/-fart, riktning, räckvidd.

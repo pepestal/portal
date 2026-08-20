@@ -62,8 +62,8 @@
 /* plåt per rad. Färgen är dekor och tint — texten förblir nyckelns svarta. */
 [data-style="tryckark"] .app-row[data-app="syntes"] { --app-accent: var(--tr-k); }
 [data-style="tryckark"] .app-row[data-app="signal"] { --app-accent: var(--tr-c); --tr-takt: 9.5s; }
-[data-style="tryckark"] .app-row[data-app="todos"]  { --app-accent: var(--tr-y); --tr-takt: 13s; }
-[data-style="tryckark"] .app-row[data-app="stronk"] { --app-accent: var(--tr-m); --tr-takt: 15.5s; }
+[data-style="tryckark"] .app-row[data-app="ethos"]  { --app-accent: var(--tr-y); --tr-takt: 13s; }
+[data-style="tryckark"] .app-row[data-app="hexis"] { --app-accent: var(--tr-m); --tr-takt: 15.5s; }
 
 /* --- knappen: ett tryckt fält på arket --- */
 [data-style="tryckark"] .app-btn {
@@ -133,8 +133,8 @@
 }
 [data-style="tryckark"] .app-btn[data-name="syntes"]::after { content: "PLÅT K · 45°"; color: var(--surface); background: var(--tr-k); border-color: var(--tr-k); }
 [data-style="tryckark"] .app-btn[data-name="signal"]::after { content: "PLÅT C · 15°"; }
-[data-style="tryckark"] .app-btn[data-name="todos"]::after  { content: "PLÅT Y · 0°"; }
-[data-style="tryckark"] .app-btn[data-name="stronk"]::after { content: "PLÅT M · 75°"; }
+[data-style="tryckark"] .app-btn[data-name="ethos"]::after  { content: "PLÅT Y · 0°"; }
+[data-style="tryckark"] .app-btn[data-name="hexis"]::after { content: "PLÅT M · 75°"; }
 
 /* pappersdriften: plåten söker sig kring sitt läge men kommer aldrig hem.
    Amplituden är passningsfelet ur TR_PLAT, utskrivet på raden av enhancern. */
@@ -200,7 +200,7 @@
 [data-style="tryckark"] .viz--vinkel .klbl { fill: var(--tr-k); opacity: .75; }
 [data-style="tryckark"] .viz--vinkel .elbl { fill: var(--tr-c); font-weight: 700; }
 
-/* --- todos: kilen skrivs ut, ett tryckverk i taget --- */
+/* --- ethos: kilen skrivs ut, ett tryckverk i taget --- */
 [data-style="tryckark"] .viz--ton .ton {
   opacity: 0; transition: opacity .01s steps(1) calc(.12s + var(--i) * .09s);
 }
@@ -212,7 +212,7 @@
 [data-style="tryckark"] .viz--ton .nom--matt { opacity: 1; font-weight: 700; font-size: 5.4px; }
 [data-style="tryckark"] .viz--ton .ram--matt { stroke-width: 1.4; opacity: 1; }
 
-/* --- stronk: fältet körs upp till fullton, nålen slår till --- */
+/* --- hexis: fältet körs upp till fullton, nålen slår till --- */
 [data-style="tryckark"] .viz--fullton .falt--100 { opacity: 0; transition: opacity .01s steps(1) .22s; }
 [data-style="tryckark"] .app-btn:is(:hover, :focus-visible) .viz--fullton .falt--100 { opacity: 1; }
 [data-style="tryckark"] .viz--fullton :is(.axel, .tick) { stroke: var(--tr-k); stroke-width: .8; opacity: .6; }
@@ -258,8 +258,8 @@
   animation: tr-drift var(--tr-takt) ease-in-out infinite;
 }
 [data-style="tryckark"] .tr-kors--plat[data-app="signal"] { --tr-takt: 9.5s; }
-[data-style="tryckark"] .tr-kors--plat[data-app="todos"]  { --tr-takt: 13s; }
-[data-style="tryckark"] .tr-kors--plat[data-app="stronk"] { --tr-takt: 15.5s; }
+[data-style="tryckark"] .tr-kors--plat[data-app="ethos"]  { --tr-takt: 13s; }
+[data-style="tryckark"] .tr-kors--plat[data-app="hexis"] { --tr-takt: 15.5s; }
 
 /* vinkelmätarna: nyckelns mätare har ett ben, de tre har två — sitt eget och
    nyckelns 45° — plus bågen som mäter skillnaden. */
@@ -291,11 +291,11 @@
 
 /* --- en underapp hovras: hennes vinkel mäts upp i marginalen --- */
 [data-style="tryckark"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .tr-matare[data-app="signal"] .tr-bage,
-[data-style="tryckark"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .tr-matare[data-app="todos"] .tr-bage,
-[data-style="tryckark"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .tr-matare[data-app="stronk"] .tr-bage { opacity: 1; stroke-width: 1.6; }
+[data-style="tryckark"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .tr-matare[data-app="ethos"] .tr-bage,
+[data-style="tryckark"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .tr-matare[data-app="hexis"] .tr-bage { opacity: 1; stroke-width: 1.6; }
 [data-style="tryckark"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .tr-matare[data-app="signal"] .tr-vlbl,
-[data-style="tryckark"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .tr-matare[data-app="todos"] .tr-vlbl,
-[data-style="tryckark"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .tr-matare[data-app="stronk"] .tr-vlbl { opacity: 1; font-weight: 700; }
+[data-style="tryckark"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .tr-matare[data-app="ethos"] .tr-vlbl,
+[data-style="tryckark"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .tr-matare[data-app="hexis"] .tr-vlbl { opacity: 1; font-weight: 700; }
 
 /* ============================ reduced motion ============================ */
 /* Driften är stilens enda rörelse i vila och den ÄR påståendet, så plåtarna

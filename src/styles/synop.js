@@ -63,8 +63,8 @@ const SY_GRAT = (() => {
 })()
 /* De tre fronterna, uttryckta från navet: typ, riktning, längd, antal symboler. */
 const SY_FRONTS = [
-  ['ock', 'stronk', 234, 330, 4],
-  ['varm', 'todos', 24, 470, 5],
+  ['ock', 'hexis', 234, 330, 4],
+  ['varm', 'ethos', 24, 470, 5],
   ['kall', 'signal', 146, 560, 6],
 ]
 /* Stationsobservationer: polärt kring navet, så strålarna in mot L blir raka. */
@@ -192,7 +192,7 @@ export default {
       </span>
     </div>
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="synop" aria-hidden="true">
     <div class="viz viz--oktas">
       <span class="sky">
@@ -210,7 +210,7 @@ export default {
       <span class="cap">UPPKLARNANDE · <b class="count" data-to="3" data-suffix="/3">0/3</b></span>
     </div>
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="synop" aria-hidden="true">
     <div class="viz viz--vindpil">
       <svg viewBox="0 0 152 46" preserveAspectRatio="xMidYMid meet">

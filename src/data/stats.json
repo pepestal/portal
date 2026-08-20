@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-03T08:42:46.383Z",
+  "generatedAt": "2026-08-20T19:31:02.190Z",
   "ecosystem": {
-    "files": 533,
-    "lines": 68266,
-    "apps": 4
+    "files": 2296,
+    "lines": 258147,
+    "apps": 5
   },
   "projects": {
     "signal": {
       "name": "Signal",
       "available": true,
-      "files": 332,
-      "lines": 54309,
+      "files": 278,
+      "lines": 53363,
       "languages": [
         {
           "name": "TypeScript",
@@ -22,7 +22,7 @@
         },
         {
           "name": "Markdown",
-          "lines": 10971
+          "lines": 9489
         },
         {
           "name": "CSS",
@@ -39,27 +39,27 @@
         "Lightweight Charts"
       ]
     },
-    "todos": {
-      "name": "Todos",
+    "ethos": {
+      "name": "Ethos",
       "available": true,
-      "files": 45,
-      "lines": 1861,
+      "files": 1377,
+      "lines": 152870,
       "languages": [
         {
-          "name": "Markdown",
-          "lines": 1132
+          "name": "TypeScript",
+          "lines": 60243
         },
         {
           "name": "Python",
-          "lines": 371
+          "lines": 58745
         },
         {
-          "name": "TypeScript",
-          "lines": 125
+          "name": "Markdown",
+          "lines": 19004
         },
         {
-          "name": "YAML",
-          "lines": 108
+          "name": "CSS",
+          "lines": 12836
         }
       ],
       "stack": [
@@ -68,19 +68,19 @@
         "FastAPI",
         "SQLAlchemy",
         "React",
-        "Vite"
-      ],
-      "stale": true
+        "Vite",
+        "Tailwind"
+      ]
     },
-    "stronk": {
-      "name": "Stronk",
+    "hexis": {
+      "name": "Hexis",
       "available": true,
-      "files": 88,
-      "lines": 7427,
+      "files": 75,
+      "lines": 6465,
       "languages": [
         {
           "name": "Markdown",
-          "lines": 2671
+          "lines": 2634
         },
         {
           "name": "Python",
@@ -92,7 +92,7 @@
         },
         {
           "name": "YAML",
-          "lines": 1334
+          "lines": 391
         }
       ],
       "stack": [
@@ -104,34 +104,66 @@
         "Vite"
       ]
     },
-    "syntes": {
-      "name": "Syntes",
+    "scales": {
+      "name": "scales",
       "available": true,
-      "files": 68,
-      "lines": 4669,
+      "files": 381,
+      "lines": 32486,
       "languages": [
         {
-          "name": "Markdown",
-          "lines": 3019
+          "name": "TypeScript",
+          "lines": 15933
         },
         {
           "name": "Python",
-          "lines": 838
+          "lines": 7975
         },
         {
-          "name": "TypeScript",
-          "lines": 355
+          "name": "Markdown",
+          "lines": 4701
         },
         {
           "name": "CSS",
-          "lines": 223
+          "lines": 2373
         }
       ],
       "stack": [
-        "FastAPI",
-        "SQLAlchemy",
         "PostgreSQL",
         "Docker",
+        "FastAPI",
+        "SQLAlchemy",
+        "React",
+        "Vite"
+      ]
+    },
+    "sersys": {
+      "name": "ser/sys",
+      "available": true,
+      "files": 185,
+      "lines": 12963,
+      "languages": [
+        {
+          "name": "Python",
+          "lines": 6848
+        },
+        {
+          "name": "TypeScript",
+          "lines": 2154
+        },
+        {
+          "name": "Markdown",
+          "lines": 1627
+        },
+        {
+          "name": "CSS",
+          "lines": 993
+        }
+      ],
+      "stack": [
+        "PostgreSQL",
+        "Docker",
+        "FastAPI",
+        "SQLAlchemy",
         "React",
         "Vite"
       ]

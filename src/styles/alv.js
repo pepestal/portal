@@ -13,18 +13,18 @@ import stats from '../data/stats.json'
 const AQ = {
   syntes: stats.projects.syntes?.lines || 0,
   signal: stats.projects.signal?.lines || 0,
-  todos: stats.projects.todos?.lines || 0,
-  stronk: stats.projects.stronk?.lines || 0,
+  ethos: stats.projects.ethos?.lines || 0,
+  hexis: stats.projects.hexis?.lines || 0,
 }
 /* uppströms → nedströms: i vilken ordning grenarna kommer in i fåran.
    Banden i älven ligger i samma ordning, källvattnet innerst. */
-const ORDNING = ['syntes', 'signal', 'todos', 'stronk']
+const ORDNING = ['syntes', 'signal', 'ethos', 'hexis']
 const TOT = ORDNING.reduce((s, id) => s + AQ[id], 0)
 
 /* Längsprofilen (navets hover): flödet mot kilometertalet, med ett steg uppåt
    vid varje sammanflöde. Kilometertalen är kartfiktion (som bäringarna i
    bikupa); flödesstegen är stats.json och räknas fram här, inte hårdkodas. */
-const KM = { syntes: 0, signal: 14, todos: 23, stronk: 31 }
+const KM = { syntes: 0, signal: 14, ethos: 23, hexis: 31 }
 const KM_MYN = 38
 const LX = (km) => (12 + km * 5.05).toFixed(1)
 const LY = (q) => (40 - (q / 72000) * 33).toFixed(1)
@@ -137,7 +137,7 @@ function alvEnhancer() {
       const ty = confY + 14
       peglar.push(`
         <line x1="${r1(kant[id] + 3)}" y1="${r1(ty)}" x2="${r1(kant[id] + 9)}" y2="${r1(ty)}" />
-        <text class="${id === 'stronk' ? 'mynning' : ''}" x="${r1(kant[id] + 13)}" y="${r1(ty + 3.5)}">${nf.format(cum)}</text>`)
+        <text class="${id === 'hexis' ? 'mynning' : ''}" x="${r1(kant[id] + 13)}" y="${r1(ty + 3.5)}">${nf.format(cum)}</text>`)
     }
     svg.innerHTML = grenar.join('') + `<g class="alv-pegel">${peglar.join('')}</g>`
   }
@@ -167,7 +167,7 @@ export default {
         <circle class="topp" cx="87" cy="10" r="2.2" />
       </svg>
       <span class="cap">VÅRFLOD · Q <b class="count" data-to="${AQ.signal}">0</b></span>`),
-    todos: viz('flottning', `
+    ethos: viz('flottning', `
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
         <line class="yta" x1="8" y1="12" x2="208" y2="12" />
         <line class="yta" x1="8" y1="36" x2="208" y2="36" />
@@ -179,8 +179,8 @@ export default {
         ${[[14, 22, 0], [22, 18, 1], [30, 26, 2], [18.5, 20, 3], [26.5, 23, 4]].map(([y, len, i]) =>
           `<rect class="stock" style="--i:${i}" x="230" y="${y}" width="${len}" height="4.6" rx="2.2" />`).join('')}
       </svg>
-      <span class="cap">RÄKNEVERK · <b class="count" data-to="${AQ.todos}" data-suffix=" ST">0 ST</b></span>`),
-    stronk: viz('turbin', `
+      <span class="cap">RÄKNEVERK · <b class="count" data-to="${AQ.ethos}" data-suffix=" ST">0 ST</b></span>`),
+    hexis: viz('turbin', `
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
         <path class="tub" d="M8,4 L28,15 L36,20" />
         <path class="utlopp" d="M51,27 L208,27" />
@@ -195,7 +195,7 @@ export default {
         </g>
         <text class="varv" x="206" y="16">167 V/MIN</text>
       </svg>
-      <span class="cap">FALL 171 M · Q <b class="count" data-to="${AQ.stronk}">0</b></span>`),
+      <span class="cap">FALL 171 M · Q <b class="count" data-to="${AQ.hexis}">0</b></span>`),
   },
   enhancer: alvEnhancer,
 }

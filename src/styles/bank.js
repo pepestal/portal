@@ -7,13 +7,9 @@ export default {
   anim: {
   syntes: `
   <div class="av" data-for="bank" aria-hidden="true">
-    <div class="viz viz--alloc">
-      <div class="bar">
-        <span class="seg" style="--i:0;--w:38%"></span>
-        <span class="seg" style="--i:1;--w:34%"></span>
-        <span class="seg" style="--i:2;--w:28%"></span>
-      </div>
-      <span class="val count" data-to="100" data-suffix=" % samlat">0 % samlat</span>
+    <div class="viz viz--avslutat">
+      <div class="bar"><span class="seg"></span></div>
+      <span class="val">0,00</span>
     </div>
   </div>`,
   signal: `
@@ -32,7 +28,7 @@ export default {
       <span class="val count" data-to="42318" data-prefix="$">$0</span>
     </div>
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="bank" aria-hidden="true">
     <div class="viz viz--ring">
       <svg viewBox="0 0 44 44">
@@ -42,7 +38,7 @@ export default {
       </svg>
     </div>
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="bank" aria-hidden="true">
     <div class="viz viz--plates">
       <div class="rack">
@@ -55,6 +51,24 @@ export default {
         <span class="plate" style="--i:2;--h:58%"></span>
       </div>
       <span class="val count" data-to="60" data-suffix=" kg">0 kg</span>
+    </div>
+  </div>`,
+  scales: `
+  <div class="av" data-for="bank" aria-hidden="true">
+    <div class="viz viz--metronom">
+      <svg viewBox="0 0 60 46" preserveAspectRatio="xMidYMid meet">
+        <path class="hus" d="M30,4 L44,42 H16 Z" />
+        <line class="stav" x1="30" y1="40" x2="30" y2="8" />
+        <rect class="lod" x="26.6" y="15" width="6.8" height="4" rx="1" />
+      </svg>
+      <span class="val count" data-to="72" data-prefix="♩=">♩=0</span>
+    </div>
+  </div>`,
+  sersys: `
+  <div class="av" data-for="bank" aria-hidden="true">
+    <div class="viz viz--drift">
+      <div class="dygn">${Array.from({ length: 30 }, (_, i) => `<i style="--i:${i}"></i>`).join('')}</div>
+      <span class="val count" data-to="30" data-suffix=" dygn">0 dygn</span>
     </div>
   </div>`,
   },

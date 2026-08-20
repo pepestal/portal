@@ -3,8 +3,8 @@
    Ur tävlingsbidraget variations/kvitto.html. Topbaren blir kassaapparaten,
    raderna blir varurader på ett termokvitto som skrivs ut vid stilbyte.
    Huvud/fot, realtidsklocka och streckkod injiceras av kvitto-enhancern.
-   Hover per app: skanner-laser (signal), gummistämpel (todos), termohuvud
-   som bränner om raden (stronk).
+   Hover per app: skanner-laser (signal), gummistämpel (ethos), termohuvud
+   som bränner om raden (hexis).
    ========================================================================= */
 [data-style="kvitto"] {
   --bg: #151B18; --surface: #F6F2E7; --line: #CFC8B4;
@@ -18,10 +18,12 @@
     radial-gradient(90vmax 60vmax at 50% 0%, rgba(255, 255, 255, .05), transparent 60%),
     repeating-linear-gradient(94deg, transparent 0 90px, rgba(0, 0, 0, .14) 90px 92px);
 }
-[data-style="kvitto"] .app-row[data-app="syntes"] { --app-accent: #2F6B4A; } /* kassörens gröna penna */
+[data-style="kvitto"] .app-row[data-app="syntes"] { --app-accent: #4A4A44; } /* struken rad: blyerts */
+[data-style="kvitto"] .app-row[data-app="scales"] { --app-accent: #6B3F8E; }
+[data-style="kvitto"] .app-row[data-app="sersys"] { --app-accent: #2F6B4A; } /* kassörens gröna penna */
 [data-style="kvitto"] .app-row[data-app="signal"] { --app-accent: #C2312B; }
-[data-style="kvitto"] .app-row[data-app="todos"]  { --app-accent: #44499E; }
-[data-style="kvitto"] .app-row[data-app="stronk"] { --app-accent: #A85A1C; }
+[data-style="kvitto"] .app-row[data-app="ethos"]  { --app-accent: #44499E; }
+[data-style="kvitto"] .app-row[data-app="hexis"] { --app-accent: #A85A1C; }
 
 /* --- topbaren är kassaapparaten; kvittot matas ut ur slitsen --- */
 [data-style="kvitto"] .topbar {
@@ -121,7 +123,7 @@
   font-size: .82rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
 }
 [data-style="kvitto"] .app-btn__name::before { content: "1 st\2002 LÄNK, "; }
-[data-style="kvitto"] .app-row[data-app="syntes"] .app-btn__name::before { content: "1 st\2002 NAV, "; }
+[data-style="kvitto"] .app-row[data-app="syntes"] .app-btn__name::before { content: "0 st\2002 UTGÅTT, "; }
 [data-style="kvitto"] .app-btn__anim { inset: 0; } /* pennan ska nå hela raden */
 [data-style="kvitto"] .app-btn:hover .app-btn__name { transform: none; }
 [data-style="kvitto"] .app-btn::after { /* à-priset */
@@ -155,8 +157,8 @@
 }
 @keyframes kv-beep { 0%, 44% { opacity: 0; } 50%, 78% { opacity: 1; } 80% { opacity: 0; } }
 
-/* --- todos · gummistämpeln slår ner: KLART --- */
-[data-style="kvitto"] .app-row[data-app="todos"] .app-btn::before {
+/* --- ethos · gummistämpeln slår ner: KLART --- */
+[data-style="kvitto"] .app-row[data-app="ethos"] .app-btn::before {
   content: "KLART"; position: absolute; right: 4.2rem; top: 50%; z-index: 4;
   padding: 1px 8px;
   font-size: .74rem; font-weight: 700; letter-spacing: .22em;
@@ -173,7 +175,7 @@
   mask-composite: intersect;
   transform: translateY(-50%) rotate(-8deg) scale(2.4);
 }
-[data-style="kvitto"] .app-row[data-app="todos"] .app-btn:hover::before {
+[data-style="kvitto"] .app-row[data-app="ethos"] .app-btn:hover::before {
   animation: kv-stamp .38s cubic-bezier(.2, 1.6, .4, 1) both;
 }
 @keyframes kv-stamp {
@@ -182,25 +184,25 @@
   75%  { transform: translateY(-50%) rotate(-9deg) scale(1.05); }
   100% { opacity: .92; transform: translateY(-50%) rotate(-8deg) scale(1); }
 }
-[data-style="kvitto"] .app-row[data-app="todos"] .app-btn:hover {
+[data-style="kvitto"] .app-row[data-app="ethos"] .app-btn:hover {
   animation: kv-thud .3s cubic-bezier(.2, 1.4, .4, 1) .05s; /* pappret trycks till */
 }
 @keyframes kv-thud { 0%, 100% { transform: none; } 40% { transform: translateY(1.5px); } }
 
-/* --- stronk · termohuvudet sveper och bränner om raden --- */
-[data-style="kvitto"] .app-row[data-app="stronk"] .app-btn:hover .app-btn__name {
+/* --- hexis · termohuvudet sveper och bränner om raden --- */
+[data-style="kvitto"] .app-row[data-app="hexis"] .app-btn:hover .app-btn__name {
   background: linear-gradient(90deg, #000 0 47%, var(--text) 53%) 100% 0 / 220% 100% no-repeat;
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   animation: kv-burn 1.2s linear both;
 }
 @keyframes kv-burn { from { background-position-x: 100%; } to { background-position-x: 0%; } }
-[data-style="kvitto"] .app-row[data-app="stronk"] .app-btn__fx::before {
+[data-style="kvitto"] .app-row[data-app="hexis"] .app-btn__fx::before {
   content: ""; position: absolute; top: 2px; bottom: 2px; left: 0; width: 12px; border-radius: 3px;
   background: linear-gradient(180deg, #2B2E33, #14161A);
   box-shadow: 0 0 14px 3px rgba(255, 122, 30, .55);
   opacity: 0;
 }
-[data-style="kvitto"] .app-row[data-app="stronk"] .app-btn:hover .app-btn__fx::before {
+[data-style="kvitto"] .app-row[data-app="hexis"] .app-btn:hover .app-btn__fx::before {
   animation: kv-sweep 1.2s linear both;
 }
 @keyframes kv-sweep {
@@ -240,7 +242,18 @@
 
 /* ---------- Hover-animationer: en per app ---------- */
 
-/* kvitto · kassörens penna ringar in navet på kvittot */
+/* kvitto · kassörens penna stryker raden som inte gick att expediera */
+.viz--struken { position: absolute; inset: 0; }
+.viz--struken svg { position: absolute; inset: -3px 0; width: 100%; height: calc(100% + 6px); overflow: visible; }
+.viz--struken .ink {
+  fill: none; stroke: var(--app-accent); stroke-width: 2; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset .55s cubic-bezier(.5, 0, .4, 1);
+}
+.app-btn:hover .viz--struken .ink { stroke-dashoffset: 0; }
+
+/* kvitto · kassörens penna ringar in den enda rad som betyder något */
 .viz--encircle { position: absolute; inset: 0; }
 .viz--encircle svg { position: absolute; inset: -3px 0; width: 100%; height: calc(100% + 6px); overflow: visible; transform: rotate(-1.2deg); }
 .viz--encircle .ink {
@@ -257,3 +270,16 @@
   opacity: 0; transition: opacity .3s ease .55s;
 }
 .app-btn:hover .viz--encircle .note { opacity: 1; }
+
+/* --- scales · taktstämpeln slås i marginalen när raden läses av --- */
+[data-style="kvitto"] .app-row[data-app="scales"] .app-btn::before {
+  content: "♩ 72"; position: absolute; right: 4.2rem; top: 50%; z-index: 4;
+  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .04em;
+  color: var(--app-accent); border: 1.5px solid var(--app-accent); border-radius: 3px;
+  padding: .05rem .3rem;
+  transform: translateY(-50%) rotate(-7deg) scale(1.7); opacity: 0;
+  transition: transform .16s cubic-bezier(.3, 1.5, .5, 1), opacity .12s ease;
+}
+[data-style="kvitto"] .app-row[data-app="scales"] .app-btn:hover::before {
+  transform: translateY(-50%) rotate(-7deg) scale(1); opacity: .85;
+}

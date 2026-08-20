@@ -3,7 +3,7 @@
    Delat skelett + flera stilar. Varje stil bär palett, typografi, rörelse-etik
    OCH — kärnan i projektet — helt egna animationer per app:
 
-     app × stil ─────── Signal ──────── Todos ─────────── Stronk ────────────
+     app × stil ─────── Signal ──────── Ethos ─────────── Hexis ────────────
      terminal      candlesticks printas   [ ]→[x]-checklista   ASCII load-bar + reps
      editorial     graverad linje ritas   bläck-bock + strike  tally-streck (loggbok)
      bank          area-kurva sveper      progress-ring sluts  viktplattor staplas
@@ -248,8 +248,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   [data-style="sinus"] .app-btn::after { left: 8px; top: 8px; font-size: .44rem; }
   [data-style="sinus"] .app-btn[data-name="syntes"]::after { content: "KAN 1 · t = 0"; }
   [data-style="sinus"] .app-btn[data-name="signal"]::after { content: "KAN 2 · +0,04 s"; }
-  [data-style="sinus"] .app-btn[data-name="todos"]::after  { content: "KAN 3 · +0,12 s"; }
-  [data-style="sinus"] .app-btn[data-name="stronk"]::after { content: "KAN 4 · +0,20 s"; }
+  [data-style="sinus"] .app-btn[data-name="ethos"]::after  { content: "KAN 3 · +0,12 s"; }
+  [data-style="sinus"] .app-btn[data-name="hexis"]::after { content: "KAN 4 · +0,20 s"; }
   [data-style="sinus"] .viz .cap { font-size: .43rem; letter-spacing: .04em; }
   [data-style="sinus"] .sn-fot { display: none; }
 }

@@ -1,6 +1,6 @@
 /* =========================================================================
    STIL — Tunnelbanan   (linjenätskartan: sidan är ett nät med EN bytespunkt)
-   Tre linjer i primärfärg — grön (Signal), röd (Todos), blå (Stronk) — löper
+   Tre linjer i primärfärg — grön (Signal), röd (Ethos), blå (Hexis) — löper
    tvärs över kartan i Becks schematiska geometri: bara räta vinklar och mjuka
    krökar. Ute på kartan korsar linjerna varandra UTAN station; den enda plats
    där de delar perrong är navets rad, där alla tre går parallellt genom
@@ -40,8 +40,8 @@
    trafik — hierarkin görs med opacitet, aldrig med borttagning. */
 [data-style="tunnelbana"] .tb-line { transition: opacity .35s ease; }
 [data-style="tunnelbana"] .tb-line[data-app="signal"] { color: var(--tb-gron); }
-[data-style="tunnelbana"] .tb-line[data-app="todos"] { color: var(--tb-rod); }
-[data-style="tunnelbana"] .tb-line[data-app="stronk"] { color: var(--tb-bla); }
+[data-style="tunnelbana"] .tb-line[data-app="ethos"] { color: var(--tb-rod); }
+[data-style="tunnelbana"] .tb-line[data-app="hexis"] { color: var(--tb-bla); }
 [data-style="tunnelbana"] .tb-bas { fill: none; stroke: currentColor; stroke-width: 5; }
 [data-style="tunnelbana"] .tb-stn circle { fill: var(--bg); stroke: currentColor; stroke-width: 2; }
 /* tåget: en dash som löper nav→station-sträckan baklänges, dvs. anländer till
@@ -52,18 +52,18 @@
 }
 @keyframes tb-anlopp { from { stroke-dashoffset: -91; } to { stroke-dashoffset: 0; } }
 [data-style="tunnelbana"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .tb-line:not([data-app="signal"]),
-[data-style="tunnelbana"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .tb-line:not([data-app="todos"]),
-[data-style="tunnelbana"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .tb-line:not([data-app="stronk"]) { opacity: .22; }
+[data-style="tunnelbana"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .tb-line:not([data-app="ethos"]),
+[data-style="tunnelbana"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .tb-line:not([data-app="hexis"]) { opacity: .22; }
 [data-style="tunnelbana"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .tb-line[data-app="signal"] .tb-tag,
-[data-style="tunnelbana"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .tb-line[data-app="todos"] .tb-tag,
-[data-style="tunnelbana"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .tb-line[data-app="stronk"] .tb-tag,
+[data-style="tunnelbana"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .tb-line[data-app="ethos"] .tb-tag,
+[data-style="tunnelbana"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .tb-line[data-app="hexis"] .tb-tag,
 [data-style="tunnelbana"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .tb-tag {
   opacity: 1; animation: tb-anlopp 2.8s linear infinite;
 }
 /* bytespunkten kvitterar: kapselns ram tar den ankommande linjens färg */
 [data-style="tunnelbana"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-gron); }
-[data-style="tunnelbana"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-rod); }
-[data-style="tunnelbana"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-bla); }
+[data-style="tunnelbana"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-rod); }
+[data-style="tunnelbana"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .app-row[data-app="syntes"] .app-btn__fx::before { border-color: var(--tb-bla); }
 
 /* --- topbar som kartans titellist --- */
 [data-style="tunnelbana"] .topbar { position: relative; z-index: 1; }
@@ -80,8 +80,8 @@
 /* --- stationerna: knappen är genomskinlig så linjen löper genom den --- */
 [data-style="tunnelbana"] .app-row[data-app="syntes"] { --app-accent: var(--tb-ink); }
 [data-style="tunnelbana"] .app-row[data-app="signal"] { --app-accent: var(--tb-gron); }
-[data-style="tunnelbana"] .app-row[data-app="todos"] { --app-accent: var(--tb-rod); }
-[data-style="tunnelbana"] .app-row[data-app="stronk"] { --app-accent: var(--tb-bla); }
+[data-style="tunnelbana"] .app-row[data-app="ethos"] { --app-accent: var(--tb-rod); }
+[data-style="tunnelbana"] .app-row[data-app="hexis"] { --app-accent: var(--tb-bla); }
 [data-style="tunnelbana"] .app-btn {
   background: transparent;
   border: 1px solid rgba(22, 24, 28, .16);
@@ -123,8 +123,8 @@
 }
 [data-style="tunnelbana"] .app-btn[data-name="syntes"]::after { content: "SPÅR 1–6"; }
 [data-style="tunnelbana"] .app-btn[data-name="signal"]::after { content: "◉ 4 MIN"; }
-[data-style="tunnelbana"] .app-btn[data-name="todos"]::after { content: "◉ 6 MIN"; }
-[data-style="tunnelbana"] .app-btn[data-name="stronk"]::after { content: "◉ 3 MIN"; }
+[data-style="tunnelbana"] .app-btn[data-name="ethos"]::after { content: "◉ 6 MIN"; }
+[data-style="tunnelbana"] .app-btn[data-name="hexis"]::after { content: "◉ 3 MIN"; }
 
 /* info-knappen står på kartan — pappersbotten så linjen inte löper genom den */
 [data-style="tunnelbana"] .info-toggle { background: var(--bg); border-color: rgba(22, 24, 28, .3); }
@@ -184,7 +184,7 @@
 .app-btn:is(:hover, :focus-visible) .viz--forsignal .sig .rod { opacity: 1; }
 .viz--forsignal .cap b { color: var(--tb-gron); }
 
-/* todos · vagnskartan: linjediagrammet ovanför dörren. Resan börjar i
+/* ethos · vagnskartan: linjediagrammet ovanför dörren. Resan börjar i
    bytespunktens kapsel; markören stegar — steps(6), tåg glider inte mellan
    hållplatser i ett vagnsdiagram — och de passerade fylls i. */
 .viz--vagnskarta .ln { stroke: var(--tb-rod); stroke-width: 3; }
@@ -196,7 +196,7 @@
 .app-btn:is(:hover, :focus-visible) .viz--vagnskarta .mark { transform: translateX(141px); }
 .viz--vagnskarta .cap b { color: var(--tb-rod); }
 
-/* stronk · bergrummet: sektion genom djupstationen. Rulltrappan dras ner
+/* hexis · bergrummet: sektion genom djupstationen. Rulltrappan dras ner
    genom berget, salen sprängs ur, tåget står inne — och djupmåttet växer
    till −30 m: tyngd mätt i meter berg ovanför perrongen. */
 .viz--bergrum .mark0 { stroke: var(--tb-ink); stroke-width: 1.5; }

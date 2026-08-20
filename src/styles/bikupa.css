@@ -1,7 +1,7 @@
 /* =========================================================================
    STIL — Bikupan   (vaxkakan: sidan är en kaka i motljus, apparna är celler)
    Hierarkin ligger i vad cellerna innehåller. Tre av dem LAGRAR något: Signal
-   är nektarcellen, Todos den täckta yngelcellen, Stronk den packade pollen-
+   är nektarcellen, Ethos den täckta yngelcellen, Hexis den packade pollen-
    cellen. Navets cell är den enda TOMMA — bina håller dansgolvet putsat och
    propolislackat just för att det inte ska ligga något där. Den lagrar ingen
    sak; den lagrar riktning. Ett lass nektar är stumt tills det dansas, och det
@@ -58,8 +58,8 @@
    riktigt — vallmo och honungsört bär hem blågrått pollen) */
 [data-style="bikupa"] .app-row[data-app="syntes"] { --app-accent: var(--bk-vax-ljus); }
 [data-style="bikupa"] .app-row[data-app="signal"] { --app-accent: var(--bk-nektar); }
-[data-style="bikupa"] .app-row[data-app="todos"]  { --app-accent: var(--bk-yngel); }
-[data-style="bikupa"] .app-row[data-app="stronk"] { --app-accent: var(--bk-pollen-bla); }
+[data-style="bikupa"] .app-row[data-app="ethos"]  { --app-accent: var(--bk-yngel); }
+[data-style="bikupa"] .app-row[data-app="hexis"] { --app-accent: var(--bk-pollen-bla); }
 
 /* --- cellen: sexkanten är väggen, __fx är kärlet den omsluter --- */
 [data-style="bikupa"] .app-btn {
@@ -101,9 +101,9 @@
   background-size: 100% 38%;
 }
 [data-style="bikupa"] .app-row[data-app="signal"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { background-size: 100% 58%; }
-/* todos · yngelcellen: bädden ligger ofärdig och pärlemorsblank, och locket dras
+/* ethos · yngelcellen: bädden ligger ofärdig och pärlemorsblank, och locket dras
    över mynningen från vänster. Två lager i samma yta — locket först, bädden under. */
-[data-style="bikupa"] .app-row[data-app="todos"] .app-btn__fx::before {
+[data-style="bikupa"] .app-row[data-app="ethos"] .app-btn__fx::before {
   background-image:
     linear-gradient(178deg, rgba(236, 216, 168, .94), rgba(186, 148, 88, .92)),
     radial-gradient(14px 6px at 26% 88%, rgba(255, 246, 224, .8), transparent 74%),
@@ -113,12 +113,12 @@
   background-position: left center, bottom, bottom, bottom, bottom center;
   background-size: 0% 100%, 100% 34%, 100% 34%, 100% 34%, 100% 34%;
 }
-[data-style="bikupa"] .app-row[data-app="todos"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before {
+[data-style="bikupa"] .app-row[data-app="ethos"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before {
   background-size: 100% 100%, 100% 34%, 100% 34%, 100% 34%, 100% 34%;
 }
-/* stronk · pollencellen: lass på lass, tramade i lager av husbina. Varje kula är
+/* hexis · pollencellen: lass på lass, tramade i lager av husbina. Varje kula är
    en hemburen tur, och färgen skiftar med vad hon hittade. */
-[data-style="bikupa"] .app-row[data-app="stronk"] .app-btn__fx::before {
+[data-style="bikupa"] .app-row[data-app="hexis"] .app-btn__fx::before {
   background-image:
     radial-gradient(13px 9px at 18% 62%, rgba(247, 186, 46, 1), transparent 72%),
     radial-gradient(13px 9px at 41% 84%, rgba(178, 174, 226, .95), transparent 72%),
@@ -127,7 +127,7 @@
     linear-gradient(0deg, rgba(198, 122, 30, .9) 0 60%, rgba(198, 122, 30, .35) 92%, transparent);
   background-size: 100% 40%;
 }
-[data-style="bikupa"] .app-row[data-app="stronk"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { background-size: 100% 60%; }
+[data-style="bikupa"] .app-row[data-app="hexis"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { background-size: 100% 60%; }
 /* Vid hover tittar man IN i cellen: fodret sjunker undan i ljusstyrka så scenen
    tillhör animationen, inte ytan. Utan det dränker vaxet sin egen berättelse. */
 [data-style="bikupa"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { opacity: .42; }
@@ -161,8 +161,8 @@
   color: var(--bk-vax-ljus); text-shadow: 0 1px 3px rgba(20, 10, 2, .9);
 }
 [data-style="bikupa"] .app-btn[data-name="signal"]::before { content: "NEKTAR"; }
-[data-style="bikupa"] .app-btn[data-name="todos"]::before  { content: "YNGEL"; }
-[data-style="bikupa"] .app-btn[data-name="stronk"]::before { content: "POLLEN"; }
+[data-style="bikupa"] .app-btn[data-name="ethos"]::before  { content: "YNGEL"; }
+[data-style="bikupa"] .app-btn[data-name="hexis"]::before { content: "POLLEN"; }
 [data-style="bikupa"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* hörnetiketten: de tre bär var sin bäring UR navet — navet bär temperaturen
@@ -175,8 +175,8 @@
 }
 [data-style="bikupa"] .app-btn[data-name="syntes"]::after { content: "35,0 °C ±0,2"; opacity: 1; font-weight: 700; }
 [data-style="bikupa"] .app-btn[data-name="signal"]::after { content: "α 40° · 1,4 km"; }
-[data-style="bikupa"] .app-btn[data-name="todos"]::after  { content: "α 155° · 0,3 km"; }
-[data-style="bikupa"] .app-btn[data-name="stronk"]::after { content: "α 268° · 2,2 km"; }
+[data-style="bikupa"] .app-btn[data-name="ethos"]::after  { content: "α 155° · 0,3 km"; }
+[data-style="bikupa"] .app-btn[data-name="hexis"]::after { content: "α 268° · 2,2 km"; }
 
 /* --- kakan under allt (injiceras): ramlist, celler, yngelvärme, sol, bäringar --- */
 [data-style="bikupa"] .bk-hive { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
@@ -245,8 +245,8 @@
 }
 [data-style="bikupa"] .bk-r { color: var(--bk-vax); opacity: .9; }
 [data-style="bikupa"] .bk-r[data-app="signal"] { color: var(--bk-nektar); }
-[data-style="bikupa"] .bk-r[data-app="todos"]  { color: var(--bk-yngel); }
-[data-style="bikupa"] .bk-r[data-app="stronk"] { color: var(--bk-pollen-bla); }
+[data-style="bikupa"] .bk-r[data-app="ethos"]  { color: var(--bk-yngel); }
+[data-style="bikupa"] .bk-r[data-app="hexis"] { color: var(--bk-pollen-bla); }
 
 /* --- kakan svarar på pekaren -----------------------------------------------
    Hovras en underapp dras bara HENNES bäring — och den startar i dansgolvets
@@ -254,12 +254,12 @@
    tänds och yngelvärmen slår ut över hela kakan: det är syntesen, gjord av
    kupan själv. En cell kan inte peka ut en riktning; bara golvet kan. */
 [data-style="bikupa"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .bk-r[data-app="signal"] .ln,
-[data-style="bikupa"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .bk-r[data-app="todos"] .ln,
-[data-style="bikupa"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .bk-r[data-app="stronk"] .ln,
+[data-style="bikupa"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .bk-r[data-app="ethos"] .ln,
+[data-style="bikupa"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .bk-r[data-app="hexis"] .ln,
 [data-style="bikupa"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .bk-flyg .ln { stroke-dashoffset: 0; }
 [data-style="bikupa"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .bk-r[data-app="signal"] :is(.sp, text),
-[data-style="bikupa"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .bk-r[data-app="todos"] :is(.sp, text),
-[data-style="bikupa"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .bk-r[data-app="stronk"] :is(.sp, text),
+[data-style="bikupa"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .bk-r[data-app="ethos"] :is(.sp, text),
+[data-style="bikupa"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .bk-r[data-app="hexis"] :is(.sp, text),
 [data-style="bikupa"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .bk-flyg :is(.sp, text) { opacity: 1; }
 [data-style="bikupa"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .bk-varme { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 [data-style="bikupa"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .bk-sol { opacity: 1; }
@@ -296,8 +296,8 @@
 .viz--svansdans .foljare ellipse { fill: currentColor; }
 .viz--svansdans .foljare line { stroke: currentColor; stroke-width: 1.2; stroke-dasharray: 2.5 2; }
 .viz--svansdans .foljare[data-app="signal"] { color: var(--bk-nektar); --d: 0s; }
-.viz--svansdans .foljare[data-app="todos"]  { color: var(--bk-yngel); --d: .14s; }
-.viz--svansdans .foljare[data-app="stronk"] { color: var(--bk-pollen-bla); --d: .28s; }
+.viz--svansdans .foljare[data-app="ethos"]  { color: var(--bk-yngel); --d: .14s; }
+.viz--svansdans .foljare[data-app="hexis"] { color: var(--bk-pollen-bla); --d: .28s; }
 .app-btn:is(:hover, :focus-visible) .viz--svansdans :is(.lod, .sol, .bage, .svans, .bi, .foljare) { opacity: 1; }
 .app-btn:is(:hover, :focus-visible) .viz--svansdans .sol { transform: scale(1); }
 .app-btn:is(:hover, :focus-visible) .viz--svansdans .rutt { stroke-dashoffset: 0; }

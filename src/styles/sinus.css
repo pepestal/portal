@@ -54,8 +54,8 @@
    taktstrecken, noden. De tre är kanalpennor och bär amplitud. */
 [data-style="sinus"] .app-row[data-app="syntes"] { --app-accent: var(--sn-rod); }
 [data-style="sinus"] .app-row[data-app="signal"] { --app-accent: var(--sn-p1); }
-[data-style="sinus"] .app-row[data-app="todos"]  { --app-accent: var(--sn-p2); }
-[data-style="sinus"] .app-row[data-app="stronk"] { --app-accent: var(--sn-p3); }
+[data-style="sinus"] .app-row[data-app="ethos"]  { --app-accent: var(--sn-p2); }
+[data-style="sinus"] .app-row[data-app="hexis"] { --app-accent: var(--sn-p3); }
 
 /* --- knappen: analysfönstret som lagts ovanpå remsan --- */
 [data-style="sinus"] .app-btn {
@@ -105,8 +105,8 @@
 }
 [data-style="sinus"] .app-btn[data-name="syntes"]::after { content: "KAN 1 · SA-NOD · t = 0"; color: var(--sn-rod); font-weight: 700; }
 [data-style="sinus"] .app-btn[data-name="signal"]::after { content: "KAN 2 · FÖRMAK · +0,04 s"; }
-[data-style="sinus"] .app-btn[data-name="todos"]::after  { content: "KAN 3 · AV-NOD · +0,12 s"; }
-[data-style="sinus"] .app-btn[data-name="stronk"]::after { content: "KAN 4 · KAMMARE · +0,20 s"; }
+[data-style="sinus"] .app-btn[data-name="ethos"]::after  { content: "KAN 3 · AV-NOD · +0,12 s"; }
+[data-style="sinus"] .app-btn[data-name="hexis"]::after { content: "KAN 4 · KAMMARE · +0,20 s"; }
 
 /* --- remsans grammatik, samma i knappen som på sidan --- */
 [data-style="sinus"] .viz :is(.bas, .del, .in, .hall, .kal, .pil, .niva, .klaff, .penna, .port, .spar path) { fill: none; }
@@ -124,8 +124,8 @@
 /* i navets knapp skrivs slaget med de tre andras pennor — kurvan är deras, bara
    takten är nodens */
 [data-style="sinus"] .viz .del[data-app="signal"] { stroke: var(--sn-p1); }
-[data-style="sinus"] .viz .del[data-app="todos"]  { stroke: var(--sn-p2); }
-[data-style="sinus"] .viz .del[data-app="stronk"] { stroke: var(--sn-p3); }
+[data-style="sinus"] .viz .del[data-app="ethos"]  { stroke: var(--sn-p2); }
+[data-style="sinus"] .viz .del[data-app="hexis"] { stroke: var(--sn-p3); }
 /* kurvan skrivs som stylusen skriver den: i pappersfart, del för del, och varje
    dels fördröjning ÄR dess plats i slaget (--t i millisekunder efter noden) */
 [data-style="sinus"] .viz :is(.del, .in, .hall) {
@@ -196,15 +196,15 @@
   stroke-dasharray: 100; stroke-dashoffset: calc(100 - var(--sn-skriv) * 100);
   transition: stroke-dashoffset calc(var(--d) * 3ms) linear calc(var(--t) * 3ms);
 }
-[data-style="sinus"] .sn-kanal[data-app="todos"] .sn-spar { stroke: var(--sn-p2); stroke-width: 2.4; }
-[data-style="sinus"] .sn-kanal[data-app="stronk"] .sn-spar { stroke: var(--sn-p3); }
+[data-style="sinus"] .sn-kanal[data-app="ethos"] .sn-spar { stroke: var(--sn-p2); stroke-width: 2.4; }
+[data-style="sinus"] .sn-kanal[data-app="hexis"] .sn-spar { stroke: var(--sn-p3); }
 [data-style="sinus"] .sn-port { stroke: var(--sn-p2); stroke-width: 1.2; opacity: var(--sn-skriv); transition: opacity .2s linear .36s; }
 [data-style="sinus"] .sn-matt { opacity: var(--sn-skriv); transition: opacity .3s linear .5s; }
 [data-style="sinus"] .sn-matt .klaff { fill: none; stroke: var(--sn-blyerts); stroke-width: .9; }
 [data-style="sinus"] .sn-matt text { fill: var(--sn-blyerts); font-family: var(--font-mono); font-size: 8px; letter-spacing: .1em; text-anchor: middle; }
 [data-style="sinus"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .sn-kanal[data-app="signal"],
-[data-style="sinus"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .sn-kanal[data-app="todos"],
-[data-style="sinus"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .sn-kanal[data-app="stronk"],
+[data-style="sinus"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .sn-kanal[data-app="ethos"],
+[data-style="sinus"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .sn-kanal[data-app="hexis"],
 [data-style="sinus"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sn-kanal { --sn-skriv: 1; }
 [data-style="sinus"] body:has(.app-btn:is(:hover, :focus-visible)) .sn-takt { opacity: .6; }
 

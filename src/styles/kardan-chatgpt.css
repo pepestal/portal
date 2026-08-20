@@ -21,8 +21,8 @@
 [data-style="kardan-chatgpt"] .app-row { --app-accent:var(--kd-steel); position:relative; z-index:1; }
 [data-style="kardan-chatgpt"] .app-row[data-app="syntes"] { --app-accent:var(--kd-brass); }
 [data-style="kardan-chatgpt"] .app-row[data-app="signal"] { --app-accent:#a6c7b0; }
-[data-style="kardan-chatgpt"] .app-row[data-app="todos"] { --app-accent:#d8b86b; }
-[data-style="kardan-chatgpt"] .app-row[data-app="stronk"] { --app-accent:#c98b68; }
+[data-style="kardan-chatgpt"] .app-row[data-app="ethos"] { --app-accent:#d8b86b; }
+[data-style="kardan-chatgpt"] .app-row[data-app="hexis"] { --app-accent:#c98b68; }
 [data-style="kardan-chatgpt"] .app-btn { overflow:visible; border:1px solid #566157; background:linear-gradient(125deg,#29342d,#18201b 54%,#111713); box-shadow:inset 0 1px 0 rgba(255,255,255,.06), inset 0 -8px 15px rgba(0,0,0,.2),0 9px 22px rgba(0,0,0,.25); transition:border-color .3s,box-shadow .3s,background .3s; }
 [data-style="kardan-chatgpt"] .app-btn:is(:hover,:focus-visible) { background:linear-gradient(125deg,#344339,#1e2922 54%,#141b16); border-color:var(--app-accent); box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 0 0 1px color-mix(in srgb,var(--app-accent) 28%,transparent),0 10px 28px rgba(0,0,0,.33); outline:none; }
 /* kuggen griper i axeln i varje rad, men navets är ett dubbelt lager */
@@ -36,8 +36,8 @@
 [data-style="kardan-chatgpt"] .app-btn::after { position:absolute; left:12px;top:10px;z-index:4; font:600 .5rem var(--font-mono); letter-spacing:.12em; color:var(--app-accent); pointer-events:none; }
 [data-style="kardan-chatgpt"] .app-btn[data-name="syntes"]::after { content:'AXEL 0°'; }
 [data-style="kardan-chatgpt"] .app-btn[data-name="signal"]::after { content:'12:1'; }
-[data-style="kardan-chatgpt"] .app-btn[data-name="todos"]::after { content:'4 STEG'; }
-[data-style="kardan-chatgpt"] .app-btn[data-name="stronk"]::after { content:'480 NM'; }
+[data-style="kardan-chatgpt"] .app-btn[data-name="ethos"]::after { content:'4 STEG'; }
+[data-style="kardan-chatgpt"] .app-btn[data-name="hexis"]::after { content:'480 NM'; }
 [data-style="kardan-chatgpt"] .info-toggle { border-radius:50%; background:#1a211c; border-color:#596359; }
 [data-style="kardan-chatgpt"] .info-panel,[data-style="kardan-chatgpt"] .system__panel { background:#1a211c; border-color:#596359; box-shadow:0 14px 30px rgba(0,0,0,.38); }
 [data-style="kardan-chatgpt"] .system__title::before { content:'◉ ';color:var(--kd-brass); }

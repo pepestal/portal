@@ -5,6 +5,55 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 
 ## [Ej släppt]
 
+### Ändrat
+- 🔴 **Ekosystemet i portalen visar verkligheten igen — sex appar, inget nav** (PR 1 av
+  uppdraget i [`PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md)).
+  - **Registret:** `todos` → `ethos` och `stronk` → `hexis` genom både `id` och `name`,
+    plus nya kort för **scales** (`scales.syntes.dev`) och **ser/sys** (`sys.syntes.dev`).
+    Id-bytet är genomfört hela vägen — 67 hårdkodade app-id i JS och 293
+    `data-app`/`data-name`-selektorer i CSS. Namnen är apparnas egna: `scales` och
+    `ser/sys` skrivs gement, som i deras respektive `<title>`.
+  - **Syntes är vilande, inte länkad.** Kortet bär `dormant: true` och renderas **utan
+    `href`** — ett kort som länkar till en 404 ser ut att fungera. Elementet och alla
+    klasser är oförändrade, så stilarnas selektorer fortsätter träffa.
+  - **Nav-rollen är riven ur åtta stilar.** terminal, editorial, bank, växeln, jacquard,
+    kvittot, orrery och hinnan är omkomponerade från grunden, inte sök-och-ersatta:
+    växelbordets `:has`-regel som lät varje hovrad app ringa på Syntes-panelen är borta,
+    jacquards inslag tillhör väven i stället för en app, orrerys sol är utbytt mot
+    instrumentets axeltapp, och hinnans bärande nav-bukt mot sex jämnstarka svällningar
+    om samma ändliga material.
+  - ⚠️ **Tretton stilar bär fortfarande sin nav-komposition** och saknar egna animationer
+    för scales och ser/sys. De visar rätt sex kort med rätt namn, men är halvklädda tills
+    PR 1b. Under ombyggnad: singularitet, sprangskiss, synop, bikupa, fuga, sinus,
+    tryckark, alv, tunnelbana, kardan-chatgpt, pangea, lodet, dynamo.
+- **Tävlingsprompterna skrivna mot det nya ekosystemet.**
+  [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) hade ett avsnitt *"Syntes är navet — ge den en
+  särställning"* som var tävlingens uttalade konceptuella kärna; det är ersatt av *"Sex
+  jämnstarka appar — och en vilande plats"*. [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md) krävde
+  *"fyra fungerande länkar"* och bar navet som fritt material; nu fem länkar plus en
+  plats som inte får vara klickbar. Lämnade orörda hade båda byggt in navet igen i nästa
+  bidrag.
+
+### Fixat
+- 🔴 **`generate-stats.mjs` räknade agentens egna worktrees som appkod.**
+  `<repo>/.claude/worktrees/` innehåller hela repokopior — 2,1 GB i `ethos`, 125 MB i
+  `stronk`, 27 MB i `scales`. Ethos mättes därför till **1 499 329 rader**, tio gånger
+  appens verkliga storlek, och eftersom både systemhälsans och info-panelernas staplar
+  normaliseras mot det största projektet hade de fem andra apparna renderats som streck.
+  `.claude`, `.agents`, `.gradle`, `.kotlin` och `worktrees` ignoreras nu: Ethos landar på
+  152 870 rader och ekosystemet på 258 147 i stället för 1 645 862.
+- **`PROJECTS` i statsgeneratorn pekade på katalognamn som inte finns.** Den letade
+  `Signal/backend`, `Signal/signal_frontend`, `todos` och `syntes` i `../` och hittade
+  bara två av fyra från `~/lab`; resten föll tillbaka på gamla värden. Listan går nu mot
+  `signal_backend`, `signal_frontend`, `ethos`, `stronk` (Hexis bor kvar i den katalogen),
+  `scales` och `sersys`. Syntes mäts inte alls — en app utan drift ska inte räknas in i
+  ekosystemets siffror bara för att källkoden ligger kvar på disk.
+
+### Borttaget
+- **`anim`-fältet i `src/apps.js`.** Det hade ingen läsare: `main.js` slår upp
+  `style.anim[appId]`, alltså stilens egen tabell, aldrig appens fält. Fältet beskrev en
+  koppling som inte fanns.
+
 ### Tillagt
 - **Uppdragsprompt: [`docs/PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md)** — ett
   engångsuppdrag, till skillnad från de två återanvändbara tävlingsprompterna.

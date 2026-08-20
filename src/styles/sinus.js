@@ -24,8 +24,8 @@ const SN_RR = 60 / SN_BPM                        // 0,833 s mellan två slag
 const SN_KANAL = [
   ['syntes', 'SA-NOD', 0, 72],
   ['signal', 'FÖRMAK', 40, 60],
-  ['todos', 'AV-NOD', 120, 45],
-  ['stronk', 'KAMMARE', 200, 32],
+  ['ethos', 'AV-NOD', 120, 45],
+  ['hexis', 'KAMMARE', 200, 32],
 ]
 const snSek = (ms) => (ms / 1000).toFixed(2).replace('.', ',')
 /* Millimeterpapper med k enheter per mm: x kommer ur pappershastigheten, y ur
@@ -147,7 +147,7 @@ function sinusEnhancer() {
         ? `<g class="sn-nod"><circle cx="0" cy="0" r="${s.mm(.9)}" /><circle class="karna" cx="0" cy="0" r="${s.mm(.3)}" /></g>`
         : id === 'signal'
           ? `<path class="sn-spar" style="--t:40;--d:80" d="${d.p}" pathLength="100" />`
-          : id === 'todos'
+          : id === 'ethos'
             ? `<path class="sn-spar sn-spar--hall" style="--t:120;--d:80" d="${d.pq}" pathLength="100" />
                <line class="sn-port" x1="${s.x(120)}" y1="${-s.mm(1.6)}" x2="${s.x(120)}" y2="${s.mm(1.6)}" />
                <line class="sn-port" x1="${s.x(200)}" y1="${-s.mm(1.6)}" x2="${s.x(200)}" y2="${s.mm(1.6)}" />`
@@ -216,9 +216,9 @@ export default {
   }
   const slag = (i) => `<g class="slag" style="--i:${i}" transform="translate(${(x0 + i * rr).toFixed(1)} 34)">
       <path class="del" data-app="signal" style="--t:40;--d:80"   d="${d.p}" pathLength="100" />
-      <path class="del" data-app="todos"  style="--t:120;--d:80"  d="${d.pq}" pathLength="100" />
-      <path class="del" data-app="stronk" style="--t:200;--d:100" d="${d.qrs}" pathLength="100" />
-      <path class="del" data-app="stronk" style="--t:400;--d:180" d="${d.t}" pathLength="100" />
+      <path class="del" data-app="ethos"  style="--t:120;--d:80"  d="${d.pq}" pathLength="100" />
+      <path class="del" data-app="hexis" style="--t:200;--d:100" d="${d.qrs}" pathLength="100" />
+      <path class="del" data-app="hexis" style="--t:400;--d:180" d="${d.t}" pathLength="100" />
     </g>`
   return `
   <div class="av" data-for="sinus" aria-hidden="true">
@@ -273,7 +273,7 @@ export default {
      streck, kammarens fyllnadstid — och släpper den vidare. På remsan syns det
      som ingenting alls, och ändå är det en kö: impulsen står still och rutorna
      räknas av. Utan noden kommer aldrig något in i den. */
-  todos: (() => {
+  ethos: (() => {
   const s = snSkala(9), d = snDelar(s), x0 = 24
   const port = x0 + s.x(120), slapp = x0 + s.x(200)
   return `
@@ -308,7 +308,7 @@ export default {
      tjugofyra gånger förmakets utslag — men amplituden är ingenting förrän den
      ställs mot kalibreringspulsen, och tidpunkten är inte dess egen: den ligger
      0,20 s efter ett streck som ritats av någon annan. Egen kraft, lånad takt. */
-  stronk: (() => {
+  hexis: (() => {
   const s = snSkala(2.5), d = snDelar(s), x0 = 64, kal = 14
   const topp = 34 + s.y(2.4), enMv = 34 + s.y(1), mat = 150
   return `

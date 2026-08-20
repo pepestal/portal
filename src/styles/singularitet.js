@@ -101,7 +101,7 @@ function singularitetEnhancer() {
 
   const repsEl = document.querySelector('.av[data-for="singularitet"] .reps-n')
   let reps = 0
-  liveNumber('stronk', () => { repsEl.textContent = prefersReduced ? 12 : ++reps }, 1000)
+  liveNumber('hexis', () => { repsEl.textContent = prefersReduced ? 12 : ++reps }, 1000)
 
   return () => cleanups.forEach((fn) => fn())
 }
@@ -133,7 +133,7 @@ export default {
     </div>
     ${dust()}
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="singularitet" aria-hidden="true">
     <div class="viz viz--selfcheck">
       ${[['pull main', '.05'], ['write tests', '.4'], ['deploy', '.75']].map(([t, d]) => `
@@ -141,7 +141,7 @@ export default {
     </div>
     ${dust()}
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="singularitet" aria-hidden="true">
     <div class="viz viz--lift">
       <span class="bar">

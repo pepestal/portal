@@ -32,8 +32,8 @@
 /* pennorna: navet i vit tusch, detaljerna i var sin färgkrita */
 [data-style="sprangskiss"] .app-row[data-app="syntes"] { --app-accent: #FFFFFF; }
 [data-style="sprangskiss"] .app-row[data-app="signal"] { --app-accent: #FFC9B4; }
-[data-style="sprangskiss"] .app-row[data-app="todos"]  { --app-accent: #FFE7AE; }
-[data-style="sprangskiss"] .app-row[data-app="stronk"] { --app-accent: #BFE9CF; }
+[data-style="sprangskiss"] .app-row[data-app="ethos"]  { --app-accent: #FFE7AE; }
+[data-style="sprangskiss"] .app-row[data-app="hexis"] { --app-accent: #BFE9CF; }
 
 /* --- topbaren är bladets övre textrad --- */
 [data-style="sprangskiss"] .wordmark { letter-spacing: .34em; text-transform: uppercase; font-weight: 500; }
@@ -87,8 +87,8 @@
 }
 [data-style="sprangskiss"] .app-btn[data-name="syntes"]::before { content: "POS. 1 · HUVUDENHET"; color: #CBDDF0; }
 [data-style="sprangskiss"] .app-btn[data-name="signal"]::before { content: "POS. 2 · SIGNALGIVARE"; }
-[data-style="sprangskiss"] .app-btn[data-name="todos"]::before  { content: "POS. 3 · SPÄRRVERK"; }
-[data-style="sprangskiss"] .app-btn[data-name="stronk"]::before { content: "POS. 4 · FJÄDERPAKET"; }
+[data-style="sprangskiss"] .app-btn[data-name="ethos"]::before  { content: "POS. 3 · SPÄRRVERK"; }
+[data-style="sprangskiss"] .app-btn[data-name="hexis"]::before { content: "POS. 4 · FJÄDERPAKET"; }
 [data-style="sprangskiss"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* ritningens egen grammatik för hierarkin: navet ÄR referensplanet, de tre
@@ -151,8 +151,8 @@
 [data-style="sprangskiss"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sk-row[data-pos="3"] .sk-mon,
 [data-style="sprangskiss"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sk-row[data-pos="4"] .sk-mon { opacity: .9; }
 [data-style="sprangskiss"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .sk-row[data-pos="2"],
-[data-style="sprangskiss"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .sk-row[data-pos="3"],
-[data-style="sprangskiss"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .sk-row[data-pos="4"] {
+[data-style="sprangskiss"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .sk-row[data-pos="3"],
+[data-style="sprangskiss"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .sk-row[data-pos="4"] {
   color: var(--text); background: rgba(234, 243, 251, .12);
 }
 

@@ -44,24 +44,10 @@
 .orr-chart .orr-radial { fill: none; stroke-width: 1; vector-effect: non-scaling-stroke; stroke-dasharray: 2 5; opacity: 0; transition: opacity .5s ease; }
 
 /* --- Navet: ekosystemets stjärna --- */
-.orr-core { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: clamp(44px, 7.5vmin, 68px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 42%, #FFFDF6 0%, #EFE6D0 32%, #9A8F72 74%, #4A4436 100%); box-shadow: 0 0 0 1px rgba(239,230,208,.25), 0 0 22px 4px rgba(239,230,208,.30), 0 0 70px 12px rgba(239,230,208,.13); }
-.orr-core::before { content: ""; position: absolute; inset: -42%; border-radius: 50%; background: radial-gradient(circle, rgba(239,230,208,.16) 0%, transparent 62%); animation: orr-corepulse 6s var(--anim-ease) infinite; }
-.orr-core::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(0deg, transparent 46%, rgba(255,253,246,.5) 50%, transparent 54%), linear-gradient(90deg, transparent 46%, rgba(255,253,246,.5) 50%, transparent 54%); -webkit-mask: radial-gradient(circle, #000 12%, transparent 34%); mask: radial-gradient(circle, #000 12%, transparent 34%); opacity: .5; animation: orr-corepulse 6s var(--anim-ease) infinite; }
-@keyframes orr-corepulse { 0%,100% { transform: scale(.94); opacity: .8; } 50% { transform: scale(1.08); opacity: 1; } }
-/* navet är Syntes-länken: etikett vid uppvaknande, pulsen slår snabbare */
-.orr-core { display: block; text-decoration: none; cursor: pointer; }
-.orr-core__label {
-  position: absolute; left: 50%; top: calc(100% + 14px); transform: translateX(-50%);
-  font-family: var(--font-mono); font-size: .58rem; letter-spacing: .3em; text-transform: uppercase;
-  color: #EFE6D0; white-space: nowrap; opacity: 0; transition: opacity .35s ease;
-}
-.orr-core:hover .orr-core__label, .orr-core:focus-visible .orr-core__label { opacity: .9; }
-.orr-scene.orr-nav-awake .orr-core::before,
-.orr-scene.orr-nav-awake .orr-core::after { animation-duration: 1.4s; }
-.orr-core:focus-visible { outline: 1px solid rgba(239, 230, 208, .6); outline-offset: 6px; border-radius: 50%; }
-/* Hjärtat lyser upp när det tar emot flödet */
-.orr-core { transition: box-shadow .5s var(--anim-ease); }
-.orr-core:is(:hover, :focus-visible) { box-shadow: 0 0 0 1px rgba(239, 230, 208, .42), 0 0 34px 8px rgba(239, 230, 208, .44), 0 0 100px 24px rgba(239, 230, 208, .22); }
+/* --- Instrumentets axeltapp: mekanikens mitt, inte en av kropparna. Den
+       lyser inte, den går inte att öppna och den bär inget namn. --- */
+.orr-pivot { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: clamp(14px, 2.2vmin, 20px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 50% 38%, #C9BFA4 0%, #8A8168 46%, #3A3629 100%); box-shadow: 0 0 0 1px rgba(201, 191, 164, .22), inset 0 -1px 2px rgba(0, 0, 0, .6); pointer-events: none; }
+.orr-pivot::after { content: ""; position: absolute; inset: 30%; border-radius: 50%; background: #14130E; }
 
 /* --- Kretsande stoft (box = banans diameter, prick i toppen) --- */
 .orr-dust { position: absolute; left: 50%; top: 50%; border-radius: 50%; pointer-events: none; }
@@ -107,7 +93,7 @@
 .orr-world:is(:hover, :focus-visible) .orr-spark__fill { opacity: 1; }
 .orr-world:is(:hover, :focus-visible) .orr-spark__pt { opacity: 1; transform: scale(1); }
 
-/* Todos: uppgifter bockas av */
+/* Ethos: uppgifter bockas av */
 .orr-checklist { display: grid; gap: 3px; font-size: .58rem; color: var(--muted); }
 .orr-checklist .orr-row { position: relative; display: flex; align-items: center; gap: .5ch; white-space: nowrap; transition: color .3s ease calc(var(--i) * .12s + .2s); }
 .orr-checklist .orr-bx { position: relative; width: 1.2ch; color: var(--muted); }
@@ -117,7 +103,7 @@
 .orr-world:is(:hover, :focus-visible) .orr-checklist .orr-bx b { opacity: 1; }
 .orr-world:is(:hover, :focus-visible) .orr-checklist .orr-row::after { transform: scaleX(1); }
 
-/* Stronk: skivstång laddas */
+/* Hexis: skivstång laddas */
 .orr-barbell { display: flex; align-items: center; justify-content: center; gap: 2px; height: 30px; }
 .orr-barbell .orr-bar { width: 54px; height: 3px; background: var(--muted); border-radius: 2px; }
 .orr-barbell .orr-plate { width: 5px; border-radius: 1px; background: var(--hue); align-self: center; opacity: 0; transform: translateY(6px) scaleY(.5); transform-origin: center; transition: opacity .3s ease calc(var(--i) * .09s + .15s), transform .4s var(--anim-ease) calc(var(--i) * .09s + .15s); }
@@ -131,3 +117,42 @@
 .orr-status { position: absolute; bottom: clamp(1rem, 2.4vw, 1.9rem); left: 50%; transform: translateX(-50%); z-index: 5; display: flex; align-items: center; gap: .7ch; font-family: var(--font-mono); font-size: .58rem; letter-spacing: .34em; text-transform: uppercase; color: var(--muted); white-space: nowrap; pointer-events: none; }
 .orr-status__dot { width: 6px; height: 6px; border-radius: 50%; background: #6FD8E3; box-shadow: 0 0 10px #6FD8E3; animation: orr-blink 2.6s var(--anim-ease) infinite; }
 @keyframes orr-blink { 0%,100% { opacity: .35; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
+
+/* --- Den utslocknade kroppen: samma bana, samma etikett, men ingen glöd. Inga
+       partikelströmmar heller — det finns inget som strömmar från den. --- */
+.orr-world--dark { cursor: default; }
+.orr-world--dark .orr-orb {
+  background: radial-gradient(circle at 42% 36%, #4A4E56 0%, #2A2D33 52%, #14161A 100%);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, .8), 0 0 0 1px rgba(110, 116, 128, .3);
+}
+.orr-world--dark .orr-ring-spin,
+.orr-world--dark .orr-wave { display: none; }
+.orr-world--dark .orr-label .orr-name { color: #8A909C; }
+/* en tunn kall ring kvar där atmosfären satt */
+.orr-world--dark .orr-orb::after {
+  content: ""; position: absolute; inset: -14%; border-radius: 50%;
+  border: 1px dashed rgba(110, 116, 128, .34);
+}
+
+/* --- scales · skalan löper uppför systemet, en ton per steg --- */
+.orr-skala { width: 100%; height: 32px; overflow: visible; }
+.orr-skala__ln { stroke: rgba(223, 230, 242, .28); stroke-width: .6; }
+.orr-skala__nt {
+  fill: var(--hue); opacity: 0; transform: scale(.3); transform-origin: center; transform-box: fill-box;
+  transition: opacity .18s ease calc(var(--i) * 80ms), transform .26s var(--anim-ease) calc(var(--i) * 80ms);
+}
+.orr-world:is(:hover, :focus-visible) .orr-skala__nt { opacity: 1; transform: scale(1); }
+
+/* --- ser/sys · fyren: ringarna går ut, en signal i taget --- */
+.orr-fyr { width: 100%; height: 32px; overflow: visible; }
+.orr-fyr__ring { fill: none; stroke: var(--hue); stroke-width: 1; opacity: 0; }
+.orr-world:is(:hover, :focus-visible) .orr-fyr__ring {
+  animation: orr-fyrut 2.1s var(--anim-ease) calc(var(--i) * .7s) infinite;
+}
+@keyframes orr-fyrut {
+  0% { transform: scale(.4); opacity: .9; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+.orr-fyr__ring { transform-origin: 50px 16px; transform-box: view-box; }
+.orr-fyr__pt { fill: var(--hue); opacity: 0; transition: opacity .3s ease; }
+.orr-world:is(:hover, :focus-visible) .orr-fyr__pt { opacity: 1; }
