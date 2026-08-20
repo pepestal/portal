@@ -1,10 +1,10 @@
 import './kardan-chatgpt.css'
 import { makeCountEnhancer } from '../shared.js'
 
-/* Kardanen: Syntes är huvudaxeln. De tre underapparna kan ha olika utväxling,
-   men deras kuggar griper i samma, stilla referensaxel. I vila syns den genom
-   hela stapeln som en genomgående axel; navets lager är ensamt dubbelt och
-   dess kilspår är nolläget som de tre markeringarna räknas från. */
+/* Kardanen: axellinjen är verkstadens. Den löper genom hela stapeln och varje
+   maskin tar kraft ur den med sin egen utväxling — ingen av dem äger axeln.
+   Syntes lager är urkopplat: remmen ligger kvar på lösskivan, hjulet snurrar
+   med, och ingenting drivs. */
 const viz = (inner) => `
   <div class="av" data-for="kardan-chatgpt" aria-hidden="true">
     <div class="viz">${inner}</div>
@@ -14,16 +14,18 @@ export default {
   id: 'kardan-chatgpt',
   label: 'Kardanen · chatgpt',
   anim: {
+    /* Lösskivan: den fasta skivan sitter kvar på axeln, men remmen är skjuten
+       åt sidan och löper på lösskivan bredvid. Hjulet går runt, maskinen står. */
     syntes: viz(`
-      <div class="viz--regulator">
+      <div class="viz--losskiva">
         <svg viewBox="0 0 216 52" preserveAspectRatio="xMidYMid meet">
-          <path class="shaft" d="M108 4V48" />
-          <circle class="hub" cx="108" cy="27" r="8" />
-          <g class="arms"><path d="M104 23L68 8M112 23L148 8" /><circle cx="65" cy="7" r="7" /><circle cx="151" cy="7" r="7" /></g>
-          <path class="belt b1" d="M16 45C49 20 68 38 100 29" /><path class="belt b2" d="M200 45C167 20 148 38 116 29" />
-          <path class="belt b3" d="M108 49C108 39 108 37 108 35" />
+          <path class="axel" d="M8 27H208" />
+          <rect class="fast" x="88" y="9" width="17" height="36" rx="2" />
+          <rect class="los" x="109" y="9" width="17" height="36" rx="2" />
+          <path class="rem" d="M117 9V2M117 45v5" />
+          <path class="gaffel" d="M112 50h11" />
         </svg>
-        <span class="cap">REGULATOR · <b class="count" data-to="3" data-suffix=" DRIFTER">0 DRIFTER</b></span>
+        <span class="cap">URKOPPLAD · <b>0 NM</b></span>
       </div>`),
     signal: viz(`
       <div class="viz--escapement">
@@ -54,6 +56,30 @@ export default {
           <path class="marks" d="M68 19L84 35M68 35L84 19" />
         </svg>
         <span class="cap">VRIDMOMENT · <b class="count" data-to="480" data-suffix=" NM">0 NM</b></span>
+      </div>`),
+    /* Spelverkets stiftvals: stiften rivs förbi kammen i tur och ordning. En
+       maskin som spelar en skala är fortfarande en maskin. */
+    scales: viz(`
+      <div class="viz--stiftvals">
+        <svg viewBox="0 0 216 52" preserveAspectRatio="xMidYMid meet">
+          <rect class="vals" x="30" y="14" width="118" height="26" rx="13" />
+          ${Array.from({ length: 24 }, (_, i) => `<circle class="stift" style="--i:${i}" cx="${38 + (i % 12) * 10}" cy="${19 + (i > 11 ? 14 : 0)}" r="1.9" />`).join('')}
+          ${[0, 1, 2, 3, 4, 5].map((i) => `<path class="kam" style="--i:${i}" d="M158 ${16 + i * 4}H198" />`).join('')}
+        </svg>
+        <span class="cap">24 STIFT · <b class="count" data-to="6" data-suffix=" KAMMAR">0 KAMMAR</b></span>
+      </div>`),
+    /* Centrifugalregulatorn: kulorna far ut när varvtalet stiger och stryper
+       ångan innan maskinen skenar. Verkstadens enda maskin som vaktar de andra. */
+    sersys: viz(`
+      <div class="viz--regulator">
+        <svg viewBox="0 0 216 52" preserveAspectRatio="xMidYMid meet">
+          <path class="shaft" d="M108 4V48" />
+          <circle class="hub" cx="108" cy="27" r="8" />
+          <g class="arms"><path d="M104 23L68 8M112 23L148 8" /><circle cx="65" cy="7" r="7" /><circle cx="151" cy="7" r="7" /></g>
+          <path class="belt b1" d="M16 45C49 20 68 38 100 29" /><path class="belt b2" d="M200 45C167 20 148 38 116 29" />
+          <path class="belt b3" d="M108 49C108 39 108 37 108 35" />
+        </svg>
+        <span class="cap">REGULATOR · <b class="count" data-to="1200" data-suffix=" V/MIN">0 V/MIN</b></span>
       </div>`),
   },
   enhancer: makeCountEnhancer('kardan-chatgpt'),
