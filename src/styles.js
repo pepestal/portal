@@ -3,7 +3,8 @@
 // Varje modul default-exporterar `{ id, label, anim, enhancer? }`:
 //   id        — matchar `data-style` på <html> och filnamnen (.js + .css)
 //   label     — namnet i stilväxlaren
-//   anim      — hover-markup per app: { syntes, signal, ethos, hexis }.
+//   anim      — hover-markup per app, slagen på app-id:
+//               { syntes, signal, ethos, hexis, scales, sersys }.
 //               Bara den aktiva stilens markup renderas; main.js byter ut den
 //               vid stilbyte, så en ny stil kostar ingenting i DOM:en.
 //   enhancer  — valfri. Körs efter att markupen satts, returnerar en cleanup
