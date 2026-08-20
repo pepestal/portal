@@ -50,7 +50,6 @@ Vertikalt överflöd i pixlar (`scrollHeight − innerHeight`). `0` = ryms.
 | tunnelbana | 349 | 529 | 287 | 480×116 | — |
 | kardan-chatgpt | 353 | 533 | 291 | 480×116 | — |
 | **singularitet** | 177 | 678 | **1092** | 260×260 | — |
-| **kvitto** | **0** | 4 | **0** | 321×34 | — |
 | orrery | 0 | 0 | 0 | — | ✅ |
 | pangea | 0 | 0 | 0 | — | ✅ |
 | lodet | 0 | 0 | 0 | — | ✅ |
@@ -62,8 +61,10 @@ Vertikalt överflöd i pixlar (`scrollHeight − innerHeight`). `0` = ryms.
 1. **Femton av sexton skelettstilar spiller över exakt lika mycket.** Överflödet kommer
    inte ur stilarna utan ur skelettet — samma `.rows`-geometri i alla. Rättas den, rättas
    femton stilar på en gång.
-2. **`kvitto` löser redan problemet** genom att göra raderna 34 px höga i stället för 116.
-   Den är beviset på att kravet går att uppfylla utan att stilen tappar sitt uttryck.
+2. **Kravet går att uppfylla utan att en stil tappar sitt uttryck.** `kvitto` mätte
+   `0 px` överflöd i både dator- och mobilläge genom att göra raderna 34 px höga i
+   stället för 116 — beviset finns alltså, även om stilen sedan togs bort på Peters
+   begäran (2026-08-20). Det som bär är att krympa raden, inte att offra formen.
 3. **De fem helscenerna spiller inte över alls** — de ersätter skelettet och skalar sig
    själva. De berörs inte av spaltarbetet, bara av mobilgranskningen.
 
@@ -208,19 +209,20 @@ appar.
 
 ### C — metaforen bryts (3 stilar)
 
+Alla tre är avgjorda — besluten står i högerspalten.
+
 Här räcker det inte att flytta korten. Stilen påstår något som två spalter gör falskt.
 
 | Stil | Problemet | Möjlig väg |
 |---|---|---|
-| `alv` | Älven är **strikt enkelriktad**: KM 0 överst, biflöden som rinner in nedströms, och huvudfårans bredd är bevisligen summan av delarna. Två spalter ger två älvar utan sammanflöde. | Antingen ett **delta** (fåran delar sig nedströms i stället för att samlas), eller behåll en spalt som undantag. ⚠️ Dessutom trasig redan nu: `AQ` läser `stats.projects.syntes` som inte längre finns → källans flöde är `0`, och `scales`/`sersys` saknas helt. Aritmetiken i stilens egen kommentar stämmer inte längre. |
-| `sinus` | EKG-remsan har **en gemensam tidsaxel**: alla kanaler delar nollpunkt och taktstreck, och fördröjningarna är räkningsbara millimeterrutor åt höger. Två spalter = två remsor med varsin tid, och då betyder `+0,04 s` ingenting. | Sex kanaler på **en** remsa är fortfarande sex kanaler — en riktig EKG-remsa har tolv. Behåll en spalt som undantag, eller lägg remsan liggande. Kanalerna blir då 6 × ~92 px höga, vilket ryms. |
+| `alv` | Älven är **strikt enkelriktad**: KM 0 överst, biflöden som rinner in nedströms, och huvudfårans bredd är bevisligen summan av delarna. Två spalter ger två älvar utan sammanflöde. | ✅ **Beslut (Peter, 2026-08-20): delta.** Fåran delar sig nedströms i stället för att samlas — vattnet konserveras fortfarande, men åt andra hållet: huvudfårans bredd ÄR summan av grenarna den delar sig i. Aritmetiken blir lika kontrollerbar, och två spalter blir två deltaarmar i stället för två älvar. ⚠️ Dessutom trasig redan nu: `AQ` läser `stats.projects.syntes` som inte längre finns → källans flöde är `0`, och `scales`/`sersys` saknas helt. |
+| `sinus` | EKG-remsan har **en gemensam tidsaxel**: alla kanaler delar nollpunkt och taktstreck, och fördröjningarna är räkningsbara millimeterrutor åt höger. Två spalter = två remsor med varsin tid, och då betyder `+0,04 s` ingenting. | ✅ **Beslut: en spalt, via `enspalt: true` i stilmodulen.** Sex kanaler på en remsa är fortfarande en remsa — en riktig EKG har tolv avledningar. Vid ~92 px per kanal blir kolumnen 602 px av 730 tillgängliga på dator, alltså ingen skroll. Att tvinga in instrumentet i två spalter hade gjort dess enda påstående falskt: att `+0,04 s` ÄR två millimeterrutor åt höger på samma papper. |
 | `fuga` | Systemen läses uppifrån och ner; rösterna sätter in i ordning. Två spalter är två partitursidor bredvid varandra. | Fungerar faktiskt — ett uppslag är två sidor. Men insatsordningen måste läsas radvis, och `T. 1–2` osv. behöver stämma med den ordningen. Fyra röster → sex. |
 
-### D — egna fall (7 stilar)
+### D — egna fall (6 stilar)
 
 | Stil | Verdikt |
 |---|---|
-| `kvitto` | 🛑 **Undantag: ska förbli en spalt.** Ett kvitto med två spalter är inte ett kvitto. Den ryms redan (`0 px` överflöd på både dator och mobil) genom 34 px höga varurader, och är förebilden för hur mycket ett kort kan krympa. Skelettet måste alltså tillåta en stil att välja bort rutnätet. |
 | `singularitet` | 🔴 **Värst på mobil: 1 092 px överflöd.** Portarna är kvadratiska; `--gate` är `clamp(200px, 24vw, 260px)`
   (`src/styles/singularitet.css:12`), alltså **golvet 200 px** som slår igenom på mobil.
   Två spalter hjälper på dator (177 → 0), men på mobil måste golvet ner till ~`110 px`. Stjärnfältet är `position: fixed` och berörs inte. |
@@ -248,6 +250,17 @@ Kvarstår oförändrat från [`PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md) be
   för liten.
 
 ---
+
+## Undantaget: `enspalt`
+
+Skelettet får **ett** dokumenterat sätt att välja bort rutnätet: `enspalt: true` i
+stilmodulen (`src/styles/<id>.js`), som sätter `data-enspalt` på `<html>`. Det är
+avsiktligt trubbigt och avsiktligt sällsynt — i dag använder bara `sinus` det.
+
+🛑 **Det är inte en ursäkt för att slippa tänka.** En stil som väljer enspalt måste
+fortfarande rymmas utan skroll; flaggan ändrar bara *hur* korten fördelas, inte om de får
+spilla över. Ett bidrag som sätter `enspalt` utan att kunna motivera varför metaforen
+kräver det ska underkännas.
 
 ## Vad som INTE ändras
 

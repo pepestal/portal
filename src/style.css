@@ -8,7 +8,7 @@
      editorial     graverad linje ritas   bläck-bock + strike  tally-streck (loggbok)
      bank          area-kurva sveper      progress-ring sluts  viktplattor staplas
      singularitet  puls + kurs tickar     listan bockar sig    skivstång gör reps
-     (kvitto/vaxel/jacquard/sprangskiss/synop/bikupa/fuga: se respektive stilblock nedan)
+     (vaxel/jacquard/sprangskiss/synop/bikupa/fuga: se respektive stilblock nedan)
 
    Rörelse-etik: terminal snappar (stegat), editorial ritar långsamt, bank
    glider med tyngd, jacquard går taktfast i vävens takt, sprangskiss rör sig
@@ -39,13 +39,27 @@
   /* Radens geometri på ett ställe. Raden kapas till `100%` av .rows innehålls-
      bredd, så knapp + mellanrum + info-knapp aldrig blir bredare än sidan —
      `vw` duger inte, den räknar in rullisten och ger horisontell scroll. */
-  --btn-max: 480px; --row-gap: .9rem; --info-size: 30px; --rows-pad: 1.25rem;
+  --btn-max: 480px; --row-gap: .9rem; --info-size: 44px; --rows-pad: 1.25rem;
+
+  /* ---- Höjdbudgeten (docs/LAYOUT.md) ----
+     Sidan får ALDRIG skrolla. Kortet har därför ingen egen höjd: rutnätet delar
+     upp den yta `.rows` faktiskt fick av flexboxen, och kortet fyller sin cell
+     upp till taket 116 px. Ingen JS-mätning av topbaren behövs — den räknar
+     layouten redan åt oss, och en mätning skulle bara tävla med den.
+     (Första försöket mätte topbaren i JS och blev 3 px fel, vilket räckte för
+     att lämna 7 px skroll på Pixel 9. Mätt 2026-08-20.)
+
+     `--rader` sätts av main.js ur antalet appar delat på antalet spalter, så
+     skelettet tål en sjunde app utan en ny PR. */
+  --rad-gap: clamp(1rem, 2vw, 2rem);
+  --rader: 6;
+  --btn-h-max: 116px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -53,7 +67,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color .55s ease, color .55s ease;
 }
-#app { min-height: 100vh; display: flex; flex-direction: column; }
+#app { min-height: 100dvh; height: 100dvh; display: flex; flex-direction: column; }
 
 /* ============================ Skelett ============================ */
 .topbar {
@@ -70,8 +84,8 @@ body {
   transition: border-color .25s ease, color .25s ease, background .25s ease;
 }
 .style-switch__btn { min-width: 30px; }
-/* 11ch golv så switchern inte hoppar när stilnamnet byter längd. Där golvet
-   släpps (kvitto på smal skärm) kortas namnet i stället för att knuffa ut sidan. */
+/* 11ch golv så switchern inte hoppar när stilnamnet byter längd. Släpps golvet
+   kortas namnet i stället för att knuffa ut sidan. */
 .style-switch__name {
   font-family: var(--font-ui); font-size: .74rem; color: var(--muted);
   min-width: 11ch; text-align: center;
@@ -82,16 +96,38 @@ body {
 .style-switch__chaos.is-on { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
 .style-switch__chaos:disabled { opacity: .45; cursor: default; }
 
-.rows { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(1.25rem, 3vw, 2.25rem); padding: 2rem var(--rows-pad) 4rem; }
+/* Rutnät, inte kolumn. `--spalter` sätts av main.js; på smal skärm tvingas den
+   till 1 längre ner. `place-content: center` centrerar hela rutnätet i ytan utan
+   att sträcka spalterna. */
+.rows {
+  flex: 1; display: grid;
+  grid-template-columns: repeat(var(--spalter, 2), minmax(0, calc(var(--btn-max) + var(--row-gap) + var(--info-size))));
+  grid-template-rows: repeat(var(--rader), minmax(0, 1fr));
+  gap: var(--rad-gap) clamp(1rem, 2.5vw, 2.5rem);
+  justify-content: center; justify-items: center; align-items: center;
+  padding: 1.5rem var(--rows-pad);
+  min-height: 0; /* så rutnätet får krympa i stället för att spränga #app */
+  /* Raderna är `1fr` så korten KRYMPER när höjden tryter — men på en hög skärm
+     ska de inte i stället glida isär. Taket säger hur högt rutnätet behöver bli
+     när varje kort får sitt maxmått; `margin-block: auto` centrerar det som
+     blir över. Utan taket blev raderna 240 px för ett 116 px kort. */
+  max-block-size: calc(var(--rader) * var(--btn-h-max) + (var(--rader) - 1) * var(--rad-gap) + 3rem);
+  margin-block: auto;
+}
+/* En stil får välja bort rutnätet med `enspalt: true` i sin modul (docs/LAYOUT.md).
+   Den måste fortfarande rymmas utan skroll — flaggan ändrar fördelningen, inte kravet. */
+[data-enspalt="true"] .rows { --spalter: 1; }
 .app-row {
   position: relative; display: flex; align-items: center; gap: var(--row-gap);
   width: min(100%, calc(var(--btn-max) + var(--row-gap) + var(--info-size)));
+  height: 100%; /* fyller sin rutnätscell — knappen kapas sedan av --btn-h-max */
 }
 
 /* --- Den stora knappen (samma storlek i alla stilar) --- */
 .app-btn {
   position: relative; overflow: hidden; isolation: isolate;
-  width: var(--btn-max); min-width: 0; min-height: 116px; /* min-width:0 → får krympa med raden */
+  width: var(--btn-max); min-width: 0;
+  height: min(100%, var(--btn-h-max)); min-height: 0; /* min-width:0 → får krympa med raden */
   display: grid; place-items: center;
   text-decoration: none; color: var(--muted);
   background: var(--surface); border: 1px solid var(--line);
@@ -133,10 +169,24 @@ body {
   transform: translateX(-50%) translateY(-8px);
   background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(10px);
   border: 1px solid var(--line); border-radius: 12px; padding: 1.15rem 1.3rem;
-  opacity: 0; visibility: hidden; z-index: 20;
-  transition: opacity .35s var(--anim-ease), transform .35s var(--anim-ease), visibility .35s;
+  opacity: 0; z-index: 20;
+  /* 🔴 Panelen måste vara helt borta ur layouten när den är stängd, inte bara
+     osynlig. Den är absolut positionerad inuti .app-row och en absolut
+     positionerad ättling förlänger dokumentets scrollHeight även när den inte
+     syns — 209 px på Pixel 9 (mätt 2026-08-20), alltså två tredjedelar av all
+     mobilskroll. Varken `visibility: hidden` eller `content-visibility: hidden`
+     hjälper: den senare hoppar över innehållet men elementets egen låda med sin
+     padding står kvar och gav 18 px skroll i varje stil.
+     `display: none` + `allow-discrete` + `@starting-style` tar bort lådan helt
+     OCH behåller övergången. */
+  display: none;
+  transition: opacity .35s var(--anim-ease), transform .35s var(--anim-ease),
+              display .35s allow-discrete;
 }
-.info-panel.is-open { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+.info-panel.is-open { display: block; opacity: 1; transform: translateX(-50%) translateY(0); }
+@starting-style {
+  .info-panel.is-open { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+}
 .info-tagline { font-family: var(--font-body); font-size: .85rem; color: var(--text); margin-bottom: 1rem; }
 .info-metrics { display: flex; gap: 2rem; margin-bottom: 1rem; }
 .info-metrics dt { font-family: var(--font-ui); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -193,20 +243,27 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 
 /* ============================ Responsivt ============================ */
-/* Extremt smal skärm: kassaapparaten hålls kvar på en rad (den är en apparat,
-   inte en spalt) — ramen kryper ihop i stället för att knuffa ut sidan. */
-@media (max-width: 360px) {
-  [data-style="kvitto"] .topbar { padding-left: .7rem; padding-right: .7rem; }
+/* --- Mobil: en spalt, men nedskalad så sex kort ryms utan skroll ---
+   Brytpunkten är 900 px och inte 560: två spalter à 480 px plus mellanrum kräver
+   drygt 1 000 px, så allt däremellan skulle ge horisontell scroll. */
+@media (max-width: 899px) {
+  .rows { --spalter: 1; --rad-gap: clamp(.5rem, 1.6vw, 1rem); padding: .9rem var(--rows-pad); }
+  /* Info-knapparna ligger i högerkanten på varje rad; systemhälsan flyttas till
+     vänster så de två inte slåss om samma hörn. Mätt kollision på Pixel 9:
+     systemknappen låg ovanpå sista radens info-knapp. */
+  .system { left: .8rem; right: auto; bottom: .8rem; align-items: flex-start; }
+  .system__panel { transform-origin: bottom left; }
 }
+
 @media (max-width: 560px) {
   .topbar { flex-direction: column; align-items: flex-start; gap: .8rem; }
-  .app-btn__name { font-size: 1.2rem !important; }
+  .app-btn__name { font-size: clamp(.95rem, 4.2vw, 1.2rem) !important; }
   .system { bottom: 1rem; right: 1rem; }
+  /* Animationslagret sitter 2,4rem ner i en 116 px-knapp; i en 92 px-knapp
+     lämnar det ingen plats åt vizzen. Flyttas upp med kortet. */
+  .app-btn__anim { inset: 1.9rem 0 .35rem; }
+  .app-btn:hover .app-btn__name { transform: translateY(-1.4rem) scale(.8); }
   [data-style="singularitet"] .app-btn__name { font-size: 1rem !important; letter-spacing: .22em; }
-  /* kassaapparaten förblir en apparat även på smal skärm */
-  [data-style="kvitto"] .topbar { flex-direction: row; align-items: center; gap: .5rem; }
-  [data-style="kvitto"] .style-switch__name { min-width: 0; }
-  [data-style="kvitto"] .app-btn__name { font-size: .78rem !important; }
   /* mässingsplåten krymper värdigt på smal skärm */
   [data-style="vaxel"] .app-btn__name { font-size: 1rem !important; letter-spacing: .12em; padding: .24rem .75rem .28rem; }
   [data-style="vaxel"] .app-btn::before { font-size: .5rem !important; letter-spacing: .14em; }

@@ -147,17 +147,33 @@ function mountAnim(style) {
 
 let cleanupEnhancer = null
 
+/* Höjdbudgeten (docs/LAYOUT.md): rutnätet delar upp den yta `.rows` fick, och
+   kortet fyller sin cell upp till taket. Det enda JS behöver bidra med är hur
+   många RADER det blir — spaltantalet bestäms av CSS (två på dator, en under
+   900 px) och läses tillbaka därifrån i stället för att gissas här. */
+const rowsEl = document.querySelector('.rows')
+function matRader() {
+  const spalter = getComputedStyle(rowsEl).gridTemplateColumns.split(' ').filter(Boolean).length || 1
+  const rader = Math.ceil(apps.length / spalter)
+  document.documentElement.style.setProperty('--rader', String(rader))
+}
+addEventListener('resize', matRader)
+
 function applyStyle(id) {
   if (!byId[id]) id = DEFAULT_STYLE
   const style = byId[id]
   // Städa FÖRE markupbytet: enhancern kan hålla element som nu försvinner.
   if (cleanupEnhancer) { cleanupEnhancer(); cleanupEnhancer = null }
   document.documentElement.dataset.style = id
+  /* En stil kan välja bort rutnätet (`enspalt: true`), t.ex. sinus vars remsa
+     bygger på att alla kanaler delar en tidsaxel. Sätts före mätningen nedan. */
+  document.documentElement.dataset.enspalt = style.enspalt ? 'true' : 'false' 
   document.documentElement.dataset.mode = modeOf(id)
   nameEl.textContent = style.label
   localStorage.setItem(LS_LAST, id)
   localStorage.setItem(LS_MODE, modeOf(id))
   mountAnim(style)
+  matRader()
   cleanupEnhancer = style.enhancer ? style.enhancer() : null
   reflectChaos()
 }

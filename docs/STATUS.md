@@ -12,7 +12,7 @@
 > stilar är omkomponerade så att de inte längre bygger på ett nav; **tretton återstår**
 > och visar rätt kort men saknar egna animationer för scales och ser/sys (PR 1b).
 >
-> Samtidigt ska **samtliga 21 stilar mobilanpassas**: 14 av dem har ingen media query
+> Samtidigt ska **samtliga 20 stilar mobilanpassas**: 14 av dem har ingen media query
 > alls, och repot bär 336 `:hover`-regler utan en enda `@media (hover: hover)` — på
 > Peters Pixel 9 är hover-innehåll osynligt, och ett tap ger sticky hover.
 >
@@ -38,19 +38,17 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   svarar `404`. De fem levande apparna är jämnstarka, och Syntes plats står kvar tom.
   **Åtta stilar är omkomponerade efter det:** terminalens `HTTP/2 404`, editorialens
   ombrutna men tomma spalt, bankens position som töms till `0,00`, växelbordets urkopplade
-  anknytning, jacquardvävens avklippta varptråd, kvittots strukna varurad, orrerys
+  anknytning, jacquardvävens avklippta varptråd, orrerys
   utslocknade kropp kring en axeltapp, och hinnans slaka fläck i materialet.
 - ⚠️ **Tretton stilar bär fortfarande nav-kompositionen** och beskrivs nedan som de såg ut
   före rivningen: `singularitet`, `sprangskiss`, `synop`, `bikupa`, `fuga`, `sinus`,
   `tryckark`, `alv`, `tunnelbana`, `kardan-chatgpt`, `pangea`, `lodet`, `dynamo`. De visar
   rätt sex kort med rätt namn, men saknar egna animationer för scales och ser/sys, och
   deras geometri pekar fortfarande mot en mitt som inte finns. Åtgärdas i PR 1b.
-- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): sjutton klassiska stilar — `terminal`
+- **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): sexton klassiska stilar — `terminal`
   (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
   `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära
-  portar, stjärnfält, levande siffror), `kvitto` (Kvittot — ur tävlingsbidraget
-  `variations/kvitto.html`: topbaren blir kassaapparat, apparna varurader på ett
-  termokvitto som skrivs ut), `orrery` (Orrery — himlainstrument: apparna som
+  portar, stjärnfält, levande siffror), `orrery` (Orrery — himlainstrument: apparna som
   världar i omlopp kring ett nav, byggd i `src/styles/orrery.js`), `vaxel` (Växeln —
   telefonstation ~1915: bakelit, mässingsplåtar, linjelampor; Syntes är växelbordet
   och inkommande-lampan ringer via `:has` när en underapp hovras), `jacquard`
@@ -140,7 +138,6 @@ faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
   `.viz--*` i stilens egen CSS; på hover viker knappnamnet upp och animationen tar scenen)
   plus orrery's tre världar och nav i sin egen scen. Enhancers per stil: count-up för terminal/bank/vaxel;
   singularitet injicerar stjärnfält/parallax/3D-tilt och tickande siffror (kurs, reps);
-  kvitto injicerar kvittots huvud/fot med realtidsklocka och streckkod (hover: kassörens penna,
   skanner-laser, gummistämpel, termohuvud); orrery bygger hela scenen (stjärnfält, banor, reticle,
   siktlinjer) och väcker per app en sparkline, en bockad lista respektive en laddad skivstång
   med uppräkning — samt navet Syntes i mitten, som tänder alla siktlinjer; jacquard injicerar
