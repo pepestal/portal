@@ -110,14 +110,14 @@ export default {
   id: 'singularitet',
   label: 'Singularitet',
   anim: {
+  /* Den slocknade porten: ringen står kvar men horisonten har fallit ihop.
+     Stoftet driver förbi utan att dras in — inget håller det längre. */
   syntes: `
   <div class="av" data-for="singularitet" aria-hidden="true">
-    <div class="viz viz--nexus">
+    <div class="viz viz--slocknad">
       <span class="field">
-        <i class="mote" style="--a:10deg;--c:#4ADE9C;--d:0s"></i>
-        <i class="mote" style="--a:130deg;--c:#F5C56B;--d:.5s"></i>
-        <i class="mote" style="--a:250deg;--c:#F97B76;--d:1s"></i>
-        <span class="core"></span>
+        <i class="ring"></i>
+        <span class="karna"></span>
       </span>
     </div>
     ${dust()}
@@ -150,6 +150,27 @@ export default {
         <span class="plate plate--big"></span><span class="plate plate--small"></span>
       </span>
       <span class="reps">reps <b class="reps-n">0</b></span>
+    </div>
+    ${dust()}
+  </div>`,
+  /* Tolv halvtoner runt ringen, sju tända: skalan lagd på porten. */
+  scales: `
+  <div class="av" data-for="singularitet" aria-hidden="true">
+    <div class="viz viz--tonring">
+      <span class="ring">
+        ${Array.from({ length: 12 }, (_, i) => `<i class="steg${[0, 2, 4, 5, 7, 9, 11].includes(i) ? ' steg--i' : ''}" style="--a:${i * 30}deg;--i:${i}"></i>`).join('')}
+      </span>
+    </div>
+    ${dust()}
+  </div>`,
+  /* Svepet går runt och fastnar på ett enda eko. */
+  sersys: `
+  <div class="av" data-for="singularitet" aria-hidden="true">
+    <div class="viz viz--svep">
+      <span class="skiva">
+        <i class="stråle"></i>
+        <i class="eko"></i>
+      </span>
     </div>
     ${dust()}
   </div>`,

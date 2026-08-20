@@ -17,10 +17,11 @@
     radial-gradient(80vmax 60vmax at 108% 88%, rgba(74, 222, 156, .05), transparent 55%),
     radial-gradient(80vmax 60vmax at -8% 92%, rgba(249, 123, 118, .05), transparent 55%);
 }
-[data-style="singularitet"] .app-row[data-app="syntes"] { --app-accent: #A78BFA; --app-accent-2: #7C6FE0; }
+[data-style="singularitet"] .app-row[data-app="syntes"] { --app-accent: #6E6A82; --app-accent-2: #4A4760; }
 [data-style="singularitet"] .app-row[data-app="signal"] { --app-accent: #4ADE9C; --app-accent-2: #2DD4BF; }
 /* navet är den största porten — hjärtat de andra kretsar kring */
-[data-style="singularitet"] .app-row[data-app="syntes"] .app-btn { width: calc(var(--gate) * 1.14); height: calc(var(--gate) * 1.14); }
+[data-style="singularitet"] .app-row[data-app="scales"] { --app-accent: #8FB8FF; --app-accent-2: #6E93E0; }
+[data-style="singularitet"] .app-row[data-app="sersys"] { --app-accent: #C79BE8; --app-accent-2: #9B6FD4; }
 [data-style="singularitet"] .app-row[data-app="ethos"]  { --app-accent: #F5C56B; --app-accent-2: #E8A33D; }
 [data-style="singularitet"] .app-row[data-app="hexis"] { --app-accent: #F97B76; --app-accent-2: #E35D78; }
 
@@ -163,37 +164,24 @@
 /* ---------- Hover-animationer: en per app ---------- */
 
 /* singularitet · de tre världarnas stoft sugs in i ett hjärta som slår */
-.viz--nexus { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.viz--nexus .field { position: relative; width: 84px; height: 56px; }
-.viz--nexus .core {
-  position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle at 42% 36%, #E8E0FF, var(--app-accent) 58%, #4B3E8F 100%);
-  box-shadow: 0 0 18px 4px color-mix(in srgb, var(--app-accent) 70%, transparent);
-  animation: sg-heart 1.2s cubic-bezier(.4, 0, .4, 1) infinite;
-  animation-play-state: paused;
+.viz--slocknad { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.viz--slocknad .field { position: relative; width: 84px; height: 56px; }
+.viz--slocknad .ring { /* horisonten som var: en tunn, kall cirkel utan innehåll */
+  position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px;
+  border-radius: 50%; border: 1px dashed color-mix(in srgb, var(--app-accent) 45%, transparent);
+  transform: scale(1.25); opacity: 0;
+  transition: transform .9s cubic-bezier(.3, .8, .4, 1), opacity .5s ease;
 }
-.app-btn:hover .viz--nexus .core { animation-play-state: running; }
-@keyframes sg-heart { /* dubbel-slag: dunk-dunk … */
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  12%      { transform: translate(-50%, -50%) scale(1.3); }
-  24%      { transform: translate(-50%, -50%) scale(1); }
-  36%      { transform: translate(-50%, -50%) scale(1.18); }
-  48%      { transform: translate(-50%, -50%) scale(1); }
+.app-btn:hover .viz--slocknad .ring { transform: scale(1); opacity: 1; }
+.viz--slocknad .karna { /* ingen glöd, ingen puls — bara ett hål i fältet */
+  position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; border-radius: 50%;
+  transform: translate(-50%, -50%) scale(.3);
+  background: radial-gradient(circle at 42% 36%, #1A1726, #0A0912 70%);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .9);
+  opacity: 0; transition: transform .7s cubic-bezier(.3, .8, .4, 1) .2s, opacity .4s ease .2s;
 }
-.viz--nexus .mote {
-  position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; border-radius: 50%;
-  background: var(--c); box-shadow: 0 0 8px var(--c); opacity: 0;
-  animation: sg-drawin 1.8s linear var(--d) infinite;
-  animation-play-state: paused;
-}
-.app-btn:hover .viz--nexus .mote { animation-play-state: running; }
-@keyframes sg-drawin {
-  0%   { opacity: 0; transform: rotate(var(--a)) translateX(38px) scale(1); }
-  15%  { opacity: .95; }
-  100% { opacity: 0; transform: rotate(calc(var(--a) + 90deg)) translateX(3px) scale(.2); }
-}
-.viz--nexus .cap { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; color: var(--muted); }
+.app-btn:hover .viz--slocknad .karna { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+
 
 /* singularitet · pulsen ritar om sig i loop + kursen tickar live (enhancer) */
 .viz--pulse { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 62%; }
@@ -238,3 +226,40 @@
 .viz--lift .plate--small { height: 24px; }
 .viz--lift .reps { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
 .viz--lift .reps b { font-weight: 400; color: var(--app-accent); }
+
+/* scales · tolv halvtoner runt porten, sju tända — skalan lagd på ringen */
+.viz--tonring { display: flex; align-items: center; justify-content: center; }
+.viz--tonring .ring { position: relative; width: 56px; height: 56px; }
+.viz--tonring .steg {
+  position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; margin: -1.5px;
+  border-radius: 50%; background: color-mix(in srgb, var(--app-accent) 30%, transparent);
+  transform: rotate(var(--a)) translateY(-24px);
+  transition: background .2s ease calc(var(--i) * 55ms), box-shadow .2s ease calc(var(--i) * 55ms), width .2s ease calc(var(--i) * 55ms), height .2s ease calc(var(--i) * 55ms), margin .2s ease calc(var(--i) * 55ms);
+}
+.app-btn:hover .viz--tonring .steg--i {
+  width: 5px; height: 5px; margin: -2.5px;
+  background: var(--app-accent);
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--app-accent) 70%, transparent);
+}
+
+/* ser/sys · svepet går runt och fastnar på ett enda eko */
+.viz--svep { display: flex; align-items: center; justify-content: center; }
+.viz--svep .skiva {
+  position: relative; width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--app-accent) 28%, transparent);
+}
+.viz--svep .stråle {
+  position: absolute; left: 50%; top: 50%; width: 26px; height: 1.5px;
+  transform-origin: 0 50%; opacity: 0;
+  background: linear-gradient(90deg, var(--app-accent), transparent);
+  transition: opacity .3s ease;
+}
+.app-btn:hover .viz--svep .stråle { opacity: 1; animation: sg-svep 2.4s linear infinite; }
+@keyframes sg-svep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.viz--svep .eko {
+  position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px;
+  border-radius: 50%; background: var(--app-accent);
+  transform: rotate(212deg) translateY(-18px); opacity: 0;
+}
+.app-btn:hover .viz--svep .eko { animation: sg-eko 2.4s linear infinite; }
+@keyframes sg-eko { 0%, 56% { opacity: 0; } 60% { opacity: 1; box-shadow: 0 0 10px 2px var(--app-accent); } 100% { opacity: 0; } }
