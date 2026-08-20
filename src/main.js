@@ -209,6 +209,70 @@ function pickInitial() {
 applyStyle(pickInitial())
 reflectLock()
 
+/* ============================ Drag nedåt = ny stil ============================
+   Peters krav: på telefon ska ett drag nedåt ge en ny slumpad stil.
+
+   🔴 Webbläsarens EGEN pull-to-refresh går inte att lita på här. Den är en
+   funktion i Chromes gränssnitt, inte i sidan: den syns inte i DOM:en, går inte
+   att känna av från JS och kan inte reproduceras i en headless-webbläsare — så
+   den kan varken verifieras eller felsökas härifrån. Testad på Peters Pixel 9
+   2026-08-21: den utlöstes inte. Sidan äger därför gesten själv.
+
+   `overscroll-behavior-y: contain` på <html> stänger av webbläsarens variant, så
+   de två aldrig kan skjuta samtidigt.
+
+   Stilbytet sker i sidan i stället för som omladdning: det är omedelbart, blinkar
+   inte vitt och riskerar inte en ny Authelia-runda. Resultatet är detsamma —
+   en ny slumpad stil. */
+const DRAG_TROSKEL = 88 // px innan gesten räknas som ett drag
+const dragEl = document.createElement('div')
+dragEl.className = 'dragrefresh'
+dragEl.setAttribute('aria-hidden', 'true')
+dragEl.innerHTML = '<span class="dragrefresh__ring"></span>'
+document.body.appendChild(dragEl)
+
+let dragY = null, dragX = 0, dragAktiv = false
+
+const dragAvbryt = () => {
+  dragY = null; dragAktiv = false
+  dragEl.classList.remove('is-armed', 'is-dragging')
+  dragEl.style.removeProperty('--d')
+}
+
+document.addEventListener('touchstart', (e) => {
+  /* Bara från sidans topp, bara med ett finger, och inte i en stil som äger
+     dragrörelsen själv (lodet vinschar med den — se docs/LAYOUT.md). */
+  if (e.touches.length !== 1) return dragAvbryt()
+  if (byId[document.documentElement.dataset.style]?.egenDrag) return
+  if (window.scrollY > 0) return
+  dragY = e.touches[0].clientY
+  dragX = e.touches[0].clientX
+}, { passive: true })
+
+document.addEventListener('touchmove', (e) => {
+  if (dragY === null || e.touches.length !== 1) return
+  const dy = e.touches[0].clientY - dragY
+  const dx = Math.abs(e.touches[0].clientX - dragX)
+  // Ett drag nedåt, inte en svepning i sidled och inte en uppåtrörelse.
+  if (dy <= 0 || dx > Math.abs(dy)) return dragAvbryt()
+  dragAktiv = true
+  const d = Math.min(dy, DRAG_TROSKEL * 1.6)
+  dragEl.classList.add('is-dragging')
+  dragEl.classList.toggle('is-armed', dy >= DRAG_TROSKEL)
+  dragEl.style.setProperty('--d', `${d}px`)
+}, { passive: true })
+
+document.addEventListener('touchend', () => {
+  const utlos = dragAktiv && dragEl.classList.contains('is-armed')
+  dragAvbryt()
+  if (!utlos) return
+  /* Samma val som vid sidladdning: ur den aktiva poolen, aldrig samma igen.
+     Låset respekteras — är en stil låst är det avsiktligt att den ligger kvar. */
+  applyStyle(pickInitial())
+  reflectLock()
+}, { passive: true })
+document.addEventListener('touchcancel', dragAvbryt, { passive: true })
+
 /* Bläddra n steg i den aktiva poolens rotation (wrap:ar åt båda håll). */
 function stepStyle(delta) {
   const cur = document.documentElement.dataset.style
