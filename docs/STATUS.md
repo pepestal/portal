@@ -6,11 +6,11 @@
 > 🟢 **Live:** [`https://portal.syntes.dev`](https://portal.syntes.dev) (sedan 2026-07-24),
 > bakom Authelia-login. Driftsättning: se [`DEPLOY.md`](DEPLOY.md).
 >
-> 🔴 **Registret är inaktuellt sedan 2026-08-20 — nästa uppdrag är beställt.** Portalen
-> visar fyra appar: en som inte längre finns (**Syntes**, navet revs den dagen), två med
-> fel namn (**Todos** heter Ethos, **Stronk** heter Hexis) och missar tre som lever
-> (**scales**, **ser/sys** — `kladd` ska medvetet inte in). Syntes-kortet länkar därmed
-> till en adress som svarar `404`.
+> 🟡 **Registret är rättat (2026-08-20), stilarna är halvvägs.** Portalen visar sex appar
+> med rätt namn — Signal, Ethos, Hexis, scales, ser/sys — och Syntes som en **vilande
+> plats utan länk**, eftersom `syntes.dev` svarar `404` sedan navet revs. Åtta av 21
+> stilar är omkomponerade så att de inte längre bygger på ett nav; **tretton återstår**
+> och visar rätt kort men saknar egna animationer för scales och ser/sys (PR 1b).
 >
 > Samtidigt ska **samtliga 21 stilar mobilanpassas**: 14 av dem har ingen media query
 > alls, och repot bär 336 `:hover`-regler utan en enda `@media (hover: hover)` — på
@@ -27,28 +27,24 @@ Portal är medvetet ett **design-experiment / showroom** — inte en nyttosida m
 faktiskt navigerar via. Fokus ligger på hur det känns, inte på länkarna.
 
 - **Delat skelett** (`src/main.js`): stora centrerade knappar, en per app (Syntes,
-  Signal, Todos, Stronk), var med en info-knapp; plus en systemhälsa-panel.
-- **Knapparna länkar skarpt** (sedan 2026-07-28): `syntes.dev`, `signal.syntes.dev`,
-  `ethos.syntes.dev` (Todos bor på *ethos* — id:t `todos` är kvar eftersom stilarnas
-  selektorer och stats-nyckeln hänger på det) och `stronk.syntes.dev`.
-- **Syntes är navet** — den övergripande dashboarden som tar emot, syntetiserar och
-  pumpar information mellan underapparna (t.ex. säljsignal från Signal → uppgift i
-  Todos). Varje stil ger den en särställning: merge-diagram (terminal), venn-snitt
-  (editorial), samlad allokering (bank), största porten med hjärtslag (singularitet),
-  inringad NAV-rad med kassörens penna (kvitto), det lysande navet i mitten (orrery),
-  växelbordet där det ringer när en underapp hovras (vaxel), inslaget som binder de tre
-  varptrådarna till tyg (jacquard), POS. 1 — sammanställningen i snitt som de tre
-  detaljerna måttsätts från (sprangskiss), lågtryckscentrum L som isobarerna sluter sig
-  kring och de tre fronterna utgår ur (synop), dansgolvet — kakans enda tomma cell, där
-  lassen blir till bäringar för de tre andra (bikupa), subjektet — den enda tonföljd som
-  finns, som de tre är omskrivningar av (fuga), sinusknutan — taktgivaren som inte går att
-  avbilda, så allt man ser av den ÄR de tre andra (sinus), nyckelplåten K — plåten som bär
-  konturen och all text, den de tre färgplåtarna riktas mot och den enda som inte kan
-  ligga ur pass (tryckark), källan — KM 0 som kilometertalen räknas från, där de tre
-  biflödenas vatten ligger kvar som band i fåran så att älvens bredd ÄR summan av
-  delarna (alv), bytespunkten — nätets enda station där alla tre linjer delar perrong,
-  som underapparna bär sin restid till i räknebara mellanstationer (tunnelbana) och till Kardanen · chatgpt (`kardan-chatgpt`), där Syntes är
- den genomgående huvudaxeln och de andra tre är olika drivna mekanismer.
+  Signal, Ethos, Hexis, scales, ser/sys), var med en info-knapp; plus en
+  systemhälsa-panel.
+- **Fem knappar länkar skarpt:** `signal.syntes.dev`, `ethos.syntes.dev`,
+  `stronk.syntes.dev` (Hexis bytte namn 2026-08-20 men inte adress), `scales.syntes.dev`
+  och `sys.syntes.dev`. **Syntes-kortet har medvetet ingen `href`** — platsen står kvar,
+  appen bakom den är riven.
+- 🔴 **Det finns inget nav** (sedan 2026-08-20). Syntes var ett händelsenav som tog emot,
+  syntetiserade och pumpade information mellan apparna; bussen är riven och `syntes.dev`
+  svarar `404`. De fem levande apparna är jämnstarka, och Syntes plats står kvar tom.
+  **Åtta stilar är omkomponerade efter det:** terminalens `HTTP/2 404`, editorialens
+  ombrutna men tomma spalt, bankens position som töms till `0,00`, växelbordets urkopplade
+  anknytning, jacquardvävens avklippta varptråd, kvittots strukna varurad, orrerys
+  utslocknade kropp kring en axeltapp, och hinnans slaka fläck i materialet.
+- ⚠️ **Tretton stilar bär fortfarande nav-kompositionen** och beskrivs nedan som de såg ut
+  före rivningen: `singularitet`, `sprangskiss`, `synop`, `bikupa`, `fuga`, `sinus`,
+  `tryckark`, `alv`, `tunnelbana`, `kardan-chatgpt`, `pangea`, `lodet`, `dynamo`. De visar
+  rätt sex kort med rätt namn, men saknar egna animationer för scales och ser/sys, och
+  deras geometri pekar fortfarande mot en mitt som inte finns. Åtgärdas i PR 1b.
 - **Stil-system** (`src/styles.js` + `src/styles/<id>.{js,css}`): sjutton klassiska stilar — `terminal`
   (Terminal Modernism), `editorial` (Editorial Light), `bank` (Private Bank),
   `singularitet` (Singularitet — ur tävlingsbidraget `variations/index.html`: cirkulära

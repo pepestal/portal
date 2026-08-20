@@ -7,10 +7,10 @@ Klistra in allt nedanför linjen. Uppdatera vid behov: stil-lista och regler
 Tävlingen har **två klasser som aldrig blandas** — använd rätt prompt:
 
 - **Klassisk** (denna prompt): bidraget klär det gemensamma skelettet.
-  Återhållsamhet, mekanisk precision, navets särställning. Ligger i den
+  Återhållsamhet, mekanisk precision, sex jämnstarka appar. Ligger i den
   vanliga rotationen.
 - **Kaos** ([`PROMPT_CHAOS.md`](PROMPT_CHAOS.md)): inget skelett, fritt
-  mönsterbrott — bara de fyra länkarna är heliga. Bidragen bär `chaos: true`
+  mönsterbrott — bara de sex apparna är heliga. Bidragen bär `chaos: true`
   och visas bara bakom kaos-togglen i topbaren, i en egen rotation.
 
 ---
@@ -92,9 +92,11 @@ klass.)
   sätt då `fullscene: true` i modulen och lämna `anim` tomt. Är det friheten från
   skelettet du är ute efter är det **kaosklassen** du söker (`PROMPT_CHAOS.md`) —
   inte ett undantag i den här.
-- Alla **fyra appar** (Syntes, Signal, Todos, Stronk) ska vara klickbara länkar
-  med **en egen, unik hover-animation per app** — samma koncept i fyra uttryck
-  räknas, fyra kopior gör det inte.
+- Alla **sex appar** (Syntes, Signal, Ethos, Hexis, scales, ser/sys) ska ha **en egen,
+  unik hover-animation per app** — samma koncept i sex uttryck räknas, sex kopior gör det
+  inte. De fem levande ska vara klickbara länkar. **Syntes ska inte vara det:** kortet är
+  vilande och renderas utan `href` av skelettet, så gör det inte klickbart i din stil
+  heller.
 - **Länkarna är skarpa och adressen kommer ur `src/apps.js` — aldrig ur din kod.**
   Knapparna går till `syntes.dev`, `signal.syntes.dev`, `ethos.syntes.dev` och
   `stronk.syntes.dev` (Todos bor på *ethos*; app-id:t är ändå `todos`, för alla
@@ -108,42 +110,36 @@ klass.)
 - **Texten är ransonerad.** Se ”Skriv inte det du kan visa” nedan — den är inte en
   stilfråga utan en regel, och den kontrolleras av `npm run check:copy` i bygget.
 
-## Syntes är navet — ge den en särställning
+## Sex jämnstarka appar — och en vilande plats
 
-Syntes är inte en app bland de andra: den är **hjärtat i ekosystemet**, en
-övergripande dashboard som tar emot information från underapparna, syntetiserar
-och pumpar vidare (t.ex. säljsignal från Signal → uppgift i Todos: "sälj aktie A").
+Det finns **inget nav**. Fram till 2026-08-20 var Syntes ett händelsenav som tog emot,
+syntetiserade och pumpade vidare mellan apparna, och tävlingens konceptuella kärna var att
+ge den en särställning. Händelsebussen är riven — containrar, databas, Caddy-block,
+Authelia-regel och tunnelrutter är borta, och `syntes.dev` svarar 404.
 
-Låt det synas i din stil. De tre underapparna förhåller sig till Syntes — inte
-tvärtom. Tidigare bidrag har gjort navet till kvittots inringade rad, till
-himlainstrumentets lysande centrum, till telefonistens växelbord, till inslaget
-som binder de tre varptrådarna till tyg och till ritningens POS. 1 — sammanställningen
-som de tre detaljerna måttsätts från, till väderkartans lågtryckscentrum L, som
-isobarerna sluter sig kring och de tre fronterna utgår ur, till vaxkakans dansgolv —
-den enda cell som hålls TOM, eftersom den inte lagrar en sak utan en riktning — och till
-fugans subjekt, den enda tonföljd som finns på bladet, som de tre andra rösterna bara är
-omskrivningar av (svar, spegling, förstoring) — och till EKG-remsans sinusknuta, taktgivaren
-som är den enda struktur på sidan som INTE går att avbilda, eftersom dess signal aldrig når
-huden: allt man någonsin ser av navet är de tre andra — och till tryckarkets nyckelplåt
-(K i CMYK står för KEY, inte black): den enda plåt som bär kontur och text, den de tre
-färgplåtarna vinkelmäts mot och den enda som inte KAN ligga ur pass, eftersom den är
-nollan de andra ställs in efter — och till älvens källa, KM 0 som alla kilometertal
-räknas från: de tre underapparna är biflöden vars vatten inte blandas vid
-sammanflödena utan ligger kvar som band i fåran, så att huvudfårans bredd bevisligen
-ÄR summan av delarna (bredderna är k × radantalen ur stats.json, och pegelplåtarna
-skriver samma aritmetik i riktiga tal) — och till linjenätets bytespunkt: tre
-tunnelbanelinjer som korsar varandra ute på kartan UTAN station, och en enda plats
-där de delar perrong — navets rad, där alla tre löper genom kapseln; varje underapp
-bär sin restid dit (`◉ N MIN`) och mellanstationerna ritas ut så att talet går att
-räkna på kartan; gör något
-eget: en wrap kring de andra, dirigenten, blodomloppet. Detta är
-tävlingens konceptuella kärna.
+De fem levande apparna är alltså **jämnstarka**. Ingen av dem definierar de andra, och en
+komposition som gör en av dem till centrum beskriver ett ekosystem som inte finns.
 
-**Ett grepp som visat sig bära:** låt navets särställning synas redan i vilotillståndet,
-inte bara vid hover — och låt den vara *mekanisk*, inte dekorativ. Det starkaste är när de
-tre underapparna bär en egenskap som bevisligen kommer ur navet (en lägestolerans mot
-referensplanet, ett tryck som lutar in mot L, en bäring som mättes på dansgolvet), så att
-det syns att de inte kan definiera sig själva.
+🔴 **Uppgiften är i stället svårare, och mer intressant: Syntes plats står kvar, tom.**
+Kortet renderas utan länk (`dormant: true` i `src/apps.js`, och `.app-row.is-dormant` i
+CSS:en). Din stil ska visa att där finns en plats som inte är fylld — **utan att skriva
+det**. Det är samma regel som styr all annan text på sidan, och det är här den är svårast.
+
+Grepp som redan är använda, så att du gör något annat: terminalens `HTTP/2 404`, editorialens
+ombrutna men tomma spalt, bankens position som töms till `0,00`, växelbordets urkopplade
+propp, jacquardvävens avklippta varptråd, kvittots strukna varurad, orrerys utslocknade
+kropp som ligger kvar i sin bana, och hinnans slaka fläck där materialet tappat spänsten.
+Mönstret i alla åtta är detsamma: **den vilande platsen är gjord av samma material som de
+levande, men saknar det som gör dem levande.** Inte en gråtonad kopia, inte en varningsikon.
+
+⚠️ **Flera äldre stilar bär fortfarande nav-kompositionen** — de komponerades när navet
+fanns och är under ombyggnad. Kopiera dem inte som förebild; läs `docs/CHANGELOG.md` för
+vilka som är omgjorda.
+
+**Ett grepp som visat sig bära:** låt skillnaden synas redan i vilotillståndet, inte bara
+vid hover — och låt den vara *mekanisk*, inte dekorativ. Det starkaste är när den vilande
+platsen saknar något som stilens egen fysik kräver: en tråd som inte bär, en yta som inte
+spänner, en krets som inte sluts.
 
 **Men:** de exemplen är *geometri*, inte text. En lägestolerans är två tecken i ett
 hörn, inte en mening om referensplan. Läs nästa avsnitt innan du skriver en enda
@@ -156,8 +152,8 @@ bidrag in är det här den enskilt största kvalitetsskillnaden mellan stilarna,
 den vanligaste anledningen till att ett i övrigt skickligt bygge känns fjantigt.
 
 - **Ingen förklaringsrad under knappen.** `.app-btn::before` med en mening i är
-  förbjuden mark. Navets särställning ska framgå av geometri, färg, läge eller
-  rörelse — aldrig av en rad som talar om att den är navet.
+  förbjuden mark. Att en plats är vilande ska framgå av geometri, färg, läge eller
+  rörelse — aldrig av en rad som talar om att den är vilande.
 - **Etiketter är mätvärden, inte meningar.** Riktmärke ~16 tecken, inga verb, inget
   efterled efter tankstreck. `⊕ Ø0,2 A`, `+0,04 s`, `1002 ↘`, `T. 3` är rätt.
   `DUX · HÄRIFRÅN HÄMTAR DE TRE SIN TONFÖLJD` är fel — och skrev du "härifrån",
@@ -173,7 +169,7 @@ den vanligaste anledningen till att ett i övrigt skickligt bygge känns fjantig
 - Konceptet förklaras i `docs/CHANGELOG.md` och i kodkommentarer, **inte på skärmen**.
 
 Testet innan du lämnar in: täck över all text i din stil. Syns det fortfarande vilken
-rad som är navet? Gör det inte det är det geometrin som ska fixas, inte texten.
+rad som är den vilande? Gör det inte det är det geometrin som ska fixas, inte texten.
 
 ## Tävlingens kärna: konceptet
 
@@ -187,7 +183,7 @@ stark idé konsekvent genomförd slår tio effekter.
 ## Innan du lämnar in
 
 1. **Verifiera live:** kör dev-servern, ta skärmdumpar av grundläget + alla
-   fyra hover-tillstånden (forcera `:hover` vid behov), och regressionskolla
+   sex hover-tillstånden (forcera `:hover` vid behov), och regressionskolla
    minst en befintlig stil.
 2. **Kör `npm run check:copy`.** Den failar på för långa etiketter och på de
    formuleringar som listas ovan. Den ingår i `prebuild` — ett bidrag som inte
@@ -199,9 +195,10 @@ stark idé konsekvent genomförd slår tio effekter.
    [...document.querySelectorAll('a[href]')].map((a) => [a.dataset.name || a.dataset.app, a.getAttribute('href')])
    ```
 
-   Fyra rader ut, alla mot `*.syntes.dev`. Klipper din stil knappens form eller
-   lägger något ovanpå den: klicka faktiskt på alla fyra och kontrollera att inget
-   overlay-lager äter träffytan (`pointer-events: none` på dekor).
+   **Fem** rader ut, alla mot `*.syntes.dev` — den vilande Syntes ska INTE finnas med,
+   den har inget `href`. Klipper din stil knappens form eller lägger något ovanpå den:
+   klicka faktiskt på alla fem och kontrollera att inget overlay-lager äter träffytan
+   (`pointer-events: none` på dekor).
 4. **Uppdatera docs** enligt CLAUDE.md: `CHANGELOG.md`, `STATUS.md`,
    `ROADMAP.md`, `README.md` vid behov.
 5. **Arkivera bidraget:** spara en representativ skärmdump (gärna med hover

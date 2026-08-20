@@ -4,7 +4,7 @@
 tävlingsklasser som aldrig blandas:
 
 - **Klassisk** ([`PROMPT_TAVLING.md`](PROMPT_TAVLING.md)) — klär det gemensamma
-  skelettet. Återhållsamhet, mekanisk elegans, navets särställning. Ligger i den
+  skelettet. Återhållsamhet, mekanisk elegans, sex jämnstarka appar. Ligger i den
   vanliga rotationen.
 - **Kaos** (denna prompt) — inget skelett att respektera. Bidragen bär
   `chaos: true` i modulen och visas **bara** när kaos-togglen i topbaren är på.
@@ -18,22 +18,26 @@ ny stil i portalens stilsystem, byggd direkt i produktion, men till skillnad fr�
 den klassiska klassen finns här **inget skelett att följa**. Sidan är din. Riv
 den, vänd den ut och in, gör den till något en länksida aldrig varit.
 
-Det enda som är heligt: **fyra fungerande länkar** till ekosystemets appar.
-Allt annat är förhandlingsbart.
+Det enda som är heligt: **fem fungerande länkar** till ekosystemets appar, och en
+sjätte plats som står tom och ska synas göra det. Allt annat är förhandlingsbart.
 
 ## Golvet (det enda som inte får brytas)
 
 Kaos är en frihet i uttrycket, inte i kontraktet. Detta gäller utan undantag:
 
 - Läs `CLAUDE.md`, `docs/STATUS.md` och `README.md` innan du börjar.
-- **Fyra riktiga länkar** — Syntes, Signal, Todos, Stronk — som `<a href>` med
-  adresser ur `src/apps.js` (`appById[id].url`). Aldrig `href="#"`, aldrig
-  hårdkodade adresser, aldrig `preventDefault` som kapar navigationen: vanligt
-  klick, ctrl/cmd-klick och mittenklick ska alla öppna appen. Hur gömd, rörlig
-  eller förvriden länken än är måste den gå att träffa.
-- **Alla fyra nås med tangentbord.** Tab hittar dem, Enter följer dem, och
+- **Fem riktiga länkar** — Signal, Ethos, Hexis, scales, ser/sys — som `<a href>` med
+  adresser ur `src/apps.js`. Aldrig `href="#"`, aldrig hårdkodade adresser, aldrig
+  `preventDefault` som kapar navigationen: vanligt klick, ctrl/cmd-klick och
+  mittenklick ska alla öppna appen. Hur gömd, rörlig eller förvriden länken än är
+  måste den gå att träffa.
+- 🔴 **Den sjätte, Syntes, ska INTE vara en länk.** Den bär `dormant: true` i
+  registret och `syntes.dev` svarar 404. Rendera platsen, men utan `href` — ett kaos
+  som länkar dit ljuger om ekosystemet. Läs `dormant`-flaggan, hårdkoda inte
+  undantaget.
+- **Alla fem länkarna nås med tangentbord.** Tab hittar dem, Enter följer dem, och
   fokus ger en upplevelse i klass med pekarens. En länk som bara kan fångas med
-  mus är en trasig länk.
+  mus är en trasig länk. Den vilande platsen ska inte fånga fokus alls.
 - **Sidan förblir statisk.** Ingen backend, inga externa anrop, ingen
   Syntes-koppling. Kaoset är lokalt.
 - **Ditt bidrag bor i egna filer:** `src/styles/<id>.js` + `src/styles/<id>.css`
@@ -91,7 +95,7 @@ pressa — exemplen är engångständstickor, inte förslag; det som redan står
 **VAD är en länk?** Ingenting säger att den ska se ut som en knapp. En länk kan
 vara ett hål i sidan, en varelse som rör sig, skuggan av något man inte ser,
 den enda lugna punkten i ett oväder, ett föremål som måste grävas fram, ett
-ögonblick som bara finns var tionde sekund. Frågan är inte "hur stylar jag fyra
+ögonblick som bara finns var tionde sekund. Frågan är inte "hur stylar jag sex
 knappar" utan "vad i den här världen råkar också gå att gå in i".
 
 **HUR fungerar den?** Hover är ett av många verb. Länkar kan jagas, lockas,
@@ -135,29 +139,33 @@ Men kaos är en vilja, inte en ursäkt. Skillnaden mellan WHOA och jippo:
 - **Överraskningen ska gå att upprepa.** En engångseffekt som är förbrukad
   efter första besöket förlorar mot en mekanik man vill utforska igen.
 
-## Syntes är fortfarande navet — material, inte krav
+## Den tomma platsen — material, inte krav
 
-Ekosystemets sanning gäller även här: Syntes är dashboarden som tar emot,
-syntetiserar och pumpar information mellan de tre underapparna. I den klassiska
-klassen är navets särställning obligatorisk kärna; i kaos är den **material** —
-använd den om den gör ditt mönsterbrott starkare (ett kaos där tre av länkarna
-bevisligen dras mot, föds ur eller styrs av den fjärde kan bli mycket stort),
-och lämna den om din idé pekar åt annat håll. Det som bedöms är brottet.
+Ekosystemets sanning gäller även här: **det finns inget nav.** Syntes var ett
+händelsenav fram till 2026-08-20, då bussen revs; de fem levande apparna är jämnstarka
+och ingen av dem definierar de andra. Ett kaos där tre länkar bevisligen dras mot en
+fjärde beskriver alltså ett ekosystem som inte längre finns.
+
+Det som däremot är fritt material är **tomrummet**. En sjätte plats som står kvar utan
+något bakom sig är en gåva till ett mönsterbrott: ett hål i kompositionen, en plats där
+mekaniken inte griper, ett namn som inte svarar. I den klassiska klassen ska den
+skillnaden vara stram och mekanisk; i kaos får den vara vad du vill — så länge den
+**syns utan att skrivas ut**, och så länge platsen inte går att klicka på.
 
 ## Innan du lämnar in
 
 1. **Verifiera live:** kör dev-servern, slå på kaos-togglen, och ta skärmdumpar
    av vilotillståndet + interaktionstillstånden (forcera `:hover` vid behov).
-2. **Klicka alla fyra länkarna på riktigt.** Kaosbidrag bygger egna `<a>` —
+2. **Klicka alla fem länkarna på riktigt.** Kaosbidrag bygger egna `<a>` —
    kontrollera i konsolen:
 
    ```js
    [...document.querySelectorAll('a[href]')].map((a) => [a.dataset.name || a.dataset.app, a.getAttribute('href')])
    ```
 
-   Fyra rader ut, alla mot `*.syntes.dev`. Kontrollera att inget dekorlager
-   äter träffytan (`pointer-events: none` på dekor) och att Tab + Enter når
-   och följer alla fyra.
+   **Fem** rader ut, alla mot `*.syntes.dev` — Syntes ska inte vara med. Kontrollera
+   att inget dekorlager äter träffytan (`pointer-events: none` på dekor) och att
+   Tab + Enter når och följer alla fem.
 3. **Toggla kaos av och på fem gånger.** Sidan ska stå exakt orörd i det
    klassiska läget efteråt — regressionskolla minst en klassisk stil.
 4. **Kör `npm run check:copy`** (ingår i `prebuild`; utan grönt går bidraget
