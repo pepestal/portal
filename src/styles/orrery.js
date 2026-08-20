@@ -9,8 +9,8 @@
 // är inte en av kropparna den bär. Syntes är en av världarna som alla andra —
 // men utslocknad, en kropp som slutat lysa och ändå ligger kvar i banan.
 //
-// Byggs vid stilbyte och rivs av cleanup (samma livscykel som singularitet/
-// kvitto). Skiljer sig medvetet från `singularitet` genom radiell komposition
+// Byggs vid stilbyte och rivs av cleanup (samma livscykel som singularitet).
+// Skiljer sig medvetet från `singularitet` genom radiell komposition
 // (nav + koncentriska banor + reticle + siktlinjer), dämpad stjärnatlas-palett
 // och Fraunces-serif — inte neonvirvlar i en kolumn.
 //

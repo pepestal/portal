@@ -10,6 +10,10 @@
 //   enhancer  — valfri. Körs efter att markupen satts, returnerar en cleanup
 //               som körs vid nästa stilbyte. Behöver stilen bara uppräkning
 //               räcker `makeCountEnhancer('<id>')` ur `src/shared.js`.
+//   enspalt   — valfri. Stilen väljer bort skelettets rutnät och får sina kort i
+//               EN spalt även på dator (docs/LAYOUT.md). Undantag, inte val: bara
+//               en stil vars metafor kräver en enda kolumn. `sinus` använder den.
+//               Kravet på att sidan aldrig får skrolla gäller ändå.
 //   fullscene — bara `orrery`: stilen ersätter skelettet i stället för att
 //               klä om det. Förankrat undantag, se CLAUDE.md och STATUS.md.
 //   chaos     — valfri. Markerar bidraget som KAOSKLASS (docs/PROMPT_CHAOS.md):
@@ -24,7 +28,6 @@ import terminal from './styles/terminal.js'
 import editorial from './styles/editorial.js'
 import bank from './styles/bank.js'
 import singularitet from './styles/singularitet.js'
-import kvitto from './styles/kvitto.js'
 import orrery from './styles/orrery.js'
 import vaxel from './styles/vaxel.js'
 import jacquard from './styles/jacquard.js'
@@ -43,7 +46,7 @@ import dynamo from './styles/dynamo.js'
 import hinnan from './styles/hinnan.js'
 
 export const styles = [
-  terminal, editorial, bank, singularitet, kvitto, orrery, vaxel,
+  terminal, editorial, bank, singularitet, orrery, vaxel,
   jacquard, sprangskiss, synop, bikupa, fuga, sinus, tryckark, alv, tunnelbana,
   kardanChatgpt,
   pangea, lodet, dynamo, hinnan,

@@ -198,6 +198,10 @@ function sinusEnhancer() {
 
 export default {
   id: 'sinus',
+  /* Remsan bygger på att alla kanaler delar EN tidsaxel: `+0,04 s` ÄR två
+     millimeterrutor åt höger på samma papper. Två spalter ger två papper och
+     gör påståendet falskt. Se docs/LAYOUT.md. */
+  enspalt: true,
   label: 'Sinusrytmen',
   anim: {
   /* sinus · slaget: den enda kanal där hela hjärtslaget står samlat, och det är

@@ -66,7 +66,7 @@ klass.)
   `enhancer` körs efter att markupen satts och ska returnera en cleanup som river
   allt du injicerat. Behöver du bara uppräkning av siffror räcker
   `makeCountEnhancer('<id>')` ur `src/shared.js`. Följ mönstret från
-  `singularitet`/`kvitto`: injicera vid stilbyte, städa i cleanup.
+  `singularitet`/`orrery`: injicera vid stilbyte, städa i cleanup.
 
   Allt du delar med andra stilar ska hämtas ur `src/shared.js` (`nf`,
   `prefersReduced`, `countUp`, `makeCountEnhancer`). Lägg inte till nya delade
@@ -127,7 +127,7 @@ det**. Det är samma regel som styr all annan text på sidan, och det är här d
 
 Grepp som redan är använda, så att du gör något annat: terminalens `HTTP/2 404`, editorialens
 ombrutna men tomma spalt, bankens position som töms till `0,00`, växelbordets urkopplade
-propp, jacquardvävens avklippta varptråd, kvittots strukna varurad, orrerys utslocknade
+propp, jacquardvävens avklippta varptråd, orrerys utslocknade
 kropp som ligger kvar i sin bana, och hinnans slaka fläck där materialet tappat spänsten.
 Mönstret i alla åtta är detsamma: **den vilande platsen är gjord av samma material som de
 levande, men saknar det som gör dem levande.** Inte en gråtonad kopia, inte en varningsikon.
@@ -174,7 +174,7 @@ rad som är den vilande? Gör det inte det är det geometrin som ska fixas, inte
 ## Tävlingens kärna: konceptet
 
 Studera de befintliga stilarna via `?style=<id>` (`terminal`, `editorial`,
-`bank`, `singularitet`, `kvitto`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
+`bank`, `singularitet`, `orrery`, `vaxel`, `jacquard`, `sprangskiss`, `synop`,
 `bikupa`, `fuga`, `sinus`, `tryckark`, `alv`, `tunnelbana`) — inte för inspiration utan för att
 **inte** återanvända deras grepp. Varje stil ligger i `src/styles/<id>.js` och
 `src/styles/<id>.css`, så du kan läsa en i taget. Tolka uppgiften oväntat; en

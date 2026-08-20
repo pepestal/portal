@@ -63,7 +63,7 @@ function granska(fil, text, max, sort) {
 }
 
 /* --- Knappetiketter: content: på .app-btn::before/::after ---
-   Bara knappen själv, inte `.app-btn__name::before` (kvittots varurad m.fl.). */
+   Bara knappen själv, inte `.app-btn__name::before`. */
 const REGEL = /\.app-btn(?!__)[^{;]*::(?:before|after)[^{]*\{([^}]*)\}/g
 for (const fil of [...filer('.css'), join(ROOT, 'src', 'style.css')]) {
   const css = readFileSync(fil, 'utf8')

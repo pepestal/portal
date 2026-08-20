@@ -53,6 +53,11 @@
 
 /* --- Scenen: vattenpelaren --- */
 .lod-scene {
+  /* 🛑 Drag nedåt vinschar lodet — det ÄR mönsterbrottet. Utan detta laddar
+     webbläsarens pull-to-refresh om sidan i samma gest och upphäver poängen.
+     Priset är att den slumpade stilbytesgesten inte finns just här; byt stil med
+     pilarna i stället. Beslut av Peter 2026-08-20, se docs/LAYOUT.md. */
+  overscroll-behavior-y: contain;
   position: fixed; inset: 0; z-index: 1; overflow: hidden; touch-action: none;
   background:
     radial-gradient(120% 65% at 50% 0%, rgba(110, 210, 220, .10), transparent 60%),

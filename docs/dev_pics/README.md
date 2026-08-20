@@ -46,3 +46,4 @@ Normen i sin helhet:
 |---|---|---|---|---|
 | 001 | 2026-08-03 | Kardanen · chatgpt — klassisk stil med genomgående huvudaxel | Lokal `http://127.0.0.1:5176/?style=kardan-chatgpt` | `001_kardanen_chatgpt/start.png`, `start_mobil.png` |
 | 002 | 2026-08-20 | Ekosystemet: sex appar, avnavad Syntes — samtliga 21 stilar före och efter | Lokal dev-server, 1440 px. `_fore` från `origin/main`, `_efter` från `agent/ekosystemet` | `002_ekosystemet_sex_appar/<stil>_fore.png` + `<stil>_efter.png` (21 par) |
+| 003 | 2026-08-21 | Två spalter på dator, nedskalad spalt på mobil, aldrig skroll | Lokal dev-server, `1440×900` och `412×915` (`isMobile`). ⚠️ **Inte** `fullPage` — se `../LAYOUT.md` | `003_tva_spalter_aldrig_skroll/<stil>_{dator,mobil}_{fore,efter}.png` (20 stilar × 2 lägen × 2) |
