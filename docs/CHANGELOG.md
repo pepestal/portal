@@ -5,6 +5,22 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 
 ## [Ej släppt]
 
+### Tillagt
+- 🔴 **Nytt layoutkrav: [`docs/LAYOUT.md`](LAYOUT.md)** — två spalter på dator, en
+  nedskalad spalt på mobil, och **aldrig skroll**. Beställt av Peter 2026-08-20 efter att
+  sex appar visat att det gamla skelettet inte bär: femton av sexton skelettstilar
+  spiller över med ~350 px på `1440×900` och ~535 px på `1280×720`. Dokumentet innehåller
+  mätt nuläge per stil, höjdbudget per vyport och en genomgång av vad varje stil kräver.
+  - ⚠️ **En tredjedel av mobilens skroll är inte korten** utan de sex *stängda*
+    info-panelerna: de är `position: absolute` inuti `.app-row` och förlänger
+    `scrollHeight` med 209 px på Pixel 9 trots att de är osynliga.
+  - ✅ **Drag nedåt på mobil är redan löst** — `pickInitial()` slumpar stil vid varje
+    sidladdning och `overscroll-behavior` är `auto`. Verifierat med åtta omladdningar:
+    sju unika stilar, aldrig samma två i rad. Ingen egen gest ska byggas.
+  - `kvitto` uppfyller redan kravet (34 px höga varurader, 0 px överflöd) och är
+    undantaget som ska förbli en spalt — ett kvitto med två spalter är inget kvitto.
+
+
 ### Ändrat
 - 🔴 **Ekosystemet i portalen visar verkligheten igen — sex appar, inget nav** (PR 1 av
   uppdraget i [`PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md)).

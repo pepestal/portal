@@ -1,0 +1,263 @@
+# Layoutkravet — två spalter på dator, en på mobil, aldrig skroll
+
+Beställt av Peter 2026-08-20, efter att sex appar visat att det gamla skelettet inte
+bär. Det ersätter den outtalade regeln *"alla länkar under varandra"* som gällt sedan
+portalen byggdes med fyra appar.
+
+Alla siffror nedan är **mätta 2026-08-20** mot `agent/ekosystemet-1b` (commit `bd1da8d`)
+i Chromium, tre vyporter: `1440×900`, `1280×720` och Pixel 9 (`412×915`, `isMobile`).
+
+---
+
+## Kravet
+
+> **Detta är en showroom-sida. Det ska ALDRIG behöva skrollas.**
+
+1. **Mobil:** länkarna staplade på höjden, nedskalade så att allt ryms på en skärm.
+   Drag nedåt (uppdatering) ska ladda en ny, slumpad stil.
+2. **Dator:** skelettet anpassas till antalet länkar och staplar dem i **två spalter**.
+   Skroll ska aldrig behövas.
+
+Regeln är **mekaniskt testbar** och ska testas så:
+`document.documentElement.scrollHeight - window.innerHeight === 0` **och**
+`scrollWidth - innerWidth === 0`, i samtliga stilar, i samtliga tre vyporter.
+
+⚠️ **Testa aldrig detta med `fullPage: true`-skärmdumpar.** En fullPage-bild renderar
+hela dokumentet och ser perfekt ut även när halva sidan ligger utanför skärmen. Det var
+precis så överflödet slank igenom när ekosystemet gick från fyra kort till sex
+(PR [#7](https://github.com/pepestal/portal/pull/7)).
+
+---
+
+## Mätt nuläge
+
+Vertikalt överflöd i pixlar (`scrollHeight − innerHeight`). `0` = ryms.
+
+| Stil | 1440×900 | 1280×720 | Pixel 9 | Knappmått | Helscen |
+|---|---:|---:|---:|---|---|
+| terminal | 356 | 536 | 296 | 480×116 | — |
+| editorial | 350 | 530 | 288 | 480×116 | — |
+| bank | 352 | 532 | 290 | 480×116 | — |
+| vaxel | 355 | 535 | 293 | 480×116 | — |
+| jacquard | 358 | 538 | 296 | 480×116 | — |
+| sprangskiss | 356 | 536 | 296 | 480×116 | — |
+| synop | 354 | 534 | 292 | 480×116 | — |
+| bikupa | 375 | 555 | 313 | 487×118 | — |
+| fuga | 375 | 555 | 313 | 487×118 | — |
+| sinus | 374 | 554 | 312 | 480×116 | — |
+| tryckark | 354 | 534 | 292 | 480×116 | — |
+| alv | 352 | 532 | 290 | 480×116 | — |
+| tunnelbana | 349 | 529 | 287 | 480×116 | — |
+| kardan-chatgpt | 353 | 533 | 291 | 480×116 | — |
+| **singularitet** | 177 | 678 | **1092** | 260×260 | — |
+| **kvitto** | **0** | 4 | **0** | 321×34 | — |
+| orrery | 0 | 0 | 0 | — | ✅ |
+| pangea | 0 | 0 | 0 | — | ✅ |
+| lodet | 0 | 0 | 0 | — | ✅ |
+| dynamo | 0 | 0 | 0 | — | ✅ |
+| hinnan | 0 | 0 | 0 | — | ✅ |
+
+**Tre slutsatser ur tabellen:**
+
+1. **Femton av sexton skelettstilar spiller över exakt lika mycket.** Överflödet kommer
+   inte ur stilarna utan ur skelettet — samma `.rows`-geometri i alla. Rättas den, rättas
+   femton stilar på en gång.
+2. **`kvitto` löser redan problemet** genom att göra raderna 34 px höga i stället för 116.
+   Den är beviset på att kravet går att uppfylla utan att stilen tappar sitt uttryck.
+3. **De fem helscenerna spiller inte över alls** — de ersätter skelettet och skalar sig
+   själva. De berörs inte av spaltarbetet, bara av mobilgranskningen.
+
+### 🔴 En tredjedel av mobilens skroll är inte korten
+
+Pixel 9, `terminal`: korten själva slutar på `1002 px` mot en vyport på `915` — alltså
+`87 px` för mycket. Men `scrollHeight` är `1211`. Skillnaden på **209 px** är de sex
+**stängda info-panelerna**.
+
+Panelerna är `position: absolute` inuti `.app-row` (som är `position: relative`), och en
+absolut positionerad ättling som sticker ut **förlänger scrollHeight** även när den är
+osynlig. Sista radens panel är 270 px hög och bottnar på `1211`.
+
+Det här är alltså ett eget fel, oberoende av kortstorleken, och det billigaste att
+åtgärda av allt i det här dokumentet. Panelen ska inte bidra till dokumentets höjd när
+den är stängd.
+
+### Höjdbudget
+
+| Vyport | Topbar | `.rows` padding | Gap | Kvar till korten |
+|---|---:|---:|---:|---:|
+| 1440×900 | 74 | 32 + 64 | 36 | 730 |
+| 1280×720 | 74 | 32 + 64 | 36 | 550 |
+| Pixel 9 (412×915) | **110** (staplad) | 32 + 64 | 20 | 709 |
+
+**Dimensionerande fall är `1280×720`** — inte mobilen. Sex kort i två spalter blir tre
+rader: `3 × 116 + 2 × 36 = 420 px` av 550 tillgängliga. Det ryms med marginal, och
+kortens nuvarande höjd behöver alltså **inte** ändras på dator.
+
+**På mobil** krävs däremot nedskalning: `6 × 116 + 5 × 20 = 796` av 709 tillgängliga.
+Med kort på `92 px` och gap `10 px` blir det `6 × 92 + 5 × 10 = 602` — ryms med 107 px
+över, vilket räcker till topbarens variation mellan telefoner.
+
+---
+
+## Den nya layoutmodellen
+
+Allt nedan bor i `src/style.css` och `src/main.js`. **Ingen stil ska behöva veta om
+det** — den som skriver en ny stil ska ärva rätt layout gratis.
+
+### Dator (≥ 900 px bred)
+
+`.rows` blir ett rutnät i stället för en kolumn:
+
+```
+repeat(2, minmax(0, var(--btn-max)))   ·   6 appar → 3 rader
+```
+
+- Spalterna är lika breda, och `--btn-max` sänks så att två spalter plus mellanrum
+  ryms i vyportens bredd utan horisontell scroll.
+- **Läsordningen är radvis** (`1 2` / `3 4` / `5 6`), inte spaltvis. Registret i
+  `src/apps.js` styr ordningen, och den vilande Syntes ligger först — den ska inte
+  hamna ensam i en spalt.
+- **Antalet spalter härleds ur antalet appar, inte hårdkodas.** Fem appar ska ge
+  `3 + 2`, sju ska ge `4 + 3`. Skelettet ska tåla nästa app utan en ny PR.
+
+### Mobil (< 900 px bred)
+
+En spalt, men nedskalad:
+
+- Korthöjd `92 px` (från 116), gap `10 px` (från 20), `.rows`-padding `1rem` (från
+  `2rem`/`4rem`).
+- **Tryckytan får inte krympa under 44 × 44 px.** Kortet är 92 px högt och nästan hela
+  bredden — det är inte problemet. Problemet är `.info-toggle`, som i dag är `30 px`.
+- Namnet skalas med kortet; ingen text under ~11 px efter SVG-skalning.
+
+### Aldrig skroll — hur det upprätthålls
+
+Ett kort som inte ryms ska **krympa**, inte skjutas utanför. Det betyder att
+höjdbudgeten ska räknas i CSS, inte antas:
+
+```
+--kort-h: min(116px, (100dvh - var(--topbar-h) - var(--rows-pad-y)) / var(--rader) - var(--rad-gap));
+```
+
+`dvh` och inte `vh` — på Android ändras `vh` inte när adressfältet fälls in, och en
+sida som ryms i `100vh` kan ändå skrolla i `100dvh`.
+
+---
+
+## Drag nedåt på mobil — redan löst, med två förbehåll
+
+✅ **Ingenting behöver byggas.** `pickInitial()` i `src/main.js` slumpar redan en stil
+vid varje sidladdning och filtrerar bort den som visades sist. Verifierat 2026-08-20 med
+åtta omladdningar i rad på 412 px: `orrery vaxel fuga terminal jacquard bank orrery alv`
+— sju unika, aldrig samma två gånger i rad. `overscroll-behavior` är `auto` på både
+`html` och `body`, så webbläsarens egen pull-to-refresh är inte blockerad.
+
+🛑 **Bygg inte en egen pull-to-refresh-gest.** Den skulle ersätta en gest användaren
+redan kan, och kollidera med webbläsarens.
+
+Två förbehåll som måste hanteras:
+
+1. **Låset slår ut det.** `Lås`-knappen skriver `portal.lockedStyle` i localStorage, och
+   `pickInitial()` returnerar den låsta stilen före slumpen. Drag nedåt ger då samma stil
+   varje gång. Det är rimligt beteende — men det ska vara *synligt* att låset är på, och
+   knappen är i dag lätt att träffa av misstag på en telefon.
+2. **Pull-to-refresh kräver att sidan står i toppen.** Med skrollen borta gäller det
+   alltid — kravet på "aldrig skroll" är alltså det som *får* drag nedåt att fungera
+   pålitligt. De två kraven hänger ihop.
+
+⚠️ **`lodet` binder `touchmove`** (`src/styles/lodet.js:195`) för att vinscha lodet.
+Lyssnaren är `passive`, så den kan inte blockera webbläsaren — men ett drag nedåt på
+lodet gör därmed **två saker samtidigt**: vinschar lodet och laddar om sidan. Det behöver
+ett beslut, se genomgången.
+
+---
+
+## Genomgång per stil
+
+Verdikt: **A** = ärver den nya layouten gratis, bara verifiering behövs · **B** = fungerar
+i två spalter men behöver justeras · **C** = metaforen bryts av två spalter, kräver
+omtanke · **D** = eget fall.
+
+### A — ärver layouten (4 stilar)
+
+Ingen sidnivågeometri alls; allt bor inuti knappen.
+
+| Stil | Att göra |
+|---|---|
+| `terminal` | Verifiera att `viz--curl`, `viz--scale` och `viz--health` inte blir för breda i en smalare spalt. Scanline-effekten är oberoende av layout. |
+| `editorial` | Samma. `viz--notrad` är 136 px bred och `viz--larm` 124 — båda ryms i halv spalt. |
+| `bank` | Samma. `viz--drift` (30 dygnsfält, 168 px) är den bredaste — kontrollera vid `--btn-max` under ~300 px. |
+| `vaxel` | Samma. `viz--klaviatur` (8 tangenter à 13 px + övertangenter) och `viz--klaff` (14 klaffar) är breda men skalbara. |
+
+### B — fungerar, men behöver justeras (7 stilar)
+
+Dessa ritar ett sidnivålager som **mäter radernas verkliga positioner** i DOM:en
+(`getBoundingClientRect`) och ritar om sig efter dem. De kraschar alltså inte av två
+spalter — men bilden behöver ses över, och flera bär siffror som antar tre eller fyra
+appar.
+
+| Stil | Vad som händer i två spalter | Att göra |
+|---|---|---|
+| `bikupa` | **Blir bättre.** En vaxkaka är ett tvådimensionellt fält; sex celler i två spalter är mer kaka än sex i rad. | Cellernas sexkantsraster ska följa rutnätet i stället för en kolumn. Etiketterna är redan ett ord. |
+| `sprangskiss` | Fungerar. En sprängskiss är en 2D-ritning med positionsnummer. | `SK_PART` har fyra poster — scales och ser/sys saknas. Namnrutan och `POS. N` ska numrera sex delar. |
+| `synop` | Fungerar. En väderkarta är 2D. | Lågtrycket `L` är fortfarande navets; hela tryckfältet ska komponeras om (se nav-arbetet i PR 1b). Stationsmodellerna följer rader och behöver två nya. |
+| `tunnelbana` | **Blir bättre.** Ett linjenät i två spalter är mer nät än sex stationer på en linje. | `TB_MIN` har tre poster. Bytespunkten är navets och ska bort. Restiderna räknas ur `stats.json` och behöver nya tal. |
+| `tryckark` | Fungerar. Ett tryckark är 2D och passmärken sitter i hörnen. | Nyckelplåten `K` är navets roll. Fyra plåtar → sex; `PLÅT Y/C/M/K` behöver två färger till. |
+| `jacquard` | Fungerar. Varptrådarna löper lodrätt bakom hela ytan, inte bakom en kolumn. | `.jq-column` är låst till `--btn-max` och en spalt — den ska spänna hela rutnätet. Sex trådar ska fördelas över två spalters bredd. |
+| `kardan-chatgpt` | Fungerar med ändring. `.rows::before` ritar **en** lodrät axel mitt på sidan; med två spalter behövs **två** axlar — vilket är autentiskt, ett maskinrum har flera transmissionsaxlar. | Axeln blir en per spalt. Kuggringen sitter redan mitt i varje knapp och följer med. |
+
+### C — metaforen bryts (3 stilar)
+
+Här räcker det inte att flytta korten. Stilen påstår något som två spalter gör falskt.
+
+| Stil | Problemet | Möjlig väg |
+|---|---|---|
+| `alv` | Älven är **strikt enkelriktad**: KM 0 överst, biflöden som rinner in nedströms, och huvudfårans bredd är bevisligen summan av delarna. Två spalter ger två älvar utan sammanflöde. | Antingen ett **delta** (fåran delar sig nedströms i stället för att samlas), eller behåll en spalt som undantag. ⚠️ Dessutom trasig redan nu: `AQ` läser `stats.projects.syntes` som inte längre finns → källans flöde är `0`, och `scales`/`sersys` saknas helt. Aritmetiken i stilens egen kommentar stämmer inte längre. |
+| `sinus` | EKG-remsan har **en gemensam tidsaxel**: alla kanaler delar nollpunkt och taktstreck, och fördröjningarna är räkningsbara millimeterrutor åt höger. Två spalter = två remsor med varsin tid, och då betyder `+0,04 s` ingenting. | Sex kanaler på **en** remsa är fortfarande sex kanaler — en riktig EKG-remsa har tolv. Behåll en spalt som undantag, eller lägg remsan liggande. Kanalerna blir då 6 × ~92 px höga, vilket ryms. |
+| `fuga` | Systemen läses uppifrån och ner; rösterna sätter in i ordning. Två spalter är två partitursidor bredvid varandra. | Fungerar faktiskt — ett uppslag är två sidor. Men insatsordningen måste läsas radvis, och `T. 1–2` osv. behöver stämma med den ordningen. Fyra röster → sex. |
+
+### D — egna fall (7 stilar)
+
+| Stil | Verdikt |
+|---|---|
+| `kvitto` | 🛑 **Undantag: ska förbli en spalt.** Ett kvitto med två spalter är inte ett kvitto. Den ryms redan (`0 px` överflöd på både dator och mobil) genom 34 px höga varurader, och är förebilden för hur mycket ett kort kan krympa. Skelettet måste alltså tillåta en stil att välja bort rutnätet. |
+| `singularitet` | 🔴 **Värst på mobil: 1 092 px överflöd.** Portarna är kvadratiska; `--gate` är `clamp(200px, 24vw, 260px)`
+  (`src/styles/singularitet.css:12`), alltså **golvet 200 px** som slår igenom på mobil.
+  Två spalter hjälper på dator (177 → 0), men på mobil måste golvet ner till ~`110 px`. Stjärnfältet är `position: fixed` och berörs inte. |
+| `orrery` | Helscen, 0 px överflöd. Berörs inte av spaltarbetet. Kvar: verifiera de sex kropparnas etiketter och tryckytor vid 412 px — banorna är polära och kropparna kan hamna för nära varandra på smal skärm. |
+| `pangea` | Helscen, 0 px. Verifiera att sex plattor får plats utan att flyta ihop på 412 px. |
+| `dynamo` | Helscen, 0 px. Sex glödtrådar i stället för fyra; verifiera på 412 px. |
+| `hinnan` | Helscen, 0 px. **Redan klar:** 3×2-rutnät på bred skärm och en kolumn under 620 px (gjordes i PR #7). Kan användas som referens för hur brytpunkten ska sättas. |
+| `lodet` | Helscen, 0 px, och stilen **förbjuder redan skroll** — hjulet vinschar lodet i stället. Konceptuellt den renaste uppfyllelsen av kravet. ⚠️ Men `touchmove` gör att ett drag nedåt både vinschar och laddar om. Beslut behövs: låta båda ske (lodet rycker till precis innan sidan byts — kanske charmigt), eller sätta `overscroll-behavior-y: contain` på scenen och offra pull-to-refresh i just den stilen. |
+
+---
+
+## Cross-cutting: det som gäller alla
+
+Kvarstår oförändrat från [`PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md) beslut 6, och
+är **inte** löst av spaltarbetet:
+
+- **336 `:hover`-regler, noll `@media (hover: hover)`.** På touch är hover-buret innehåll
+  osynligt, och Android ger sticky hover vid tap. Varje hover-effekt behöver en
+  touch-motsvarighet eller vara ren dekoration.
+- **`.info-toggle` är 30 × 30 px** — under tryckytegolvet 44 × 44.
+- **Info-panelerna förlänger dokumentet** (209 px på Pixel 9), se ovan.
+- **Systemhälsan** (`.system`) sitter `position: fixed` i nedre högra hörnet
+  (`src/style.css:155`) och kan hamna över det sista kortet i en två-spaltslayout.
+  Dess egen knapp är 44 × 44 px och alltså redan rätt — det är `.info-toggle` som är
+  för liten.
+
+---
+
+## Vad som INTE ändras
+
+- Registret i `src/apps.js`, adresserna, och att Syntes är vilande utan `href`.
+- Att en stil bor i egna filer och läggs till med en rad i `src/styles.js`.
+- Textransoneringen (`npm run check:copy`).
+- Att sidan är statisk, utan backend.
+
+## Följdändringar i andra dokument
+
+När modellen är byggd ska den skrivas in i [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) och
+[`PROMPT_CHAOS.md`](PROMPT_CHAOS.md) som en hård regel — annars lämnar nästa bidrag in en
+stil som skrollar. Båda säger i dag ingenting om varken spalter eller skrollförbud.
