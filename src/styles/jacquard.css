@@ -1,13 +1,11 @@
 /* =========================================================================
    STIL — Jacquardväven   (uppspänd vävstol: oblekt lin, växtfärgad varp)
-   Konceptet: de tre underapparna ÄR varptrådar — parallella, uppspända, och
-   utan kontakt med varandra. Syntes är inslaget: det enda som går på tvären.
-   Därför bär underapparnas paneler bara lodräta trådar (ofärdig varp, fransad
-   nederkant, klippta kanter) medan navets panel är riktigt tyg — varp korsad
-   av inslag, med bunden stadkant. Ett inslag löper tvärs över HELA sidan
-   genom Syntes-panelen; hovras navet öppnas skälet i hela väven: sidans
-   varptrådar skiftar och skytteln far igenom och tänder dem en efter en.
-   Riktningen är enkelriktad med flit — navet rör de tre, aldrig tvärtom.
+   Konceptet: apparna ÄR varptrådar — parallella, uppspända, jämnstarka. Ingen
+   av dem är inslaget; inslaget tillhör väven. Hovras vilken tråd som helst
+   kastas ett skott tvärs över hela sidan, skälet öppnas och trådarna skiftar.
+   Fem paneler är färdig väv med bunden stadkant. Den sjätte, Syntes, är bar
+   varp: tråden är avklippt mitt i stycket och stannar halvvägs ner i bommen,
+   så vävstolen står still just där.
    Rörelse-etik: taktfast. Allt sker i vävens takt, aldrig snabbare.
    ========================================================================= */
 [data-style="jacquard"] {
@@ -16,6 +14,7 @@
   --font-display: var(--font-serif); --font-body: var(--font-mono); --font-ui: var(--font-mono);
   --btn-radius: 2px; --anim-draw: 1s; --anim-ease: cubic-bezier(.35, .85, .35, 1);
   --jq-madder: #A03A28; --jq-indigo: #2C4A7E; --jq-reseda: #7C6A1C;
+  --jq-kermes: #7E2C50; --jq-vau: #2C6E5E;
   --jq-linen: #C3B79E; --jq-dark: #2A241A; --jq-wood: #6E4E2C;
 }
 /* linnegrunden: tuskaft så fint att det bara anas */
@@ -27,11 +26,13 @@
 }
 [data-style="jacquard"] #app { overflow-x: clip; } /* inslaget är 100vw brett */
 
-/* navet har ingen egen tråd — det bär allas */
-[data-style="jacquard"] .app-row[data-app="syntes"] { --app-accent: #3E3527; }
+/* en växtfärg per tråd; den avklippta har bara oblekt lin kvar */
+[data-style="jacquard"] .app-row[data-app="syntes"] { --app-accent: #8A7C60; }
 [data-style="jacquard"] .app-row[data-app="signal"] { --app-accent: var(--jq-madder); }
 [data-style="jacquard"] .app-row[data-app="ethos"]  { --app-accent: var(--jq-indigo); }
 [data-style="jacquard"] .app-row[data-app="hexis"] { --app-accent: var(--jq-reseda); }
+[data-style="jacquard"] .app-row[data-app="scales"] { --app-accent: var(--jq-kermes); }
+[data-style="jacquard"] .app-row[data-app="sersys"] { --app-accent: var(--jq-vau); }
 
 /* --- topbaren är tygbommen: här rullas den färdiga väven upp --- */
 [data-style="jacquard"] .topbar {
@@ -76,8 +77,8 @@
 }
 [data-style="jacquard"] .app-btn { color: var(--muted); }
 
-/* fransen: underapparnas trådar är avklippta och repar upp sig nedtill */
-[data-style="jacquard"] .app-row:not([data-app="syntes"]) .app-btn__fx::after {
+/* fransen: den vilande panelens varp är avklippt och repar upp sig nedtill */
+[data-style="jacquard"] .app-row.is-dormant .app-btn__fx::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px;
   background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--app-accent) 55%, transparent) 0 2px, transparent 2px 8px);
   -webkit-mask-image: linear-gradient(180deg, #000, transparent);
@@ -92,16 +93,18 @@
   background: linear-gradient(90deg, transparent, rgba(247, 242, 229, .88) 14%, rgba(247, 242, 229, .88) 86%, transparent);
   text-shadow: 0 1px 0 rgba(255, 252, 240, .9);
 }
-[data-style="jacquard"] .app-btn[data-name="syntes"]::before { content: "TUSKAFT"; color: #5A4A30; }
+[data-style="jacquard"] .app-btn[data-name="syntes"]::before { content: "AVKLIPPT"; color: #7A6A4C; }
 [data-style="jacquard"] .app-btn[data-name="signal"]::before { content: "KRAPP"; }
 [data-style="jacquard"] .app-btn[data-name="ethos"]::before  { content: "VEJDE"; }
 [data-style="jacquard"] .app-btn[data-name="hexis"]::before { content: "RESEDA"; }
+[data-style="jacquard"] .app-btn[data-name="scales"]::before { content: "KERMES"; }
+[data-style="jacquard"] .app-btn[data-name="sersys"]::before { content: "VAU"; }
 [data-style="jacquard"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
-/* --- SYNTES ÄR INSLAGET: den enda panelen som är väv, inte bara trådar.
-       Varpen bär alla tre växtfärgerna, korsad av inslag, och kanterna är
-       bundna stadkanter — där inslaget vänder. --- */
-[data-style="jacquard"] .app-row[data-app="syntes"] .app-btn {
+/* --- Färdig väv: varpen bär alla växtfärgerna, korsad av inslag, och
+       kanterna är bundna stadkanter — där inslaget vänder. Gäller alla
+       paneler utom den vilande, som aldrig blev vävd. --- */
+[data-style="jacquard"] .app-row:not(.is-dormant) .app-btn {
   background:
     linear-gradient(180deg, rgba(255, 252, 240, .45), transparent 45%), /* färdigt tyg fångar ljus */
     repeating-linear-gradient(0deg, rgba(42, 36, 26, .2) 0 2px, transparent 2px 6px),
@@ -115,9 +118,10 @@
   box-shadow: inset 0 1px 0 rgba(255, 252, 240, .5), 0 2px 10px -6px rgba(42, 36, 26, .8);
 }
 
-/* --- inslaget genom hela sidan: navets tvärlinje med skyttel (injiceras) --- */
+/* --- inslaget genom hela sidan: vävens tvärlinje med skyttel (injiceras i
+       vävstolen, inte i någon panel — skottet tillhör tyget) --- */
 [data-style="jacquard"] .jq-weft {
-  position: absolute; top: 50%; left: 50%; width: 100vw; height: 12px; margin-top: -6px;
+  position: fixed; top: 50%; left: 50%; width: 100vw; height: 12px; margin-top: -6px;
   transform: translateX(-50%); z-index: -1; pointer-events: none;
 }
 [data-style="jacquard"] .jq-weft .line {
@@ -131,8 +135,8 @@
   clip-path: polygon(0 50%, 22% 0, 78% 0, 100% 50%, 78% 100%, 22% 100%);
   opacity: 0;
 }
-[data-style="jacquard"] .app-row[data-app="syntes"]:has(.app-btn:is(:hover, :focus-visible)) .jq-weft .line { opacity: 1; }
-[data-style="jacquard"] .app-row[data-app="syntes"]:has(.app-btn:is(:hover, :focus-visible)) .jq-weft .shuttle {
+[data-style="jacquard"] body:has(.app-row:not(.is-dormant) .app-btn:is(:hover, :focus-visible)) .jq-weft .line { opacity: 1; }
+[data-style="jacquard"] body:has(.app-row:not(.is-dormant) .app-btn:is(:hover, :focus-visible)) .jq-weft .shuttle {
   animation: jq-fly 1.5s cubic-bezier(.45, .05, .55, .95) both;
 }
 @keyframes jq-fly {
@@ -156,19 +160,21 @@
   opacity: .34;
   transition: transform .55s var(--anim-ease), opacity .55s ease;
 }
-/* navet öppnar skälet i hela väven: trådarna skiftar och tänds i tur och ordning
-   när skytteln passerar. De tre förhåller sig till navet — aldrig tvärtom. */
-[data-style="jacquard"] body:has(.app-row[data-app="syntes"] .app-btn:is(:hover, :focus-visible)) .jq-loom .th {
+/* vilken tråd som helst öppnar skälet: varpen skiftar varannan åt vardera
+   hållet och trådarna tänds i tur och ordning när skytteln passerar. Den
+   avklippta tråden skiftar med — men lyser inte, den bär inget skott. */
+[data-style="jacquard"] body:has(.app-row:not(.is-dormant) .app-btn:is(:hover, :focus-visible)) .jq-loom .th {
   opacity: .78; animation: jq-puls 1.5s ease-out var(--d) both;
 }
-[data-style="jacquard"] body:has(.app-row[data-app="syntes"] .app-btn:is(:hover, :focus-visible)) .jq-loom .th:nth-child(odd) { transform: translateX(-7px); }
-[data-style="jacquard"] body:has(.app-row[data-app="syntes"] .app-btn:is(:hover, :focus-visible)) .jq-loom .th:nth-child(even) { transform: translateX(7px); }
+[data-style="jacquard"] body:has(.app-row:not(.is-dormant) .app-btn:is(:hover, :focus-visible)) .jq-loom .th--av { animation: none; opacity: .3; }
+[data-style="jacquard"] body:has(.app-row:not(.is-dormant) .app-btn:is(:hover, :focus-visible)) .jq-loom .th:nth-child(odd) { transform: translateX(-7px); }
+[data-style="jacquard"] body:has(.app-row:not(.is-dormant) .app-btn:is(:hover, :focus-visible)) .jq-loom .th:nth-child(even) { transform: translateX(7px); }
 @keyframes jq-puls {
   0%, 100% { opacity: .78; box-shadow: none; }
   35%, 65% { opacity: 1; box-shadow: 0 0 7px 1px var(--c); }
 }
-/* underapparnas varp skiftar med skälet */
-[data-style="jacquard"] .rows:has(.app-row[data-app="syntes"] .app-btn:is(:hover, :focus-visible)) .app-row:not([data-app="syntes"]) .app-btn {
+/* hela väven skiftar med skälet, panel för panel */
+[data-style="jacquard"] .rows:has(.app-btn:is(:hover, :focus-visible)) .app-row:not(.is-dormant) .app-btn {
   background-position-x: 4px;
 }
 
@@ -189,41 +195,30 @@
 
 /* ---------- Hover-animationer: en per app ---------- */
 
-/* jacquard · skytteln far på tvären och binder tre lösa trådar till tyg */
-.viz--vav { display: flex; flex-direction: column; align-items: center; gap: 9px; }
-.viz--vav .loom { position: relative; width: min(212px, 62vw); height: 38px; }
-.viz--vav .tyg { /* tyget växer fram bakom skytteln — de tre färgerna korsade av inslag */
-  position: absolute; left: 0; right: 0; top: 0; height: 18px;
-  border-bottom: 1px solid rgba(42, 36, 26, .5); /* vävlinjen: här blir tråd tyg */
-  background:
-    repeating-linear-gradient(0deg, color-mix(in srgb, var(--jq-dark) 55%, transparent) 0 1px, transparent 1px 4px),
-    repeating-linear-gradient(90deg,
-      var(--jq-madder) 0 2px, transparent 2px 6px,
-      var(--jq-indigo) 6px 8px, transparent 8px 12px,
-      var(--jq-reseda) 12px 14px, transparent 14px 18px),
-    color-mix(in srgb, var(--jq-linen) 70%, #fff);
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path .9s var(--anim-ease) .2s;
+/* jacquard · varpstopp: tråden är avklippt mitt i stycket och de uppruggade
+   ändarna står kvar i skälet. Vävstolen stannar av sig själv när det händer. */
+.viz--avklippt { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.viz--avklippt .loom { position: relative; width: min(212px, 62vw); height: 38px; }
+.viz--avklippt .stump { /* den avklippta tråden: kommer uppifrån och tar slut */
+  position: absolute; left: 50%; top: 0; width: 2px; height: 40%; margin-left: -1px;
+  background: linear-gradient(180deg, var(--app-accent), color-mix(in srgb, var(--app-accent) 30%, transparent));
+  transform: scaleY(.2); transform-origin: top;
+  transition: transform .6s var(--anim-ease);
 }
-.viz--vav .warp { /* de lösa varptrådarna underifrån: en per underapp */
-  position: absolute; left: var(--x); bottom: 0; width: 3px; height: 20px; margin-left: -1.5px;
-  background: var(--c);
-  transform: scaleY(0); transform-origin: bottom;
-  transition: transform .4s var(--anim-ease) calc(var(--i) * .07s);
+.app-btn:is(:hover, :focus-visible) .viz--avklippt .stump { transform: scaleY(1); }
+.viz--avklippt .andar { /* de uppruggade fibrerna där snittet gick */
+  position: absolute; left: 50%; top: 40%; width: 26px; margin-left: -13px;
+  display: flex; justify-content: center; gap: 3px; height: 12px;
 }
-.viz--vav .skyttel { /* skytteln: en liten båt som bär inslaget */
-  position: absolute; top: 12px; left: 0; width: 17px; height: 10px; margin-left: -9px;
-  background: linear-gradient(180deg, #6E4E2C, #3E2C18);
-  clip-path: polygon(0 50%, 24% 0, 76% 0, 100% 50%, 76% 100%, 24% 100%);
-  box-shadow: 0 1px 2px rgba(42, 36, 26, .45);
-  opacity: 0;
-  transition: margin-left .9s var(--anim-ease) .2s, opacity .12s ease .2s;
+.viz--avklippt .andar i {
+  width: 1px; height: 100%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--app-accent) 60%, transparent), transparent);
+  transform-origin: top; transform: rotate(0deg) scaleY(.3); opacity: 0;
+  transition: transform .5s var(--anim-ease) calc(.35s + var(--i) * 55ms), opacity .3s ease calc(.35s + var(--i) * 55ms);
 }
-.app-btn:is(:hover, :focus-visible) .viz--vav .tyg { clip-path: inset(0 0 0 0); }
-.app-btn:is(:hover, :focus-visible) .viz--vav .warp { transform: scaleY(1); }
-.app-btn:is(:hover, :focus-visible) .viz--vav .skyttel { margin-left: calc(100% - 8px); opacity: 1; }
-.viz--vav .cap { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em; color: var(--muted); opacity: 0; transition: opacity .4s ease 1s; }
-.app-btn:is(:hover, :focus-visible) .viz--vav .cap { opacity: 1; }
+.app-btn:is(:hover, :focus-visible) .viz--avklippt .andar i { opacity: .8; transform: rotate(calc((var(--i) - 2.5) * 9deg)) scaleY(1); }
+.viz--avklippt .cap { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .18em; color: var(--muted); opacity: 0; transition: opacity .4s ease .9s; }
+.app-btn:is(:hover, :focus-visible) .viz--avklippt .cap { opacity: 1; }
 
 /* jacquard · varptråden knäpps an och darrar ut: marknaden som en spänd sträng */
 .viz--strang { display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(252px, 74vw); }
@@ -304,3 +299,45 @@
 .viz--trampa .cap { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease .3s; }
 .viz--trampa .cap b { font-weight: 600; color: var(--app-accent); }
 .app-btn:is(:hover, :focus-visible) .viz--trampa .cap { opacity: 1; }
+
+/* jacquard · kyperten byggs upp ruta för ruta: bindningen förskjuts ett steg
+   per skott, så mönstret klättrar diagonalt uppåt precis som en skala gör */
+.viz--kypert { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.viz--kypert .rutnat { display: grid; grid-template-columns: repeat(8, 5px); gap: 1px; }
+.viz--kypert .ruta {
+  width: 5px; height: 5px; background: color-mix(in srgb, var(--jq-linen) 60%, transparent);
+  opacity: 0; transform: scale(.4);
+  transition: opacity .2s ease calc(var(--i) * 11ms), transform .25s var(--anim-ease) calc(var(--i) * 11ms);
+}
+.viz--kypert .ruta--bind { background: var(--app-accent); }
+.app-btn:is(:hover, :focus-visible) .viz--kypert .ruta { opacity: 1; transform: scale(1); }
+.viz--kypert .cap { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .18em; color: var(--muted); opacity: 0; transition: opacity .4s ease .95s; }
+.app-btn:is(:hover, :focus-visible) .viz--kypert .cap { opacity: 1; }
+
+/* jacquard · granskningsbordet: väven dras förbi och en enda knut hittas och
+   märks ut. Fjorton meter tyg, ett fel — det är avläsningen. */
+.viz--granskning { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.viz--granskning .bana { position: relative; width: min(212px, 62vw); height: 30px; overflow: hidden; border-top: 1px solid #8A7754; border-bottom: 1px solid #8A7754; }
+.viz--granskning .tyg {
+  position: absolute; inset: 0; width: 200%;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--app-accent) 42%, transparent) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(0deg, rgba(42, 36, 26, .16) 0 2px, transparent 2px 5px);
+  transform: translateX(0);
+}
+.app-btn:is(:hover, :focus-visible) .viz--granskning .tyg { animation: jq-dra 2.4s linear infinite; }
+@keyframes jq-dra { to { transform: translateX(-50%); } }
+.viz--granskning .knut { /* felet: en knut som ringas in när den passerar */
+  position: absolute; left: 62%; top: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%; background: #A03A28;
+  box-shadow: 0 0 0 0 rgba(160, 58, 40, .6); opacity: 0;
+  transition: opacity .3s ease .8s;
+}
+.app-btn:is(:hover, :focus-visible) .viz--granskning .knut { opacity: 1; animation: jq-markera 1.6s ease-out .8s infinite; }
+@keyframes jq-markera {
+  0% { box-shadow: 0 0 0 0 rgba(160, 58, 40, .55); }
+  100% { box-shadow: 0 0 0 11px rgba(160, 58, 40, 0); }
+}
+.viz--granskning .cap { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em; color: var(--muted); opacity: 0; transition: opacity .4s ease 1s; }
+.viz--granskning .cap b { color: var(--app-accent); font-variant-numeric: tabular-nums; }
+.app-btn:is(:hover, :focus-visible) .viz--granskning .cap { opacity: 1; }

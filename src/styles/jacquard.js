@@ -1,36 +1,35 @@
 import './jacquard.css'
 import { makeCountEnhancer } from '../shared.js'
+import { apps } from '../apps.js'
 
-/* Jacquardväven: sidan är uppspänd i en vävstol. Tre färgade varptrådar löper
-   lodrätt bakom hela knappkolumnen (syns i gliporna mellan panelerna) — de tre
-   underapparna, parallella och utan kontakt. Navet får det enda som går på
-   tvären: ett inslag tvärs över hela sidan med en skyttel som far igenom
-   Syntes-panelen. Allt injiceras här och rivs vid stilbyte. */
+/* Jacquardväven: sidan är uppspänd i en vävstol. En färgad varptråd per app
+   löper lodrätt bakom hela knappkolumnen (syns i gliporna mellan panelerna) —
+   parallella och jämnstarka. Inslaget hör till väven, inte till någon app: ett
+   skott far tvärs över hela sidan när vilken tråd som helst hovras. Syntes
+   tråd är avklippt och stannar halvvägs. Allt injiceras här och rivs vid
+   stilbyte. */
+const VARPFARG = {
+  syntes: '#8A7C60', signal: '#A03A28', ethos: '#2C4A7E',
+  hexis: '#7C6A1C', scales: '#7E2C50', sersys: '#2C6E5E',
+}
+
 function jacquardEnhancer() {
   const cleanups = []
 
-  // Varpen: tre trådar i krapp, vejde och reseda — en per underapp.
+  // Varpen: en tråd per app, jämnt fördelade över kolumnens bredd.
   const loom = document.createElement('div')
   loom.className = 'jq-loom'
   loom.setAttribute('aria-hidden', 'true')
-  loom.innerHTML = `<i class="jq-column">${[
-    ['22%', '#A03A28', '.59s'],
-    ['50%', '#2C4A7E', '.75s'],
-    ['78%', '#7C6A1C', '.91s'],
-  ].map(([x, c, d]) => `<i class="th" style="--x:${x};--c:${c};--d:${d}"></i>`).join('')}</i>`
+  const tradar = apps.map((a, i) => {
+    const x = `${((i + 0.5) / apps.length * 100).toFixed(1)}%`
+    const d = `${(0.45 + i * 0.13).toFixed(2)}s`
+    return `<i class="th${a.dormant ? ' th--av' : ''}" style="--x:${x};--c:${VARPFARG[a.id]};--d:${d}"></i>`
+  }).join('')
+  loom.innerHTML = `<i class="jq-column">${tradar}
+    <span class="jq-weft"><i class="line"></i><i class="shuttle"></i></span>
+  </i>`
   document.body.prepend(loom)
   cleanups.push(() => loom.remove())
-
-  // Inslaget: navets tvärlinje genom hela sidan + skytteln som binder trådarna.
-  const hub = document.querySelector('.app-row[data-app="syntes"]')
-  if (hub) {
-    const weft = document.createElement('span')
-    weft.className = 'jq-weft'
-    weft.setAttribute('aria-hidden', 'true')
-    weft.innerHTML = '<i class="line"></i><i class="shuttle"></i>'
-    hub.appendChild(weft)
-    cleanups.push(() => weft.remove())
-  }
 
   cleanups.push(makeCountEnhancer('jacquard')())
   return () => cleanups.forEach((fn) => fn())
@@ -42,14 +41,12 @@ export default {
   anim: {
   syntes: `
   <div class="av" data-for="jacquard" aria-hidden="true">
-    <div class="viz viz--vav">
+    <div class="viz viz--avklippt">
       <span class="loom">
-        <i class="tyg"></i>
-        <i class="warp" style="--x:18%;--c:#A03A28;--i:0"></i>
-        <i class="warp" style="--x:50%;--c:#2C4A7E;--i:1"></i>
-        <i class="warp" style="--x:82%;--c:#7C6A1C;--i:2"></i>
-        <i class="skyttel"></i>
+        <i class="stump"></i>
+        <i class="andar">${[0, 1, 2, 3, 4, 5].map((i) => `<i style="--i:${i}"></i>`).join('')}</i>
       </span>
+      <span class="cap">VARPSTOPP</span>
     </div>
   </div>`,
   signal: `
@@ -86,6 +83,26 @@ export default {
         <i class="trampa"></i>
       </span>
       <span class="cap"><b class="count" data-to="12" data-suffix=" skott">0 skott</b></span>
+    </div>
+  </div>`,
+  scales: `
+  <div class="av" data-for="jacquard" aria-hidden="true">
+    <div class="viz viz--kypert">
+      <span class="rutnat">
+        ${Array.from({ length: 8 }, (_, r) => Array.from({ length: 8 }, (_, k) =>
+          `<i class="ruta${(k - r + 8) % 4 < 3 ? ' ruta--bind' : ''}" style="--i:${r * 8 + k}"></i>`).join('')).join('')}
+      </span>
+      <span class="cap">3/1 KYPERT</span>
+    </div>
+  </div>`,
+  sersys: `
+  <div class="av" data-for="jacquard" aria-hidden="true">
+    <div class="viz viz--granskning">
+      <span class="bana">
+        <i class="tyg"></i>
+        <i class="knut"></i>
+      </span>
+      <span class="cap"><b class="count" data-to="1" data-suffix=" fel · 14 m">0 fel · 14 m</b></span>
     </div>
   </div>`,
   },
