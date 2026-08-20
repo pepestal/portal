@@ -5,6 +5,18 @@
 >
 > 🟢 **Live:** [`https://portal.syntes.dev`](https://portal.syntes.dev) (sedan 2026-07-24),
 > bakom Authelia-login. Driftsättning: se [`DEPLOY.md`](DEPLOY.md).
+>
+> 🔴 **Registret är inaktuellt sedan 2026-08-20 — nästa uppdrag är beställt.** Portalen
+> visar fyra appar: en som inte längre finns (**Syntes**, navet revs den dagen), två med
+> fel namn (**Todos** heter Ethos, **Stronk** heter Hexis) och missar tre som lever
+> (**scales**, **ser/sys** — `kladd` ska medvetet inte in). Syntes-kortet länkar därmed
+> till en adress som svarar `404`.
+>
+> Samtidigt ska **samtliga 21 stilar mobilanpassas**: 14 av dem har ingen media query
+> alls, och repot bär 336 `:hover`-regler utan en enda `@media (hover: hover)` — på
+> Peters Pixel 9 är hover-innehåll osynligt, och ett tap ger sticky hover.
+>
+> Hela uppdraget, med mätvärden och fällor: [`PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md).
 
 Ingången för den som ska **ta vid**: var vi står, vad nästa steg är, och vilka
 beslut/förutsättningar som gäller just nu.
