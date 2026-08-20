@@ -145,31 +145,48 @@ sida som ryms i `100vh` kan ändå skrolla i `100dvh`.
 
 ---
 
-## Drag nedåt på mobil — redan löst, med två förbehåll
+## Drag nedåt på mobil — sidan äger gesten
 
-✅ **Ingenting behöver byggas.** `pickInitial()` i `src/main.js` slumpar redan en stil
-vid varje sidladdning och filtrerar bort den som visades sist. Verifierat 2026-08-20 med
-åtta omladdningar i rad på 412 px: `orrery vaxel fuga terminal jacquard bank orrery alv`
-— sju unika, aldrig samma två gånger i rad. `overscroll-behavior` är `auto` på både
-`html` och `body`, så webbläsarens egen pull-to-refresh är inte blockerad.
+🔴 **Rättelse 2026-08-21.** Det här avsnittet påstod tidigare att ingenting behövde
+byggas, eftersom `pickInitial()` slumpar en stil vid varje sidladdning och
+`overscroll-behavior` var `auto`. **Slutsatsen var fel, och verifieringen bakom den var
+otillräcklig:** den visade att en *omladdning* slumpar om stilen, inte att *gesten*
+utlöser en omladdning. Peter testade på sin Pixel 9 och gesten gjorde ingenting.
 
-🛑 **Bygg inte en egen pull-to-refresh-gest.** Den skulle ersätta en gest användaren
-redan kan, och kollidera med webbläsarens.
+Webbläsarens egen pull-to-refresh är en funktion i Chromes **gränssnitt**, inte i sidan.
+Den syns inte i DOM:en, går inte att känna av från JS, och finns inte alls i en
+headless-webbläsare. Den kan alltså varken verifieras eller felsökas härifrån — och en
+funktion som inte går att testa ska inte bära ett krav.
 
-Två förbehåll som måste hanteras:
+✅ **Sidan äger därför gesten själv** (`Drag nedåt = ny stil` i `src/main.js`):
 
-1. **Låset slår ut det.** `Lås`-knappen skriver `portal.lockedStyle` i localStorage, och
-   `pickInitial()` returnerar den låsta stilen före slumpen. Drag nedåt ger då samma stil
-   varje gång. Det är rimligt beteende — men det ska vara *synligt* att låset är på, och
-   knappen är i dag lätt att träffa av misstag på en telefon.
-2. **Pull-to-refresh kräver att sidan står i toppen.** Med skrollen borta gäller det
-   alltid — kravet på "aldrig skroll" är alltså det som *får* drag nedåt att fungera
-   pålitligt. De två kraven hänger ihop.
+- `overscroll-behavior-y: contain` på `<html>` stänger av webbläsarens variant, så de
+  två aldrig kan skjuta i samma rörelse.
+- Ett drag nedåt från sidans topp, längre än **88 px**, byter till en ny slumpad stil ur
+  den aktiva poolen — samma val som vid sidladdning, aldrig samma stil två gånger i rad.
+- En ring uppe i kanten följer fingret och tänds när tröskeln är passerad, så gesten är
+  synlig innan man släpper.
+- Bytet sker **i sidan**, inte som omladdning: omedelbart, ingen vit blink och ingen risk
+  för en ny Authelia-runda. Resultatet är detsamma — en ny slumpad stil.
 
-⚠️ **`lodet` binder `touchmove`** (`src/styles/lodet.js:195`) för att vinscha lodet.
-Lyssnaren är `passive`, så den kan inte blockera webbläsaren — men ett drag nedåt på
-lodet gör därmed **två saker samtidigt**: vinschar lodet och laddar om sidan. Det behöver
-ett beslut, se genomgången.
+Verifierat med syntetiska touch-events 2026-08-21 (`~/shots/drag-test.mjs`):
+
+| Gest | Utfall |
+|---|---|
+| Drag 140 px nedåt | ✅ stilen byts |
+| Drag 40 px (under tröskeln) | ✅ ignoreras |
+| Drag i sidled | ✅ ignoreras |
+| Drag uppåt | ✅ ignoreras |
+| Sex drag i rad | 5 unika, aldrig samma två i rad |
+| `lodet` | ✅ orörd — stilen äger dragrörelsen själv |
+
+⚠️ **Låset gäller före gesten.** Är en stil låst (`portal.lockedStyle`) ligger den kvar
+även vid drag. Det är avsiktligt — men knappen är lätt att träffa av misstag på en
+telefon, och att den är på borde synas tydligare än i dag.
+
+🛑 **`lodet` sätter `egenDrag: true`** i sin modul och undantas. Stilens hela mönsterbrott
+är att dragrörelsen vinschar ett lod i stället för att flytta sidan; att låta samma gest
+byta stil hade upphävt just det.
 
 ---
 

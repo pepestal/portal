@@ -58,6 +58,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Sidan äger dragrörelsen (se `Drag nedåt = ny stil` i main.js). Utan detta kan
+   webbläsarens egen pull-to-refresh skjuta i samma gest — och den går varken att
+   känna av eller stänga av från JS. */
+html { overscroll-behavior-y: contain; }
+
 body {
   min-height: 100dvh;
   background: var(--bg);
@@ -240,6 +245,29 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   [data-style="sinus"] .sn-lampa::before { opacity: 1; }
   [data-style="sinus"] :is(.live, .sn-nod) { opacity: 1; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* --- Dragindikatorn: syns bara under gesten, och bara på touch --- */
+.dragrefresh {
+  position: fixed; top: 0; left: 50%; z-index: 60;
+  transform: translate(-50%, calc(var(--d, 0px) - 100%));
+  pointer-events: none; opacity: 0;
+  transition: opacity .2s ease;
+}
+.dragrefresh.is-dragging { opacity: 1; }
+.dragrefresh__ring {
+  display: block; width: 34px; height: 34px; margin-top: 12px; border-radius: 50%;
+  border: 2px solid var(--line); border-top-color: var(--accent);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  transform: rotate(calc(var(--d, 0px) * 3));
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.dragrefresh.is-armed .dragrefresh__ring {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dragrefresh__ring { transform: none; }
 }
 
 /* ============================ Responsivt ============================ */

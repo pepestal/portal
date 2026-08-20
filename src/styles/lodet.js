@@ -352,6 +352,9 @@ export function lodetEnhancer() {
 
 export default {
   id: 'lodet',
+  /* Lodet vinschar med dragrörelsen — skelettets "drag nedåt = ny stil" måste
+     hålla sig undan här, annars betyder samma gest två saker. */
+  egenDrag: true,
   label: 'Lodet',
   chaos: true,      // kaosklass — visas bara bakom kaos-togglen
   fullscene: true,  // normalfallet i kaos: skelettet göms, scenen byggs här

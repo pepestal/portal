@@ -5,6 +5,24 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 
 ## [Ej släppt]
 
+### Tillagt
+- 🔴 **Drag nedåt på mobil byter stil — sidan äger gesten själv.** Portalen förlitade sig
+  på webbläsarens pull-to-refresh; **den utlöstes inte på Peters Pixel 9** (testat
+  2026-08-21). Den är en funktion i Chromes gränssnitt, inte i sidan: osynlig för DOM:en,
+  omöjlig att känna av från JS och obefintlig i en headless-webbläsare — alltså omöjlig
+  att verifiera. Den tidigare slutsatsen att "ingenting behöver byggas" byggde på ett test
+  som visade att *omladdning* slumpar om stilen, inte att *gesten* laddar om.
+  - `overscroll-behavior-y: contain` på `<html>` stänger av webbläsarens variant.
+  - Ett drag nedåt från toppen, längre än 88 px, byter till en ny slumpad stil ur den
+    aktiva poolen — aldrig samma två gånger i rad. En ring följer fingret och tänds vid
+    tröskeln.
+  - Bytet sker i sidan i stället för som omladdning: omedelbart, ingen vit blink, ingen
+    risk för en ny Authelia-runda.
+  - `lodet` sätter `egenDrag: true` och undantas — där vinschar dragrörelsen ett lod.
+  - Verifierat med syntetiska touch-events: 140 px byter, 40 px ignoreras, sidled
+    ignoreras, uppåt ignoreras, sex drag gav fem unika stilar utan upprepning i rad.
+
+
 ### Ändrat
 - 🔴 **Skelettet bygger om till rutnät: två spalter på dator, en nedskalad på mobil, och
   aldrig skroll** — kravet i [`LAYOUT.md`](LAYOUT.md). Mätt före: femton av sexton
