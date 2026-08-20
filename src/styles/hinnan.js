@@ -16,17 +16,18 @@
 //   2. DU ÄR PÅ ANDRA SIDAN. Pekaren trycker åt motsatt håll: den buktar IN
 //      hinnan, och rynkorna löper vidare som riktiga vågor (vågekvationen på
 //      ett höjdfält, inte en effekt). Två händer på var sin sida av samma duk.
-//   3. MATERIALET ÄR ÄNDLIGT. Dras en av de tre underapparna ut helt planas de
-//      andra två ut — det finns bara så mycket hinna. Det är därför sidan
-//      aldrig kan visa allt på en gång.
+//   3. MATERIALET ÄR ÄNDLIGT. Dras en av svällningarna ut helt planas de andra
+//      ut — det finns bara så mycket hinna. Det är därför sidan aldrig kan visa
+//      allt på en gång, och det märks tydligare med sex än det gjorde med tre.
 //   4. MATERIALET TAR STRYK. Där dina händer har varit ligger hinnan kvar en
 //      aning slak, och slakheten sparas mellan besöken (localStorage). Femte
 //      gången du kommer tillbaka har duken formen av dina egna vanor.
 //
-// Syntes är navet, och det är materiellt sant: navet ÄR den stora svällningen
-// som hela hinnan vilar över, och de tre trycker igenom PÅ den. Navets tryck är
-// det som lyfter dem alls, så det kan aldrig ligga lägre än den högsta av de
-// tre — och de tre konkurrerar om materialet, aldrig navet.
+// Ingen av svällningarna bär de andra. De ligger på samma hinna och konkurrerar
+// om samma material, jämnstarka. Undantaget är Syntes, och undantaget är
+// materiellt sant: där har hinnan förlorat sin spänst. Trycket bakifrån är
+// borta, så svällningen reser sig aldrig helt och bokstäverna skärps aldrig —
+// man ser att det finns en plats, men inte vad som skulle stått där.
 //
 // Och: när du står stilla en stund märker det som är bakom att du slutat röra
 // dig. Kommer du för nära drar det sig undan.
@@ -53,13 +54,14 @@ import { apps } from '../apps.js'
 import stats from '../data/stats.json'
 
 const appById = Object.fromEntries(apps.map((a) => [a.id, a]))
-const CHILD_IDS = ['signal', 'ethos', 'hexis']
+const NODE_IDS = apps.map((a) => a.id)
+const LEVANDE = apps.filter((a) => !a.dormant).map((a) => a.id)
 
 /* Storleken är riktig data: radien skalar med rader^¼ ur stats.json,
    normerad mot de tres geometriska medelvärde så skalan aldrig blir
    inaktuell när repona växer. */
 const linesOf = (id) => stats.projects[id]?.lines || 1000
-const GEO = Math.exp(CHILD_IDS.reduce((s, id) => s + Math.log(linesOf(id)), 0) / CHILD_IDS.length)
+const GEO = Math.exp(LEVANDE.reduce((s, id) => s + Math.log(linesOf(id)), 0) / LEVANDE.length)
 const sizeOf = (id) => Math.max(0.62, Math.min(1.7, Math.pow(linesOf(id) / GEO, 0.25)))
 
 /* --- Materialets konstanter (per simuleringssteg, 2 steg per bildruta) --- */
@@ -110,16 +112,11 @@ export function hinnanEnhancer() {
   }
 
   /* ------------------------------- Scenen ------------------------------- */
-  const hubApp = appById.syntes || { url: '#', name: 'Syntes' }
   const scene = document.createElement('div')
   scene.className = 'hin-scene' + (reduce ? ' is-static' : '')
   scene.innerHTML = `
     <canvas class="hin-canvas" aria-hidden="true"></canvas>
-    <a class="hin-node hin-node--hub" href="${hubApp.url}" data-app="syntes"><span class="hin-name">${hubApp.name}</span></a>
-    ${CHILD_IDS.map((id) => {
-      const app = appById[id] || { url: '#', name: id }
-      return `<a class="hin-node" href="${app.url}" data-app="${id}"><span class="hin-name">${app.name}</span></a>`
-    }).join('')}
+    ${apps.map((a) => `<a class="hin-node${a.dormant ? ' hin-node--slak' : ''}"${a.dormant ? '' : ` href="${a.url}"`} data-app="${a.id}"><span class="hin-name">${a.name}</span></a>`).join('')}
     <div class="hin-vig" aria-hidden="true"></div>`
   document.body.appendChild(scene)
   cleanups.push(() => scene.remove())
@@ -134,16 +131,16 @@ export function hinnanEnhancer() {
   const HAS_TRACKING = 'letterSpacing' in mctx
 
   const nodeEls = [...scene.querySelectorAll('.hin-node')]
-  const hub = {
-    id: 'syntes', name: hubApp.name, el: nodeEls[0], hubb: true,
-    x: 0, y: 0, rx: 1, ry: 1, base: 0.32, press: 0.32, hover: false, mask: null, font: 0, track: 0,
-  }
-  const kids = CHILD_IDS.map((id, i) => ({
-    id, name: (appById[id] || { name: id }).name, el: nodeEls[i + 1], hubb: false,
-    x: 0, y: 0, rx: 1, ry: 1, base: 0.26, press: 0.26, hover: false, mask: null, font: 0, track: 0,
-    k: sizeOf(id),
+  /* `slak`: hinnan har tappat spänsten där. Svällningen har en lägre vila och
+     ett tak långt under de andras — den kan aldrig tryckas ut helt. */
+  const nodes = apps.map((a, i) => ({
+    id: a.id, name: a.name, el: nodeEls[i], slak: !!a.dormant,
+    x: 0, y: 0, rx: 1, ry: 1,
+    base: a.dormant ? 0.10 : 0.26, press: a.dormant ? 0.10 : 0.26,
+    tak: a.dormant ? 0.34 : 1,
+    hover: false, mask: null, font: 0, track: 0,
+    k: a.dormant ? 0.86 : sizeOf(a.id),
   }))
-  const nodes = [hub, ...kids]
 
   /* ------------------------------ Tillstånd ------------------------------ */
   let W = 0, H = 0, CELL = 4, gw = 0, gh = 0
@@ -236,10 +233,10 @@ export function hinnanEnhancer() {
 
   /* Svällningen + bokstäverna som en lokal mask kring nodens mittpunkt. */
   function buildMask(n) {
-    const fpCap = (n.hubb ? n.ry * 0.62 : n.ry * 0.52) / CELL
+    const fpCap = n.ry * 0.52 / CELL
     /* Reliefen får spilla ut på slät hinna runt svällningen, men aldrig in i
        grannens fack — på smal skärm är det luckan som sätter graden. */
-    const maxW = Math.min(n.hubb ? n.rx * 1.16 : n.rx * 1.42, n.slot || 1e5) / CELL
+    const maxW = Math.min(n.rx * 1.42, n.slot || 1e5) / CELL
     const text = n.name.toUpperCase()
     const fp = fitFont(text, maxW, fpCap)
     setFont(mctx, fp, fp * 0.16)
@@ -248,7 +245,7 @@ export function hinnanEnhancer() {
     const bh = Math.round(Math.max((2 * n.ry) / CELL, fp * 1.7) + 10)
     /* Platå med definierad skuldra — inte en mjuk kulle. Det är skillnaden
        mellan "något ligger under duken" och "duken har en buckla". */
-    const PLAT = n.hubb ? 0.30 : 0.62
+    const PLAT = 0.62
     const dome = new Float32Array(bw * bh)
     for (let j = 0; j < bh; j++) {
       const dy = ((j + 0.5 - bh / 2) * CELL) / n.ry
@@ -285,32 +282,31 @@ export function hinnanEnhancer() {
     topY = top
     const band = Math.max(300, H - top)
 
-    /* På bred skärm ligger de tre i rad på navets svällning. På smal skärm
-       ryms tre namn inte bredvid varandra utan att bli oläsliga, så raden
-       ställs på högkant i stället — samma ordning, samma relation till navet. */
+    /* Sex svällningar på samma hinna. På bred skärm två rader om tre; på smal
+       skärm en enda kolumn, för sex namn bredvid varandra blir oläsliga. Ingen
+       plats är förmer än en annan — det är bara rutnätet. */
     const stack = W < 620
-    hub.x = W / 2
-    hub.y = top + band * (stack ? 0.22 : 0.36)
-    hub.rx = Math.min(W * (stack ? 0.42 : 0.34), 620)
-    hub.ry = Math.min(band * (stack ? 0.16 : 0.27), 262)
+    const KOL = stack ? 1 : 3
+    const RAD = Math.ceil(nodes.length / KOL)
 
     // Radien är riktig data (rader^¼); golvet håller träffytan tumvänlig.
-    const R0 = stack ? Math.min(W * 0.13, band * 0.075) : Math.min(W * 0.072, band * 0.125, 118)
-    for (const k of kids) { k.rx = k.ry = Math.max(stack ? 36 : 44, R0 * k.k) }
-    const sum = kids.reduce((s, k) => s + k.ry * 2, 0)
+    const R0 = stack
+      ? Math.min(W * 0.13, band * 0.055)
+      : Math.min(W * 0.062, band * 0.105, 108)
+    for (const n of nodes) { n.rx = n.ry = Math.max(stack ? 32 : 40, R0 * n.k) }
 
-    if (stack) {
-      const y0 = hub.y + hub.ry + 18
-      const gap = Math.max(8, (H - 12 - y0 - sum) / (kids.length + 1))
-      let cy = y0 + gap
-      for (const k of kids) { k.x = W / 2; k.y = cy + k.ry; k.slot = W * 0.88; cy += k.ry * 2 + gap }
-    } else {
-      const maxR = kids.reduce((m, k) => Math.max(m, k.ry), 0)
-      const kidY = Math.min(H - maxR - 16, hub.y + hub.ry * 0.9 + maxR * 0.5)
-      const gap = Math.max(10, (W * 0.9 - sum) / (kids.length + 1))
-      let cx = W * 0.05 + gap
-      for (const k of kids) { k.x = cx + k.rx; k.y = kidY; k.slot = k.rx * 2 + gap * 0.9; cx += k.rx * 2 + gap }
-    }
+    /* Marginalen är inte kosmetisk: namnet pressas ut som relief i höjdfältet
+       och blir bredare än svällningen själv. Ligger en kolumn för nära kanten
+       kapas bokstäverna av canvasranden. */
+    const MARG = stack ? 0.06 : 0.09
+    const cellW = (W * (1 - MARG * 2)) / KOL
+    const cellH = (band - 24) / RAD
+    nodes.forEach((n, i) => {
+      const c = i % KOL, r = Math.floor(i / KOL)
+      n.x = W * MARG + cellW * (c + 0.5)
+      n.y = top + 12 + cellH * (r + 0.5)
+      n.slot = cellW * 0.9
+    })
 
     for (const nd of nodes) {
       buildMask(nd)
@@ -357,7 +353,7 @@ export function hinnanEnhancer() {
     target.set(creepField)
     for (const n of nodes) {
       const p = n.press
-      const amp = (n.hubb ? 0.50 : 0.86) * p * (n.hubb ? 1 + breath * 0.06 : 1)
+      const amp = 0.86 * p
       addMask(n.mask, amp, 0.18 + 0.42 * Math.pow(p, 1.5))
     }
     if (hand.amp > 0.002 && hand.mask) {
@@ -537,12 +533,11 @@ export function hinnanEnhancer() {
   /* Med reduced motion finns ingen våg. Måltillståndet slätas ut några gånger
      i stället — det ger samma mjuka material utan en enda rörelse. */
   function solveStatic() {
-    // Samma ändliga material som i rörelse, bara löst i ett steg: hovras en av
-    // de tre planas de andra två ut, och navet ligger aldrig lägre än den högsta.
-    let maxKid = 0
-    for (const k of kids) { k.press = k.hover ? 1 : k.base + 0.22; maxKid = Math.max(maxKid, k.hover ? 1 : 0) }
-    for (const k of kids) if (!k.hover) k.press *= 1 - 0.5 * maxKid
-    hub.press = Math.max(hub.hover ? 1 : hub.base + 0.22, 0.42 + 0.5 * maxKid)
+    // Samma ändliga material som i rörelse, bara löst i ett steg: hovras en
+    // svällning planas de andra ut. Den slaka når aldrig sitt tak.
+    let maxAnnan = 0
+    for (const n of nodes) { n.press = Math.min(n.tak, n.hover ? 1 : n.base + 0.22); maxAnnan = Math.max(maxAnnan, n.hover ? 1 : 0) }
+    for (const n of nodes) if (!n.hover) n.press *= 1 - 0.5 * maxAnnan
     buildTarget()
     h = blur(Float32Array.from(target), gw, gh, 3)
     for (let i = 0; i < gw; i++) { h[i] = 0; h[(gh - 1) * gw + i] = 0 }
@@ -586,20 +581,15 @@ export function hinnanEnhancer() {
       creep[k] = Math.min(1, creep[k] + dt * 0.09)
     }
 
-    /* Efterfrågan. De tre konkurrerar om ändligt material: den som dras ut
-       planar ut de andra två. Navet konkurrerar aldrig — dess tryck är det som
-       lyfter dem, så det kan inte ligga lägre än den högsta av dem. */
-    let maxKid = 0
-    for (const k of kids) {
-      k.raw = k.hover ? 1 : Math.max(k.base, proximity(k))
-      maxKid = Math.max(maxKid, k.raw)
+    /* Efterfrågan. Alla sex konkurrerar om samma ändliga material: den som dras
+       ut planar ut de övriga. Ingen av dem är undantagen — utom den slaka, som
+       har ett tak den aldrig kommer över hur mycket material som än finns. */
+    for (const n of nodes) n.raw = Math.min(n.tak, n.hover ? 1 : Math.max(n.base, proximity(n)))
+    for (const n of nodes) {
+      let annan = 0
+      for (const o of nodes) if (o !== n) annan = Math.max(annan, o.raw - o.base)
+      n.want = n.raw * (1 - 0.66 * annan) * (1 - 0.34 * hand.amp)
     }
-    for (const k of kids) {
-      let other = 0
-      for (const o of kids) if (o !== k) other = Math.max(other, o.raw - o.base)
-      k.want = k.raw * (1 - 0.66 * other) * (1 - 0.34 * hand.amp)
-    }
-    hub.want = Math.max(hub.hover ? 1 : Math.max(hub.base, proximity(hub)), 0.42 + 0.5 * maxKid) * (1 - 0.3 * hand.amp)
 
     for (const n of nodes) {
       const w = n.want
@@ -651,9 +641,9 @@ export function hinnanEnhancer() {
           const a = a0 + (i / 7) * Math.PI * 2
           const x = Math.min(W - mx, Math.max(mx, bx + Math.cos(a) * rr))
           const y = Math.min(H - my, Math.max(topY + my, by + Math.sin(a) * rr))
-          // ... och aldrig ovanpå en av de tre, där formerna skulle slåss
+          // ... och aldrig ovanpå en svällning, där formerna skulle slåss
           let clear = 1e4
-          for (const k of kids) clear = Math.min(clear, Math.hypot(x - k.x, y - k.y) - k.rx * 1.5)
+          for (const n of nodes) clear = Math.min(clear, Math.hypot(x - n.x, y - n.y) - n.rx * 1.5)
           const d = (ptr.on ? Math.min(Math.hypot(x - bx, y - by), 300) : 300) + 1.2 * Math.min(clear, 240)
           if (d > bestD) { bestD = d; bx2 = x; by2 = y }
         }
