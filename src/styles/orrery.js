@@ -4,8 +4,10 @@
 // Till skillnad från de övriga stilarna (som bara klär om det delade skelettet)
 // tar Orrery över hela vyn: `[data-style="orrery"]` döljer knappkolumnen och
 // systemhälsan via CSS, och den här enhancern bygger en egen scen — Portal som
-// ett himlainstrument. De tre världarna ÄR app-länkarna — och navet i mitten
-// är den fjärde: Syntes, hjärtat som pumpar information mellan världarna.
+// ett himlainstrument. Världarna ÄR app-länkarna. I mitten sitter ingen app,
+// utan instrumentets egen axeltapp: en orrery är en mekanism, och mekanismen
+// är inte en av kropparna den bär. Syntes är en av världarna som alla andra —
+// men utslocknad, en kropp som slutat lysa och ändå ligger kvar i banan.
 //
 // Byggs vid stilbyte och rivs av cleanup (samma livscykel som singularitet/
 // kvitto). Skiljer sig medvetet från `singularitet` genom radiell komposition
@@ -28,15 +30,10 @@ const appById = Object.fromEntries(apps.map((a) => [a.id, a]))
 // och ett värde som räknas upp.
 const WORLDS = [
   {
-    id: 'signal', angle: 225, r: 38, hue: '#6FD8E3', coord: 'R .38 · θ 225°', tag: 'portfölj · +2,4 %',
-    value: { to: 42318, prefix: '$', suffix: '' },
-    essence: `
-      <svg class="orr-spark" viewBox="0 0 100 32" preserveAspectRatio="none">
-        <line class="orr-spark__grid" x1="0" y1="16" x2="100" y2="16" />
-        <path class="orr-spark__fill" d="M2,24 C16,22 24,10 38,14 S66,4 80,10 96,3 98,6 L98,32 L2,32 Z" />
-        <path class="orr-spark__ln" d="M2,24 C16,22 24,10 38,14 S66,4 80,10 96,3 98,6" />
-        <circle class="orr-spark__pt" cx="98" cy="6" r="2.4" />
-      </svg>`,
+    // Utslocknad kropp: ligger kvar i sin bana, men inget lyser och den går
+    // inte att öppna. `dark: true` styr både länken och orbens material.
+    id: 'syntes', angle: 345, r: 36, hue: '#6E7480', coord: 'R .36 · θ 345°', tag: '404',
+    dark: true,
   },
   {
     id: 'ethos', angle: 45, r: 25, hue: '#D9B36A', coord: 'R .25 · θ 045°', tag: 'uppgifter · idag',
@@ -46,6 +43,15 @@ const WORLDS = [
         ${['pull main', 'write tests', 'deploy'].map((t, i) => `
           <span class="orr-row" style="--i:${i}"><span class="orr-bx">[<b>x</b>]</span>${t}</span>`).join('')}
       </span>`,
+  },
+  {
+    id: 'sersys', angle: 105, r: 34, hue: '#B49BE0', coord: 'R .34 · θ 105°', tag: 'larm · hållna',
+    value: { to: 1, prefix: '', suffix: ' av 14' },
+    essence: `
+      <svg class="orr-fyr" viewBox="0 0 100 32" preserveAspectRatio="xMidYMid meet">
+        ${[0, 1, 2].map((i) => `<circle class="orr-fyr__ring" style="--i:${i}" cx="50" cy="16" r="6" />`).join('')}
+        <circle class="orr-fyr__pt" cx="50" cy="16" r="3" />
+      </svg>`,
   },
   {
     id: 'hexis', angle: 150, r: 32, hue: '#DE8A76', coord: 'R .32 · θ 150°', tag: 'set 3/3 · 12 reps',
@@ -61,26 +67,55 @@ const WORLDS = [
         <span class="orr-plate" style="--i:2;height:14px"></span>
       </span>`,
   },
+  {
+    id: 'signal', angle: 225, r: 38, hue: '#6FD8E3', coord: 'R .38 · θ 225°', tag: 'portfölj · +2,4 %',
+    value: { to: 42318, prefix: '$', suffix: '' },
+    essence: `
+      <svg class="orr-spark" viewBox="0 0 100 32" preserveAspectRatio="none">
+        <line class="orr-spark__grid" x1="0" y1="16" x2="100" y2="16" />
+        <path class="orr-spark__fill" d="M2,24 C16,22 24,10 38,14 S66,4 80,10 96,3 98,6 L98,32 L2,32 Z" />
+        <path class="orr-spark__ln" d="M2,24 C16,22 24,10 38,14 S66,4 80,10 96,3 98,6" />
+        <circle class="orr-spark__pt" cx="98" cy="6" r="2.4" />
+      </svg>`,
+  },
+  {
+    id: 'scales', angle: 285, r: 27, hue: '#8FB8FF', coord: 'R .27 · θ 285°', tag: 'övat · 45 min',
+    value: { to: 72, prefix: '♩=', suffix: '' },
+    essence: `
+      <svg class="orr-skala" viewBox="0 0 100 32" preserveAspectRatio="xMidYMid meet">
+        ${[0, 1, 2, 3, 4].map((i) => `<line class="orr-skala__ln" x1="6" y1="${7 + i * 4.5}" x2="94" y2="${7 + i * 4.5}" />`).join('')}
+        ${[0, 1, 2, 3, 4, 5, 6].map((i) => `<circle class="orr-skala__nt" style="--i:${i}" cx="${16 + i * 11}" cy="${28 - i * 3}" r="2.6" />`).join('')}
+      </svg>`,
+  },
 ]
 
 function worldMarkup(w) {
   const rad = (w.angle - 90) * Math.PI / 180
   const x = (50 + w.r * Math.cos(rad)).toFixed(2)
   const y = (50 + w.r * Math.sin(rad)).toFixed(2)
-  const app = appById[w.id] || { name: w.id, url: '#' }
+  const app = appById[w.id]
   const v = w.value
-  return `
-    <a class="orr-world" href="${app.url}" data-app="${w.id}" data-hue="${w.hue}"
-       style="--hue:${w.hue};--x:${x}%;--y:${y}%" aria-label="Öppna ${app.name}">
-      <span class="orr-world__inner">
-        <span class="orr-ring-spin" aria-hidden="true"></span>
-        <span class="orr-wave" aria-hidden="true"></span>
-        <span class="orr-orb" aria-hidden="true"></span>
+  /* Den utslocknade kroppen är samma element med samma klasser — men utan
+     href, utan essens och utan värde att räkna upp. Det finns inget att läsa
+     av på en kropp som slutat lysa. */
+  const inne = w.dark ? `
+        <span class="orr-essence" aria-hidden="true">
+          <span class="orr-tag">${w.tag}</span>
+        </span>` : `
         <span class="orr-essence" aria-hidden="true">
           ${w.essence}
           <span class="orr-value" data-to="${v.to}" data-prefix="${v.prefix}" data-suffix="${v.suffix}">${v.prefix}0${v.suffix}</span>
           <span class="orr-tag">${w.tag}</span>
-        </span>
+        </span>`
+  return `
+    <a class="orr-world${w.dark ? ' orr-world--dark' : ''}"${w.dark ? '' : ` href="${app.url}"`}
+       data-app="${w.id}" data-hue="${w.hue}"
+       style="--hue:${w.hue};--x:${x}%;--y:${y}%"
+       ${w.dark ? `aria-disabled="true" aria-label="${app.name} — vilande"` : `aria-label="Öppna ${app.name}"`}>
+      <span class="orr-world__inner">
+        <span class="orr-ring-spin" aria-hidden="true"></span>
+        <span class="orr-wave" aria-hidden="true"></span>
+        <span class="orr-orb" aria-hidden="true"></span>${inne}
         <span class="orr-label">
           <span class="orr-name">${app.name}</span>
           <span class="orr-coord">${w.coord}</span>
@@ -121,10 +156,7 @@ export function orreryEnhancer() {
           ${WORLDS.map((w) => `<line class="orr-radial" id="orr-radial-${w.id}" x1="500" y1="500" x2="500" y2="500" stroke="${w.hue}" />`).join('')}
           <g class="orr-ticks">${ticks}</g>
         </svg>
-        <a class="orr-core" href="${(appById.syntes || { url: '#' }).url}" data-app="syntes"
-           aria-label="Öppna Syntes — navet">
-          <span class="orr-core__label">Syntes</span>
-        </a>
+        <span class="orr-pivot" aria-hidden="true"></span>
         ${WORLDS.map(worldMarkup).join('')}
       </div>
     </div>
@@ -143,34 +175,6 @@ export function orreryEnhancer() {
       line.setAttribute('x2', (CX + R * Math.cos(rad)).toFixed(1))
       line.setAttribute('y2', (CY + R * Math.sin(rad)).toFixed(1))
     }
-  })
-
-  // Navet (Syntes) vaknar: siktlinjerna tänds OCH de tre världarna matar in stoft i
-  // hjärtat längs banorna — Syntes tar emot, syntetiserar och pumpar vidare.
-  const core = scene.querySelector('.orr-core')
-  const radials = WORLDS.map((w) => scene.querySelector('#orr-radial-' + w.id)).filter(Boolean)
-  const worldOrbs = [...scene.querySelectorAll('.orr-world')].map((w) => ({ orb: w.querySelector('.orr-orb'), hue: w.dataset.hue }))
-  let coreActive = false
-  const coreCenter = { x: 0, y: 0 }
-  const coreWake = () => {
-    radials.forEach((l) => { l.style.opacity = '.6' })
-    scene.classList.add('orr-nav-awake')
-    coreActive = true
-  }
-  const coreSleep = () => {
-    radials.forEach((l) => { l.style.opacity = '0' })
-    scene.classList.remove('orr-nav-awake')
-    coreActive = false
-  }
-  core.addEventListener('pointerenter', coreWake)
-  core.addEventListener('focus', coreWake)
-  core.addEventListener('pointerleave', coreSleep)
-  core.addEventListener('blur', coreSleep)
-  cleanups.push(() => {
-    core.removeEventListener('pointerenter', coreWake)
-    core.removeEventListener('focus', coreWake)
-    core.removeEventListener('pointerleave', coreSleep)
-    core.removeEventListener('blur', coreSleep)
   })
 
   // Kretsande stoft per bana: en box lika stor som banans diameter, prick i topp.
@@ -311,21 +315,6 @@ export function orreryEnhancer() {
     if (streams.length > 140) streams.shift()
   }
 
-  // Navet vaket: de tre världarna matar in stoft i hjärtat, längs banorna.
-  const spawnFeed = () => {
-    if (reduce || !coreActive || !worldOrbs.length) return
-    const wo = worldOrbs[(Math.random() * worldOrbs.length) | 0]
-    if (!wo.orb) return
-    const r = wo.orb.getBoundingClientRect()
-    streams.push({
-      x: r.left + r.width / 2 + (Math.random() * 14 - 7),
-      y: r.top + r.height / 2 + (Math.random() * 14 - 7),
-      tx: coreCenter.x, ty: coreCenter.y, life: 1, hue: wo.hue,
-      v: 0.015 + Math.random() * 0.02,
-    })
-    if (streams.length > 200) streams.shift()
-  }
-
   let running = true
   let last = performance.now()
   const loop = (now = performance.now()) => {
@@ -358,12 +347,6 @@ export function orreryEnhancer() {
     }
 
     if (activeTarget) { spawnStream(); spawnStream() }
-    if (coreActive) {
-      const cr = core.getBoundingClientRect()
-      coreCenter.x = cr.left + cr.width / 2
-      coreCenter.y = cr.top + cr.height / 2
-      spawnFeed(); spawnFeed(); spawnFeed()
-    }
     ctx.globalCompositeOperation = 'lighter'
     for (let i = streams.length - 1; i >= 0; i--) {
       const p = streams[i]
