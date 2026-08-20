@@ -7,12 +7,11 @@ export default {
   anim: {
   syntes: `
   <div class="av" data-for="vaxel" aria-hidden="true">
-    <div class="viz viz--patch">
+    <div class="viz viz--urkopplad">
       <span class="board">
-        <span class="jack" style="--i:0;--c:#C4574A"><i class="cord"></i></span>
-        <span class="jack" style="--i:1;--c:#86A268"><i class="cord"></i></span>
-        <span class="jack" style="--i:2;--c:#CB7C43"><i class="cord"></i></span>
+        <span class="jack"><i class="propp"></i></span>
       </span>
+      <span class="read">UR BRUK</span>
     </div>
   </div>`,
   signal: `
@@ -45,6 +44,23 @@ export default {
         <span class="crank"><i class="arm"></i></span>
       </span>
       <span class="cap"><b class="count" data-to="24" data-suffix=" vev">0 vev</b></span>
+    </div>
+  </div>`,
+  scales: `
+  <div class="av" data-for="vaxel" aria-hidden="true">
+    <div class="viz viz--klaviatur">
+      <span class="klav">
+        ${[0, 1, 2, 3, 4, 5, 6, 7].map((i) => `<i class="tang" style="--i:${i}"></i>`).join('')}
+        ${[0, 1, 3, 4, 5].map((i, n) => `<i class="tang tang--ov" style="--i:${n};--x:${i}"></i>`).join('')}
+      </span>
+      <span class="cap"><b class="count" data-to="8" data-suffix=" tangenter">0 tangenter</b></span>
+    </div>
+  </div>`,
+  sersys: `
+  <div class="av" data-for="vaxel" aria-hidden="true">
+    <div class="viz viz--klaff">
+      <span class="tavla">${Array.from({ length: 14 }, (_, i) => `<i class="kl${i === 8 ? ' kl--fall' : ''}" style="--i:${i}"></i>`).join('')}</span>
+      <span class="cap"><b class="count" data-to="1" data-suffix=" klaff av 14">0 klaff av 14</b></span>
     </div>
   </div>`,
   },
