@@ -66,7 +66,17 @@ export default {
   id: 'kvitto',
   label: 'Kvittot',
   anim: {
+  /* Kassören stryker raden: varan gick inte att expediera. Samma penna som
+     ringar in raden hos ser/sys — det är samma hand, olika besked. */
   syntes: `
+  <div class="av" data-for="kvitto" aria-hidden="true">
+    <div class="viz viz--struken">
+      <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+        <path class="ink" d="M6,26 C52,19 96,23 142,17 S186,14 194,12" pathLength="100" />
+      </svg>
+    </div>
+  </div>`,
+  sersys: `
   <div class="av" data-for="kvitto" aria-hidden="true">
     <div class="viz viz--encircle">
       <svg viewBox="0 0 200 40" preserveAspectRatio="none">
