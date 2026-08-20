@@ -64,7 +64,7 @@ export default {
       <span class="read">spänning <b class="count" data-to="512" data-suffix=" cN">0 cN</b></span>
     </div>
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="jacquard" aria-hidden="true">
     <div class="viz viz--halkort">
       <span class="card">
@@ -74,7 +74,7 @@ export default {
       <span class="cap">3 hål</span>
     </div>
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="jacquard" aria-hidden="true">
     <div class="viz viz--trampa">
       <span class="rig">

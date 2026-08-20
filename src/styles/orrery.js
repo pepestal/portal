@@ -39,7 +39,7 @@ const WORLDS = [
       </svg>`,
   },
   {
-    id: 'todos', angle: 45, r: 25, hue: '#D9B36A', coord: 'R .25 · θ 045°', tag: 'uppgifter · idag',
+    id: 'ethos', angle: 45, r: 25, hue: '#D9B36A', coord: 'R .25 · θ 045°', tag: 'uppgifter · idag',
     value: { to: 3, prefix: '', suffix: '/3 klart' },
     essence: `
       <span class="orr-checklist">
@@ -48,7 +48,7 @@ const WORLDS = [
       </span>`,
   },
   {
-    id: 'stronk', angle: 150, r: 32, hue: '#DE8A76', coord: 'R .32 · θ 150°', tag: 'set 3/3 · 12 reps',
+    id: 'hexis', angle: 150, r: 32, hue: '#DE8A76', coord: 'R .32 · θ 150°', tag: 'set 3/3 · 12 reps',
     value: { to: 60, prefix: '', suffix: ' kg' },
     essence: `
       <span class="orr-barbell">

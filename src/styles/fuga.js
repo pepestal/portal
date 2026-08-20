@@ -113,8 +113,8 @@ function fgSystem(x0, x1, bas, sp = FG_SP) {
 const FG_STAMMOR = [
   ['syntes', 0, 1, 'DUX'],           // ställer temat i takt 1
   ['signal', 2, 3, 'COMES'],         // tiger två takter, faller in i t. 3
-  ['todos', 4, 5, 'INVERSIO'],
-  ['stronk', 6, 7, 'AUGMENTATIO'],
+  ['ethos', 4, 5, 'INVERSIO'],
+  ['hexis', 6, 7, 'AUGMENTATIO'],
 ]
 const FG_MM = 72
 const FG_TAKT = (60 / FG_MM) * 4                    // en 4/4-takt i sekunder
@@ -203,8 +203,8 @@ function fugaEnhancer() {
     // rösterna hinner inte vänta på varandra längre, och navet håller alla fyra.
     const stretto = [
       ['signal', FG_COMES.slice(0, 4), 6],
-      ['todos', FG_INV.slice(0, 4), 12],
-      ['stronk', FG_AUG.slice(0, 2), 18],
+      ['ethos', FG_INV.slice(0, 4), 12],
+      ['hexis', FG_AUG.slice(0, 2), 18],
     ]
     const hoger = visa ? FG_STAMMOR.map(([id, paus, takt, namn], i) => {
       const bas = basar[i]
@@ -218,8 +218,8 @@ function fugaEnhancer() {
           <g class="fg-dux-eko">${fgNoter(FG_SUBJ, { x0: xr, k: kv, bas, sp }).svg}</g>
         </g>`
       }
-      const noter = { signal: FG_COMES, todos: FG_INV, stronk: FG_AUG }[id]
-      const kk = id === 'stronk' ? k * .55 : k
+      const noter = { signal: FG_COMES, ethos: FG_INV, hexis: FG_AUG }[id]
+      const kk = id === 'hexis' ? k * .55 : k
       return `<g class="fg-harledning" data-app="${id}">${lbl}${fgNoter(noter, { x0: xr, k: kk, bas, sp }).svg}</g>`
     }).join('') : ''
 
@@ -248,8 +248,8 @@ export default {
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
         ${fgSystem(6, 212, 34)}
         <g class="insats" data-app="signal">${fgNoter(FG_COMES.slice(0, 4), { x0: 86, k: 5 }).svg}</g>
-        <g class="insats" data-app="todos">${fgNoter(FG_INV.slice(0, 4), { x0: 116, k: 5 }).svg}</g>
-        <g class="insats" data-app="stronk">${fgNoter(FG_AUG.slice(0, 2), { x0: 146, k: 5 }).svg}</g>
+        <g class="insats" data-app="ethos">${fgNoter(FG_INV.slice(0, 4), { x0: 116, k: 5 }).svg}</g>
+        <g class="insats" data-app="hexis">${fgNoter(FG_AUG.slice(0, 2), { x0: 146, k: 5 }).svg}</g>
         <g class="dux">${fgNoter(FG_SUBJ, { x0: 56, k: 5 }).svg}</g>
       </svg>
       <span class="cap">STRETTO · <b class="count" data-to="4" data-suffix=" INSATSER">0 INSATSER</b></span>
@@ -275,7 +275,7 @@ export default {
      Varje not faller till sin spegelbild — uppgången blir nedgång, kadensen
      blir sitt eget svar. Axeln är ritad, för utan den är speglingen inte
      mätbar: inversionen har ingen egen tonföljd, bara subjektets och en axel. */
-  todos: `
+  ethos: `
   <div class="av" data-for="fuga" aria-hidden="true">
     <div class="viz viz--inversio">
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
@@ -292,7 +292,7 @@ export default {
      samma subjekt tar plötsligt fyra takter i stället för två. Noterna glider
      isär, huvudena öppnar sig (halv- och helnoter), och två taktstreck till
      måste dras för att rymma det. Tyngdlyftarens variant av samma tema. */
-  stronk: `
+  hexis: `
   <div class="av" data-for="fuga" aria-hidden="true">
     <div class="viz viz--augmentatio">
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">

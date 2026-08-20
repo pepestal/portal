@@ -9,8 +9,8 @@
 }
 [data-style="bank"] .app-row[data-app="syntes"] { --app-accent: #C6CAD3; }
 [data-style="bank"] .app-row[data-app="signal"] { --app-accent: #9BB0C9; }
-[data-style="bank"] .app-row[data-app="todos"]  { --app-accent: #C9B79C; }
-[data-style="bank"] .app-row[data-app="stronk"] { --app-accent: #C99C9C; }
+[data-style="bank"] .app-row[data-app="ethos"]  { --app-accent: #C9B79C; }
+[data-style="bank"] .app-row[data-app="hexis"] { --app-accent: #C99C9C; }
 [data-style="bank"] .app-btn { box-shadow: 0 6px 26px -14px rgba(0, 0, 0, .7); }
 [data-style="bank"] .app-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px -18px rgba(0, 0, 0, .85); }
 [data-style="bank"] .app-btn__name { text-transform: uppercase; letter-spacing: .28em; font-size: 1.15rem; font-weight: 500; }

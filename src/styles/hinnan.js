@@ -53,7 +53,7 @@ import { apps } from '../apps.js'
 import stats from '../data/stats.json'
 
 const appById = Object.fromEntries(apps.map((a) => [a.id, a]))
-const CHILD_IDS = ['signal', 'todos', 'stronk']
+const CHILD_IDS = ['signal', 'ethos', 'hexis']
 
 /* Storleken är riktig data: radien skalar med rader^¼ ur stats.json,
    normerad mot de tres geometriska medelvärde så skalan aldrig blir

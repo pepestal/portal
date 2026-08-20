@@ -32,7 +32,7 @@ export default {
       <span class="val count" data-to="42318" data-prefix="$">$0</span>
     </div>
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="bank" aria-hidden="true">
     <div class="viz viz--ring">
       <svg viewBox="0 0 44 44">
@@ -42,7 +42,7 @@ export default {
       </svg>
     </div>
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="bank" aria-hidden="true">
     <div class="viz viz--plates">
       <div class="rack">

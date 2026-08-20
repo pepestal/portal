@@ -46,11 +46,11 @@ const linesOf = (id) => stats.projects[id]?.lines || 1000
 const metersOf = (id) => Math.max(12, Math.round(1.6 * Math.sqrt(linesOf(id))))
 const clamp01 = (v) => Math.max(0, Math.min(1, v))
 
-const HUES = { signal: '#C792FF', todos: '#6FE7FF', stronk: '#FFB84D' }
+const HUES = { signal: '#C792FF', ethos: '#6FE7FF', hexis: '#FFB84D' }
 const DEPTHS = [0.26, 0.50, 0.74]
 const HX = [0.30, 0.68, 0.46]
 // Grunt → djupt efter STIGANDE radantal — riktig data styr ordningen, inte färgen.
-const LURE_IDS = ['signal', 'todos', 'stronk'].sort((a, b) => linesOf(a) - linesOf(b))
+const LURE_IDS = ['signal', 'ethos', 'hexis'].sort((a, b) => linesOf(a) - linesOf(b))
 const LURES = LURE_IDS.map((id, i) => ({ id, depth: DEPTHS[i], hx: HX[i], hue: HUES[id] }))
 
 const REACH = 0.16

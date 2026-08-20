@@ -107,7 +107,7 @@
 .orr-world:is(:hover, :focus-visible) .orr-spark__fill { opacity: 1; }
 .orr-world:is(:hover, :focus-visible) .orr-spark__pt { opacity: 1; transform: scale(1); }
 
-/* Todos: uppgifter bockas av */
+/* Ethos: uppgifter bockas av */
 .orr-checklist { display: grid; gap: 3px; font-size: .58rem; color: var(--muted); }
 .orr-checklist .orr-row { position: relative; display: flex; align-items: center; gap: .5ch; white-space: nowrap; transition: color .3s ease calc(var(--i) * .12s + .2s); }
 .orr-checklist .orr-bx { position: relative; width: 1.2ch; color: var(--muted); }
@@ -117,7 +117,7 @@
 .orr-world:is(:hover, :focus-visible) .orr-checklist .orr-bx b { opacity: 1; }
 .orr-world:is(:hover, :focus-visible) .orr-checklist .orr-row::after { transform: scaleX(1); }
 
-/* Stronk: skivstång laddas */
+/* Hexis: skivstång laddas */
 .orr-barbell { display: flex; align-items: center; justify-content: center; gap: 2px; height: 30px; }
 .orr-barbell .orr-bar { width: 54px; height: 3px; background: var(--muted); border-radius: 2px; }
 .orr-barbell .orr-plate { width: 5px; border-radius: 1px; background: var(--hue); align-self: center; opacity: 0; transform: translateY(6px) scaleY(.5); transform-origin: center; transition: opacity .3s ease calc(var(--i) * .09s + .15s), transform .4s var(--anim-ease) calc(var(--i) * .09s + .15s); }

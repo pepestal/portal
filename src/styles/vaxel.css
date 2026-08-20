@@ -4,7 +4,7 @@
    genom telefonisten — hovra en underapp och inkommande-lampan ringer på
    Syntes-panelen (`:has`-koppling nedan). Underapparna är abonnenter med
    anknytningsnummer; hover per app: proppar i jack (Syntes), telegramremsa
-   i morse (Signal), samtalskö som expedieras (Todos), magnetvev (Stronk).
+   i morse (Signal), samtalskö som expedieras (Ethos), magnetvev (Hexis).
    Tangentbordsfokus ger samma upplevelse som hover (`:is(:hover, :focus-visible)`).
    ========================================================================= */
 [data-style="vaxel"] {
@@ -22,8 +22,8 @@
 }
 [data-style="vaxel"] .app-row[data-app="syntes"] { --app-accent: #E3B54B; }
 [data-style="vaxel"] .app-row[data-app="signal"] { --app-accent: #C4574A; }
-[data-style="vaxel"] .app-row[data-app="todos"]  { --app-accent: #86A268; }
-[data-style="vaxel"] .app-row[data-app="stronk"] { --app-accent: #CB7C43; }
+[data-style="vaxel"] .app-row[data-app="ethos"]  { --app-accent: #86A268; }
+[data-style="vaxel"] .app-row[data-app="hexis"] { --app-accent: #CB7C43; }
 
 /* --- topbar: stationens mässingsskylt --- */
 [data-style="vaxel"] .wordmark { font-family: var(--font-serif); font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: var(--vx-brass); }
@@ -68,8 +68,8 @@
 }
 [data-style="vaxel"] .app-btn[data-name="syntes"]::before { content: "VÄXELBORD"; color: var(--vx-brass); }
 [data-style="vaxel"] .app-btn[data-name="signal"]::before { content: "ANKN. 101"; }
-[data-style="vaxel"] .app-btn[data-name="todos"]::before  { content: "ANKN. 202"; }
-[data-style="vaxel"] .app-btn[data-name="stronk"]::before { content: "ANKN. 303"; }
+[data-style="vaxel"] .app-btn[data-name="ethos"]::before  { content: "ANKN. 202"; }
+[data-style="vaxel"] .app-btn[data-name="hexis"]::before { content: "ANKN. 303"; }
 [data-style="vaxel"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* --- SYNTES ÄR VÄXELBORDET: mässingsram + inkommande-lampa. Hovra en

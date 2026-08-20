@@ -21,8 +21,8 @@
 [data-style="singularitet"] .app-row[data-app="signal"] { --app-accent: #4ADE9C; --app-accent-2: #2DD4BF; }
 /* navet är den största porten — hjärtat de andra kretsar kring */
 [data-style="singularitet"] .app-row[data-app="syntes"] .app-btn { width: calc(var(--gate) * 1.14); height: calc(var(--gate) * 1.14); }
-[data-style="singularitet"] .app-row[data-app="todos"]  { --app-accent: #F5C56B; --app-accent-2: #E8A33D; }
-[data-style="singularitet"] .app-row[data-app="stronk"] { --app-accent: #F97B76; --app-accent-2: #E35D78; }
+[data-style="singularitet"] .app-row[data-app="ethos"]  { --app-accent: #F5C56B; --app-accent-2: #E8A33D; }
+[data-style="singularitet"] .app-row[data-app="hexis"] { --app-accent: #F97B76; --app-accent-2: #E35D78; }
 
 /* --- stjärnfält + vandringsljus (DOM injiceras av enhancern, z: -1) --- */
 [data-style="singularitet"] .void { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
@@ -65,7 +65,7 @@
 /* Skelettets `.app-row` bär en bredd avsedd för den lodräta kolumnen (knapp +
    glapp + info-knapp). Här ligger raderna på tvären och porten är en cirkel, så
    raden måste hugga porten — annars äter varje rad ~500 px flexbasis och
-   radbrytningen slår till i förtid (Stronk ramlar ned på rad två).
+   radbrytningen slår till i förtid (Hexis ramlar ned på rad två).
    Bara från den bredd där alla fyra portarna ryms på en rad: under den radbryter
    hallen ändå, och då ska raden behålla skelettets bredd så info-panelen (ankrad
    i porten, 360 px) inte kan knuffas ut ur sidan av en port ute i kanten. */

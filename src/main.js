@@ -75,9 +75,15 @@ function systemHealth() {
    med tretton stilar blev det 45 dolda block i DOM:en, och kostnaden växte med
    varje nytt bidrag. Nu ligger bara den aktiva stilens markup inne. */
 function appRow(app) {
+  /* Vilande app (`dormant` i apps.js): samma element och samma klasser, så alla
+     stilars selektorer fortsätter träffa — men utan `href`. Ett kort som länkar
+     till en 404 ser ut att fungera; det här ser ut som det är. */
+  const dormant = app.dormant
+  const href = dormant ? '' : ` href="${app.url}"`
+  const vilande = dormant ? ' aria-disabled="true"' : ''
   return `
-    <div class="app-row" data-app="${app.id}">
-      <a class="app-btn" href="${app.url}" data-name="${app.id}">
+    <div class="app-row${dormant ? ' is-dormant' : ''}" data-app="${app.id}">
+      <a class="app-btn"${href} data-name="${app.id}"${vilande}>
         <span class="app-btn__fx" aria-hidden="true"></span>
         <span class="app-btn__anim"></span>
         <span class="app-btn__name">${app.name}</span>
@@ -133,7 +139,7 @@ const animSlots = [...document.querySelectorAll('.app-row')].map((row) => [
   row.dataset.app, row.querySelector('.app-btn__anim'),
 ])
 
-/* Byter ut hover-markupen i alla fyra knappar. En stil som saknar variant för en
+/* Byter ut hover-markupen i knapparna. En stil som saknar variant för en
    app (eller är en helscen) får ett tomt lager — det är giltigt. */
 function mountAnim(style) {
   for (const [appId, slot] of animSlots) slot.innerHTML = style.anim?.[appId] || ''

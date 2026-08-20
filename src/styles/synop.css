@@ -30,8 +30,8 @@
 /* pennorna: navet i tusch, fronterna i var sin kritfärg */
 [data-style="synop"] .app-row[data-app="syntes"] { --app-accent: #12222B; }
 [data-style="synop"] .app-row[data-app="signal"] { --app-accent: var(--sy-blue); }
-[data-style="synop"] .app-row[data-app="todos"]  { --app-accent: var(--sy-red); }
-[data-style="synop"] .app-row[data-app="stronk"] { --app-accent: var(--sy-violet); }
+[data-style="synop"] .app-row[data-app="ethos"]  { --app-accent: var(--sy-red); }
+[data-style="synop"] .app-row[data-app="hexis"] { --app-accent: var(--sy-violet); }
 
 [data-style="synop"] .wordmark { letter-spacing: .3em; text-transform: uppercase; font-weight: 500; }
 [data-style="synop"] .wordmark::after {
@@ -73,8 +73,8 @@
 }
 [data-style="synop"] .app-btn[data-name="syntes"]::before { content: "▼ LÅGTRYCKSCENTRUM"; color: var(--sy-ink); }
 [data-style="synop"] .app-btn[data-name="signal"]::before { content: "▲▲▲ KALLFRONT"; }
-[data-style="synop"] .app-btn[data-name="todos"]::before  { content: "◗◗◗ VARMFRONT"; }
-[data-style="synop"] .app-btn[data-name="stronk"]::before { content: "▲◗▲ OCKLUSION"; }
+[data-style="synop"] .app-btn[data-name="ethos"]::before  { content: "◗◗◗ VARMFRONT"; }
+[data-style="synop"] .app-btn[data-name="hexis"]::before { content: "▲◗▲ OCKLUSION"; }
 [data-style="synop"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* stationsavläsningen i hörnet: varje underapp ligger högre än navets 984, och
@@ -87,8 +87,8 @@
 }
 [data-style="synop"] .app-btn[data-name="syntes"]::after { content: "L  984 ↓↓"; opacity: 1; font-weight: 700; }
 [data-style="synop"] .app-btn[data-name="signal"]::after { content: "1002 ↘"; }
-[data-style="synop"] .app-btn[data-name="todos"]::after  { content: "1008 ↘"; }
-[data-style="synop"] .app-btn[data-name="stronk"]::after { content: "996 ↓"; }
+[data-style="synop"] .app-btn[data-name="ethos"]::after  { content: "1008 ↘"; }
+[data-style="synop"] .app-btn[data-name="hexis"]::after { content: "996 ↓"; }
 
 /* --- kartan under analysen (injiceras): kust, graticule, isobarer, fronter --- */
 [data-style="synop"] .sy-chart { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
@@ -186,8 +186,8 @@
 [data-style="synop"] .sy-leg .k .sym--varm { fill: none; stroke: currentColor; stroke-width: 1.6; }
 [data-style="synop"] .sy-leg .k--l { font-size: .8rem; font-weight: 700; color: var(--sy-red); line-height: 1; }
 [data-style="synop"] .sy-leg[data-app="signal"] .k { color: var(--sy-blue); }
-[data-style="synop"] .sy-leg[data-app="todos"] .k { color: var(--sy-red); }
-[data-style="synop"] .sy-leg[data-app="stronk"] .k { color: var(--sy-violet); }
+[data-style="synop"] .sy-leg[data-app="ethos"] .k { color: var(--sy-red); }
+[data-style="synop"] .sy-leg[data-app="hexis"] .k { color: var(--sy-violet); }
 [data-style="synop"] .sy-foot { padding: 5px 8px 6px; border-top: 1px solid rgba(18, 34, 43, .3); display: grid; gap: 2px; font-size: .45rem; letter-spacing: .09em; }
 [data-style="synop"] .sy-note em { font-style: italic; letter-spacing: 0; }
 @media (min-width: 1180px) { [data-style="synop"] .sy-block { display: block; } }
@@ -198,16 +198,16 @@
    fronterna tänds, observationerna rinner in mot centrum och systemet börjar
    vrida sig moturs. Det är syntesen, gjord av kartan själv. */
 [data-style="synop"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .sy-front--kall,
-[data-style="synop"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .sy-front--varm,
-[data-style="synop"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .sy-front--ock { opacity: 1; }
+[data-style="synop"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .sy-front--varm,
+[data-style="synop"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .sy-front--ock { opacity: 1; }
 [data-style="synop"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .sy-leg[data-app="signal"],
-[data-style="synop"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .sy-leg[data-app="todos"],
-[data-style="synop"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .sy-leg[data-app="stronk"] {
+[data-style="synop"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .sy-leg[data-app="ethos"],
+[data-style="synop"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .sy-leg[data-app="hexis"] {
   color: var(--text); background: rgba(18, 34, 43, .1);
 }
 [data-style="synop"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .sy-leg[data-app="signal"] u,
-[data-style="synop"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .sy-leg[data-app="todos"] u,
-[data-style="synop"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .sy-leg[data-app="stronk"] u { opacity: 1; }
+[data-style="synop"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .sy-leg[data-app="ethos"] u,
+[data-style="synop"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .sy-leg[data-app="hexis"] u { opacity: 1; }
 
 [data-style="synop"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sy-system { transform: rotate(-9deg); }
 [data-style="synop"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .sy-iso { transform: rotate(var(--tilt)) scale(.9); border-color: rgba(18, 34, 43, .55); }

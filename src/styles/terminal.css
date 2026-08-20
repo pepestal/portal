@@ -9,8 +9,13 @@
 }
 [data-style="terminal"] .app-row[data-app="syntes"] { --app-accent: #7C7CE0; }
 [data-style="terminal"] .app-row[data-app="signal"] { --app-accent: #6EE7B0; }
-[data-style="terminal"] .app-row[data-app="todos"]  { --app-accent: #E0C97C; }
-[data-style="terminal"] .app-row[data-app="stronk"] { --app-accent: #F0836F; }
+[data-style="terminal"] .app-row[data-app="ethos"]  { --app-accent: #E0C97C; }
+[data-style="terminal"] .app-row[data-app="hexis"] { --app-accent: #F0836F; }
+[data-style="terminal"] .app-row[data-app="scales"] { --app-accent: #8FB8FF; }
+[data-style="terminal"] .app-row[data-app="sersys"] { --app-accent: #C9A0FF; }
+/* Vilande app: prompten står kvar men raden är släckt och pekaren är inte en
+   hand — kortet går inte att öppna, och det ska synas innan man klickar. */
+[data-style="terminal"] .app-row.is-dormant { --app-accent: #4A4F58; }
 [data-style="terminal"] .app-btn {
   background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 22px 22px; background-position: center;
@@ -29,17 +34,17 @@
 
 /* ---------- Hover-animationer: en per app ---------- */
 
-/* terminal · merge-diagram typas fram: tre källor pipas in i syntes */
-.viz--pipe { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; font-family: var(--font-mono); font-size: .74rem; line-height: 1.35; color: var(--muted); }
-.viz--pipe .ln {
+/* terminal · svaret typas fram: adressen finns, appen bakom den gör inte det */
+.viz--curl { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; font-family: var(--font-mono); font-size: .74rem; line-height: 1.35; color: var(--muted); }
+.viz--curl .ln {
   white-space: pre;
   clip-path: inset(0 100% 0 0);
   transition: clip-path .35s steps(8) calc(var(--i) * 120ms);
 }
-.app-btn:hover .viz--pipe .ln { clip-path: inset(0 -4px 0 0); }
-.viz--pipe .ln b { font-weight: 600; color: var(--app-accent); }
-.viz--pipe .ln b::after { content: "▮"; margin-left: 1px; opacity: 0; }
-.app-btn:hover .viz--pipe .ln b::after { animation: t-caret 1.1s steps(1) .6s infinite; }
+.app-btn:hover .viz--curl .ln { clip-path: inset(0 -4px 0 0); }
+.viz--curl .ln b { font-weight: 600; color: #F0836F; }
+.viz--curl .ln b::after { content: "▮"; margin-left: 1px; opacity: 0; }
+.app-btn:hover .viz--curl .ln b::after { animation: t-caret 1.1s steps(1) .6s infinite; }
 
 /* terminal · candlesticks som printas kolumn-för-kolumn */
 .viz--candles { display: flex; align-items: flex-end; gap: 4px; height: 46px; }
@@ -71,3 +76,22 @@
 .viz--load .loadbar { display: flex; gap: 3px; }
 .viz--load .loadbar i { width: 13px; height: 9px; background: var(--line); border-radius: 1px; transform: scaleX(.15); transform-origin: left; transition: transform .3s var(--anim-ease) calc(var(--i) * 55ms), background .3s ease calc(var(--i) * 55ms); }
 .app-btn:hover .viz--load .loadbar i { transform: scaleX(1); background: var(--app-accent); }
+
+/* terminal · skalan löper uppåt, en ton i taget, och tempot räknas upp */
+.viz--scale { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+.viz--scale .degrees { display: flex; gap: 3px; }
+.viz--scale .degrees i {
+  font-style: normal; width: 2ch; text-align: center; line-height: 1.5;
+  border-bottom: 1px solid var(--line); color: var(--muted);
+  transition: color .2s ease calc(var(--i) * 70ms), border-color .2s ease calc(var(--i) * 70ms), transform .3s var(--anim-ease) calc(var(--i) * 70ms);
+}
+.app-btn:hover .viz--scale .degrees i { color: var(--app-accent); border-color: var(--app-accent); transform: translateY(-2px); }
+.viz--scale .tempo b { color: var(--app-accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* terminal · tre enheter svarar i tur och ordning, som en statusrad som fylls i */
+.viz--health { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+.viz--health .unit { display: flex; align-items: center; gap: .5ch; opacity: .3; transition: opacity .25s ease calc(var(--i) * 140ms); }
+.app-btn:hover .viz--health .unit { opacity: 1; }
+.viz--health .unit b { color: var(--app-accent); font-weight: 600; margin-left: .3ch; }
+.viz--health .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: background .25s ease calc(var(--i) * 140ms + 80ms); }
+.app-btn:hover .viz--health .dot { background: var(--app-accent); box-shadow: 0 0 6px var(--app-accent); }

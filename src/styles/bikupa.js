@@ -7,14 +7,14 @@ import { apps } from '../apps.js'
    solen; dansens vinkel α mot lodlinjen ÄR alltså en kompassriktning. Samma tre
    bäringar används i knappens dans, i cellernas hörnetiketter och i sidans
    flygvektorer — kartan och dansen måste säga samma sak. */
-const BK_BARING = { signal: 40, todos: 155, stronk: 268 }
+const BK_BARING = { signal: 40, ethos: 155, hexis: 268 }
 const bkDir = (deg) => [Math.sin(deg * Math.PI / 180), -Math.cos(deg * Math.PI / 180)]
 /* Dansens varv: rak svansrun A→B, återvändande slinga åt höger, samma run igen,
    slinga åt vänster. Ett slutet varv — därför kan biet löpa det i all oändlighet. */
 const BK_DANS = 'M100.3,35.2 L115.7,16.8 C136,9 154,20 148,30 C142,40 115,43 100.3,35.2 '
   + 'L115.7,16.8 C93,7 68,13 70,26 C72,37 89,39 100.3,35.2 Z'
 /* Åskådarna: tre bin som läser dansen och lämnar den i var sin bäring. */
-const BK_FOLJARE = [['signal', 190, 13], ['todos', 186, 31], ['stronk', 24, 21]].map(([app, x, y]) => {
+const BK_FOLJARE = [['signal', 190, 13], ['ethos', 186, 31], ['hexis', 24, 21]].map(([app, x, y]) => {
   const [dx, dy] = bkDir(BK_BARING[app])
   const r = (v) => v.toFixed(1)
   return `<g class="foljare" data-app="${app}">
@@ -49,10 +49,10 @@ const bkCell = (cx, cy, R) => {
    bäring — den ritas bokstavligen inte. */
 const BK_RUTT = [
   ['signal', 1, 300], // bäring 40° — nektar
-  ['todos', -1, 300], // bäring 155° — bygge
-  ['stronk', 1, 520], // bäring 268° — drag
+  ['ethos', -1, 300], // bäring 155° — bygge
+  ['hexis', 1, 520], // bäring 268° — drag
 ]
-const BK_KM = { signal: '1,4 km', todos: '0,3 km', stronk: '2,2 km' }
+const BK_KM = { signal: '1,4 km', ethos: '0,3 km', hexis: '2,2 km' }
 /* Kakans cellrutnät som ett kaklingsbart mönster: sju sexkanter räcker — de som
    skjuter utanför rutan möts av grannrutans motsvarigheter och sluts till kaka. */
 function bkPattern(R = 26) {
@@ -179,7 +179,7 @@ export default {
       <span class="cap">SOCKERHALT <b class="count" data-to="46" data-suffix=" %">0 %</b></span>
     </div>
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="bikupa" aria-hidden="true">
     <div class="viz viz--forsegling">
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
@@ -200,7 +200,7 @@ export default {
       <span class="cap"><b class="count" data-to="3" data-suffix=" CELLER TÄCKTA">0 CELLER TÄCKTA</b></span>
     </div>
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="bikupa" aria-hidden="true">
     <div class="viz viz--pollenlast">
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">

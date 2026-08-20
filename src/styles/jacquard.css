@@ -30,8 +30,8 @@
 /* navet har ingen egen tråd — det bär allas */
 [data-style="jacquard"] .app-row[data-app="syntes"] { --app-accent: #3E3527; }
 [data-style="jacquard"] .app-row[data-app="signal"] { --app-accent: var(--jq-madder); }
-[data-style="jacquard"] .app-row[data-app="todos"]  { --app-accent: var(--jq-indigo); }
-[data-style="jacquard"] .app-row[data-app="stronk"] { --app-accent: var(--jq-reseda); }
+[data-style="jacquard"] .app-row[data-app="ethos"]  { --app-accent: var(--jq-indigo); }
+[data-style="jacquard"] .app-row[data-app="hexis"] { --app-accent: var(--jq-reseda); }
 
 /* --- topbaren är tygbommen: här rullas den färdiga väven upp --- */
 [data-style="jacquard"] .topbar {
@@ -94,8 +94,8 @@
 }
 [data-style="jacquard"] .app-btn[data-name="syntes"]::before { content: "TUSKAFT"; color: #5A4A30; }
 [data-style="jacquard"] .app-btn[data-name="signal"]::before { content: "KRAPP"; }
-[data-style="jacquard"] .app-btn[data-name="todos"]::before  { content: "VEJDE"; }
-[data-style="jacquard"] .app-btn[data-name="stronk"]::before { content: "RESEDA"; }
+[data-style="jacquard"] .app-btn[data-name="ethos"]::before  { content: "VEJDE"; }
+[data-style="jacquard"] .app-btn[data-name="hexis"]::before { content: "RESEDA"; }
 [data-style="jacquard"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
 /* --- SYNTES ÄR INSLAGET: den enda panelen som är väv, inte bara trådar.

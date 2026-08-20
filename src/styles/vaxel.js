@@ -24,14 +24,14 @@ export default {
       <span class="read"><b>KÖP</b></span>
     </div>
   </div>`,
-  todos: `
+  ethos: `
   <div class="av" data-for="vaxel" aria-hidden="true">
     <div class="viz viz--exped">
       ${[['ankn. 101 söker', 0], ['ankn. 303 söker', 1], ['rikssamtal i kö', 2]].map(([t, i]) => `
         <span class="q" style="--i:${i}"><i class="lamp"></i><span class="lbl"><span class="who">${t}</span><span class="done">— expedierad</span></span></span>`).join('')}
     </div>
   </div>`,
-  stronk: `
+  hexis: `
   <div class="av" data-for="vaxel" aria-hidden="true">
     <div class="viz viz--vev">
       <span class="rig">

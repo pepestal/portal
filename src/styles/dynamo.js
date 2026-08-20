@@ -65,13 +65,13 @@ const ratedOf = (id) => (stats.projects[id]?.lines || 1000) / 1000
    inte lysa samtidigt" är sant per konstruktion och blir aldrig inaktuellt när
    stats.json växer. Mätarens fullskala är nästa storlek uppåt. */
 const IEC = [16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160]
-const CONNECTED = ['syntes', 'signal', 'todos', 'stronk'].reduce((s, id) => s + ratedOf(id), 0)
+const CONNECTED = ['syntes', 'signal', 'ethos', 'hexis'].reduce((s, id) => s + ratedOf(id), 0)
 const FUSE = IEC.filter((a) => a < CONNECTED).pop() || IEC[0]
 const AMP_MAX = IEC[IEC.indexOf(FUSE) + 1] || FUSE * 1.25
 
 /* Ordningen längs skenan följer stigande märkström — den tyngsta lasten sitter
    längst från inmatningen, så skenans mörkaste segment är det den matar. */
-const LOAD_IDS = ['signal', 'todos', 'stronk'].sort((a, b) => ratedOf(a) - ratedOf(b))
+const LOAD_IDS = ['signal', 'ethos', 'hexis'].sort((a, b) => ratedOf(a) - ratedOf(b))
 const LOAD_X = [0.24, 0.53, 0.82]
 
 const nf1 = new Intl.NumberFormat('sv-SE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })

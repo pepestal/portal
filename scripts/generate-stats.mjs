@@ -21,18 +21,38 @@ const ROOT = join(__dirname, '..')          // portal/
 const LOKALT = join(ROOT, '..')             // LOKALT/
 const OUT = join(ROOT, 'src', 'data', 'stats.json')
 
-/** Projekt att mäta. Signal aggregeras från sina två underrepon. */
+/**
+ * Projekt att mäta — id:t är appens id i `src/apps.js`, `dirs` är katalognamnen
+ * som de faktiskt heter i `~/lab`. De två skiljer sig på tre ställen och det är
+ * avsiktligt: Signal aggregeras från sina två underrepon, Hexis bor kvar i
+ * katalogen `stronk` (bara appen bytte namn, 2026-08-20), och Ethos hette
+ * `todos` fram till dess.
+ *
+ * Syntes mäts inte. Händelsenavet revs 2026-08-20 och kortet i portalen är
+ * vilande (`dormant` i apps.js) — en app utan drift ska inte räknas in i
+ * ekosystemets siffror bara för att källkoden ligger kvar på disk.
+ */
 const PROJECTS = [
-  { id: 'signal', name: 'Signal', dirs: ['Signal/backend', 'Signal/signal_frontend'] },
-  { id: 'todos',  name: 'Todos',  dirs: ['todos'] },
-  { id: 'stronk', name: 'Stronk', dirs: ['stronk'] },
-  { id: 'syntes', name: 'Syntes', dirs: ['syntes'] },
+  { id: 'signal', name: 'Signal',  dirs: ['signal_backend', 'signal_frontend'] },
+  { id: 'ethos',  name: 'Ethos',   dirs: ['ethos'] },
+  { id: 'hexis',  name: 'Hexis',   dirs: ['stronk'] },
+  { id: 'scales', name: 'scales',  dirs: ['scales'] },
+  { id: 'sersys', name: 'ser/sys', dirs: ['sersys'] },
 ]
 
+/**
+ * ⚠️ `.claude` och `.agents` är inte kosmetik i den här listan. Agentens
+ * worktrees bor under `<repo>/.claude/worktrees/` — hela kopior av repot, ett
+ * per pågående gren. I `~/lab/ethos` var de 2,1 GB den 2026-08-20 och drog upp
+ * Ethos till 1,5 miljoner rader, tio gånger appens verkliga storlek. Eftersom
+ * stapeldiagrammen normaliseras mot det största projektet gjorde det alla andra
+ * appar till streck. Räknas de bort mäter siffrorna appen igen.
+ */
 const IGNORE_DIRS = new Set([
   'node_modules', '.git', 'dist', 'dist-ssr', '.next', 'build', 'out', 'coverage',
   '__pycache__', '.venv', 'venv', 'env', '.vite', '.cache', '.idea', '.vscode',
   '.pytest_cache', '.mypy_cache', '.ruff_cache', '.turbo', '.svelte-kit',
+  '.claude', '.agents', '.gradle', '.kotlin', 'worktrees',
 ])
 const IGNORE_FILES = new Set(['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml'])
 

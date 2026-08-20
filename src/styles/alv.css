@@ -51,8 +51,8 @@
    kartan och i bandet nere i huvudfåran */
 [data-style="alv"] .app-row[data-app="syntes"] { --app-accent: var(--alv-kalla); }
 [data-style="alv"] .app-row[data-app="signal"] { --app-accent: var(--alv-sig); }
-[data-style="alv"] .app-row[data-app="todos"]  { --app-accent: var(--alv-myr); }
-[data-style="alv"] .app-row[data-app="stronk"] { --app-accent: var(--alv-glac); }
+[data-style="alv"] .app-row[data-app="ethos"]  { --app-accent: var(--alv-myr); }
+[data-style="alv"] .app-row[data-app="hexis"] { --app-accent: var(--alv-glac); }
 
 /* --- knappen: en mätstation vid sitt vatten. Flödet går åt vänster — mot
        fåran — så vattnet står i knappens vänsterkant och tonar av inåt --- */
@@ -91,8 +91,8 @@
 }
 [data-style="alv"] .app-btn[data-name="syntes"]::after { content: "KM 0 · 712 M Ö.H."; opacity: 1; font-weight: 700; }
 [data-style="alv"] .app-btn[data-name="signal"]::after { content: "KM 14 · 634 M Ö.H."; }
-[data-style="alv"] .app-btn[data-name="todos"]::after  { content: "KM 23 · 598 M Ö.H."; }
-[data-style="alv"] .app-btn[data-name="stronk"]::after { content: "KM 31 · 541 M Ö.H."; }
+[data-style="alv"] .app-btn[data-name="ethos"]::after  { content: "KM 23 · 598 M Ö.H."; }
+[data-style="alv"] .app-btn[data-name="hexis"]::after { content: "KM 31 · 541 M Ö.H."; }
 
 /* --- kartlagret (injiceras): grenarna, källpunkten, pegelplåtarna ------------
    Ritas i DOM-mått av enhancern och om vid resize/scroll. Grenarnas bredd är
@@ -103,8 +103,8 @@
 [data-style="alv"] .alv-karta { position: absolute; inset: 0; width: 100%; height: 100%; }
 [data-style="alv"] .alv-gren { color: var(--alv-kalla); }
 [data-style="alv"] .alv-gren[data-app="signal"] { color: var(--alv-sig); }
-[data-style="alv"] .alv-gren[data-app="todos"]  { color: var(--alv-myr); }
-[data-style="alv"] .alv-gren[data-app="stronk"] { color: var(--alv-glac); }
+[data-style="alv"] .alv-gren[data-app="ethos"]  { color: var(--alv-myr); }
+[data-style="alv"] .alv-gren[data-app="hexis"] { color: var(--alv-glac); }
 [data-style="alv"] .alv-gren .vatten {
   fill: none; stroke: currentColor; stroke-linecap: butt; opacity: .5;
   transition: opacity .5s ease, filter .5s ease;
@@ -139,14 +139,14 @@
    tillskottet vid sammanflödet. Vattnet är spårbart därför att det aldrig
    blandas. Pekas källan ut tänds alltihop — hela systemet är hennes vatten. */
 [data-style="alv"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .alv-gren[data-app="signal"] .vatten,
-[data-style="alv"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .alv-gren[data-app="todos"] .vatten,
-[data-style="alv"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .alv-gren[data-app="stronk"] .vatten,
+[data-style="alv"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .alv-gren[data-app="ethos"] .vatten,
+[data-style="alv"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .alv-gren[data-app="hexis"] .vatten,
 [data-style="alv"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .alv-gren .vatten {
   opacity: .96; filter: drop-shadow(0 0 7px color-mix(in srgb, currentColor 55%, transparent));
 }
 [data-style="alv"] body:has(.app-btn[data-name="signal"]:is(:hover, :focus-visible)) .alv-gren[data-app="signal"] :is(.strom, .inc),
-[data-style="alv"] body:has(.app-btn[data-name="todos"]:is(:hover, :focus-visible)) .alv-gren[data-app="todos"] :is(.strom, .inc),
-[data-style="alv"] body:has(.app-btn[data-name="stronk"]:is(:hover, :focus-visible)) .alv-gren[data-app="stronk"] :is(.strom, .inc),
+[data-style="alv"] body:has(.app-btn[data-name="ethos"]:is(:hover, :focus-visible)) .alv-gren[data-app="ethos"] :is(.strom, .inc),
+[data-style="alv"] body:has(.app-btn[data-name="hexis"]:is(:hover, :focus-visible)) .alv-gren[data-app="hexis"] :is(.strom, .inc),
 [data-style="alv"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .alv-gren :is(.strom, .inc) { opacity: 1; }
 [data-style="alv"] body:has(.app-btn:is(:hover, :focus-visible)) .alv-gren .strom { animation: alv-drift 1.1s linear infinite; }
 [data-style="alv"] body:has(.app-btn[data-name="syntes"]:is(:hover, :focus-visible)) .alv-kallpunkt .ring { opacity: .9; transform: scale(1.45); }
@@ -190,8 +190,8 @@
 }
 .viz--langsprofil .stig { stroke-width: 2.4; opacity: 0; transition: opacity .3s ease; }
 .viz--langsprofil .stig[data-app="signal"] { stroke: var(--alv-sig); transition-delay: .34s; }
-.viz--langsprofil .stig[data-app="todos"]  { stroke: var(--alv-myr); transition-delay: .62s; }
-.viz--langsprofil .stig[data-app="stronk"] { stroke: var(--alv-glac); transition-delay: .84s; }
+.viz--langsprofil .stig[data-app="ethos"]  { stroke: var(--alv-myr); transition-delay: .62s; }
+.viz--langsprofil .stig[data-app="hexis"] { stroke: var(--alv-glac); transition-delay: .84s; }
 .viz--langsprofil .punkt { fill: var(--alv-kalla); opacity: 0; transition: opacity .3s ease 1.05s; }
 .app-btn:is(:hover, :focus-visible) .viz--langsprofil .profil { stroke-dashoffset: 0; }
 .app-btn:is(:hover, :focus-visible) .viz--langsprofil :is(.stig, .punkt) { opacity: 1; }
