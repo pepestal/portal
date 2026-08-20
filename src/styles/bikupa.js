@@ -4,16 +4,18 @@ import stats from '../data/stats.json'
 import { apps } from '../apps.js'
 
 /* Kupans grammatik (bikupa). På en lodrät vaxkaka betyder "rakt upp" = mot
-   solen; dansens vinkel α mot lodlinjen ÄR alltså en kompassriktning. Samma tre
-   bäringar används i knappens dans, i cellernas hörnetiketter och i sidans
-   flygvektorer — kartan och dansen måste säga samma sak. */
-const BK_BARING = { signal: 40, ethos: 155, hexis: 268 }
+   solen; en flygvinkel α mot lodlinjen ÄR alltså en kompassriktning. Referensen
+   är solen — en yttre punkt, inte en av cellerna — så varje cell kan bära sin
+   egen bäring utan att någon annan cell ger den. Samma bäringar används i
+   knappens hover, i hörnetiketterna och i sidans flygvektorer; kartan och
+   cellen måste säga samma sak. */
+const BK_BARING = { signal: 40, ethos: 155, hexis: 268, scales: 92, sersys: 315 }
 const bkDir = (deg) => [Math.sin(deg * Math.PI / 180), -Math.cos(deg * Math.PI / 180)]
 /* Dansens varv: rak svansrun A→B, återvändande slinga åt höger, samma run igen,
    slinga åt vänster. Ett slutet varv — därför kan biet löpa det i all oändlighet. */
 const BK_DANS = 'M100.3,35.2 L115.7,16.8 C136,9 154,20 148,30 C142,40 115,43 100.3,35.2 '
   + 'L115.7,16.8 C93,7 68,13 70,26 C72,37 89,39 100.3,35.2 Z'
-/* Åskådarna: tre bin som läser dansen och lämnar den i var sin bäring. */
+/* Bin som lämnar kakan i var sin bäring. */
 const BK_FOLJARE = [['signal', 190, 13], ['ethos', 186, 31], ['hexis', 24, 21]].map(([app, x, y]) => {
   const [dx, dy] = bkDir(BK_BARING[app])
   const r = (v) => v.toFixed(1)
@@ -42,17 +44,18 @@ const bkCell = (cx, cy, R) => {
    yngelvärmen, solmärket och flygvektorerna injiceras här och rivs vid stilbyte
    — skelettets markup rörs inte.
 
-   Allt utgår ur DANSGOLVET, och dansgolvet är Syntes-raden: värmen har sitt
-   centrum där, sollinjen faller ner i den, och de tre flygvektorerna startar i
-   dess cellvägg och slutar i var sin underapp. Därför mäts navets läge i DOM:en
-   varje gång layouten kan ha flyttat den. En bäring utan dansgolv är ingen
-   bäring — den ritas bokstavligen inte. */
+   Solmärket sitter överst på kakan och är referensen allt mäts mot. Varje
+   levande cell skickar ut sin egen flygvektor i sin bäring — bäringen kommer
+   ur solen, inte ur en annan cell. Syntes cell är byggd men aldrig fylld: den
+   har ingen bäring, och därför ritas ingen vektor ur den. */
 const BK_RUTT = [
   ['signal', 1, 300], // bäring 40° — nektar
-  ['ethos', -1, 300], // bäring 155° — bygge
-  ['hexis', 1, 520], // bäring 268° — drag
+  ['ethos', -1, 300], // bäring 155° — yngel
+  ['hexis', 1, 520], // bäring 268° — pollen
+  ['scales', -1, 420], // bäring 92° — hartsdrag
+  ['sersys', 1, 380], // bäring 315° — vakt
 ]
-const BK_KM = { signal: '1,4 km', ethos: '0,3 km', hexis: '2,2 km' }
+const BK_KM = { signal: '1,4 km', ethos: '0,3 km', hexis: '2,2 km', scales: '0,9 km', sersys: '1,7 km' }
 /* Kakans cellrutnät som ett kaklingsbart mönster: sju sexkanter räcker — de som
    skjuter utanför rutan möts av grannrutans motsvarigheter och sluts till kaka. */
 function bkPattern(R = 26) {
@@ -102,21 +105,27 @@ function bikupaEnhancer() {
   const flyg = hive.querySelector('.bk-flyg')
   const btn = (id) => document.querySelector(`.app-row[data-app="${id}"] .app-btn`)
   const place = () => {
-    const hub = btn('syntes')
-    if (!hub) return
-    const h = hub.getBoundingClientRect()
-    const hy = h.top + h.height / 2
-    hive.style.setProperty('--hx', `${Math.round(h.left + h.width / 2)}px`)
-    hive.style.setProperty('--hy', `${Math.round(hy)}px`)
+    /* Värmen sitter mitt i kakan, inte i en cell — yngeltemperaturen är kupans,
+       inte någon enskild apps. */
+    const alla = [...document.querySelectorAll('.app-row .app-btn')].map((e) => e.getBoundingClientRect())
+    if (!alla.length) return
+    hive.style.setProperty('--hx', `${Math.round(alla.reduce((s, r) => s + r.left + r.width / 2, 0) / alla.length)}px`)
+    hive.style.setProperty('--hy', `${Math.round(alla.reduce((s, r) => s + r.top + r.height / 2, 0) / alla.length)}px`)
     flyg.setAttribute('viewBox', `0 0 ${innerWidth} ${innerHeight}`)
     flyg.innerHTML = BK_RUTT.map(([app, side, bulge]) => {
       const t = btn(app)?.getBoundingClientRect()
       if (!t) return ''
-      const sx = side > 0 ? h.right : h.left
-      const ex = side > 0 ? t.right + 13 : t.left - 13
-      const ey = t.top + t.height / 2
-      const cx = side > 0 ? Math.max(sx, ex) + bulge : Math.min(sx, ex) - bulge
-      const cy = (hy + ey) / 2
+      /* Vektorn startar i cellens egen vägg och går ut i dess bäring. */
+      const sx = side > 0 ? t.right : t.left
+      const hy = t.top + t.height / 2
+      const [dx, dy] = bkDir(BK_BARING[app])
+      const ex = sx + dx * 120 * (side > 0 ? 1 : 1)
+      const ey = hy + dy * 120
+      /* Bågen buktar vinkelrätt mot flygriktningen — det är en flygväg, inte
+         ett organisationsschema, så den ska inte peka rakt. */
+      const b = bulge / 6 * side
+      const cx = (sx + ex) / 2 - dy * b
+      const cy = (hy + ey) / 2 + dx * b
       const mx = (sx + 2 * cx + ex) / 4
       const my = (hy + 2 * cy + ey) / 4
       return `<g class="bk-r" data-app="${app}">
@@ -138,21 +147,19 @@ export default {
   id: 'bikupa',
   label: 'Bikupan',
   anim: {
+  /* Den obesatta cellen: byggd i vax, aldrig fylld. Ingen dans, ingen bäring,
+     inget bi. Bara sexkanten och solen som referens den aldrig mättes mot. */
   syntes: `
   <div class="av" data-for="bikupa" aria-hidden="true">
-    <div class="viz viz--svansdans">
+    <div class="viz viz--obesatt">
       <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
         <g class="ref">
           <line class="lod" x1="108" y1="10" x2="108" y2="43" />
           <g class="sol"><circle cx="108" cy="5" r="2.2" />${BK_SOL}</g>
-          <path class="bage" d="M108,15 A11,11 0 0 1 115.1,17.6" />
         </g>
-        <path class="rutt" d="${BK_DANS}" pathLength="100" />
-        <line class="svans" x1="100.3" y1="35.2" x2="115.7" y2="16.8" />
-        <path class="bi" d="${BK_DANS}" pathLength="100" />
-        ${BK_FOLJARE}
+        <polygon class="tomcell" points="${bkCell(108, 27, 13)}" />
       </svg>
-      <span class="cap">α 40° · <b class="count" data-to="3" data-suffix=" BÄRINGAR">0 BÄRINGAR</b></span>
+      <span class="cap">TOM CELL</span>
     </div>
   </div>`,
   signal: `
@@ -226,6 +233,29 @@ export default {
         <text class="hz" x="212" y="14">230 Hz</text>
       </svg>
       <span class="cap">LAST <b class="count" data-to="30" data-suffix=" mg">0 mg</b></span>
+    </div>
+  </div>`,
+  /* scales · hartsdraget: propolis dras i trådar mellan cellväggarna och
+     stelnar. Sex drag, ett per övning. */
+  scales: `
+  <div class="av" data-for="bikupa" aria-hidden="true">
+    <div class="viz viz--harts">
+      <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
+        ${[0, 1, 2, 3, 4, 5].map((i) => `<path class="trad" style="--i:${i}" d="M${46 + i * 25},8 Q${52 + i * 25},${24 + (i % 2 ? 5 : -3)} ${46 + i * 25},40" pathLength="100" />`).join('')}
+      </svg>
+      <span class="cap">α 92° · <b class="count" data-to="6" data-suffix=" DRAG">0 DRAG</b></span>
+    </div>
+  </div>`,
+  /* ser/sys · vaktbiet vid flustret: fjorton anflygningar, en enda släpps in. */
+  sersys: `
+  <div class="av" data-for="bikupa" aria-hidden="true">
+    <div class="viz viz--vakt">
+      <svg viewBox="0 0 216 46" preserveAspectRatio="xMidYMid meet">
+        <line class="fluster" x1="26" y1="34" x2="190" y2="34" />
+        ${Array.from({ length: 14 }, (_, i) => `<ellipse class="anflyg${i === 6 ? ' anflyg--in' : ''}" style="--i:${i}" cx="${32 + i * 11.5}" cy="16" rx="2.6" ry="1.9" />`).join('')}
+        <ellipse class="vaktbi" cx="${32 + 6 * 11.5}" cy="34" rx="3.4" ry="2.4" />
+      </svg>
+      <span class="cap">α 315° · <b class="count" data-to="1" data-suffix=" AV 14">0 AV 14</b></span>
     </div>
   </div>`,
   },

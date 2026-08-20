@@ -21,6 +21,7 @@
   --bk-soly: 34px; /* solmärkets höjd — sollinjen räknas ut från den */
   --bk-vax: #E4C482; --bk-vax-ljus: #F9EDC8; --bk-lock: #E8D3A0;
   --bk-nektar: #F5C44B; --bk-yngel: #E09A47; --bk-pollen: #F0A81E;
+  --bk-harts: #C06A4E; --bk-vakt: #B9A8E0;
   --bk-pollen-bla: #A9A6D8; --bk-propolis: #43230A; --bk-kropp: #33200A;
   /* cellen: en långsträckt sexkant. Väggen ritas av knappens egen bakgrund,
      interiören av .app-btn__fx med samma sexkant en aning mindre. */
@@ -60,6 +61,8 @@
 [data-style="bikupa"] .app-row[data-app="signal"] { --app-accent: var(--bk-nektar); }
 [data-style="bikupa"] .app-row[data-app="ethos"]  { --app-accent: var(--bk-yngel); }
 [data-style="bikupa"] .app-row[data-app="hexis"] { --app-accent: var(--bk-pollen-bla); }
+[data-style="bikupa"] .app-row[data-app="scales"] { --app-accent: var(--bk-harts); }
+[data-style="bikupa"] .app-row[data-app="sersys"] { --app-accent: var(--bk-vakt); }
 
 /* --- cellen: sexkanten är väggen, __fx är kärlet den omsluter --- */
 [data-style="bikupa"] .app-btn {
@@ -128,13 +131,32 @@
   background-size: 100% 40%;
 }
 [data-style="bikupa"] .app-row[data-app="hexis"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { background-size: 100% 60%; }
+/* scales · hartscellen: propolis, mörk och halvgenomskinlig, med de sega
+   trådarna kvar där den drogs. Den stelnar underifrån. */
+[data-style="bikupa"] .app-row[data-app="scales"] .app-btn__fx::before {
+  background-image:
+    repeating-linear-gradient(84deg, rgba(120, 44, 30, .5) 0 3px, transparent 3px 9px),
+    linear-gradient(0deg, rgba(126, 44, 32, .95) 0 55%, rgba(126, 44, 32, .45) 90%, transparent);
+  background-size: 100% 36%;
+}
+[data-style="bikupa"] .app-row[data-app="scales"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { background-size: 100% 58%; }
+/* ser/sys · vaktcellen: tom botten men putsad blank, och en enda vaktpost i
+   mynningen. Cellen lagrar ingenting — den håller uppsikt. */
+[data-style="bikupa"] .app-row[data-app="sersys"] .app-btn__fx::before {
+  background-image:
+    radial-gradient(11px 8px at 50% 88%, rgba(210, 196, 240, .95), transparent 74%),
+    linear-gradient(0deg, rgba(74, 58, 104, .82) 0 26%, rgba(74, 58, 104, .3) 78%, transparent);
+  background-size: 100% 34%;
+}
+[data-style="bikupa"] .app-row[data-app="sersys"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { background-size: 100% 50%; }
+
 /* Vid hover tittar man IN i cellen: fodret sjunker undan i ljusstyrka så scenen
    tillhör animationen, inte ytan. Utan det dränker vaxet sin egen berättelse. */
 [data-style="bikupa"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { opacity: .42; }
 [data-style="bikupa"] .app-row[data-app="syntes"] .app-btn:is(:hover, :focus-visible) .app-btn__fx::before { opacity: 1; }
 
-/* --- DANSGOLVET ÄR NAVET: den enda cellen som hålls tom. Dubbel vägg i
-       propolis (bina lackar den), putsad botten, och ingenting lagrat i den. --- */
+/* --- Den obesatta cellen: byggd färdig men aldrig fylld. Putsad botten,
+       ingenting lagrat, ingen bäring ut. Den enda cellen utan innehåll. --- */
 [data-style="bikupa"] .app-row[data-app="syntes"] .app-btn__fx { background: var(--bk-propolis); }
 [data-style="bikupa"] .app-row[data-app="syntes"] .app-btn__fx::before {
   clip-path: var(--bk-hex-kar);
@@ -144,7 +166,7 @@
     linear-gradient(178deg, rgba(88, 48, 13, .96), rgba(41, 21, 5, .99));
   background-size: 100% 100%; background-position: center;
 }
-[data-style="bikupa"] .app-row[data-app="syntes"] .app-btn { transform: scale(1.014); }
+
 
 /* vilotexten: vad cellen bär. Ett ord — vem som bestämde det syns på
    flygvektorerna, det behöver inte skrivas ut. */
@@ -157,16 +179,18 @@
   color: rgba(48, 24, 3, .92); text-shadow: 0 1px 0 rgba(255, 236, 186, .3);
 }
 [data-style="bikupa"] .app-btn[data-name="syntes"]::before {
-  content: "DANSGOLVET";
+  content: "TOM";
   color: var(--bk-vax-ljus); text-shadow: 0 1px 3px rgba(20, 10, 2, .9);
 }
 [data-style="bikupa"] .app-btn[data-name="signal"]::before { content: "NEKTAR"; }
 [data-style="bikupa"] .app-btn[data-name="ethos"]::before  { content: "YNGEL"; }
 [data-style="bikupa"] .app-btn[data-name="hexis"]::before { content: "POLLEN"; }
+[data-style="bikupa"] .app-btn[data-name="scales"]::before { content: "HARTS"; }
+[data-style="bikupa"] .app-btn[data-name="sersys"]::before { content: "VAKT"; }
 [data-style="bikupa"] .app-btn:is(:hover, :focus-visible)::before { opacity: 0; }
 
-/* hörnetiketten: de tre bär var sin bäring UR navet — navet bär temperaturen
-   det håller åt hela kakan. Ingen av bäringarna finns utan golvet de mättes på. */
+/* hörnetiketten: varje besatt cell bär sin egen bäring, mätt mot solen. Den
+   tomma cellen bär temperaturen kakan håller — den är kupans, inte en apps. */
 [data-style="bikupa"] .app-btn::after {
   position: absolute; left: 30px; top: 11px; z-index: 3;
   font-family: var(--font-mono); font-size: .5rem; letter-spacing: .08em;
@@ -177,6 +201,8 @@
 [data-style="bikupa"] .app-btn[data-name="signal"]::after { content: "α 40° · 1,4 km"; }
 [data-style="bikupa"] .app-btn[data-name="ethos"]::after  { content: "α 155° · 0,3 km"; }
 [data-style="bikupa"] .app-btn[data-name="hexis"]::after { content: "α 268° · 2,2 km"; }
+[data-style="bikupa"] .app-btn[data-name="scales"]::after { content: "α 92° · 0,9 km"; }
+[data-style="bikupa"] .app-btn[data-name="sersys"]::after { content: "α 315° · 1,7 km"; }
 
 /* --- kakan under allt (injiceras): ramlist, celler, yngelvärme, sol, bäringar --- */
 [data-style="bikupa"] .bk-hive { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
@@ -377,3 +403,40 @@
 .viz--pollenlast .cap { font-family: var(--font-mono); font-size: .56rem; letter-spacing: .1em; color: var(--muted); font-variant-numeric: tabular-nums; opacity: 0; transition: opacity .4s ease 1.25s; }
 .viz--pollenlast .cap b { font-weight: 600; color: var(--bk-pollen); }
 .app-btn:is(:hover, :focus-visible) .viz--pollenlast .cap { opacity: 1; }
+
+/* bikupa · den tomma cellen ritas upp: sexkanten och solen, ingen dans */
+.viz--obesatt svg { width: 100%; height: 46px; overflow: visible; }
+.viz--obesatt .lod { stroke: rgba(255, 236, 186, .3); stroke-width: .7; stroke-dasharray: 3 3; }
+.viz--obesatt .sol circle { fill: var(--bk-vax-ljus); }
+.viz--obesatt .sol line { stroke: var(--bk-vax-ljus); stroke-width: .8; }
+.viz--obesatt .tomcell {
+  fill: none; stroke: var(--app-accent); stroke-width: 1.2;
+  stroke-dasharray: 90; stroke-dashoffset: 90;
+  transition: stroke-dashoffset .9s var(--anim-ease);
+}
+.app-btn:is(:hover, :focus-visible) .viz--obesatt .tomcell { stroke-dashoffset: 0; }
+
+/* bikupa · hartset dras i trådar mellan väggarna och stelnar */
+.viz--harts svg { width: 100%; height: 46px; overflow: visible; }
+.viz--harts .trad {
+  fill: none; stroke: var(--app-accent); stroke-width: 1.6; stroke-linecap: round;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset .45s var(--anim-ease) calc(var(--i) * 90ms);
+}
+.app-btn:is(:hover, :focus-visible) .viz--harts .trad { stroke-dashoffset: 0; }
+
+/* bikupa · vaktbiet vid flustret: fjorton anflygningar, en enda släpps in */
+.viz--vakt svg { width: 100%; height: 46px; overflow: visible; }
+.viz--vakt .fluster { stroke: rgba(255, 236, 186, .35); stroke-width: 1; }
+.viz--vakt .anflyg {
+  fill: rgba(255, 236, 186, .5); opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity .2s ease calc(var(--i) * 55ms), transform .3s var(--anim-ease) calc(var(--i) * 55ms);
+}
+.app-btn:is(:hover, :focus-visible) .viz--vakt .anflyg { opacity: .3; transform: translateY(0); }
+.app-btn:is(:hover, :focus-visible) .viz--vakt .anflyg--in {
+  opacity: 1; fill: var(--app-accent); transform: translateY(14px);
+  transition-delay: .8s, .8s;
+}
+.viz--vakt .vaktbi { fill: var(--app-accent); opacity: 0; transition: opacity .3s ease .3s; }
+.app-btn:is(:hover, :focus-visible) .viz--vakt .vaktbi { opacity: 1; }
