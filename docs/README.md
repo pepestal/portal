@@ -11,10 +11,19 @@ Index över Portals dokumentation. Den samlade tekniska ingången är
 | [`CHANGELOG.md`](CHANGELOG.md) | Kronologisk logg över ändringar och beslut. |
 | [`ROADMAP.md`](ROADMAP.md) | Versionsplan och vad som medvetet ligger efter v1. |
 | [`DEPLOY.md`](DEPLOY.md) | Driftsättning på VPS:en: bygg lokalt → scp `dist/` → Caddy `file_server` + Authelia. |
+| [`PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md) | **Engångsuppdrag (2026-08-20):** sex appar i stället för fyra, två namnbyten, Syntes utan navroll — och mobilanpassning av samtliga 21 stilar. |
+| [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) | Återanvändbar tävlingsprompt, **klassiska klassen**. |
+| [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md) | Återanvändbar tävlingsprompt, **kaosklassen**. |
+| [`TEXTGRANSKNING.md`](TEXTGRANSKNING.md) | Genomgång av all synlig text i stilarna (2026-07-28). Underlag till textransoneringen i `scripts/check-copy.mjs`. |
 | [`dev_pics/`](dev_pics/) | **Visuell tidslinje** — skärmdumpar per uppdatering, äldst först. Obligatorisk vid varje UI-synlig ändring (se [`dev_pics/README.md`](dev_pics/README.md)). |
 
-> Portal rör inte Syntes och har ingen djup datamodell, därför saknas
-> `INTEGRATION.md` och `ARCHITECTURE.md` medvetet. Läggs till om behovet uppstår.
+> Portal har ingen datamodell och inga anrop till andra appar — den listar länkar och
+> räknar rader. Därför saknas `INTEGRATION.md` och `ARCHITECTURE.md` medvetet.
+>
+> ⚠️ **Portalen *visar* däremot ekosystemet, och det har sprungit ifrån registret.**
+> Händelsenavet Syntes revs 2026-08-20, `Todos` heter Ethos, `Stronk` heter Hexis, och
+> `scales` och `ser/sys` saknas helt. Uppdraget som rättar det står i
+> [`PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md).
 
 ## Var finns vad (hela projektet)
 

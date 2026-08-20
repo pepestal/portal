@@ -6,6 +6,23 @@ Alla meningsfulla ändringar i Portal noteras här. Nyast överst. Format enligt
 ## [Ej släppt]
 
 ### Tillagt
+- **Uppdragsprompt: [`docs/PROMPT_EKOSYSTEMET.md`](PROMPT_EKOSYSTEMET.md)** — ett
+  engångsuppdrag, till skillnad från de två återanvändbara tävlingsprompterna.
+  Portalens appregister har sprungit ifrån verkligheten och ska rättas i två PR:er.
+  - **Sex appar i stället för fyra.** `Todos` → **Ethos**, `Stronk` → **Hexis**
+    (`stronk#17`), och **scales** + **ser/sys** tillkommer. `kladd` ska medvetet inte in.
+  - 🔴 **Syntes är inte längre ett nav.** Händelsebussen revs 2026-08-20; kortet står kvar
+    på Peters begäran men nav-språket ska bort överallt, och `syntes.dev` svarar `404`.
+  - **Samtliga 21 stilar ska mobilanpassas.** Mätt: 14 stilar har ingen media query alls,
+    och repot bär **336 `:hover`-regler** utan en enda `@media (hover: hover)` — på touch
+    är hover-innehåll osynligt, och Android ger sticky hover vid tap.
+  - ⚠️ **Prompten pekar ut att [`PROMPT_TAVLING.md`](PROMPT_TAVLING.md) och
+    [`PROMPT_CHAOS.md`](PROMPT_CHAOS.md) måste uppdateras i samma uppdrag.** Båda kräver i
+    dag *"fyra appar"* och den förstnämnda har ett avsnitt *"Syntes är navet — ge den en
+    särställning"*. Lämnas de orörda bygger nästa tävlingsbidrag in exakt det som revs.
+  - Omfattningen är mätt, inte uppskattad: 67 hårdkodade app-id i 13 JS-filer och 293
+    `data-app`-selektorer i 16 CSS-filer.
+
 - **Stil: Kardanen · chatgpt** (`kardan-chatgpt`, sjuttonde klassiska
   bidraget) — ett mörkt maskinrum där Syntes är den genomgående huvudaxeln.
   Axeln går synligt genom hela knappstapeln; navets dubbellager och `AXEL 0°`
